@@ -6,12 +6,14 @@ import {
 } from "@apollo/client";
 import { useState } from "react";
 import "./App.css";
+import CardsFilter from "./components/CardsFilter";
 import Header from "./components/Header";
 import InitialForm from "./components/InitialForm";
 import ItemCard from "./components/ItemCard";
 import Modal from "./components/Modal";
 import PathCards from "./components/PathCards";
 import SideSummary from "./components/SideSummary";
+import Path from "./sections/Path";
 
 const httpLink = createHttpLink({
   url: "http://localhost:5000",
@@ -30,11 +32,8 @@ function App() {
       <Header />
       <SideSummary />
       <InitialForm />
-      <div className="flex">
-        <PathCards />
-        <PathCards />
-        <PathCards />
-      </div>
+      <Path />
+      <CardsFilter />
       <div className="grid grid-cols-4">
         <ItemCard setShowModal={setShowModal} />
         <ItemCard />
