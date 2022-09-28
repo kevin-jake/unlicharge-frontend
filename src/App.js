@@ -4,11 +4,14 @@ import {
   createHttpLink,
   InMemoryCache,
 } from "@apollo/client";
+import { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import InitialForm from "./components/InitialForm";
 import ItemCard from "./components/ItemCard";
+import Modal from "./components/Modal";
 import PathCards from "./components/PathCards";
+import SideSummary from "./components/SideSummary";
 
 const httpLink = createHttpLink({
   url: "http://localhost:5000",
@@ -20,9 +23,12 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <ApolloProvider client={client}>
       <Header />
+      <SideSummary />
       <InitialForm />
       <div className="flex">
         <PathCards />
@@ -30,6 +36,22 @@ function App() {
         <PathCards />
       </div>
       <div className="grid grid-cols-4">
+        <ItemCard setShowModal={setShowModal} />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
         <ItemCard />
         <ItemCard />
         <ItemCard />
@@ -38,6 +60,7 @@ function App() {
         <ItemCard />
         <ItemCard />
       </div>
+      <Modal showModal={showModal} setShowModal={setShowModal} />
     </ApolloProvider>
   );
 }
