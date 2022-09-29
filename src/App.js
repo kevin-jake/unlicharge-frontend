@@ -13,6 +13,7 @@ import ItemCard from "./components/ItemCard";
 import Modal from "./components/Modal";
 import PathCards from "./components/PathCards";
 import SideSummary from "./components/SideSummary";
+import ItemLists from "./sections/ItemLists";
 import Path from "./sections/Path";
 
 const httpLink = createHttpLink({
@@ -29,36 +30,13 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Header />
-      <SideSummary />
-      <InitialForm />
-      <Path />
-      <CardsFilter />
-      <div className="grid grid-cols-4">
-        <ItemCard setShowModal={setShowModal} />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
+      <div className="sticky top-0 z-10">
+        <Header />
+        <SideSummary />
+        <InitialForm />
       </div>
+      <Path />
+      <ItemLists setShowModal={setShowModal} />
       <Modal showModal={showModal} setShowModal={setShowModal} />
     </ApolloProvider>
   );
