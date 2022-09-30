@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import CardsFilter from "../components/CardsFilter";
 import ItemCard from "../components/ItemCard";
 import { FETCH_BATTERY } from "../util/graphql/Query";
 import { useQuery } from "@apollo/client";
-import Modal from "../components/Modal";
 
-const ItemLists = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [modalDetails, setModalDetails] = useState();
-
+const ItemLists = ({ setShowModal, setModalDetails }) => {
   const { loading, data } = useQuery(FETCH_BATTERY);
   var itemData = [];
   if (data) {
@@ -35,11 +31,6 @@ const ItemLists = () => {
           ))
         )}
       </div>
-      <Modal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        data={modalDetails}
-      />
     </div>
   );
 };
