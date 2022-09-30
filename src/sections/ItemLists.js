@@ -22,7 +22,11 @@ const ItemLists = (props) => {
         ) : (
           itemData.length > 0 &&
           itemData.map((item) => (
-            <ItemCard setShowModal={props.setShowModal} item={item} />
+            <ItemCard
+              key={item.id}
+              setShowModal={props.setShowModal}
+              item={item}
+            />
           ))
         )}
       </div>

@@ -29,7 +29,7 @@ const Path = () => {
   return (
     <div className="flex-row md:flex">
       {path.map((item) => (
-        <PathCards {...item} />
+        <PathCards key={item.title} {...item} />
       ))}
     </div>
   );

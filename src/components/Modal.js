@@ -16,7 +16,7 @@ const Modal = ({ showModal, setShowModal }) => {
     >
       <div className="w-[600px]">
         <div className="bg-white p-2 rounded">
-          <h1 className="text-lg">Battery</h1>
+          <h1 className="text-lg font-bold p-4">Battery</h1>
           <div className="grid grid-flow-row">
             <Form />
           </div>
