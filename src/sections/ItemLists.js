@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import CardsFilter from "../components/CardsFilter";
 import ItemCard from "../components/ItemCard";
 import { FETCH_BATTERY } from "../util/graphql/Query";
 import { useQuery } from "@apollo/client";
+import Modal from "../components/Modal";
 
-const ItemLists = (props) => {
+const ItemLists = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalDetails, setModalDetails] = useState();
+
   const { loading, data } = useQuery(FETCH_BATTERY);
   var itemData = [];
   if (data) {
     itemData = data.getBatteries;
   }
+
+  const openModal = (item) => {
+    setShowModal(true);
+    setModalDetails(item);
+  };
 
   console.log(itemData);
   return (
@@ -22,14 +31,15 @@ const ItemLists = (props) => {
         ) : (
           itemData.length > 0 &&
           itemData.map((item) => (
-            <ItemCard
-              key={item.id}
-              setShowModal={props.setShowModal}
-              item={item}
-            />
+            <ItemCard key={item.id} item={item} openModal={openModal} />
           ))
         )}
       </div>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        data={modalDetails}
+      />
     </div>
   );
 };

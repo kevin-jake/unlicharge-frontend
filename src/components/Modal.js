@@ -1,9 +1,9 @@
 import React from "react";
 import Form from "./Form";
 
-const Modal = ({ showModal, setShowModal }) => {
+const Modal = ({ showModal, setShowModal, data }) => {
   if (!showModal) return null;
-
+  console.log(data);
   const handleOnClose = (e) => {
     if (e.target.id === "modal-container") setShowModal(false);
   };
