@@ -8,19 +8,22 @@ const path = [
   {
     title: "Battery",
     icon: <MdBatteryChargingFull size={50} />,
-    description: "asdfas asdfa sd fasd fasdf asd fasd fasdasdfasdfasdfasdfasdf",
+    description:
+      "Select type of battery here and check specification, price and how much you need",
     tooltip: "",
   },
   {
     title: "BMS",
     icon: <RiNodeTree size={50} />,
-    description: "asdfas asdfa sd fasd fasdf asd fasd fasdasdfasdfasdfasdfasdf",
+    description:
+      "Select Battery Management System here to check for compatible charge and discharge current",
     tooltip: "",
   },
   {
     title: "Active Balancer",
     icon: <TbChartArrowsVertical size={50} />,
-    description: "asdfas asdfa sd fasd fasdf asd fasd fasdasdfasdfasdfasdfasdf",
+    description:
+      "Select Active Balancer here to check for compatible strings for you battery",
     tooltip: "",
   },
 ];

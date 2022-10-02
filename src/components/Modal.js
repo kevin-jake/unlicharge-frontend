@@ -3,8 +3,8 @@ import Form from "./Form";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const Modal = ({ showModal, setShowModal, data }) => {
-  const properties = Object.getOwnPropertyNames(data);
   if (!showModal) return null;
+  const properties = Object.getOwnPropertyNames(data);
   console.log(data);
   const handleOnClose = (e) => {
     if (e.target.id === "modal-container") setShowModal(false);
