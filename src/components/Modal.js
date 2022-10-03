@@ -22,7 +22,7 @@ const Modal = ({ showModal, setShowModal, data }) => {
           size={23}
           onClick={() => setShowModal(false)}
         />
-        <div className="bg-white p-2 rounded">
+        {/* <div className="bg-white p-2 rounded">
           <h1 className="text-lg font-bold p-4">{data.__typename}</h1>
           <div className="grid grid-flow-row">
             <div>
@@ -37,9 +37,9 @@ const Modal = ({ showModal, setShowModal, data }) => {
                 ))}
               </ul>
             </div>
-            {/* <Form /> */}
           </div>
-        </div>
+        </div> */}
+        <Form />
       </div>
     </div>
   );

@@ -25,11 +25,13 @@ const ItemLists = ({ setShowModal, setModalDetails }) => {
         {/* TODO: Change to loading spinner */}
         {loading ? (
           <h1>Loading posts...</h1>
-        ) : (
-          itemData.length > 0 &&
+        ) : itemData.length > 0 ? (
           itemData.map((item) => (
             <ItemCard key={item.id} item={item} openModal={openModal} />
           ))
+        ) : (
+          // TODO: Make this more catchy
+          <div> No List found...</div>
         )}
       </div>
     </div>
