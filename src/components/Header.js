@@ -1,106 +1,125 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Mail, Notifications, Pets } from "@mui/icons-material";
+import {
+  AppBar,
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Menu,
+  MenuItem,
+  styled,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import logo from "./unlicharge_logo.svg";
+import { NavLink } from "react-router-dom";
+
+const StyledToolbar = styled(Toolbar)({
+  display: "flex",
+  justifyContent: "space-between",
+});
+
+const Search = styled("div")(({ theme }) => ({
+  backgroundColor: "white",
+  padding: "0 10px",
+  borderRadius: theme.shape.borderRadius,
+  width: "40%",
+}));
+
+const Icons = styled(Box)(({ theme }) => ({
+  display: "none",
+  gap: "20px",
+  alignItems: "center",
+  [theme.breakpoints.up("sm")]: {
+    display: "flex",
+  },
+}));
+
+const UserBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: "20px",
+  alignItems: "center",
+  [theme.breakpoints.up("sm")]: {
+    display: "none",
+  },
+}));
 
 const Header = () => {
-  const [active, setActive] = useState(1);
-
-  const handleActive = (option) => {
-    setActive(option);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
-  console.log(active);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <nav className="bg-stone-800  px-2 sm:px-4 py-2.5 dark:bg-gray-900">
-      <div className="container flex flex-wrap justify-between items-center mx-auto">
-        <NavLink
-          to="/"
-          exact
-          onClick={() => {
-            handleActive(1);
-          }}
-        >
-          <div className="flex items-center">
-            <img src={logo} className="mr-3 h-6 sm:h-9" alt="Logo" />{" "}
-          </div>
+    <AppBar position="sticky" sx={{ backgroundColor: "rgb(17 24 39)" }}>
+      <StyledToolbar>
+        <NavLink to="/" exact>
+          <Box
+            component="img"
+            alt="The house from the offer."
+            sx={{ width: 270, height: 70 }}
+            src={logo}
+          />
         </NavLink>
-        <div
-          className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
-          id="navbar-cta"
+        {/* <Pets sx={{ display: { xs: "block", sm: "none" } }} /> */}
+        {/* <Search>
+          <InputBase placeholder="Search" />
+        </Search> */}
+        <Box
+          sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
         >
-          <ul className="flex p-4 mt-4 bg-stone-800 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              {/* TODO:  Make this iterative */}
-              <p
-                className={`block py-2 pr-4 pl-3  md:hover:text-green-400 md:bg-transparent  md:p-0 dark:text-white ${
-                  active === 1 ? "text-green-500 font-bold" : "text-white"
-                }`}
-              >
-                <NavLink
-                  to="/"
-                  exact
-                  onClick={() => {
-                    handleActive(1);
-                  }}
-                >
-                  Home
-                </NavLink>
-              </p>
-            </li>
-            <li>
-              <p
-                className={`block py-2 pr-4 pl-3  md:hover:text-green-400 md:bg-transparent  md:p-0 dark:text-white ${
-                  active === 2 ? "text-green-500 font-bold" : "text-white"
-                }`}
-              >
-                <NavLink
-                  to="/"
-                  exact
-                  onClick={() => {
-                    handleActive(2);
-                  }}
-                >
-                  Estimate
-                </NavLink>
-              </p>
-            </li>
-            <li>
-              <p
-                className={`block py-2 pr-4 pl-3  md:hover:text-green-400 md:bg-transparent  md:p-0 dark:text-white ${
-                  active === 3 ? "text-green-500 font-bold" : "text-white"
-                }`}
-              >
-                <NavLink
-                  to="/list"
-                  exact
-                  onClick={() => {
-                    handleActive(3);
-                  }}
-                >
-                  Tables
-                </NavLink>
-              </p>
-            </li>
-            <li>
-              <p
-                className={`block py-2 pr-4 pl-3  md:hover:text-green-400 md:bg-transparent  md:p-0 dark:text-white ${
-                  active === 4 ? "text-green-500 font-bold" : "text-white"
-                }`}
-              >
-                <NavLink
-                  to="/"
-                  exact
-                  onClick={() => {
-                    handleActive(4);
-                  }}
-                >
-                  Contact
-                </NavLink>
-              </p>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+          <Button
+            variant="text"
+            sx={{ minWidth: 100, color: "white", textTransform: "none" }}
+          >
+            Home
+          </Button>
+          <Button
+            variant="text"
+            sx={{ minWidth: 100, color: "white", textTransform: "none" }}
+          >
+            Build
+          </Button>
+        </Box>
+        <Icons>
+          <Badge badgeContent={4} color="error">
+            <Mail color="white" />
+          </Badge>
+          <Badge badgeContent={4} color="error">
+            <Notifications color="white" />
+          </Badge>
+          <Avatar
+            sx={{ width: 30, height: 30 }}
+            src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+            onClick={handleClick}
+          />
+        </Icons>
+        <UserBox onClick={handleClick}>
+          <Avatar
+            sx={{ width: 30, height: 30 }}
+            src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+          />
+          <Typography variant="span"> test</Typography>
+        </UserBox>
+      </StyledToolbar>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem>Profile</MenuItem>
+        <MenuItem>My account</MenuItem>
+        <MenuItem>Logout</MenuItem>
+      </Menu>
+    </AppBar>
   );
 };
 

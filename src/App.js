@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import { setContext } from "apollo-link-context";
 import Tables from "./pages/Tables";
+import { Box } from "@mui/material";
 import Header from "./components/Header";
 
 const httpLink = createHttpLink({
@@ -35,13 +36,13 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <div className="sticky top-0 z-10">
+        <Box>
           <Header />
-        </div>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/list" element={<Tables />} />
-        </Routes>
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/list" element={<Tables />} />
+          </Routes>
+        </Box>
       </BrowserRouter>
     </ApolloProvider>
   );

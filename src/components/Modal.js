@@ -1,5 +1,5 @@
 import React from "react";
-import Form from "./Form";
+import Form from "./form_components/Form";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const Modal = ({ showModal, setShowModal, data }) => {
@@ -39,7 +39,7 @@ const Modal = ({ showModal, setShowModal, data }) => {
             </div>
           </div>
         </div> */}
-        <Form />
+        <Form formInputs={properties} />
       </div>
     </div>
   );
