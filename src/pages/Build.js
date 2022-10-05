@@ -1,27 +1,42 @@
-import React from 'react'
-import InitialForm from '../components/InitialForm'
-import Modal from '../components/Modal'
-import SideSummary from '../components/SideSummary'
-import ItemLists from '../sections/ItemLists'
-import Path from '../sections/Path'
+import { Grid } from "@mui/material";
+import React from "react";
+import ItemCard from "../components/ItemCard";
+import Path from "../sections/Path";
 
 const Build = () => {
   return (
-    <div className="relative z-10">
-    <SideSummary />
-    <InitialForm />
-  </div>
-  <Path />
-  <ItemLists
-    setShowModal={setShowModal}
-    setModalDetails={setModalDetails}
-  />
-  <Modal
-    showModal={showModal}
-    setShowModal={setShowModal}
-    data={modalDetails}
-  />
-  )
-}
+    <>
+      <Path />
+      <Grid
+        container
+        spacing={2}
+        direction={{ xs: "column", sm: "row" }}
+        sx={{ padding: 2 }}
+        justify="flex-start"
+        alignItems="flex-start"
+      >
+        <Grid item xs={3}>
+          <ItemCard />
+        </Grid>
 
-export default Build
+        <Grid item xs={3}>
+          <ItemCard />
+        </Grid>
+
+        <Grid item xs={3}>
+          <ItemCard />
+        </Grid>
+
+        <Grid item xs={3}>
+          <ItemCard />
+        </Grid>
+
+        <Grid item xs={3}>
+          <ItemCard />
+        </Grid>
+      </Grid>
+    </>
+  );
+};
+
+export default Build;

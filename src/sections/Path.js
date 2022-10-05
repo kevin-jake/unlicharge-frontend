@@ -3,6 +3,7 @@ import PathCards from "../components/PathCards";
 import { MdBatteryChargingFull } from "react-icons/md";
 import { RiNodeTree } from "react-icons/ri";
 import { TbChartArrowsVertical } from "react-icons/tb";
+import { Box } from "@mui/material";
 
 const path = [
   {
@@ -30,11 +31,11 @@ const path = [
 
 const Path = () => {
   return (
-    <div className="flex-row md:flex">
+    <Box p={2} sx={{ display: "flex", justifyContent: "space-between" }}>
       {path.map((item) => (
         <PathCards key={item.title} {...item} />
       ))}
-    </div>
+    </Box>
   );
 };
 

@@ -11,6 +11,7 @@ import { setContext } from "apollo-link-context";
 import Tables from "./pages/Tables";
 import { Box } from "@mui/material";
 import Header from "./components/Header";
+import Build from "./pages/Build";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:5000",
@@ -40,7 +41,7 @@ function App() {
           <Header />
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route exact path="/list" element={<Tables />} />
+            <Route exact path="/build" element={<Build />} />
           </Routes>
         </Box>
       </BrowserRouter>

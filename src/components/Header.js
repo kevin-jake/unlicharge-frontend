@@ -70,18 +70,22 @@ const Header = () => {
           <InputBase placeholder="Search" />
         </Search> */}
         <Box sx={{ display: "inline-flex" }}>
-          <Button
-            variant="text"
-            sx={{ minWidth: 100, color: "white", textTransform: "none" }}
-          >
-            Home
-          </Button>
-          <Button
-            variant="text"
-            sx={{ minWidth: 100, color: "white", textTransform: "none" }}
-          >
-            Build
-          </Button>
+          <NavLink to="/" exact>
+            <Button
+              variant="text"
+              sx={{ minWidth: 100, color: "white", textTransform: "none" }}
+            >
+              Home
+            </Button>
+          </NavLink>
+          <NavLink to="/build" exact>
+            <Button
+              variant="text"
+              sx={{ minWidth: 100, color: "white", textTransform: "none" }}
+            >
+              Build
+            </Button>
+          </NavLink>
           <Button
             variant="text"
             sx={{ minWidth: 100, color: "white", textTransform: "none" }}

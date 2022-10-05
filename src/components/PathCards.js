@@ -1,18 +1,45 @@
+import {
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  Icon,
+  Typography,
+} from "@mui/material";
 import React from "react";
 
 const PathCards = ({ title, icon, description, tooltip }) => {
   return (
-    <div className="flex mx-auto my-5 w-1/2 md:w-96 px-4 py-3 bg-white rounded-md shadow-md dark:bg-gray-800 hover:cursor-pointer">
-      <div className="mx-auto justify-center items-center">
-        <h1 className="mt-2 text-lg font-semibold text-gray-800 dark:text-white">
-          {title}
-        </h1>
-        {icon}
-      </div>
-      <div className="p-5 hidden md:flex items-center ">
-        <p>{description}</p>
-      </div>
-    </div>
+    <Card sx={{ maxWidth: 450 }}>
+      <CardActionArea>
+        <CardContent>
+          <Box
+            sx={{
+              display: "flex",
+            }}
+          >
+            <div>
+              <Typography variant="h6" component="div">
+                {title}
+              </Typography>
+            </div>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+            }}
+            gap={2}
+          >
+            {icon}
+            <Typography fontWeight="light" variant="body2">
+              {description}
+            </Typography>
+          </Box>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 };
 
