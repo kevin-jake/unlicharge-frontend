@@ -57,7 +57,7 @@ const Header = () => {
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "rgb(17 24 39)" }}>
       <StyledToolbar>
-        <NavLink to="/" exact>
+        <NavLink to="/tables" exact>
           <Box
             component="img"
             alt="The house from the offer."
@@ -69,9 +69,7 @@ const Header = () => {
         {/* <Search>
           <InputBase placeholder="Search" />
         </Search> */}
-        <Box
-          sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
-        >
+        <Box sx={{ display: "inline-flex" }}>
           <Button
             variant="text"
             sx={{ minWidth: 100, color: "white", textTransform: "none" }}
@@ -84,20 +82,23 @@ const Header = () => {
           >
             Build
           </Button>
+          <Button
+            variant="text"
+            sx={{ minWidth: 100, color: "white", textTransform: "none" }}
+          >
+            Parts
+          </Button>
+          <Icons>
+            <Badge badgeContent={4} color="error">
+              <Notifications color="white" />
+            </Badge>
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+              onClick={handleClick}
+            />
+          </Icons>
         </Box>
-        <Icons>
-          <Badge badgeContent={4} color="error">
-            <Mail color="white" />
-          </Badge>
-          <Badge badgeContent={4} color="error">
-            <Notifications color="white" />
-          </Badge>
-          <Avatar
-            sx={{ width: 30, height: 30 }}
-            src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-            onClick={handleClick}
-          />
-        </Icons>
         <UserBox onClick={handleClick}>
           <Avatar
             sx={{ width: 30, height: 30 }}
