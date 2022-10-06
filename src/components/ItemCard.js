@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import SpecsTable from "./SpecsTable";
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item, openModal }) => {
   return (
     <>
       <Card sx={{ display: "flex", flexDirection: "column" }}>
@@ -60,6 +60,7 @@ const ItemCard = ({ item }) => {
             variant="contained"
             size="small"
             sx={{ color: "white", margin: 1, textTransform: "none" }}
+            onClick={openModal}
           >
             More Details
           </Button>
