@@ -20,27 +20,7 @@ const Home = () => {
         sx={{ padding: 2 }}
         justify="flex-start"
         alignItems="flex-start"
-      >
-        <Grid item xs={3}>
-          <ItemCard />
-        </Grid>
-
-        <Grid item xs={3}>
-          <ItemCard />
-        </Grid>
-
-        <Grid item xs={3}>
-          <ItemCard />
-        </Grid>
-
-        <Grid item xs={3}>
-          <ItemCard />
-        </Grid>
-
-        <Grid item xs={3}>
-          <ItemCard />
-        </Grid>
-      </Grid>
+      ></Grid>
     </>
   );
 };
