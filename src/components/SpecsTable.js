@@ -9,9 +9,9 @@ import {
   TableRow,
 } from "@mui/material";
 
-const SpecsTable = ({ specs }) => {
+const SpecsTable = ({ specs, modalDetails }) => {
   const properties = Object.getOwnPropertyNames(specs);
-  const doNotDisplay = [
+  const cardDisplay = [
     "name",
     "id",
     "__typename",
@@ -22,6 +22,12 @@ const SpecsTable = ({ specs }) => {
     "publish_status",
     "createdAt",
   ];
+  const modalDisplay = ["name", "id", "__typename", "createdAt"];
+
+  const format = (string) => {
+    var cleanString = string.replaceAll("_", " ");
+    return cleanString.charAt(0).toUpperCase() + cleanString.slice(1);
+  };
 
   return (
     <TableContainer>
@@ -35,13 +41,14 @@ const SpecsTable = ({ specs }) => {
         <TableBody>
           {properties.map(
             (prop) =>
-              !doNotDisplay.includes(prop) && (
+              ((modalDetails && !modalDisplay.includes(prop)) ||
+                !cardDisplay.includes(prop)) && (
                 <TableRow
                   key={prop}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {prop}
+                    {format(prop)}
                   </TableCell>
                   <TableCell align="right">{specs[prop]}</TableCell>
                 </TableRow>

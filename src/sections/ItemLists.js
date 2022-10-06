@@ -3,13 +3,17 @@ import ItemCard from "../components/ItemCard";
 import { FETCH_BATTERY } from "../util/graphql/Query";
 import { useQuery } from "@apollo/client";
 import { Grid } from "@mui/material";
-import Modal from "../components/Modal";
-import SpecsTable from "../components/SpecsTable";
+import DetailsModal from "../components/DetailsModal";
+import FormModal from "../components/FormModal";
 
 const ItemLists = () => {
   const { loading, data } = useQuery(FETCH_BATTERY);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState();
+  const [showFormModal, setShowFormModal] = useState({
+    open: false,
+    operation: "",
+  });
 
   var itemData = [];
   if (data) {
@@ -19,6 +23,10 @@ const ItemLists = () => {
   const openModal = (item) => {
     setShowModal(true);
     setModalData(item);
+  };
+
+  const openEditModal = (operation) => {
+    setShowFormModal({ open: true, operation });
   };
 
   console.log(itemData);
@@ -45,9 +53,21 @@ const ItemLists = () => {
           <div> No List found...</div>
         )}
       </Grid>
-      <Modal showModal={showModal} closeModal={() => setShowModal(false)}>
-        <SpecsTable specs={modalData} />
-      </Modal>
+      {modalData && (
+        <>
+          <DetailsModal
+            modalData={modalData}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            openEditModal={openEditModal}
+          />
+          <FormModal
+            showFormModal={showFormModal}
+            setShowFormModal={setShowFormModal}
+            formData={modalData}
+          />
+        </>
+      )}
     </>
   );
 };
