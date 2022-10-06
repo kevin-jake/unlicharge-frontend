@@ -1,20 +1,11 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import Modal from "./Modal";
-import { defaultDataIdFromObject } from "@apollo/client";
 
 const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
   const properties = Object.getOwnPropertyNames(formData);
   const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
+  const operation = showFormModal.operation;
 
   const format = (string) => {
     var cleanString = string.replaceAll("_", " ");
@@ -70,10 +61,40 @@ const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
         autoComplete="off"
       >
         <div>
-          {properties.map(
-            (prop) => !formDisplay.includes(prop) && inputField(prop, formData)
+          {operation === "Edit" &&
+            properties.map(
+              (prop) =>
+                !formDisplay.includes(prop) && inputField(prop, formData)
+            )}
+          {operation === "Delete" && (
+            <>
+              <TextField
+                fullWidth
+                id="delete-reason"
+                label="Reason"
+                placeholder="State your reason for removing here"
+                multiline
+              />
+            </>
           )}
         </div>
+      </Box>
+      <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
+        <Button
+          variant="contained"
+          size="small"
+          sx={{ color: "white", margin: 1, textTransform: "none" }}
+        >
+          {operation === "Delete" ? "Delete" : "Save"}
+        </Button>
+        <Button
+          variant="contained"
+          size="small"
+          sx={{ color: "white", margin: 1, textTransform: "none" }}
+          onClick={() => setShowFormModal({ ...showFormModal, open: false })}
+        >
+          Cancel
+        </Button>
       </Box>
     </Modal>
   );

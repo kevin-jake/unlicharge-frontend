@@ -1,10 +1,9 @@
 import React from "react";
-import { AiOutlineCloseCircle } from "react-icons/ai";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 
 const Modal = ({ title, children, showModal, closeModal }) => {
   return (
-    <Dialog open={showModal} onClose={closeModal} maxWidth="md">
+    <Dialog open={showModal} onClose={closeModal} maxWidth="lg">
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
     </Dialog>

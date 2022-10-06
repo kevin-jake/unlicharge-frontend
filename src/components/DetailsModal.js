@@ -56,6 +56,7 @@ const DetailsModal = ({
             variant="contained"
             size="small"
             sx={{ color: "white", margin: 1, textTransform: "none" }}
+            onClick={() => openEditModal("Delete")}
           >
             Delete
           </Button>
