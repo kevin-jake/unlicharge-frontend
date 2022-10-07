@@ -4,6 +4,7 @@ import Modal from "./Modal";
 
 const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
   const properties = Object.getOwnPropertyNames(formData);
+  console.log(properties);
   const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
   const operation = showFormModal.operation;
 
@@ -13,6 +14,7 @@ const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
   };
 
   const inputField = (prop, formData) => {
+    console.log(prop);
     switch (prop) {
       case "name": {
         return (
@@ -44,11 +46,13 @@ const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
     <Modal
       showModal={showFormModal.open}
       title={
-        showFormModal.operation +
-        " " +
-        formData.__typename +
-        " " +
-        formData.name
+        operation === "Create"
+          ? showFormModal.operation + " Battery"
+          : showFormModal.operation +
+            " " +
+            formData.__typename +
+            " " +
+            formData.name
       }
       closeModal={() => setShowFormModal({ ...showFormModal, open: false })}
     >
@@ -61,11 +65,6 @@ const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
         autoComplete="off"
       >
         <div>
-          {operation === "Edit" &&
-            properties.map(
-              (prop) =>
-                !formDisplay.includes(prop) && inputField(prop, formData)
-            )}
           {operation === "Delete" && (
             <>
               <TextField
@@ -77,6 +76,11 @@ const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
               />
             </>
           )}
+          {operation !== "Delete" &&
+            properties.map(
+              (prop) =>
+                !formDisplay.includes(prop) && inputField(prop, formData)
+            )}
         </div>
       </Box>
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">

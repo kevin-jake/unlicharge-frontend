@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import ItemCard from "../components/ItemCard";
 import { FETCH_BATTERY } from "../util/graphql/Query";
 import { useQuery } from "@apollo/client";
-import { Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import DetailsModal from "../components/DetailsModal";
 import FormModal from "../components/FormModal";
+import { Battery } from "../util/AddFormProperties";
 
 const ItemLists = () => {
   const { loading, data } = useQuery(FETCH_BATTERY);
@@ -25,8 +26,13 @@ const ItemLists = () => {
     setModalData(item);
   };
 
-  const openEditModal = (operation) => {
+  const openFormModal = (operation) => {
     setShowFormModal({ open: true, operation });
+  };
+
+  const openAddModal = () => {
+    setModalData(Battery);
+    setShowFormModal({ open: true, operation: "Create" });
   };
 
   console.log(itemData);
@@ -53,13 +59,29 @@ const ItemLists = () => {
           <div> No List found...</div>
         )}
       </Grid>
+      <Box
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="flex-end"
+        px={2}
+        pb={5}
+      >
+        <Button
+          variant="contained"
+          size="small"
+          sx={{ color: "white", margin: 1, textTransform: "none" }}
+          onClick={openAddModal}
+        >
+          Add
+        </Button>
+      </Box>
       {modalData && (
         <>
           <DetailsModal
             modalData={modalData}
             showModal={showModal}
             setShowModal={setShowModal}
-            openEditModal={openEditModal}
+            openEditModal={openFormModal}
           />
           <FormModal
             showFormModal={showFormModal}
