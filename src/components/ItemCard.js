@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Modal,
   Typography,
 } from "@mui/material";
 import SpecsTable from "./SpecsTable";
@@ -14,10 +13,6 @@ const ItemCard = ({ item, openModal }) => {
   return (
     <>
       <Card sx={{ display: "flex", flexDirection: "column" }}>
-        {/* <CardHeader
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      /> */}
         <Box sx={{ display: "flex" }}>
           <Box
             sx={{

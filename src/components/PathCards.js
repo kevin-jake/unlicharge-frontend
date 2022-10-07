@@ -1,15 +1,13 @@
 import {
   Box,
-  Button,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
-  Icon,
   Typography,
 } from "@mui/material";
 import React from "react";
-
+// TODO: Make this mobile responsive
+// TODO: Add navigation on the path cards
 const PathCards = ({ title, icon, description, tooltip }) => {
   return (
     <Card sx={{ maxWidth: 450 }}>

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
-import ItemCard from "../components/ItemCard";
 import CardsFilter from "../components/CardsFilter";
 
 const Home = () => {
