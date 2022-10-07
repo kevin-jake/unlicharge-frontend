@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Mail, Notifications, Pets } from "@mui/icons-material";
+import React, { useContext, useState } from "react";
+import { Notifications } from "@mui/icons-material";
 import {
   AppBar,
   Avatar,
@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import logo from "./unlicharge_logo.svg";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../context/auth-context";
+import SignInUpModal from "./SignInUpModal";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -46,6 +48,8 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 
 const Header = () => {
+  const { user } = useContext(AuthContext);
+  const [showModal, setShowModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -54,10 +58,19 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const openLogin = () => {
+    console.log("login cliked");
+    console.log(showModal);
+
+    setShowModal(true);
+  };
+
+  console.log(user);
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "rgb(17 24 39)" }}>
       <StyledToolbar>
-        <NavLink to="/tables" exact>
+        <NavLink to="/tables" exact="true">
           <Box
             component="img"
             alt="The house from the offer."
@@ -70,7 +83,7 @@ const Header = () => {
           <InputBase placeholder="Search" />
         </Search> */}
         <Box sx={{ display: "inline-flex" }}>
-          <NavLink to="/" exact>
+          <NavLink to="/" exact="true">
             <Button
               variant="text"
               sx={{ minWidth: 100, color: "white", textTransform: "none" }}
@@ -78,7 +91,7 @@ const Header = () => {
               Home
             </Button>
           </NavLink>
-          <NavLink to="/build" exact>
+          <NavLink to="/build" exact="true">
             <Button
               variant="text"
               sx={{ minWidth: 100, color: "white", textTransform: "none" }}
@@ -92,24 +105,34 @@ const Header = () => {
           >
             Parts
           </Button>
-          <Icons>
-            <Badge badgeContent={4} color="error">
-              <Notifications color="white" />
-            </Badge>
+          {!user && (
+            <Button variant="contained" onClick={openLogin} size="medium">
+              Login
+            </Button>
+          )}
+          {user && (
+            <Icons>
+              <Badge badgeContent={4} color="error">
+                <Notifications color="white" />
+              </Badge>
+              <Avatar
+                sx={{ width: 30, height: 30 }}
+                src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                onClick={handleClick}
+              />
+            </Icons>
+          )}
+        </Box>
+
+        {user && (
+          <UserBox onClick={handleClick}>
             <Avatar
               sx={{ width: 30, height: 30 }}
               src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-              onClick={handleClick}
             />
-          </Icons>
-        </Box>
-        <UserBox onClick={handleClick}>
-          <Avatar
-            sx={{ width: 30, height: 30 }}
-            src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-          />
-          <Typography variant="span"> test</Typography>
-        </UserBox>
+            <Typography variant="span"> test</Typography>
+          </UserBox>
+        )}
       </StyledToolbar>
       <Menu
         id="basic-menu"
@@ -124,6 +147,7 @@ const Header = () => {
         <MenuItem>My account</MenuItem>
         <MenuItem>Logout</MenuItem>
       </Menu>
+      <SignInUpModal showModal={showModal} setShowModal={setShowModal} />
     </AppBar>
   );
 };
