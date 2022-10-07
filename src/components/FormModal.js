@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  InputAdornment,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import Modal from "./Modal";
 
 const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
@@ -18,7 +25,110 @@ const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
     switch (prop) {
       case "name": {
         return (
-          <div>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              id={"form" + prop}
+              label={format(prop)}
+              defaultValue={formData[prop]}
+              helperText={formData[prop]}
+            />
+          </Grid>
+        );
+      }
+      case "type": {
+        return (
+          <Grid item xs={3}>
+            <TextField
+              id="outlined-select-currency"
+              required
+              select
+              fullWidth
+              label={format(prop)}
+              defaultValue={formData[prop]}
+            >
+              <MenuItem value="LiFePo4">LiFePo4</MenuItem>
+              <MenuItem value="Lead Acid">Lead Acid</MenuItem>
+            </TextField>
+          </Grid>
+        );
+      }
+      case "model": {
+        return (
+          <Grid item xs={3}>
+            <TextField
+              required
+              fullWidth
+              id={"form" + prop}
+              label={format(prop)}
+              defaultValue={formData[prop]}
+              helperText={formData[prop]}
+            />
+          </Grid>
+        );
+      }
+      default: {
+        if (prop.includes("voltage")) {
+          return (
+            <Grid item xs={3}>
+              <TextField
+                fullWidth
+                required={prop === "nominal_voltage"}
+                id={"form-volt" + prop}
+                label={format(prop)}
+                defaultValue={formData[prop]}
+                helperText={formData[prop]}
+                type="number"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">V</InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          );
+        } else if (prop.includes("capacity")) {
+          return (
+            <Grid item xs={3}>
+              <TextField
+                fullWidth
+                required
+                id={"form" + prop}
+                label={format(prop)}
+                defaultValue={formData[prop]}
+                helperText={formData[prop]}
+                type="number"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">Ah</InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          );
+        } else if (prop.includes("price")) {
+          return (
+            <Grid item xs={3}>
+              <TextField
+                fullWidth
+                required
+                id={"form" + prop}
+                label={format(prop)}
+                defaultValue={formData[prop]}
+                helperText={formData[prop]}
+                type="number"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">Php</InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          );
+        }
+        return (
+          <Grid item xs={3}>
             <TextField
               fullWidth
               id={"form" + prop}
@@ -26,17 +136,7 @@ const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
               defaultValue={formData[prop]}
               helperText={formData[prop]}
             />
-          </div>
-        );
-      }
-      default: {
-        return (
-          <TextField
-            id={"form" + prop}
-            label={format(prop)}
-            defaultValue={formData[prop]}
-            helperText={formData[prop]}
-          />
+          </Grid>
         );
       }
     }
@@ -56,33 +156,23 @@ const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
       }
       closeModal={() => setShowFormModal({ ...showFormModal, open: false })}
     >
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1 },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <div>
-          {operation === "Delete" && (
-            <>
-              <TextField
-                fullWidth
-                id="delete-reason"
-                label="Reason"
-                placeholder="State your reason for removing here"
-                multiline
-              />
-            </>
+      <Grid container sx={{ padding: 2 }} spacing={2}>
+        {operation === "Delete" && (
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="delete-reason"
+              label="Reason"
+              placeholder="State your reason for removing here"
+              multiline
+            />
+          </Grid>
+        )}
+        {operation !== "Delete" &&
+          properties.map(
+            (prop) => !formDisplay.includes(prop) && inputField(prop, formData)
           )}
-          {operation !== "Delete" &&
-            properties.map(
-              (prop) =>
-                !formDisplay.includes(prop) && inputField(prop, formData)
-            )}
-        </div>
-      </Box>
+      </Grid>
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
         <Button
           variant="contained"
