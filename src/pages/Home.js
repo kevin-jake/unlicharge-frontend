@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import CardsFilter from "../components/CardsFilter";
+import Upload from "../components/UploadZone";
 
 const Home = () => {
   // TODO: Make modal dynamic
@@ -11,6 +12,7 @@ const Home = () => {
           Builds
         </Typography>
       </Box>
+      <Upload />
       <CardsFilter />
       <Grid
         container

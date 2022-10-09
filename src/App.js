@@ -12,8 +12,9 @@ import { Box } from "@mui/material";
 import Header from "./components/Header";
 import Build from "./pages/Build";
 import { AuthProvider } from "./context/auth-context";
+import { createUploadLink } from "apollo-upload-client";
 
-const httpLink = createHttpLink({
+const httpLink = createUploadLink({
   uri: "http://localhost:5000",
 });
 
@@ -22,6 +23,9 @@ const authLink = setContext(() => {
   return {
     headers: {
       Authorization: token ? `Bearer ${token}` : "",
+      // TODO: Make this headers more secure
+      "apollo-require-preflight": "test",
+      "x-apollo-operation-name": "test",
     },
   };
 });
