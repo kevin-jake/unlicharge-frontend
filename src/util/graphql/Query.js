@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const FETCH_BATTERY = gql`
+const FETCH_BATTERY = gql`
   query GetBatteries($userId: ID) {
     getBatteries(userId: $userId) {
       id
@@ -17,3 +17,5 @@ export const FETCH_BATTERY = gql`
     }
   }
 `;
+
+export { FETCH_BATTERY };

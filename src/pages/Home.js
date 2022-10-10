@@ -12,7 +12,7 @@ const Home = () => {
           Builds
         </Typography>
       </Box>
-      <Upload />
+      {/* <Upload /> */}
       <CardsFilter />
       <Grid
         container
