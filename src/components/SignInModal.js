@@ -118,10 +118,10 @@ const SignInModal = ({ signInModal, showSignInModal, showRegisterModal }) => {
                 label="Password"
               />
             </FormControl>
-            <Typography variant="caption" justifyContent="center" color="red">
+            <Typography variant="caption" component="div" color="red">
               {errors.password ? errors.password : ""}
             </Typography>
-            <Typography variant="caption" justifyContent="center" color="red">
+            <Typography variant="caption" component="div" color="red">
               {errors.general ? errors.general : ""}
             </Typography>
           </Grid>

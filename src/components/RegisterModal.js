@@ -58,8 +58,10 @@ const RegisterModal = ({
       Navigate("/");
     },
     onError(err) {
-      console.log(err.graphQLErrors[0].extensions.errors);
-      setErrors(err.graphQLErrors[0].extensions.errors);
+      if (err.graphQLErrors[0]) {
+        console.log(err.graphQLErrors[0].extensions.errors);
+        setErrors(err.graphQLErrors[0].extensions.errors);
+      }
     },
     variables: values,
   });

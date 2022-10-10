@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Notifications } from "@mui/icons-material";
 import {
   AppBar,
@@ -49,17 +49,21 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const [signInModal, showSignInModal] = useState(false);
   const [registerModal, showRegisterModal] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (event) => {
     setAnchorEl(null);
+    if (event.target.innerText === "Logout") {
+      logout(user);
+    }
   };
 
   const openLogin = () => {
@@ -153,7 +157,7 @@ const Header = () => {
       >
         <MenuItem>Profile</MenuItem>
         <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
       <SignInModal
         signInModal={signInModal}
