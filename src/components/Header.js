@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Notifications } from "@mui/icons-material";
 import {
   AppBar,
@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import logo from "./unlicharge_logo.svg";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import SignInModal from "./SignInModal";
 import RegisterModal from "./RegisterModal";
@@ -49,10 +49,10 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 
 const Header = () => {
+  const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
   const [signInModal, showSignInModal] = useState(false);
   const [registerModal, showRegisterModal] = useState(false);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -63,6 +63,7 @@ const Header = () => {
     setAnchorEl(null);
     if (event.target.innerText === "Logout") {
       logout(user);
+      navigate("/");
     }
   };
 

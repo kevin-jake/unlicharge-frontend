@@ -23,7 +23,7 @@ import {
   DialogActions,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import { REGISTER_USER } from "../util/graphql/Mutation";
 import { useForm } from "../util/useForm";
@@ -33,6 +33,7 @@ const RegisterModal = ({
   showRegisterModal,
   showSignInModal,
 }) => {
+  const navigate = useNavigate();
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -55,7 +56,7 @@ const RegisterModal = ({
     update(_, { data: { register: userData } }) {
       context.login(userData);
       showRegisterModal(false);
-      Navigate("/");
+      navigate("/");
     },
     onError(err) {
       if (err.graphQLErrors[0]) {
@@ -126,6 +127,7 @@ const RegisterModal = ({
               helperText={errors.email || ""}
             />
           </Grid>
+          {/* TODO: Add mobile number validator */}
           <Grid item xs={12}>
             <TextField
               required

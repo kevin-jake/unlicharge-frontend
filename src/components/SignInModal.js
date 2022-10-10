@@ -23,12 +23,13 @@ import {
   DialogActions,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
-import { LOGIN_USER, REGISTER_USER } from "../util/graphql/Mutation";
+import { LOGIN_USER } from "../util/graphql/Mutation";
 import { useForm } from "../util/useForm";
 
 const SignInModal = ({ signInModal, showSignInModal, showRegisterModal }) => {
+  const navigate = useNavigate();
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -49,7 +50,7 @@ const SignInModal = ({ signInModal, showSignInModal, showRegisterModal }) => {
     update(_, { data: { login: userData } }) {
       context.login(userData);
       showSignInModal(false);
-      Navigate("/");
+      navigate("/");
     },
     onError(err) {
       if (err.graphQLErrors[0]) {
