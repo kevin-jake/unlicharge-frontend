@@ -15,7 +15,8 @@ import {
 import logo from "./unlicharge_logo.svg";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
-import SignInUpModal from "./SignInUpModal";
+import SignInModal from "./SignInModal";
+import RegisterModal from "./RegisterModal";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -49,7 +50,9 @@ const UserBox = styled(Box)(({ theme }) => ({
 
 const Header = () => {
   const { user } = useContext(AuthContext);
-  const [showModal, setShowModal] = useState(false);
+  const [signInModal, showSignInModal] = useState(false);
+  const [registerModal, showRegisterModal] = useState(false);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -60,10 +63,13 @@ const Header = () => {
   };
 
   const openLogin = () => {
-    console.log("login cliked");
-    console.log(showModal);
+    showRegisterModal(false);
+    showSignInModal(true);
+  };
 
-    setShowModal(true);
+  const openRegister = () => {
+    showSignInModal(false);
+    showRegisterModal(true);
   };
 
   console.log(user);
@@ -149,7 +155,16 @@ const Header = () => {
         <MenuItem>My account</MenuItem>
         <MenuItem>Logout</MenuItem>
       </Menu>
-      <SignInUpModal showModal={showModal} setShowModal={setShowModal} />
+      <SignInModal
+        signInModal={signInModal}
+        showSignInModal={showSignInModal}
+        showRegisterModal={openRegister}
+      />
+      <RegisterModal
+        registerModal={registerModal}
+        showRegisterModal={showRegisterModal}
+        showSignInModal={openLogin}
+      />
     </AppBar>
   );
 };
