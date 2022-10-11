@@ -19,10 +19,10 @@ const httpLink = createUploadLink({
 });
 
 const authLink = setContext(() => {
-  const token = localStorage.getItem("jwtToken");
+  const userData = JSON.parse(localStorage.getItem("userData"));
   return {
     headers: {
-      Authorization: token ? `Bearer ${token}` : "",
+      Authorization: userData ? `Bearer ${userData.token}` : "",
       // TODO: Make this headers more secure
       "apollo-require-preflight": "test",
       "x-apollo-operation-name": "test",
@@ -32,6 +32,7 @@ const authLink = setContext(() => {
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
+  connectToDevTools: true,
   cache: new InMemoryCache({
     addTypename: false,
   }),

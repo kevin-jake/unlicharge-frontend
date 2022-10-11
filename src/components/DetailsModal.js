@@ -10,7 +10,7 @@ const DetailsModal = ({
   modalData,
   openEditModal,
 }) => {
-  const { user } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <Modal
       showModal={showModal}
@@ -41,7 +41,7 @@ const DetailsModal = ({
         <SpecsTable specs={modalData} modalDetails={true} />
         <Box
           sx={{
-            display: user ? "flex" : "none",
+            display: isLoggedIn ? "flex" : "none",
             justifyContent: "center",
             p: 1,
           }}

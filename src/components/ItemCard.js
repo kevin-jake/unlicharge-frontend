@@ -9,7 +9,8 @@ import {
 } from "@mui/material";
 import SpecsTable from "./SpecsTable";
 
-const ItemCard = ({ item, openModal }) => {
+const ItemCard = ({ item, openModal, selection }) => {
+  console.log(selection);
   return (
     <>
       <Card
@@ -17,7 +18,12 @@ const ItemCard = ({ item, openModal }) => {
           display: "flex",
           flexDirection: "column",
           width: 450,
-          height: 270,
+          height:
+            selection === "BMS"
+              ? 330
+              : selection === "Active Balancer"
+              ? 350
+              : 270,
         }}
       >
         <Box sx={{ display: "flex" }}>

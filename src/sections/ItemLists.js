@@ -76,7 +76,11 @@ const ItemLists = ({ selection }) => {
           ) : itemData && itemData.length > 0 ? (
             itemData.map((item) => (
               <Grid key={item.id} item xs={3} lg={"auto"}>
-                <ItemCard item={item} openModal={() => openModal(item)} />
+                <ItemCard
+                  selection={selection}
+                  item={item}
+                  openModal={() => openModal(item)}
+                />
               </Grid>
             ))
           ) : (

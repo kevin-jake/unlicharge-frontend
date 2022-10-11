@@ -10,86 +10,21 @@ import {
 } from "@mui/material";
 import Modal from "./Modal";
 import { AuthContext } from "../context/auth-context";
-import { useForm } from "../hooks/useForm";
-import { CREATE_BATT } from "../util/graphql/Mutation";
-import { FETCH_BATTERY } from "../util/graphql/Query";
-import { useMutation } from "@apollo/client";
+import { useOperationForm } from "../hooks/useOperationForm";
 
 const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   const { isLoggedIn } = useContext(AuthContext);
   const properties = Object.getOwnPropertyNames(formData);
   const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
   const operation = showFormModal.operation;
-  const [values, setValues] = useState({
-    name: "",
-    type: "",
-    model: "",
-    nominal_voltage: "",
-    capacity: "",
-    price_per_pc: "",
-    min_voltage: "",
-    max_voltage: "",
-    supplier: "",
-    image_url: "",
-  });
+  const { values, onChange, onSubmit } = useOperationForm(title);
 
-  const onChange = (event) => {
-    var prop;
-    event.target.id ? (prop = event.target.id) : (prop = event.target.name);
-    setValues({ ...values, [prop]: event.target.value });
+  const handleSave = (event, operation) => {
+    onSubmit(event, operation);
+    setShowFormModal(false);
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    createPostCallback();
-  };
-
-  useEffect(() => {
-    setValues({
-      name: "",
-      type: "",
-      model: "",
-      nominal_voltage: "",
-      capacity: "",
-      price_per_pc: "",
-      min_voltage: "",
-      max_voltage: "",
-      supplier: "",
-      image_url: "",
-    });
-  }, [showFormModal.open]);
-
-  const [createBatt, { error }] = useMutation(CREATE_BATT, {
-    variables: values,
-    update(proxy, result) {
-      const data = proxy.readQuery({
-        query: FETCH_BATTERY,
-      });
-      proxy.writeQuery({
-        query: FETCH_BATTERY,
-        data: {
-          getBatteries: [result.data.createBatt, ...data.getBatteries],
-        },
-      });
-      setValues({
-        name: "",
-        type: "",
-        model: "",
-        nominal_voltage: "",
-        capacity: "",
-        price_per_pc: "",
-        min_voltage: "",
-        max_voltage: "",
-        supplier: "",
-        image_url: "",
-      });
-    },
-  });
-
-  function createPostCallback() {
-    createBatt();
-  }
-
+  console.log(values);
   const format = (string) => {
     var cleanString = string.replaceAll("_", " ");
     return cleanString.charAt(0).toUpperCase() + cleanString.slice(1);
@@ -301,7 +236,7 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
             variant="contained"
             size="small"
             sx={{ color: "white", margin: 1, textTransform: "none" }}
-            onClick={onSubmit}
+            onClick={(e) => handleSave(e, operation)}
           >
             {operation === "Delete" ? "Delete" : "Save"}
           </Button>
