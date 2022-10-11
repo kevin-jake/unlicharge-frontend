@@ -12,7 +12,14 @@ import SpecsTable from "./SpecsTable";
 const ItemCard = ({ item, openModal }) => {
   return (
     <>
-      <Card sx={{ display: "flex", flexDirection: "column" }}>
+      <Card
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: 450,
+          height: 270,
+        }}
+      >
         <Box sx={{ display: "flex" }}>
           <Box
             sx={{
@@ -48,7 +55,6 @@ const ItemCard = ({ item, openModal }) => {
           sx={{
             display: "flex",
             justifyContent: "center",
-            p: 1,
           }}
         >
           <Button

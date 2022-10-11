@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const useForm = (callback, initialState = {}) => {
   const [values, setValues] = useState(initialState);
@@ -10,10 +10,9 @@ export const useForm = (callback, initialState = {}) => {
   };
 
   const onSubmit = (event) => {
-    event.preventDefault();
     callback();
   };
-  console.log(values);
+
   return {
     onChange,
     onSubmit,

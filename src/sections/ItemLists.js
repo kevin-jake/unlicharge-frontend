@@ -11,18 +11,26 @@ import { AuthContext } from "../context/auth-context";
 function querySelect(select) {
   switch (select) {
     case "Battery":
-      return { gql_query: FETCH_BATTERY, form_props: Battery };
+      return {
+        gql_query: FETCH_BATTERY,
+        form_props: Battery,
+        data: "getBatteries",
+      };
     case "BMS":
-      return { gql_query: FETCH_BMS, form_props: BMS };
+      return { gql_query: FETCH_BMS, form_props: BMS, data: "getBMSes" };
     case "Active Balancer":
-      return { gql_query: FETCH_AB, form_props: AB };
+      return {
+        gql_query: FETCH_AB,
+        form_props: AB,
+        data: "getActiveBalancers",
+      };
   }
 }
 
 const ItemLists = ({ selection }) => {
   const { user } = useContext(AuthContext);
   const { loading, data } = useQuery(querySelect(selection).gql_query, {
-    variables: { userId: user.id },
+    variables: { userId: user ? user.id : null },
   });
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState();
@@ -33,7 +41,7 @@ const ItemLists = ({ selection }) => {
 
   var itemData = [];
   if (data) {
-    itemData = data.getBatteries;
+    itemData = data[querySelect(selection).data];
   }
 
   const openModal = (item) => {
@@ -53,42 +61,45 @@ const ItemLists = ({ selection }) => {
   console.log(itemData);
   return (
     <>
-      <Grid
-        container
-        spacing={2}
-        direction={{ xs: "column", sm: "row" }}
-        sx={{ padding: 2 }}
-        justify="flex-start"
-        alignItems="flex-start"
-      >
-        {loading ? (
-          <h1>Loading posts...</h1>
-        ) : itemData && itemData.length > 0 ? (
-          itemData.map((item) => (
-            <Grid key={item.id} item xs={3} lg={"auto"}>
-              <ItemCard item={item} openModal={() => openModal(item)} />
-            </Grid>
-          ))
-        ) : (
-          // TODO: Make this more catchy
-          <div> No List found...</div>
-        )}
-      </Grid>
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="flex-end"
-        px={2}
-        pb={5}
-      >
-        <Button
-          variant="contained"
-          size="small"
-          sx={{ color: "white", margin: 1, textTransform: "none" }}
-          onClick={openAddModal}
+      <Box sx={{ flexDirection: "row" }}>
+        <Grid
+          container
+          spacing={2}
+          direction={{ xs: "column", sm: "row" }}
+          sx={{ padding: 2 }}
+          alignContent="start"
+          justifyContent="center"
+          alignItems="center"
         >
-          Add
-        </Button>
+          {loading ? (
+            <h1>Loading posts...</h1>
+          ) : itemData && itemData.length > 0 ? (
+            itemData.map((item) => (
+              <Grid key={item.id} item xs={3} lg={"auto"}>
+                <ItemCard item={item} openModal={() => openModal(item)} />
+              </Grid>
+            ))
+          ) : (
+            // TODO: Make this more catchy
+            <div> No List found...</div>
+          )}
+        </Grid>
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          px={2}
+          pb={5}
+        >
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ color: "white", margin: 1, textTransform: "none" }}
+            onClick={openAddModal}
+          >
+            Add
+          </Button>
+        </Box>
       </Box>
       {modalData && (
         <>

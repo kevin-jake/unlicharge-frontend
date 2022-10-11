@@ -91,6 +91,11 @@ const SignInModal = ({ signInModal, showSignInModal, showRegisterModal }) => {
               label="Username"
               value={values.username}
               onChange={onChange}
+              onKeyPress={(ev) => {
+                if (ev.key === "Enter") {
+                  onSubmit();
+                }
+              }}
               error={errors.username || errors.general ? true : false}
               helperText={errors.username || ""}
             />
@@ -103,6 +108,11 @@ const SignInModal = ({ signInModal, showSignInModal, showRegisterModal }) => {
                 type={showPassword ? "text" : "password"}
                 value={values.password}
                 onChange={onChange}
+                onKeyPress={(ev) => {
+                  if (ev.key === "Enter") {
+                    onSubmit();
+                  }
+                }}
                 error={errors.password || errors.general ? true : false}
                 endAdornment={
                   <InputAdornment position="end">

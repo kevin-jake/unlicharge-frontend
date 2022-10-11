@@ -19,6 +19,7 @@ const SpecsTable = ({ specs, modalDetails }) => {
     "supplier",
     "publish_status",
     "createdAt",
+    "image_url",
   ];
   const modalDisplay = ["name", "id", "createdAt"];
 
