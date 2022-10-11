@@ -4,7 +4,6 @@ import CardsFilter from "../components/CardsFilter";
 import Upload from "../components/UploadZone";
 
 const Home = () => {
-  // TODO: Make modal dynamic
   return (
     <>
       <Box p={2}>

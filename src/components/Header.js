@@ -79,7 +79,6 @@ const Header = () => {
 
   console.log(isLoggedIn);
   // TODO: Make this mobile responsive
-  // TODO: Add user authorization
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "rgb(17 24 39)" }}>
       <StyledToolbar>

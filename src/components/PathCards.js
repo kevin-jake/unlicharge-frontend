@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import React from "react";
 // TODO: Make this mobile responsive
-// TODO: Add navigation on the path cards
+// TODO: Add tooltip to the cards or helper
 const PathCards = ({
   title,
   icon,
