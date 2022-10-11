@@ -8,9 +8,22 @@ import {
 import React from "react";
 // TODO: Make this mobile responsive
 // TODO: Add navigation on the path cards
-const PathCards = ({ title, icon, description, tooltip }) => {
+const PathCards = ({
+  title,
+  icon,
+  description,
+  tooltip,
+  onClick,
+  selection,
+}) => {
+  const activeStyle = (title) => {
+    if (selection === title) {
+      return { maxWidth: 450, backgroundColor: "lightblue" };
+    } else return { maxWidth: 450 };
+  };
+
   return (
-    <Card sx={{ maxWidth: 450 }}>
+    <Card onClick={onClick} sx={activeStyle(title)}>
       <CardActionArea>
         <CardContent>
           <Box

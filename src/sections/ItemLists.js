@@ -7,8 +7,20 @@ import DetailsModal from "../components/DetailsModal";
 import FormModal from "../components/FormModal";
 import { Battery } from "../util/AddFormProperties";
 
-const ItemLists = () => {
-  const { loading, data } = useQuery(FETCH_BATTERY);
+function querySelect(select) {
+  switch (select) {
+    case "Battery":
+      return FETCH_BATTERY;
+    case "BMS":
+      return FETCH_BATTERY;
+    case "Active Balancer":
+      return FETCH_BATTERY;
+  }
+}
+
+const ItemLists = ({ selection }) => {
+  console.log(selection);
+  const { loading, data } = useQuery(querySelect(selection));
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState();
   const [showFormModal, setShowFormModal] = useState({

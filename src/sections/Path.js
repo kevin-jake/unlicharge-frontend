@@ -29,11 +29,16 @@ const path = [
   },
 ];
 
-const Path = () => {
+const Path = ({ selection, setSelection }) => {
   return (
     <Box p={2} sx={{ display: "flex", justifyContent: "space-between" }}>
       {path.map((item) => (
-        <PathCards key={item.title} {...item} />
+        <PathCards
+          key={item.title}
+          {...item}
+          selection={selection}
+          onClick={() => setSelection(item.title)}
+        />
       ))}
     </Box>
   );
