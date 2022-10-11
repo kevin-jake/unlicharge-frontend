@@ -7,15 +7,13 @@ export const useAuth = () => {
   const [tokenExpirationDate, setTokenExpirationDate] = useState();
   const [userId, setUserId] = useState(false);
   const [email, setEmail] = useState();
-  const [name, setName] = useState();
-  const [role, setRole] = useState();
+  const [username, setName] = useState();
 
-  const login = useCallback((uid, token, email, name, role, expirationDate) => {
+  const login = useCallback((uid, token, email, username, expirationDate) => {
     setToken(token);
     setUserId(uid);
     setEmail(email);
-    setName(name);
-    setRole(role);
+    setName(username);
     const tokenExpirationDate =
       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
     setTokenExpirationDate(tokenExpirationDate);
@@ -25,8 +23,7 @@ export const useAuth = () => {
         userId: uid,
         token: token,
         email: email,
-        name: name,
-        role: role,
+        username: username,
         expiration: tokenExpirationDate.toISOString(),
       })
     );
@@ -39,7 +36,6 @@ export const useAuth = () => {
     setUserId(null);
     setEmail(null);
     setName(null);
-    setRole(null);
     localStorage.removeItem("userData");
     // eslint-disable-next-line
   }, []);
@@ -66,13 +62,12 @@ export const useAuth = () => {
         storedData.userId,
         storedData.token,
         storedData.email,
-        storedData.name,
-        storedData.role,
+        storedData.username,
         new Date(storedData.expiration)
       );
     }
     // eslint-disable-next-line
   }, [login]);
 
-  return { token, login, logout, userId, name, email, role };
+  return { token, login, logout, userId, username, email };
 };

@@ -50,7 +50,7 @@ const UserBox = styled(Box)(({ theme }) => ({
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
   const [signInModal, showSignInModal] = useState(false);
   const [registerModal, showRegisterModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -62,7 +62,7 @@ const Header = () => {
   const handleClose = (event) => {
     setAnchorEl(null);
     if (event.target.innerText === "Logout") {
-      logout(user);
+      logout();
       navigate("/");
     }
   };
@@ -77,7 +77,7 @@ const Header = () => {
     showRegisterModal(true);
   };
 
-  console.log(user);
+  console.log(isLoggedIn);
   // TODO: Make this mobile responsive
   // TODO: Add user authorization
   return (
@@ -118,12 +118,12 @@ const Header = () => {
           >
             Parts
           </Button>
-          {!user && (
+          {!isLoggedIn && (
             <Button variant="contained" onClick={openLogin} size="medium">
               Login
             </Button>
           )}
-          {user && (
+          {isLoggedIn && (
             <Icons>
               <Badge badgeContent={4} color="error">
                 <Notifications color="white" />
@@ -137,7 +137,7 @@ const Header = () => {
           )}
         </Box>
 
-        {user && (
+        {isLoggedIn && (
           <UserBox onClick={handleClick}>
             <Avatar
               sx={{ width: 30, height: 30 }}

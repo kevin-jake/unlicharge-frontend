@@ -10,13 +10,13 @@ import {
 } from "@mui/material";
 import Modal from "./Modal";
 import { AuthContext } from "../context/auth-context";
-import { useForm } from "../util/useForm";
+import { useForm } from "../hooks/useForm";
 import { CREATE_BATT } from "../util/graphql/Mutation";
 import { FETCH_BATTERY } from "../util/graphql/Query";
 import { useMutation } from "@apollo/client";
 
 const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
-  const { user } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const properties = Object.getOwnPropertyNames(formData);
   const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
   const operation = showFormModal.operation;
@@ -296,7 +296,7 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
           )}
       </Grid>
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-        {user ? (
+        {isLoggedIn ? (
           <Button
             variant="contained"
             size="small"

@@ -26,7 +26,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import { LOGIN_USER } from "../util/graphql/Mutation";
-import { useForm } from "../util/useForm";
+import { useForm } from "../hooks/useForm";
 
 const SignInModal = ({ signInModal, showSignInModal, showRegisterModal }) => {
   const navigate = useNavigate();
@@ -47,8 +47,16 @@ const SignInModal = ({ signInModal, showSignInModal, showRegisterModal }) => {
   }, [values]);
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-    update(_, { data: { login: userData } }) {
-      context.login(userData);
+    update(
+      _,
+      {
+        data: {
+          login: { id, token, email, username },
+        },
+      }
+    ) {
+      // console.log(id, token, email,username );
+      context.login(id, token, email, username);
       showSignInModal(false);
       navigate("/");
     },

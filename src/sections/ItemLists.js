@@ -28,9 +28,9 @@ function querySelect(select) {
 }
 
 const ItemLists = ({ selection }) => {
-  const { user } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const { loading, data } = useQuery(querySelect(selection).gql_query, {
-    variables: { userId: user ? user.id : null },
+    variables: { userId },
   });
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState();
