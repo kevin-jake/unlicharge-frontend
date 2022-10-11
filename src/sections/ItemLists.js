@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ItemCard from "../components/ItemCard";
 import { FETCH_AB, FETCH_BATTERY, FETCH_BMS } from "../util/graphql/Query";
 import { useQuery } from "@apollo/client";
@@ -6,6 +6,7 @@ import { Box, Button, Grid } from "@mui/material";
 import DetailsModal from "../components/DetailsModal";
 import FormModal from "../components/FormModal";
 import { AB, Battery, BMS } from "../util/AddFormProperties";
+import { AuthContext } from "../context/auth-context";
 
 function querySelect(select) {
   switch (select) {
@@ -19,8 +20,10 @@ function querySelect(select) {
 }
 
 const ItemLists = ({ selection }) => {
-  console.log(selection);
-  const { loading, data } = useQuery(querySelect(selection).gql_query);
+  const { user } = useContext(AuthContext);
+  const { loading, data } = useQuery(querySelect(selection).gql_query, {
+    variables: { userId: user.id },
+  });
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState();
   const [showFormModal, setShowFormModal] = useState({

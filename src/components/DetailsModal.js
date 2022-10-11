@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Button } from "@mui/material";
 import Modal from "../components/Modal";
 import SpecsTable from "../components/SpecsTable";
+import { AuthContext } from "../context/auth-context";
 
 const DetailsModal = ({
   setShowModal,
@@ -9,6 +10,7 @@ const DetailsModal = ({
   modalData,
   openEditModal,
 }) => {
+  const { user } = useContext(AuthContext);
   return (
     <Modal
       showModal={showModal}
@@ -39,7 +41,7 @@ const DetailsModal = ({
         <SpecsTable specs={modalData} modalDetails={true} />
         <Box
           sx={{
-            display: "flex",
+            display: user ? "flex" : "none",
             justifyContent: "center",
             p: 1,
           }}

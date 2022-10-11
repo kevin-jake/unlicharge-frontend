@@ -13,7 +13,6 @@ const SpecsTable = ({ specs, modalDetails }) => {
   const cardDisplay = [
     "name",
     "id",
-    "__typename",
     "price_per_pc",
     "min_voltage",
     "max_voltage",
@@ -21,7 +20,7 @@ const SpecsTable = ({ specs, modalDetails }) => {
     "publish_status",
     "createdAt",
   ];
-  const modalDisplay = ["name", "id", "__typename", "createdAt"];
+  const modalDisplay = ["name", "id", "createdAt"];
 
   const format = (string) => {
     var cleanString = string.replaceAll("_", " ");

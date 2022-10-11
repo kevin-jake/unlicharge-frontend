@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -6,14 +6,89 @@ import {
   InputAdornment,
   MenuItem,
   TextField,
+  Typography,
 } from "@mui/material";
 import Modal from "./Modal";
+import { AuthContext } from "../context/auth-context";
+import { useForm } from "../util/useForm";
+import { CREATE_BATT } from "../util/graphql/Mutation";
+import { FETCH_BATTERY } from "../util/graphql/Query";
+import { useMutation } from "@apollo/client";
 
 const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
+  const { user } = useContext(AuthContext);
   const properties = Object.getOwnPropertyNames(formData);
-  console.log(properties);
   const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
   const operation = showFormModal.operation;
+  const [values, setValues] = useState({
+    name: "",
+    type: "",
+    model: "",
+    nominal_voltage: "",
+    capacity: "",
+    price_per_pc: "",
+    min_voltage: "",
+    max_voltage: "",
+    supplier: "",
+    image_url: "",
+  });
+
+  const onChange = (event) => {
+    var prop;
+    event.target.id ? (prop = event.target.id) : (prop = event.target.name);
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    createPostCallback();
+  };
+
+  useEffect(() => {
+    setValues({
+      name: "",
+      type: "",
+      model: "",
+      nominal_voltage: "",
+      capacity: "",
+      price_per_pc: "",
+      min_voltage: "",
+      max_voltage: "",
+      supplier: "",
+      image_url: "",
+    });
+  }, [showFormModal.open]);
+
+  const [createBatt, { error }] = useMutation(CREATE_BATT, {
+    variables: values,
+    update(proxy, result) {
+      const data = proxy.readQuery({
+        query: FETCH_BATTERY,
+      });
+      proxy.writeQuery({
+        query: FETCH_BATTERY,
+        data: {
+          getBatteries: [result.data.createBatt, ...data.getBatteries],
+        },
+      });
+      setValues({
+        name: "",
+        type: "",
+        model: "",
+        nominal_voltage: "",
+        capacity: "",
+        price_per_pc: "",
+        min_voltage: "",
+        max_voltage: "",
+        supplier: "",
+        image_url: "",
+      });
+    },
+  });
+
+  function createPostCallback() {
+    createBatt();
+  }
 
   const format = (string) => {
     var cleanString = string.replaceAll("_", " ");
@@ -21,7 +96,6 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   };
 
   const inputField = (prop, formData) => {
-    console.log(prop);
     switch (prop) {
       case "name": {
         return (
@@ -29,10 +103,13 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
             <TextField
               required
               fullWidth
-              id={"form" + prop}
+              id={prop}
               label={format(prop)}
-              defaultValue={formData[prop]}
               helperText={formData[prop]}
+              value={
+                formData[prop] && !values[prop] ? formData[prop] : values[prop]
+              }
+              onChange={onChange}
             />
           </Grid>
         );
@@ -41,12 +118,15 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
         return (
           <Grid item xs={3}>
             <TextField
-              id="outlined-select-currency"
+              name="type"
               required
               select
               fullWidth
               label={format(prop)}
-              defaultValue={formData[prop]}
+              value={
+                formData[prop] && !values[prop] ? formData[prop] : values[prop]
+              }
+              onChange={onChange}
             >
               <MenuItem value="LiFePo4">LiFePo4</MenuItem>
               <MenuItem value="Lead Acid">Lead Acid</MenuItem>
@@ -60,10 +140,13 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
             <TextField
               required
               fullWidth
-              id={"form" + prop}
+              id={prop}
               label={format(prop)}
-              defaultValue={formData[prop]}
               helperText={formData[prop]}
+              value={
+                formData[prop] && !values[prop] ? formData[prop] : values[prop]
+              }
+              onChange={onChange}
             />
           </Grid>
         );
@@ -75,9 +158,8 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
               <TextField
                 fullWidth
                 required={prop === "nominal_voltage"}
-                id={"form-volt" + prop}
+                id={prop}
                 label={format(prop)}
-                defaultValue={formData[prop]}
                 helperText={formData[prop]}
                 type="number"
                 InputProps={{
@@ -85,6 +167,12 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
                     <InputAdornment position="end">V</InputAdornment>
                   ),
                 }}
+                value={
+                  formData[prop] && !values[prop]
+                    ? formData[prop]
+                    : values[prop]
+                }
+                onChange={onChange}
               />
             </Grid>
           );
@@ -94,9 +182,8 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
               <TextField
                 fullWidth
                 required
-                id={"form" + prop}
+                id={prop}
                 label={format(prop)}
-                defaultValue={formData[prop]}
                 helperText={formData[prop]}
                 type="number"
                 InputProps={{
@@ -104,6 +191,12 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
                     <InputAdornment position="end">Ah</InputAdornment>
                   ),
                 }}
+                value={
+                  formData[prop] && !values[prop]
+                    ? formData[prop]
+                    : values[prop]
+                }
+                onChange={onChange}
               />
             </Grid>
           );
@@ -113,9 +206,8 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
               <TextField
                 fullWidth
                 required
-                id={"form" + prop}
+                id={prop}
                 label={format(prop)}
-                defaultValue={formData[prop]}
                 helperText={formData[prop]}
                 type="number"
                 InputProps={{
@@ -123,6 +215,12 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
                     <InputAdornment position="start">Php</InputAdornment>
                   ),
                 }}
+                value={
+                  formData[prop] && !values[prop]
+                    ? formData[prop]
+                    : values[prop]
+                }
+                onChange={onChange}
               />
             </Grid>
           );
@@ -131,9 +229,8 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
             <Grid item xs={3}>
               <TextField
                 fullWidth
-                id={"form" + prop}
+                id={prop}
                 label={format(prop)}
-                defaultValue={formData[prop]}
                 helperText={formData[prop]}
                 type="number"
                 InputProps={{
@@ -141,6 +238,12 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
                     <InputAdornment position="end">A</InputAdornment>
                   ),
                 }}
+                value={
+                  formData[prop] && !values[prop]
+                    ? formData[prop]
+                    : values[prop]
+                }
+                onChange={onChange}
               />
             </Grid>
           );
@@ -149,10 +252,13 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
           <Grid item xs={3}>
             <TextField
               fullWidth
-              id={"form" + prop}
+              id={prop}
               label={format(prop)}
-              defaultValue={formData[prop]}
               helperText={formData[prop]}
+              value={
+                formData[prop] && !values[prop] ? formData[prop] : values[prop]
+              }
+              onChange={onChange}
             />
           </Grid>
         );
@@ -166,11 +272,7 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
       title={
         operation === "Create"
           ? showFormModal.operation + " " + title
-          : showFormModal.operation +
-            " " +
-            formData.__typename +
-            " " +
-            formData.name
+          : showFormModal.operation + " " + title + " " + formData.name
       }
       closeModal={() => setShowFormModal({ ...showFormModal, open: false })}
     >
@@ -179,10 +281,12 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              id="delete-reason"
+              id="reason"
               label="Reason"
               placeholder="State your reason for removing here"
               multiline
+              value={values.reason}
+              onChange={onChange}
             />
           </Grid>
         )}
@@ -192,13 +296,18 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
           )}
       </Grid>
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-        <Button
-          variant="contained"
-          size="small"
-          sx={{ color: "white", margin: 1, textTransform: "none" }}
-        >
-          {operation === "Delete" ? "Delete" : "Save"}
-        </Button>
+        {user ? (
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ color: "white", margin: 1, textTransform: "none" }}
+            onClick={onSubmit}
+          >
+            {operation === "Delete" ? "Delete" : "Save"}
+          </Button>
+        ) : (
+          <Typography variant="body2">Sign In to Save</Typography>
+        )}
         <Button
           variant="contained"
           size="small"
