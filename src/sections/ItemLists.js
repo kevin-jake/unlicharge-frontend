@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import ItemCard from "../components/ItemCard";
-import { FETCH_BATTERY } from "../util/graphql/Query";
+import { FETCH_AB, FETCH_BATTERY, FETCH_BMS } from "../util/graphql/Query";
 import { useQuery } from "@apollo/client";
 import { Box, Button, Grid } from "@mui/material";
 import DetailsModal from "../components/DetailsModal";
 import FormModal from "../components/FormModal";
-import { Battery } from "../util/AddFormProperties";
+import { AB, Battery, BMS } from "../util/AddFormProperties";
 
 function querySelect(select) {
   switch (select) {
     case "Battery":
-      return FETCH_BATTERY;
+      return { gql_query: FETCH_BATTERY, form_props: Battery };
     case "BMS":
-      return FETCH_BATTERY;
+      return { gql_query: FETCH_BMS, form_props: BMS };
     case "Active Balancer":
-      return FETCH_BATTERY;
+      return { gql_query: FETCH_AB, form_props: AB };
   }
 }
 
 const ItemLists = ({ selection }) => {
   console.log(selection);
-  const { loading, data } = useQuery(querySelect(selection));
+  const { loading, data } = useQuery(querySelect(selection).gql_query);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState();
   const [showFormModal, setShowFormModal] = useState({
@@ -43,7 +43,7 @@ const ItemLists = ({ selection }) => {
   };
 
   const openAddModal = () => {
-    setModalData(Battery);
+    setModalData(querySelect(selection).form_props);
     setShowFormModal({ open: true, operation: "Create" });
   };
 
@@ -60,7 +60,7 @@ const ItemLists = ({ selection }) => {
       >
         {loading ? (
           <h1>Loading posts...</h1>
-        ) : itemData.length > 0 ? (
+        ) : itemData && itemData.length > 0 ? (
           itemData.map((item) => (
             <Grid key={item.id} item xs={3} lg={"auto"}>
               <ItemCard item={item} openModal={() => openModal(item)} />
@@ -99,6 +99,7 @@ const ItemLists = ({ selection }) => {
             showFormModal={showFormModal}
             setShowFormModal={setShowFormModal}
             formData={modalData}
+            title={selection}
           />
         </>
       )}

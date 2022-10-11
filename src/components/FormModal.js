@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import Modal from "./Modal";
 
-const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
+const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   const properties = Object.getOwnPropertyNames(formData);
   console.log(properties);
   const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
@@ -126,6 +126,24 @@ const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
               />
             </Grid>
           );
+        } else if (prop.includes("current")) {
+          return (
+            <Grid item xs={3}>
+              <TextField
+                fullWidth
+                id={"form" + prop}
+                label={format(prop)}
+                defaultValue={formData[prop]}
+                helperText={formData[prop]}
+                type="number"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">A</InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          );
         }
         return (
           <Grid item xs={3}>
@@ -147,7 +165,7 @@ const FormModal = ({ showFormModal, setShowFormModal, formData }) => {
       showModal={showFormModal.open}
       title={
         operation === "Create"
-          ? showFormModal.operation + " Battery"
+          ? showFormModal.operation + " " + title
           : showFormModal.operation +
             " " +
             formData.__typename +

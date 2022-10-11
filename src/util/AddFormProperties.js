@@ -10,4 +10,28 @@ const Battery = {
   supplier: "",
 };
 
-export { Battery };
+const BMS = {
+  name: "",
+  brand: "",
+  strings: "",
+  charge_current: "",
+  discharge_current: "",
+  port_type: "",
+  voltage: "",
+  price: "",
+  supplier: "",
+  image_url: "",
+};
+
+const AB = {
+  name: "",
+  brand: "",
+  strings: "",
+  balance_current: "",
+  balancing: "",
+  price: "",
+  supplier: "",
+  image_url: "",
+};
+
+export { Battery, BMS, AB };
