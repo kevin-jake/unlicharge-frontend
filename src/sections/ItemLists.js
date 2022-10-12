@@ -8,6 +8,8 @@ import FormModal from "../components/FormModal";
 import { AB, Battery, BMS } from "../util/AddFormProperties";
 import { AuthContext } from "../context/auth-context";
 
+// TODO: Put realistic data
+
 function querySelect(select) {
   switch (select) {
     case "Battery":

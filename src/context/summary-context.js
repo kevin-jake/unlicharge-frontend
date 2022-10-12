@@ -20,6 +20,11 @@ const AppReducer = (state, action) => {
         ...state,
         initialForm: action.initialForm,
       };
+    case "SET_BATT":
+      return {
+        ...state,
+        initialForm: action.initialForm,
+      };
     default:
       return state;
   }
@@ -37,9 +42,18 @@ const SummaryProvider = (props) => {
     });
   };
 
+  const setBattery = (batterySelected) => {
+    dispatch({
+      type: "SET_BATT",
+      batterySelected,
+    });
+  };
+
   console.log(state);
   const value = {
     initialForm: state.initialForm,
+    batterySelected: state.batterySelected,
+    setBattery,
     setInitForm,
   };
   // // console.log(state);

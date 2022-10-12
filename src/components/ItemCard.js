@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -8,9 +8,18 @@ import {
   Typography,
 } from "@mui/material";
 import SpecsTable from "./SpecsTable";
+import { batterySummary } from "../logic/battery-computations";
+import { SummaryContext } from "../context/summary-context";
 
 const ItemCard = ({ item, openModal, selection }) => {
-  console.log(selection);
+  const { initialForm, batterySelected, setBattery } =
+    useContext(SummaryContext);
+  const [computedData, setComputedData] = useState();
+  useEffect(() => {
+    setComputedData(batterySummary(item, initialForm));
+  }, [initialForm]);
+
+  console.log(computedData);
   return (
     <>
       <Card

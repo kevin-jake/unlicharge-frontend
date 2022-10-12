@@ -11,6 +11,7 @@ const FETCH_BATTERY = gql`
       max_voltage
       nominal_voltage
       price_per_pc
+      capacity
       supplier
       image_url
       publish_status
