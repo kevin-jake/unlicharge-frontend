@@ -26,7 +26,6 @@ const InitialForm = () => {
             onChange={(e) =>
               setInitForm({ ...initialForm, batteryVoltage: e.target.value })
             }
-            sx={{ m: 1 }}
           >
             <MenuItem value="12">12 V</MenuItem>
             <MenuItem value="24">24 V</MenuItem>
@@ -43,7 +42,6 @@ const InitialForm = () => {
             onChange={(e) =>
               setInitForm({ ...initialForm, batteryCapacity: e.target.value })
             }
-            sx={{ m: 1 }}
             InputProps={{
               endAdornment: <InputAdornment position="end">Ah</InputAdornment>,
             }}
@@ -71,14 +69,7 @@ const InitialForm = () => {
                   }
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment
-                        position="end"
-                        sx={{
-                          marginRight: 3,
-                        }}
-                      >
-                        V
-                      </InputAdornment>
+                      <InputAdornment position="end">V</InputAdornment>
                     ),
                   }}
                 />
@@ -102,14 +93,7 @@ const InitialForm = () => {
                   }
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment
-                        position="end"
-                        sx={{
-                          marginRight: 3,
-                        }}
-                      >
-                        V
-                      </InputAdornment>
+                      <InputAdornment position="end">V</InputAdornment>
                     ),
                   }}
                 />
@@ -126,14 +110,7 @@ const InitialForm = () => {
                   }
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment
-                        position="end"
-                        sx={{
-                          marginRight: 3,
-                        }}
-                      >
-                        %
-                      </InputAdornment>
+                      <InputAdornment position="end">%</InputAdornment>
                     ),
                   }}
                 />

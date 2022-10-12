@@ -8,7 +8,7 @@ import FormModal from "../components/FormModal";
 import { AB, Battery, BMS } from "../util/AddFormProperties";
 import { AuthContext } from "../context/auth-context";
 
-// TODO: Put realistic data
+// TODO: Put realistic data on BMS and AB
 
 function querySelect(select) {
   switch (select) {

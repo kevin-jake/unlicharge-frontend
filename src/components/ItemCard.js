@@ -10,6 +10,7 @@ import {
 import SpecsTable from "./SpecsTable";
 import { batterySummary } from "../logic/battery-computations";
 import { SummaryContext } from "../context/summary-context";
+import QuickSpecs from "./QuickSpecs";
 
 const ItemCard = ({ item, openModal, selection }) => {
   const { initialForm, batterySelected, setBattery } =
@@ -25,13 +26,9 @@ const ItemCard = ({ item, openModal, selection }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
+          pb: 2,
           width: 450,
-          height:
-            selection === "BMS"
-              ? 330
-              : selection === "Active Balancer"
-              ? 350
-              : 270,
+          height: "auto",
         }}
       >
         <Box sx={{ display: "flex" }}>
@@ -74,6 +71,7 @@ const ItemCard = ({ item, openModal, selection }) => {
             />
           </Box>
         </Box>
+        <QuickSpecs />
         <Box
           sx={{
             display: "flex",

@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Link,
   Table,
   TableBody,
   TableCell,
@@ -53,7 +54,19 @@ const SpecsTable = ({ specs, modalDetails }) => {
                   <TableCell component="th" scope="row">
                     {format(prop)}
                   </TableCell>
-                  <TableCell align="right">{specs[prop]}</TableCell>
+                  <TableCell align="right">
+                    {prop === "supplier" && (
+                      <Link
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href={specs[prop]}
+                        underline="none"
+                      >
+                        Buy here
+                      </Link>
+                    )}
+                    {prop !== "supplier" && specs[prop]}
+                  </TableCell>
                 </TableRow>
               )
           )}
