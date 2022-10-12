@@ -56,13 +56,12 @@ const SignInModal = ({
       _,
       {
         data: {
-          login: { id, token, email, username },
+          login: { id, token, email, username, name },
         },
       }
     ) {
       // console.log(id, token, email,username );
-      context.login(id, token, email, username);
-
+      context.login(id, token, email, username, name);
       if (!fromFormModal) {
         showSignInModal(false);
         navigate("/");

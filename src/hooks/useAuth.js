@@ -7,34 +7,41 @@ export const useAuth = () => {
   const [tokenExpirationDate, setTokenExpirationDate] = useState();
   const [userId, setUserId] = useState();
   const [email, setEmail] = useState();
-  const [username, setName] = useState();
+  const [name, setName] = useState();
+  const [username, setUserName] = useState();
 
-  const login = useCallback((uid, token, email, username, expirationDate) => {
-    setToken(token);
-    setUserId(uid);
-    setEmail(email);
-    setName(username);
-    const tokenExpirationDate =
-      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
-    setTokenExpirationDate(tokenExpirationDate);
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        userId: uid,
-        token: token,
-        email: email,
-        username: username,
-        expiration: tokenExpirationDate.toISOString(),
-      })
-    );
-    // eslint-disable-next-line
-  }, []);
+  const login = useCallback(
+    (uid, token, email, username, name, expirationDate) => {
+      setToken(token);
+      setUserId(uid);
+      setEmail(email);
+      setUserName(username);
+      setName(name);
+      const tokenExpirationDate =
+        expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+      setTokenExpirationDate(tokenExpirationDate);
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          userId: uid,
+          token: token,
+          name: name,
+          email: email,
+          username: username,
+          expiration: tokenExpirationDate.toISOString(),
+        })
+      );
+      // eslint-disable-next-line
+    },
+    []
+  );
 
   const logout = useCallback(() => {
     setToken(null);
     setTokenExpirationDate(null);
     setUserId(null);
     setEmail(null);
+    setUserName(null);
     setName(null);
     localStorage.removeItem("userData");
     // eslint-disable-next-line
@@ -63,11 +70,12 @@ export const useAuth = () => {
         storedData.token,
         storedData.email,
         storedData.username,
+        storedData.name,
         new Date(storedData.expiration)
       );
     }
     // eslint-disable-next-line
   }, [login]);
 
-  return { token, login, logout, userId, username, email };
+  return { token, login, logout, userId, username, name, email };
 };

@@ -67,6 +67,7 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
             >
               <MenuItem value="LiFePo4">LiFePo4</MenuItem>
               <MenuItem value="Lead Acid">Lead Acid</MenuItem>
+              <MenuItem value="Li-on">Li-on</MenuItem>
             </TextField>
           </Grid>
         );

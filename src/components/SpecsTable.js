@@ -13,6 +13,7 @@ const SpecsTable = ({ specs, modalDetails }) => {
   const cardDisplay = [
     "name",
     "id",
+    "model",
     "price_per_pc",
     "voltage",
     "price",

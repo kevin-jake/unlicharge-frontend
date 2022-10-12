@@ -54,10 +54,22 @@ const RegisterModal = ({
   }, [values]);
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(_, { data: { register: userData } }) {
-      context.login(userData);
-      showRegisterModal(false);
-      if (!fromFormModal) navigate("/");
+    update(
+      _,
+      {
+        data: {
+          register: { id, token, email, username, name },
+        },
+      }
+    ) {
+      context.login(id, token, email, username, name);
+      if (!fromFormModal) {
+        showRegisterModal(false);
+        navigate("/");
+      } else {
+        showRegisterModal(false);
+        showSignInModal(false, true);
+      }
     },
     onError(err) {
       if (err.graphQLErrors[0]) {

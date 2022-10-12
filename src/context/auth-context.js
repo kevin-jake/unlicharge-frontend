@@ -6,6 +6,7 @@ const AuthContext = createContext({
   userId: null,
   token: null,
   email: null,
+  username: null,
   name: null,
   role: null,
   login: () => {},
@@ -13,7 +14,8 @@ const AuthContext = createContext({
 });
 
 const AuthProvider = (props) => {
-  const { token, login, logout, userId, email, name, role } = useAuth();
+  const { token, login, logout, userId, email, username, name, role } =
+    useAuth();
   return (
     <AuthContext.Provider
       value={{
@@ -21,6 +23,7 @@ const AuthProvider = (props) => {
         token: token,
         userId: userId,
         email: email,
+        username: username,
         name: name,
         role: role,
         login: login,

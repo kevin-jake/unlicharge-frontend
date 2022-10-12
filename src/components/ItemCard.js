@@ -18,7 +18,6 @@ const ItemCard = ({ item, openModal, selection }) => {
   useEffect(() => {
     setComputedData(batterySummary(item, initialForm));
   }, [initialForm]);
-
   console.log(computedData);
   return (
     <>
@@ -44,9 +43,17 @@ const ItemCard = ({ item, openModal, selection }) => {
             }}
           >
             <CardContent sx={{ flex: "1 0 auto" }}>
-              <Typography variant="h5" color="text.secondary">
-                {item.name}
-              </Typography>
+              <div
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  width: "11rem",
+                }}
+              >
+                <Typography noWrap variant="h5" color="text.secondary">
+                  {item.name}
+                </Typography>
+              </div>
               {item && <SpecsTable specs={item} />}
             </CardContent>
           </Box>
@@ -58,6 +65,7 @@ const ItemCard = ({ item, openModal, selection }) => {
               flexDirection: "column",
             }}
           >
+            {/* TODO: Change image to be dynamic */}
             <CardMedia
               component="img"
               sx={{ width: 151, height: 151, margin: 2 }}
@@ -69,6 +77,7 @@ const ItemCard = ({ item, openModal, selection }) => {
         <Box
           sx={{
             display: "flex",
+            alignItems: "flex-end",
             justifyContent: "center",
           }}
         >

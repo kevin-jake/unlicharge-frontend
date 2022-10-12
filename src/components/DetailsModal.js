@@ -26,6 +26,8 @@ const DetailsModal = ({
           padding: 2,
         }}
       >
+        {/* TODO: Dynamic image */}
+        {/* TODO: Add link on supplier instead of string */}
         <Box
           component="img"
           alt="The house from the offer."

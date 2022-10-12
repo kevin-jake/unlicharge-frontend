@@ -6,6 +6,7 @@ import {
   Badge,
   Box,
   Button,
+  CardHeader,
   Menu,
   MenuItem,
   styled,
@@ -53,7 +54,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { signInModal, fromFormModal, showSignInModal } =
     useContext(GlobalContext);
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout, username } = useContext(AuthContext);
   // const [signInModal, showSignInModal] = useState(false);
   const [registerModal, showRegisterModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -97,7 +98,7 @@ const Header = () => {
         {/* <Search>
           <InputBase placeholder="Search" />
         </Search> */}
-        <Box sx={{ display: "inline-flex" }}>
+        <Box sx={{ display: "inline-flex", alignItems: "center" }}>
           <NavLink to="/" exact="true">
             <Button
               variant="text"
@@ -126,28 +127,26 @@ const Header = () => {
             </Button>
           )}
           {isLoggedIn && (
-            <Icons>
-              <Badge badgeContent={4} color="error">
-                <Notifications color="white" />
-              </Badge>
-              <Avatar
-                sx={{ width: 30, height: 30 }}
-                src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+            <>
+              <Icons>
+                <Badge badgeContent={4} color="error">
+                  <Notifications color="white" />
+                </Badge>
+              </Icons>
+              <CardHeader
                 onClick={handleClick}
+                avatar={
+                  <Avatar
+                    alt="User"
+                    sx={{ width: 30, height: 30 }}
+                    src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                  />
+                }
+                title={username}
               />
-            </Icons>
+            </>
           )}
         </Box>
-
-        {isLoggedIn && (
-          <UserBox onClick={handleClick}>
-            <Avatar
-              sx={{ width: 30, height: 30 }}
-              src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-            />
-            <Typography variant="span"> test</Typography>
-          </UserBox>
-        )}
       </StyledToolbar>
       <Menu
         id="basic-menu"

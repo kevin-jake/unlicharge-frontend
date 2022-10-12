@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/auth-context";
 
 export const useForm = (callback, initialState = {}) => {
+  const { isLoggedIn } = useContext(AuthContext);
   const [values, setValues] = useState(initialState);
+  useEffect(() => {
+    setValues({});
+  }, [isLoggedIn]);
 
   const onChange = (event) => {
     var prop;

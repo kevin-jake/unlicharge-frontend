@@ -6,6 +6,7 @@
 
 // Computes battery total capacity
 const batteryTotalCapacity = (input_dod, input_capacity, data_battType) => {
+  // FIXME: Fix dod computation and which is which when selecting batteries
   var defaultDod = input_dod;
   if (!input_dod) {
     switch (data_battType) {
@@ -66,11 +67,14 @@ const batteryTotalLimits = (
 
 const batterySummary = (data_battery, input_parameters) => {
   var totalLimits;
+  console.log({ data_battery });
   const totalCapacity = batteryTotalCapacity(
     +input_parameters.dod,
     +input_parameters.batteryCapacity,
     data_battery.type
   );
+  console.log({ totalCapacity });
+
   const totalNumber = batteryNumber(
     +input_parameters.batteryVoltage,
     +data_battery.nominal_voltage,
