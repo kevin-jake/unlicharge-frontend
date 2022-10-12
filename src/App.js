@@ -14,6 +14,7 @@ import Build from "./pages/Build";
 import { AuthProvider } from "./context/auth-context";
 import { createUploadLink } from "apollo-upload-client";
 import { GlobalProvider } from "./context/global-context";
+import { SummaryProvider } from "./context/summary-context";
 
 const httpLink = createUploadLink({
   uri: "http://localhost:5000",
@@ -44,15 +45,17 @@ function App() {
     <ApolloProvider client={client}>
       <AuthProvider>
         <GlobalProvider>
-          <BrowserRouter>
-            <Box>
-              <Header />
-              <Routes>
-                <Route exact="true" path="/" element={<Home />} />
-                <Route exact="true" path="/build" element={<Build />} />
-              </Routes>
-            </Box>
-          </BrowserRouter>
+          <SummaryProvider>
+            <BrowserRouter>
+              <Box>
+                <Header />
+                <Routes>
+                  <Route exact="true" path="/" element={<Home />} />
+                  <Route exact="true" path="/build" element={<Build />} />
+                </Routes>
+              </Box>
+            </BrowserRouter>
+          </SummaryProvider>
         </GlobalProvider>
       </AuthProvider>
     </ApolloProvider>
