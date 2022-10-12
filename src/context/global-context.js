@@ -1,7 +1,8 @@
 import React, { createContext, useReducer } from "react";
 
 const initState = {
-  showModal: false,
+  signInModal: false,
+  fromFormModal: false,
 };
 
 const AppReducer = (state, action) => {
@@ -9,28 +10,31 @@ const AppReducer = (state, action) => {
     case "SHOW_MODAL":
       return {
         ...state,
-        showModal: action.showModal,
+        signInModal: action.signInModal,
+        fromFormModal: action.fromFormModal,
       };
     default:
       return state;
   }
 };
 
-export const GlobalContext = createContext(initState);
+const GlobalContext = createContext(initState);
 
-export const GlobalProvider = (props) => {
+const GlobalProvider = (props) => {
   const [state, dispatch] = useReducer(AppReducer, initState);
 
-  const setShowModal = (showModal) => {
+  const showSignInModal = (signInModal, fromFormModal) => {
     dispatch({
       type: "SHOW_MODAL",
-      showModal,
+      signInModal,
+      fromFormModal,
     });
   };
 
   const value = {
-    showModal: state.showModal,
-    setShowModal,
+    signInModal: state.signInModal,
+    fromFormModal: state.fromFormModal,
+    showSignInModal,
   };
   // // console.log(state);
   return (
@@ -39,3 +43,5 @@ export const GlobalProvider = (props) => {
     </GlobalContext.Provider>
   );
 };
+
+export { GlobalContext, GlobalProvider };

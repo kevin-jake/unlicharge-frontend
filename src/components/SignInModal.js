@@ -28,7 +28,12 @@ import { AuthContext } from "../context/auth-context";
 import { LOGIN_USER } from "../util/graphql/Mutation";
 import { useForm } from "../hooks/useForm";
 
-const SignInModal = ({ signInModal, showSignInModal, showRegisterModal }) => {
+const SignInModal = ({
+  signInModal,
+  showSignInModal,
+  showRegisterModal,
+  fromFormModal,
+}) => {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
@@ -57,8 +62,11 @@ const SignInModal = ({ signInModal, showSignInModal, showRegisterModal }) => {
     ) {
       // console.log(id, token, email,username );
       context.login(id, token, email, username);
-      showSignInModal(false);
-      navigate("/");
+
+      if (!fromFormModal) {
+        showSignInModal(false);
+        navigate("/");
+      } else showSignInModal(false, true);
     },
     onError(err) {
       if (err.graphQLErrors[0]) {
@@ -87,7 +95,9 @@ const SignInModal = ({ signInModal, showSignInModal, showRegisterModal }) => {
       onClose={() => showSignInModal(false)}
       maxWidth="sm"
     >
-      <DialogTitle align="center">Login</DialogTitle>
+      <DialogTitle align="center">
+        Login {fromFormModal ? "to Save" : ""}
+      </DialogTitle>
       <DialogContent dividers>
         <Grid container sx={{ padding: 2 }} spacing={2}>
           <Grid item xs={12}>

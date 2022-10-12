@@ -11,8 +11,10 @@ import {
 import Modal from "./Modal";
 import { AuthContext } from "../context/auth-context";
 import { useOperationForm } from "../hooks/useOperationForm";
+import { GlobalContext } from "../context/global-context";
 
 const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
+  const { showSignInModal } = useContext(GlobalContext);
   const { isLoggedIn } = useContext(AuthContext);
   const properties = Object.getOwnPropertyNames(formData);
   const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
@@ -231,18 +233,20 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
           )}
       </Grid>
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-        {isLoggedIn ? (
+        {
           <Button
             variant="contained"
             size="small"
             sx={{ color: "white", margin: 1, textTransform: "none" }}
-            onClick={(e) => handleSave(e, operation)}
+            onClick={(e) =>
+              isLoggedIn
+                ? handleSave(e, operation)
+                : showSignInModal(true, true)
+            }
           >
             {operation === "Delete" ? "Delete" : "Save"}
           </Button>
-        ) : (
-          <Typography variant="body2">Sign In to Save</Typography>
-        )}
+        }
         <Button
           variant="contained"
           size="small"

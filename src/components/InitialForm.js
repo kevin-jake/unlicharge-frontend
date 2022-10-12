@@ -2,6 +2,7 @@ import {
   Box,
   Grid,
   InputAdornment,
+  MenuItem,
   TextField,
   Typography,
 } from "@mui/material";
@@ -15,13 +16,26 @@ const InitialForm = () => {
         <Grid item xs={4}>
           <TextField
             fullWidth
+            select
             label="Battery Voltage"
             id="outlined-start-adornment"
             sx={{ m: 1 }}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">V</InputAdornment>,
-            }}
-          />
+            // InputProps={{
+            //   endAdornment: (
+            //     <InputAdornment
+            //       position="end"
+            //       sx={{
+            //         marginRight: 3,
+            //       }}
+            //     >
+            //       V
+            //     </InputAdornment>
+            //   ),
+            // }}
+          >
+            <MenuItem value="12">12 V</MenuItem>
+            <MenuItem value="24">24 V</MenuItem>
+          </TextField>
         </Grid>
         <Grid item xs={4}>
           <TextField

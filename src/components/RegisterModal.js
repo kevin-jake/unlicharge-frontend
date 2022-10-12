@@ -32,6 +32,7 @@ const RegisterModal = ({
   registerModal,
   showRegisterModal,
   showSignInModal,
+  fromFormModal,
 }) => {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
@@ -56,7 +57,7 @@ const RegisterModal = ({
     update(_, { data: { register: userData } }) {
       context.login(userData);
       showRegisterModal(false);
-      navigate("/");
+      if (!fromFormModal) navigate("/");
     },
     onError(err) {
       if (err.graphQLErrors[0]) {
@@ -85,7 +86,9 @@ const RegisterModal = ({
       onClose={() => showRegisterModal(false)}
       maxWidth="sm"
     >
-      <DialogTitle align="center">Register</DialogTitle>
+      <DialogTitle align="center">
+        Register {fromFormModal ? "to Save" : ""}
+      </DialogTitle>
       <DialogContent dividers>
         <Grid container sx={{ padding: 2 }} spacing={2}>
           <Grid item xs={12}>

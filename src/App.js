@@ -13,6 +13,7 @@ import Header from "./components/Header";
 import Build from "./pages/Build";
 import { AuthProvider } from "./context/auth-context";
 import { createUploadLink } from "apollo-upload-client";
+import { GlobalProvider } from "./context/global-context";
 
 const httpLink = createUploadLink({
   uri: "http://localhost:5000",
@@ -42,15 +43,17 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <BrowserRouter>
-          <Box>
-            <Header />
-            <Routes>
-              <Route exact="true" path="/" element={<Home />} />
-              <Route exact="true" path="/build" element={<Build />} />
-            </Routes>
-          </Box>
-        </BrowserRouter>
+        <GlobalProvider>
+          <BrowserRouter>
+            <Box>
+              <Header />
+              <Routes>
+                <Route exact="true" path="/" element={<Home />} />
+                <Route exact="true" path="/build" element={<Build />} />
+              </Routes>
+            </Box>
+          </BrowserRouter>
+        </GlobalProvider>
       </AuthProvider>
     </ApolloProvider>
   );

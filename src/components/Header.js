@@ -17,6 +17,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import SignInModal from "./SignInModal";
 import RegisterModal from "./RegisterModal";
+import { GlobalContext } from "../context/global-context";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -50,8 +51,10 @@ const UserBox = styled(Box)(({ theme }) => ({
 
 const Header = () => {
   const navigate = useNavigate();
+  const { signInModal, fromFormModal, showSignInModal } =
+    useContext(GlobalContext);
   const { isLoggedIn, logout } = useContext(AuthContext);
-  const [signInModal, showSignInModal] = useState(false);
+  // const [signInModal, showSignInModal] = useState(false);
   const [registerModal, showRegisterModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -68,13 +71,13 @@ const Header = () => {
   };
 
   const openLogin = () => {
-    showRegisterModal(false);
-    showSignInModal(true);
+    showRegisterModal(false, fromFormModal);
+    showSignInModal(true, fromFormModal);
   };
 
   const openRegister = () => {
-    showSignInModal(false);
-    showRegisterModal(true);
+    showSignInModal(false, fromFormModal);
+    showRegisterModal(true, fromFormModal);
   };
 
   console.log(isLoggedIn);
@@ -163,11 +166,13 @@ const Header = () => {
         signInModal={signInModal}
         showSignInModal={showSignInModal}
         showRegisterModal={openRegister}
+        fromFormModal={fromFormModal}
       />
       <RegisterModal
         registerModal={registerModal}
         showRegisterModal={showRegisterModal}
         showSignInModal={openLogin}
+        fromFormModal={fromFormModal}
       />
     </AppBar>
   );
