@@ -1,7 +1,8 @@
 import { Box, Divider, Typography } from "@mui/material";
 import React from "react";
+import { numberWithCommas } from "../util/numberFormats";
 
-const QuickSpecs = () => {
+const QuickSpecs = ({ computedData, title }) => {
   return (
     <div>
       <Box
@@ -18,28 +19,33 @@ const QuickSpecs = () => {
       >
         <div>
           <Typography gutterBottom variant="caption" component="span">
-            Price
+            {title === "Battery" ? "Total Price" : "Price"}
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
-            Php 4.50
+            Php {numberWithCommas(+computedData.totalPrice)}
           </Typography>
         </div>
         <Divider orientation="vertical" variant="middle" flexItem />
         <div>
           <Typography gutterBottom variant="caption" component="span">
-            Configuration
+            {title === "Battery" ? "Configuration" : ""}
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
-            4S 11P
+            {title === "Battery"
+              ? computedData.totalSeries +
+                "S " +
+                computedData.totalParallel +
+                "P"
+              : ""}
           </Typography>
         </div>
         <Divider orientation="vertical" variant="middle" flexItem />
         <div>
           <Typography gutterBottom variant="caption" component="span">
-            Total Qty.
+            {title === "Battery" ? "Total Qty." : ""}
           </Typography>
           <Typography gutterBottom variant="h6" component="div">
-            44
+            {title === "Battery" ? computedData.totalQty : ""}
           </Typography>
         </div>
       </Box>

@@ -71,7 +71,9 @@ const ItemCard = ({ item, openModal, selection }) => {
             />
           </Box>
         </Box>
-        <QuickSpecs />
+        {computedData && (
+          <QuickSpecs computedData={computedData} title={selection} />
+        )}
         <Box
           sx={{
             display: "flex",

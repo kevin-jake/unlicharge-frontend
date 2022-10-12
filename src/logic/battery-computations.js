@@ -67,13 +67,11 @@ const batteryTotalLimits = (
 
 const batterySummary = (data_battery, input_parameters) => {
   var totalLimits;
-  console.log({ data_battery });
   const totalCapacity = batteryTotalCapacity(
     +input_parameters.dod,
     +input_parameters.batteryCapacity,
     data_battery.type
   );
-  console.log({ totalCapacity });
 
   const totalNumber = batteryNumber(
     +input_parameters.batteryVoltage,
@@ -88,16 +86,22 @@ const batterySummary = (data_battery, input_parameters) => {
       +data_battery.min_voltage
     );
   }
-  if (totalNumber && totalLimits)
+
+  if (totalNumber && totalLimits) {
+    console.log(totalNumber.total_quantity * +data_battery.price_per_pc);
+    const totalPrice = (
+      totalNumber.total_quantity * +data_battery.price_per_pc
+    ).toFixed(2);
     return {
       totalCapacity,
       totalSeries: totalNumber.total_series,
       totalParallel: totalNumber.total_parallel,
       totalQty: totalNumber.total_quantity,
+      totalPrice,
       totalMaxVolt: totalLimits.total_MaxVolt,
       totalMinVolt: totalLimits.total_MinVolt,
     };
-  else return null;
+  } else return null;
 };
 
 export { batterySummary };

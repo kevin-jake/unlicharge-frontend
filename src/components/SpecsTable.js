@@ -55,7 +55,7 @@ const SpecsTable = ({ specs, modalDetails }) => {
                     {format(prop)}
                   </TableCell>
                   <TableCell align="right">
-                    {prop === "supplier" && (
+                    {prop === "supplier" ? (
                       <Link
                         rel="noopener noreferrer"
                         target="_blank"
@@ -64,8 +64,9 @@ const SpecsTable = ({ specs, modalDetails }) => {
                       >
                         Buy here
                       </Link>
+                    ) : (
+                      specs[prop]
                     )}
-                    {prop !== "supplier" && specs[prop]}
                   </TableCell>
                 </TableRow>
               )
