@@ -75,10 +75,11 @@ const CREATE_BATT = gql`
       name
       type
       model
+      nominal_voltage
+      capacity
+      price_per_pc
       min_voltage
       max_voltage
-      nominal_voltage
-      price_per_pc
       supplier
       image_url
       publish_status

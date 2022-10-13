@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import { gql, useMutation } from "@apollo/client";
 
 import styled from "@emotion/styled";
+import { CardMedia } from "@mui/material";
 
 // TODO: Integrate this to forms
 
@@ -69,29 +69,22 @@ const errorStyle = {
   fontSize: "0.75rem",
 };
 
-// relevant code starts here
-const uploadFileMutation = gql`
-  mutation uploadFile($file: Upload!) {
-    uploadFile(file: $file) {
-      Location
-    }
-  }
-`;
-
-const Upload = ({ register }) => {
+const Upload = ({ onUpload }) => {
   const [preview, setPreview] = useState();
   const [errors, setErrors] = useState();
-  const [uploadFile, { data }] = useMutation(uploadFileMutation);
+  const [imgfile, setImgFile] = useState();
   const onDrop = useCallback(
     async ([file]) => {
       if (file) {
+        setErrors();
+        setImgFile(file);
         setPreview(URL.createObjectURL(file));
-        uploadFile({ variables: { file } });
+        onUpload(file);
       } else {
         setErrors("Something went wrong. Check file type and size (max. 1 MB)");
       }
     },
-    [uploadFile]
+    [setPreview]
   );
   const {
     getRootProps,
@@ -106,14 +99,20 @@ const Upload = ({ register }) => {
   });
 
   const thumb = (
-    <div style={thumbStyle}>
-      <div style={thumbInner}>
-        <img src={preview} style={img} />
-      </div>
-    </div>
+    <CardMedia
+      component="img"
+      sx={{ width: 151, height: 151, margin: 2 }}
+      image={preview}
+      alt={imgfile ? imgfile.name : ""}
+    />
+    // <div style={thumbStyle}>
+    //   <div style={thumbInner}>
+    //     <img src={preview} style={img} />
+    //   </div>
+    // </div>
   );
 
-  console.log(data);
+  console.log(preview);
   return (
     <Container {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>
       <input {...getInputProps()} />
@@ -124,14 +123,6 @@ const Upload = ({ register }) => {
       )}
       {preview && <aside style={thumbsContainer}>{thumb}</aside>}
       {errors && <span style={errorStyle}>{errors}</span>}
-      {data && data.uploadFile && (
-        <input
-          type="hidden"
-          name="avatarUrl"
-          value={data.uploadFile.Location}
-          ref={register}
-        />
-      )}
     </Container>
   );
 };
