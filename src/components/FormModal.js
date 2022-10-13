@@ -284,7 +284,9 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
               Type the Image Address
             </Button>
           </Stack>
-          {imgButton && <Upload onUpload={setImageFile} />}
+          {imgButton && (
+            <Upload imageFile={imageFile} setImageFile={setImageFile} />
+          )}
         </div>
       </Box>
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">

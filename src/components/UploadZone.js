@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 import styled from "@emotion/styled";
@@ -69,17 +69,15 @@ const errorStyle = {
   fontSize: "0.75rem",
 };
 
-const Upload = ({ onUpload }) => {
+const Upload = ({ imageFile, setImageFile }) => {
   const [preview, setPreview] = useState();
   const [errors, setErrors] = useState();
-  const [imgfile, setImgFile] = useState();
   const onDrop = useCallback(
     async ([file]) => {
       if (file) {
         setErrors();
-        setImgFile(file);
+        setImageFile(file);
         setPreview(URL.createObjectURL(file));
-        onUpload(file);
       } else {
         setErrors("Something went wrong. Check file type and size (max. 1 MB)");
       }
@@ -103,7 +101,7 @@ const Upload = ({ onUpload }) => {
       component="img"
       sx={{ width: 151, height: 151, margin: 2 }}
       image={preview}
-      alt={imgfile ? imgfile.name : ""}
+      alt={imageFile ? imageFile.name : ""}
     />
     // <div style={thumbStyle}>
     //   <div style={thumbInner}>
