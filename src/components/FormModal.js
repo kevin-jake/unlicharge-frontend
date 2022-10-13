@@ -15,6 +15,15 @@ import { useOperationForm } from "../hooks/useOperationForm";
 import { GlobalContext } from "../context/global-context";
 import Upload from "./UploadZone";
 import { Stack } from "@mui/system";
+import { gql, useMutation } from "@apollo/client";
+
+const uploadFileMutation = gql`
+  mutation uploadFile($file: Upload!) {
+    uploadFile(file: $file) {
+      Location
+    }
+  }
+`;
 
 const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   const { showSignInModal } = useContext(GlobalContext);
@@ -25,9 +34,17 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   const { values, onChange, onSubmit } = useOperationForm(title);
   const [imgButton, setImgButton] = useState(true);
   const [imageFile, setImageFile] = useState();
+  const [uploadFile, { data }] = useMutation(uploadFileMutation);
 
   const handleSave = (event, operation) => {
-    onSubmit(event, operation);
+    if (imageFile) {
+      uploadFile({
+        variables: { file: imageFile },
+        onCompleted: (data) => {
+          onSubmit(event, operation, data.uploadFile.Location);
+        },
+      });
+    } else onSubmit(event, operation);
     setShowFormModal(false);
   };
 

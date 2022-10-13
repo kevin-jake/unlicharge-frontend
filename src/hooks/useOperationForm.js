@@ -103,15 +103,18 @@ export const useOperationForm = (partsTitle) => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const onSubmit = (event, operation) => {
+  const onSubmit = (event, operation, image_url) => {
+    console.log(image_url);
     switch (operation) {
       case "Create": {
-        onCreate();
+        if (image_url) {
+          onCreate({ variables: { ...values, image_url } });
+        } else onCreate();
       }
     }
   };
 
-  console.log(values);
+  console.log({ values });
   return {
     onChange,
     onSubmit,

@@ -70,19 +70,9 @@ const errorStyle = {
   fontSize: "0.75rem",
 };
 
-// relevant code starts here
-const uploadFileMutation = gql`
-  mutation uploadFile($file: Upload!) {
-    uploadFile(file: $file) {
-      Location
-    }
-  }
-`;
-
 const Upload = ({ imageFile, setImageFile }) => {
   const [preview, setPreview] = useState();
   const [errors, setErrors] = useState();
-  const [uploadFile, { data }] = useMutation(uploadFileMutation);
 
   const onDrop = useCallback(
     async ([file]) => {
@@ -116,11 +106,6 @@ const Upload = ({ imageFile, setImageFile }) => {
       image={preview}
       alt={imageFile ? imageFile.name : ""}
     />
-    // <div style={thumbStyle}>
-    //   <div style={thumbInner}>
-    //     <img src={preview} style={img} />
-    //   </div>
-    // </div>
   );
 
   console.log(preview);
