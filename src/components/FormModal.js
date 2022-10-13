@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Divider,
   Grid,
   InputAdornment,
   MenuItem,
@@ -12,6 +13,8 @@ import Modal from "./Modal";
 import { AuthContext } from "../context/auth-context";
 import { useOperationForm } from "../hooks/useOperationForm";
 import { GlobalContext } from "../context/global-context";
+import Upload from "./UploadZone";
+import { Stack } from "@mui/system";
 
 const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   const { showSignInModal } = useContext(GlobalContext);
@@ -19,7 +22,9 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   const properties = Object.getOwnPropertyNames(formData);
   const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
   const operation = showFormModal.operation;
-  const { values, onChange, onSubmit } = useOperationForm(title);
+  const { values, onChange, onImgUpload, onSubmit } = useOperationForm(title);
+  const [imgButton, setImgButton] = useState(true);
+  const [imageFile, setImageFile] = useState();
 
   const handleSave = (event, operation) => {
     onSubmit(event, operation);
@@ -214,25 +219,74 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
       }
       closeModal={() => setShowFormModal({ ...showFormModal, open: false })}
     >
-      <Grid container sx={{ padding: 2 }} spacing={2}>
-        {operation === "Delete" && (
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              id="reason"
-              label="Reason"
-              placeholder="State your reason for removing here"
-              multiline
-              value={values.reason}
-              onChange={onChange}
-            />
+      <Box>
+        <div>
+          <Grid container sx={{ padding: 2 }} spacing={2}>
+            {operation === "Delete" && (
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  id="reason"
+                  label="Reason"
+                  placeholder="State your reason for removing here"
+                  multiline
+                  value={values.reason}
+                  onChange={onChange}
+                />
+              </Grid>
+            )}
+            {operation !== "Delete" &&
+              properties.map(
+                (prop) =>
+                  !formDisplay.includes(prop) && inputField(prop, formData)
+              )}
+            {!imgButton && (
+              <Grid item xs={5}>
+                <TextField
+                  fullWidth
+                  id="image_url"
+                  label="Image Address"
+                  value={values.image_url}
+                  onChange={onChange}
+                />
+              </Grid>
+            )}
           </Grid>
-        )}
-        {operation !== "Delete" &&
-          properties.map(
-            (prop) => !formDisplay.includes(prop) && inputField(prop, formData)
-          )}
-      </Grid>
+        </div>
+        <Divider orientation="vertical" variant="middle" flexItem />
+        <div>
+          <Stack direction="row" spacing={2} alignItems="center" margin={1}>
+            <Button
+              variant={imgButton ? "contained" : "outlined"}
+              size="small"
+              sx={{
+                margin: 1,
+                textTransform: "none",
+                ...(imgButton ? { color: "white" } : {}),
+              }}
+              onClick={() => setImgButton(true)}
+            >
+              Image Upload
+            </Button>
+            <Typography variant="body2" component="span">
+              or
+            </Typography>
+            <Button
+              variant={imgButton ? "outlined" : "contained"}
+              size="small"
+              sx={{
+                margin: 1,
+                textTransform: "none",
+                ...(imgButton ? {} : { color: "white" }),
+              }}
+              onClick={() => setImgButton(false)}
+            >
+              Type the Image Address
+            </Button>
+          </Stack>
+          {imgButton && <Upload onUpload={setImageFile} />}
+        </div>
+      </Box>
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
         {
           <Button

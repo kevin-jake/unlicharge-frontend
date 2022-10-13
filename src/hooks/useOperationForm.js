@@ -66,6 +66,8 @@ export const useOperationForm = (partsTitle) => {
   }
   const { userId } = useContext(AuthContext);
   const [values, setValues] = useState(titleSelect(partsTitle).initialState);
+  const [image, setImage] = useState();
+
   useEffect(() => {
     setValues(titleSelect(partsTitle).initialState);
   }, [partsTitle]);
@@ -102,7 +104,14 @@ export const useOperationForm = (partsTitle) => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
+  const onImgUpload = (event) => {
+    console.log({ event });
+    setImage(event);
+  };
+
   const onSubmit = (event, operation) => {
+    if (image) {
+    }
     switch (operation) {
       case "Create": {
         onCreate();
@@ -114,6 +123,7 @@ export const useOperationForm = (partsTitle) => {
   return {
     onChange,
     onSubmit,
+    onImgUpload,
     values,
   };
 };

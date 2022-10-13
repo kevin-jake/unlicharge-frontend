@@ -19,7 +19,7 @@ const ItemCard = ({ item, openModal, selection }) => {
   useEffect(() => {
     setComputedData(batterySummary(item, initialForm));
   }, [initialForm]);
-  console.log(computedData);
+  console.log(item);
   return (
     <>
       <Card
@@ -66,7 +66,7 @@ const ItemCard = ({ item, openModal, selection }) => {
             <CardMedia
               component="img"
               sx={{ width: 151, height: 151, margin: 2 }}
-              image="https://images.pexels.com/photos/39853/woman-girl-freedom-happy-39853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              image={item.image_url}
               alt="Live from space album cover"
             />
           </Box>
