@@ -48,6 +48,15 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
     setShowFormModal(false);
   };
 
+  const handleImagebtn = (event) => {
+    if (event.target.id === "uploadImg") {
+      setImgButton(true);
+    } else {
+      setImgButton(false);
+      setImageFile();
+    }
+  };
+
   console.log(values);
   const format = (string) => {
     var cleanString = string.replaceAll("_", " ");
@@ -276,12 +285,13 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
             <Button
               variant={imgButton ? "contained" : "outlined"}
               size="small"
+              id="uploadImg"
               sx={{
                 margin: 1,
                 textTransform: "none",
                 ...(imgButton ? { color: "white" } : {}),
               }}
-              onClick={() => setImgButton(true)}
+              onClick={handleImagebtn}
             >
               Image Upload
             </Button>
@@ -291,12 +301,13 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
             <Button
               variant={imgButton ? "outlined" : "contained"}
               size="small"
+              id="imgaddr"
               sx={{
                 margin: 1,
                 textTransform: "none",
                 ...(imgButton ? {} : { color: "white" }),
               }}
-              onClick={() => setImgButton(false)}
+              onClick={handleImagebtn}
             >
               Type the Image Address
             </Button>
