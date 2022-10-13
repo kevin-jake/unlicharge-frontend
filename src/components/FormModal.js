@@ -17,6 +17,7 @@ import Upload from "./UploadZone";
 import { Stack } from "@mui/system";
 import { gql, useMutation } from "@apollo/client";
 
+// FIXME: Cleanup the image upload before save function
 const uploadFileMutation = gql`
   mutation uploadFile($file: Upload!) {
     uploadFile(file: $file) {
