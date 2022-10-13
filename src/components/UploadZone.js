@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { gql, useMutation } from "@apollo/client";
 
 import styled from "@emotion/styled";
 import { CardMedia } from "@mui/material";
@@ -69,9 +70,20 @@ const errorStyle = {
   fontSize: "0.75rem",
 };
 
+// relevant code starts here
+const uploadFileMutation = gql`
+  mutation uploadFile($file: Upload!) {
+    uploadFile(file: $file) {
+      Location
+    }
+  }
+`;
+
 const Upload = ({ imageFile, setImageFile }) => {
   const [preview, setPreview] = useState();
   const [errors, setErrors] = useState();
+  const [uploadFile, { data }] = useMutation(uploadFileMutation);
+
   const onDrop = useCallback(
     async ([file]) => {
       if (file) {
@@ -84,6 +96,7 @@ const Upload = ({ imageFile, setImageFile }) => {
     },
     [setPreview]
   );
+
   const {
     getRootProps,
     getInputProps,

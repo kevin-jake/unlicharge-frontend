@@ -22,7 +22,7 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   const properties = Object.getOwnPropertyNames(formData);
   const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
   const operation = showFormModal.operation;
-  const { values, onChange, onImgUpload, onSubmit } = useOperationForm(title);
+  const { values, onChange, onSubmit } = useOperationForm(title);
   const [imgButton, setImgButton] = useState(true);
   const [imageFile, setImageFile] = useState();
 
