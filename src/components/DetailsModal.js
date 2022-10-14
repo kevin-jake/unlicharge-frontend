@@ -3,12 +3,14 @@ import { Box, Button } from "@mui/material";
 import Modal from "../components/Modal";
 import SpecsTable from "../components/SpecsTable";
 import { AuthContext } from "../context/auth-context";
+import ItemTabs from "./ItemTabs";
 
 const DetailsModal = ({
   setShowModal,
   showModal,
   modalData,
   openEditModal,
+  computedData,
 }) => {
   const { isLoggedIn } = useContext(AuthContext);
   return (
@@ -29,7 +31,7 @@ const DetailsModal = ({
         {/* TODO: Dynamic image */}
         <Box
           component="img"
-          alt="The house from the offer."
+          alt={modalData.name}
           sx={{
             width: 300,
             margin: 2,
@@ -37,9 +39,17 @@ const DetailsModal = ({
             justifyContent: "center",
             alignItems: "center",
           }}
-          src="https://images.pexels.com/photos/39853/woman-girl-freedom-happy-39853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          src={modalData.image_url}
         />
-        <SpecsTable specs={modalData} modalDetails={true} />
+        {/* <SpecsTable specs={modalData} modalDetails={true} /> */}
+        <ItemTabs
+          tab1={<SpecsTable specs={modalData} modalDetails={true} />}
+          tab2={
+            computedData && (
+              <SpecsTable specs={computedData} modalDetails={true} />
+            )
+          }
+        />
         <Box
           sx={{
             display: isLoggedIn ? "flex" : "none",

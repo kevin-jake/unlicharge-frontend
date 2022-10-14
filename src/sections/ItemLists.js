@@ -36,6 +36,8 @@ const ItemLists = ({ selection }) => {
   });
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState();
+  const [computedData, setComputedData] = useState();
+
   const [showFormModal, setShowFormModal] = useState({
     open: false,
     operation: "",
@@ -46,8 +48,10 @@ const ItemLists = ({ selection }) => {
     itemData = data[querySelect(selection).data];
   }
 
-  const openModal = (item) => {
+  const openModal = (item, computedData) => {
+    console.log({ computedData });
     setShowModal(true);
+    setComputedData(computedData);
     setModalData(item);
   };
 
@@ -81,7 +85,7 @@ const ItemLists = ({ selection }) => {
                 <ItemCard
                   selection={selection}
                   item={item}
-                  openModal={() => openModal(item)}
+                  openModal={openModal}
                 />
               </Grid>
             ))
@@ -114,6 +118,7 @@ const ItemLists = ({ selection }) => {
             showModal={showModal}
             setShowModal={setShowModal}
             openEditModal={openFormModal}
+            computedData={computedData}
           />
           <FormModal
             showFormModal={showFormModal}
