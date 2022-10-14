@@ -9,6 +9,8 @@ import {
   TableRow,
 } from "@mui/material";
 
+// TODO: Add units on the values in the specs
+
 const SpecsTable = ({ specs, modalDetails }) => {
   const properties = Object.getOwnPropertyNames(specs);
   const cardDisplay = [

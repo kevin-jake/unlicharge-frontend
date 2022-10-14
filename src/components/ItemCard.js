@@ -61,7 +61,6 @@ const ItemCard = ({ item, openModal, selection }) => {
               flexDirection: "column",
             }}
           >
-            {/* TODO: Change image to be dynamic */}
             <CardMedia
               component="img"
               sx={{ width: 151, height: 151, margin: 2 }}

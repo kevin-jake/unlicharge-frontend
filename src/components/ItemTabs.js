@@ -44,7 +44,6 @@ export default function ItemTabs({ tab1, tab2, tab3 }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  // TODO: Make dynamic tags
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

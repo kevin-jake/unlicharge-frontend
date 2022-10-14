@@ -5,7 +5,7 @@ import { gql, useMutation } from "@apollo/client";
 import styled from "@emotion/styled";
 import { CardMedia } from "@mui/material";
 
-// TODO: Integrate this to forms
+// TODO: Integrate this to register form
 
 // just some styled components for the image upload area
 const getColor = (props) => {

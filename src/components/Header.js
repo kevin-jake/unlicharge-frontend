@@ -82,7 +82,7 @@ const Header = () => {
   };
 
   console.log(isLoggedIn);
-  // TODO: Make this mobile responsive
+  // FIXME: Make this mobile responsive
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "rgb(17 24 39)" }}>
       <StyledToolbar>
@@ -139,6 +139,7 @@ const Header = () => {
                   <Avatar
                     alt="User"
                     sx={{ width: 30, height: 30 }}
+                    //  FIXME: Make this image from users correct pic
                     src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
                   />
                 }
