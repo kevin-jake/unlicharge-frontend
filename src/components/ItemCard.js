@@ -19,7 +19,6 @@ const ItemCard = ({ item, openModal, selection }) => {
   useEffect(() => {
     setComputedData(batterySummary(item, initialForm));
   }, [initialForm]);
-  console.log(item);
   return (
     <>
       <Card
@@ -67,7 +66,7 @@ const ItemCard = ({ item, openModal, selection }) => {
               component="img"
               sx={{ width: 151, height: 151, margin: 2 }}
               image={item.image_url}
-              alt="Live from space album cover"
+              alt={item.name}
             />
           </Box>
         </Box>
@@ -85,7 +84,7 @@ const ItemCard = ({ item, openModal, selection }) => {
             variant="contained"
             size="small"
             sx={{ color: "white", margin: 1, textTransform: "none" }}
-            onClick={openModal}
+            onClick={() => openModal(item, computedData)}
           >
             More Details
           </Button>
