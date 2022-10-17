@@ -16,6 +16,7 @@ import { GlobalContext } from "../context/global-context";
 import Upload from "./UploadZone";
 import { Stack } from "@mui/system";
 import { gql, useMutation } from "@apollo/client";
+import FormFields from "./FormFields";
 
 // FIXME: Refactor the image upload before save function to be more optimized
 const uploadFileMutation = gql`
@@ -59,182 +60,6 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   };
 
   console.log(values);
-  const format = (string) => {
-    var cleanString = string.replaceAll("_", " ");
-    return cleanString.charAt(0).toUpperCase() + cleanString.slice(1);
-  };
-
-  const inputField = (prop, formData) => {
-    switch (prop) {
-      case "name": {
-        return (
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id={prop}
-              label={format(prop)}
-              helperText={formData[prop]}
-              value={
-                formData[prop] && !values[prop] ? formData[prop] : values[prop]
-              }
-              onChange={onChange}
-            />
-          </Grid>
-        );
-      }
-      case "type": {
-        return (
-          <Grid item xs={3}>
-            <TextField
-              name="type"
-              required
-              select
-              fullWidth
-              label={format(prop)}
-              value={
-                formData[prop] && !values[prop] ? formData[prop] : values[prop]
-              }
-              onChange={onChange}
-            >
-              <MenuItem value="LiFePo4">LiFePo4</MenuItem>
-              <MenuItem value="Lead Acid">Lead Acid</MenuItem>
-              <MenuItem value="Li-on">Li-on</MenuItem>
-            </TextField>
-          </Grid>
-        );
-      }
-      case "model": {
-        return (
-          <Grid item xs={3}>
-            <TextField
-              required
-              fullWidth
-              id={prop}
-              label={format(prop)}
-              helperText={formData[prop]}
-              value={
-                formData[prop] && !values[prop] ? formData[prop] : values[prop]
-              }
-              onChange={onChange}
-            />
-          </Grid>
-        );
-      }
-      default: {
-        if (prop.includes("voltage")) {
-          return (
-            <Grid item xs={3}>
-              <TextField
-                fullWidth
-                required={prop === "nominal_voltage"}
-                id={prop}
-                label={format(prop)}
-                helperText={formData[prop]}
-                type="number"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">V</InputAdornment>
-                  ),
-                }}
-                value={
-                  formData[prop] && !values[prop]
-                    ? formData[prop]
-                    : values[prop]
-                }
-                onChange={onChange}
-              />
-            </Grid>
-          );
-        } else if (prop.includes("capacity")) {
-          return (
-            <Grid item xs={3}>
-              <TextField
-                fullWidth
-                required
-                id={prop}
-                label={format(prop)}
-                helperText={formData[prop]}
-                type="number"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">Ah</InputAdornment>
-                  ),
-                }}
-                value={
-                  formData[prop] && !values[prop]
-                    ? formData[prop]
-                    : values[prop]
-                }
-                onChange={onChange}
-              />
-            </Grid>
-          );
-        } else if (prop.includes("price")) {
-          return (
-            <Grid item xs={3}>
-              <TextField
-                fullWidth
-                required
-                id={prop}
-                label={format(prop)}
-                helperText={formData[prop]}
-                type="number"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">Php</InputAdornment>
-                  ),
-                }}
-                value={
-                  formData[prop] && !values[prop]
-                    ? formData[prop]
-                    : values[prop]
-                }
-                onChange={onChange}
-              />
-            </Grid>
-          );
-        } else if (prop.includes("current")) {
-          return (
-            <Grid item xs={3}>
-              <TextField
-                fullWidth
-                id={prop}
-                label={format(prop)}
-                helperText={formData[prop]}
-                type="number"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">A</InputAdornment>
-                  ),
-                }}
-                value={
-                  formData[prop] && !values[prop]
-                    ? formData[prop]
-                    : values[prop]
-                }
-                onChange={onChange}
-              />
-            </Grid>
-          );
-        }
-        return (
-          <Grid item xs={3}>
-            <TextField
-              fullWidth
-              id={prop}
-              label={format(prop)}
-              helperText={formData[prop]}
-              value={
-                formData[prop] && !values[prop] ? formData[prop] : values[prop]
-              }
-              onChange={onChange}
-            />
-          </Grid>
-        );
-      }
-    }
-  };
 
   return (
     <Modal
@@ -265,9 +90,17 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
             {operation !== "Delete" &&
               properties.map(
                 (prop) =>
-                  !formDisplay.includes(prop) && inputField(prop, formData)
+                  !formDisplay.includes(prop) && (
+                    <FormFields
+                      prop={prop}
+                      formData={formData}
+                      values={values}
+                      onChange={onChange}
+                      onSubmit={onSubmit}
+                    />
+                  )
               )}
-            {!imgButton && (
+            {!imgButton && operation === "Create" && (
               <Grid item xs={5}>
                 <TextField
                   fullWidth
@@ -280,43 +113,47 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
             )}
           </Grid>
         </div>
-        <Divider orientation="vertical" variant="middle" flexItem />
-        <div>
-          <Stack direction="row" spacing={2} alignItems="center" margin={1}>
-            <Button
-              variant={imgButton ? "contained" : "outlined"}
-              size="small"
-              id="uploadImg"
-              sx={{
-                margin: 1,
-                textTransform: "none",
-                ...(imgButton ? { color: "white" } : {}),
-              }}
-              onClick={handleImagebtn}
-            >
-              Image Upload
-            </Button>
-            <Typography variant="body2" component="span">
-              or
-            </Typography>
-            <Button
-              variant={imgButton ? "outlined" : "contained"}
-              size="small"
-              id="imgaddr"
-              sx={{
-                margin: 1,
-                textTransform: "none",
-                ...(imgButton ? {} : { color: "white" }),
-              }}
-              onClick={handleImagebtn}
-            >
-              Type the Image Address
-            </Button>
-          </Stack>
-          {imgButton && (
-            <Upload imageFile={imageFile} setImageFile={setImageFile} />
-          )}
-        </div>
+        {operation === "Create" && (
+          <>
+            <Divider orientation="vertical" variant="middle" flexItem />
+            <div>
+              <Stack direction="row" spacing={2} alignItems="center" margin={1}>
+                <Button
+                  variant={imgButton ? "contained" : "outlined"}
+                  size="small"
+                  id="uploadImg"
+                  sx={{
+                    margin: 1,
+                    textTransform: "none",
+                    ...(imgButton ? { color: "white" } : {}),
+                  }}
+                  onClick={handleImagebtn}
+                >
+                  Image Upload
+                </Button>
+                <Typography variant="body2" component="span">
+                  or
+                </Typography>
+                <Button
+                  variant={imgButton ? "outlined" : "contained"}
+                  size="small"
+                  id="imgaddr"
+                  sx={{
+                    margin: 1,
+                    textTransform: "none",
+                    ...(imgButton ? {} : { color: "white" }),
+                  }}
+                  onClick={handleImagebtn}
+                >
+                  Type the Image Address
+                </Button>
+              </Stack>
+              {imgButton && (
+                <Upload imageFile={imageFile} setImageFile={setImageFile} />
+              )}
+            </div>
+          </>
+        )}
       </Box>
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
         {
