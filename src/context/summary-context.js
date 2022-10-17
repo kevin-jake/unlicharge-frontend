@@ -8,7 +8,11 @@ const initState = {
     minBattVoltage: 0,
     dod: 0,
   },
-  batterySelected: "",
+  batterySelected: {
+    id: "",
+    qty: "",
+    price: "",
+  },
   bmsSelected: "",
   abSelected: "",
 };

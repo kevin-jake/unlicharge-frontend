@@ -1,39 +1,56 @@
-import React, { useState } from "react";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import { Fab } from "@mui/material";
 
-const SideSummary = () => {
-  const [showSideSummary, setshowSideSummary] = useState(false);
+export default function SideSummary({ components }) {
+  const [state, setState] = React.useState({
+    right: false,
+  });
 
-  const handleClick = (e) => {
-    if (e.target.id === "sidesummaryBtn" || e.target.id === "sidesummarydiv")
-      setshowSideSummary(true);
-    else setshowSideSummary(false);
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
   };
 
-  return (
-    <>
-      {showSideSummary ? (
-        <div
-          onClick={handleClick}
-          className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center"
-        >
-          <div
-            id="sidesummarydiv"
-            className="right-0 fixed h-full w-1/4 z-10 p-10 bg-white rounded-lg shadow-lg"
-          >
-            <h2 className="text-2xl">Summary</h2>
-          </div>
-        </div>
-      ) : (
-        <button
-          id="sidesummaryBtn"
-          onClick={handleClick}
-          className="fixed top-1/2 right-0 z-10 bg-stone-800 p-10 rounded-l-lg text-white"
-        >
-          Test
-        </button>
-      )}
-    </>
+  const list = (anchor, components) => (
+    <Box
+      sx={{ width: 300, p: 2, m: 0 }}
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      {components}
+    </Box>
   );
-};
 
-export default SideSummary;
+  return (
+    <Box
+      sx={{
+        margin: 0,
+        top: "50%",
+        right: 20,
+        bottom: 20,
+        left: "auto",
+        position: "fixed",
+      }}
+      alignItems="center"
+    >
+      <Fab variant="extended" onClick={toggleDrawer("right", true)}>
+        Summary
+      </Fab>
+      <Drawer
+        anchor="right"
+        open={state.right}
+        onClose={toggleDrawer("right", false)}
+      >
+        {list("right", components)}
+      </Drawer>
+    </Box>
+  );
+}

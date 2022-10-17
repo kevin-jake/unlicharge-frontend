@@ -7,6 +7,11 @@ import DetailsModal from "../components/DetailsModal";
 import FormModal from "../components/FormModal";
 import { AB, Battery, BMS } from "../util/AddFormProperties";
 import { AuthContext } from "../context/auth-context";
+import SideSummary from "../components/SideSummary";
+import { SummaryContext } from "../context/summary-context";
+import SpecsTable from "../components/SpecsTable";
+import PathCards from "../components/PathCards";
+import { MdBatteryChargingFull } from "react-icons/md";
 
 function querySelect(select) {
   switch (select) {
@@ -29,6 +34,8 @@ function querySelect(select) {
 
 const ItemLists = ({ selection }) => {
   const { userId } = useContext(AuthContext);
+  const { batterySelected, bmsSelected, abSelected } =
+    useContext(SummaryContext);
   const { loading, data } = useQuery(querySelect(selection).gql_query, {
     variables: { userId },
   });
@@ -125,6 +132,23 @@ const ItemLists = ({ selection }) => {
           />
         </>
       )}
+      <SideSummary
+        components={
+          batterySelected && (
+            <PathCards
+              title="Battery"
+              icon={<MdBatteryChargingFull />}
+              description={
+                <div>
+                  <p> Selected Battery: {batterySelected.id} </p>
+                  <p> Battery Price: {batterySelected.price} </p>
+                  <p> Total Quantity: {batterySelected.qty} </p>
+                </div>
+              }
+            />
+          )
+        }
+      />
     </>
   );
 };
