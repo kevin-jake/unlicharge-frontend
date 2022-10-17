@@ -23,7 +23,7 @@ const AppReducer = (state, action) => {
     case "SET_BATT":
       return {
         ...state,
-        initialForm: action.initialForm,
+        batterySelected: action.batterySelected,
       };
     default:
       return state;

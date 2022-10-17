@@ -19,6 +19,9 @@ const ItemCard = ({ item, openModal, selection }) => {
   useEffect(() => {
     setComputedData(batterySummary(item, initialForm));
   }, [initialForm]);
+  console.log({ item });
+  console.log({ batterySelected });
+
   return (
     <>
       <Card
@@ -28,6 +31,7 @@ const ItemCard = ({ item, openModal, selection }) => {
           pb: 2,
           width: 450,
           height: "auto",
+          backgroundColor: batterySelected === item.id ? "lightgreen" : "",
         }}
       >
         <Box sx={{ display: "flex" }}>
@@ -91,6 +95,7 @@ const ItemCard = ({ item, openModal, selection }) => {
             variant="contained"
             size="small"
             sx={{ color: "white", margin: 1, textTransform: "none" }}
+            onClick={() => setBattery(item.id)}
           >
             Select
           </Button>
