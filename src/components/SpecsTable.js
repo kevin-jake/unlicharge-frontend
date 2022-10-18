@@ -34,7 +34,6 @@ const SpecsTable = ({ specs, modalDetails }) => {
     var cleanString = string.replaceAll("_", " ");
     return cleanString.charAt(0).toUpperCase() + cleanString.slice(1);
   };
-  console.log({ specs });
   return (
     <TableContainer>
       <Table size="small" aria-label="simple table">

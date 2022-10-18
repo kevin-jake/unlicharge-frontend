@@ -67,6 +67,7 @@ const AppReducer = (state, action) => {
 const SummaryContext = createContext(initState);
 
 const SummaryProvider = (props) => {
+  const [state, dispatch] = useReducer(AppReducer, initState);
   const setInitForm = (initialForm) => {
     dispatch({
       type: "SET_INIT_FORM",
