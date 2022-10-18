@@ -12,9 +12,20 @@ const initState = {
     id: "",
     qty: "",
     price: "",
+    sumPrice: "",
   },
-  bmsSelected: "",
-  abSelected: "",
+  bmsSelected: {
+    id: "",
+    qty: "",
+    price: "",
+    sumPrice: "",
+  },
+  abSelected: {
+    id: "",
+    qty: "",
+    price: "",
+    sumPrice: "",
+  },
 };
 
 const AppReducer = (state, action) => {
@@ -27,7 +38,26 @@ const AppReducer = (state, action) => {
     case "SET_BATT":
       return {
         ...state,
-        batterySelected: action.batterySelected,
+        batterySelected: {
+          ...action.batterySelected,
+          sumPrice: +action.batterySelected.qty * +action.batterySelected.price,
+        },
+      };
+    case "SET_BMS":
+      return {
+        ...state,
+        bmsSelected: {
+          ...action.bmsSelected,
+          sumPrice: +action.bmsSelected.qty * +action.bmsSelected.price,
+        },
+      };
+    case "SET_AB":
+      return {
+        ...state,
+        abSelected: {
+          ...action.abSelected,
+          sumPrice: +action.abSelected.qty * +action.abSelected.price,
+        },
       };
     default:
       return state;
@@ -37,8 +67,6 @@ const AppReducer = (state, action) => {
 const SummaryContext = createContext(initState);
 
 const SummaryProvider = (props) => {
-  const [state, dispatch] = useReducer(AppReducer, initState);
-
   const setInitForm = (initialForm) => {
     dispatch({
       type: "SET_INIT_FORM",
@@ -53,11 +81,28 @@ const SummaryProvider = (props) => {
     });
   };
 
-  console.log(state);
+  const setBMS = (bmsSelected) => {
+    dispatch({
+      type: "SET_BMS",
+      bmsSelected,
+    });
+  };
+
+  const setAB = (abSelected) => {
+    dispatch({
+      type: "SET_AB",
+      abSelected,
+    });
+  };
+
   const value = {
     initialForm: state.initialForm,
     batterySelected: state.batterySelected,
+    bmsSelected: state.bmsSelected,
+    abSelected: state.abSelected,
     setBattery,
+    setBMS,
+    setAB,
     setInitForm,
   };
   // // console.log(state);
