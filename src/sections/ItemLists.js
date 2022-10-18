@@ -145,8 +145,10 @@ const ItemLists = ({ selection }) => {
                   <p> Total Quantity: {batterySelected.qty} </p>
                 </div>
               }
-            /> */}
-      ) } />
+            />
+          )
+        }
+      /> */}
     </>
   );
 };
