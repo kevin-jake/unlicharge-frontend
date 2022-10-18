@@ -106,7 +106,7 @@ const SummaryProvider = (props) => {
     setAB,
     setInitForm,
   };
-  // // console.log(state);
+  console.log({ value });
   return (
     <SummaryContext.Provider value={value}>
       {props.children}

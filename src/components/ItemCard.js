@@ -13,12 +13,45 @@ import { SummaryContext } from "../context/summary-context";
 import QuickSpecs from "./QuickSpecs";
 
 const ItemCard = ({ item, openModal, selection }) => {
-  const { initialForm, batterySelected, setBattery } =
-    useContext(SummaryContext);
+  const {
+    initialForm,
+    batterySelected,
+    bmsSelected,
+    abSelected,
+    setBattery,
+    setBMS,
+    setAB,
+  } = useContext(SummaryContext);
   const [computedData, setComputedData] = useState();
+  const bgSelect = () => {
+    if (selection === "Battery") {
+      return batterySelected.id === item.id ? "lightgreen" : "";
+    }
+    if (selection === "BMS") {
+      console.log({ bmsSelected });
+      return bmsSelected.id === item.id ? "lightgreen" : "";
+    }
+    if (selection === "Active Balancer") {
+      console.log({ abSelected });
+      return abSelected.id === item.id ? "lightgreen" : "";
+    }
+  };
+
   useEffect(() => {
     setComputedData(batterySummary(item, initialForm));
   }, [initialForm]);
+
+  const handleItemCick = (id, qty, price) => {
+    if (selection === "Battery") {
+      setBattery({ id, qty: computedData && computedData.qty, price });
+    }
+    if (selection === "BMS") {
+      setBMS({ id, qty, price });
+    }
+    if (selection === "Active Balancer") {
+      setAB({ id, qty, price });
+    }
+  };
 
   return (
     <>
@@ -29,7 +62,7 @@ const ItemCard = ({ item, openModal, selection }) => {
           pb: 2,
           width: 450,
           height: "auto",
-          backgroundColor: batterySelected.id === item.id ? "lightgreen" : "",
+          backgroundColor: bgSelect(),
         }}
       >
         <Box sx={{ display: "flex" }}>
@@ -94,12 +127,7 @@ const ItemCard = ({ item, openModal, selection }) => {
             size="small"
             sx={{ color: "white", margin: 1, textTransform: "none" }}
             onClick={() =>
-              setBattery({
-                ...batterySelected,
-                id: item.id,
-                qty: computedData && computedData.totalQty,
-                price: item.price_per_pc,
-              })
+              handleItemCick(item.id, "1", item.price_per_pc || item.price)
             }
           >
             Select
