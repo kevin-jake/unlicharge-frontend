@@ -22,7 +22,6 @@ export const stringCompatibility = (
     if (total_battInSeries !== data_string) {
       return {
         notifType: "ERR",
-        part: partType,
         msg:
           partType +
           " have " +
@@ -33,5 +32,5 @@ export const stringCompatibility = (
       };
     }
   }
-  return false;
+  return {};
 };

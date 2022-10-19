@@ -28,7 +28,7 @@ const SpecsTable = ({ specs, modalDetails }) => {
     "createdAt",
     "image_url",
   ];
-  const modalDisplay = ["name", "id", "createdAt", "image_url"];
+  const modalDisplay = ["name", "id", "createdAt", "image_url", "error"];
 
   const format = (string) => {
     var cleanString = string.replaceAll("_", " ");

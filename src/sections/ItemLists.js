@@ -34,8 +34,6 @@ function querySelect(select) {
 
 const ItemLists = ({ selection }) => {
   const { userId } = useContext(AuthContext);
-  const { batterySelected, bmsSelected, abSelected } =
-    useContext(SummaryContext);
   const { loading, data } = useQuery(querySelect(selection).gql_query, {
     variables: { userId },
   });

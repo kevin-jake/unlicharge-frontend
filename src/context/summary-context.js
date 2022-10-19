@@ -9,27 +9,14 @@ const initState = {
     dod: 0,
   },
   batterySelected: {
-    id: "",
-    qty: "",
-    price: "",
-    sumPrice: "",
-    battSeries: "",
+    error: {},
   },
   bmsSelected: {
-    id: "",
-    qty: "",
-    price: "",
-    sumPrice: "",
-    strings: "",
+    error: {},
   },
   abSelected: {
-    id: "",
-    qty: "",
-    price: "",
-    sumPrice: "",
-    strings: "",
+    error: {},
   },
-  incompatibility: [],
 };
 
 const AppReducer = (state, action) => {
@@ -39,34 +26,21 @@ const AppReducer = (state, action) => {
         ...state,
         initialForm: action.initialForm,
       };
-    case "SET_BATT":
+    case "SET_BATT": {
       return {
         ...state,
-        batterySelected: {
-          ...action.batterySelected,
-          sumPrice: +action.batterySelected.qty * +action.batterySelected.price,
-        },
+        batterySelected: action.batterySelected,
       };
+    }
     case "SET_BMS":
       return {
         ...state,
-        bmsSelected: {
-          ...action.bmsSelected,
-          sumPrice: +action.bmsSelected.qty * +action.bmsSelected.price,
-        },
+        bmsSelected: action.bmsSelected,
       };
     case "SET_AB":
       return {
         ...state,
-        abSelected: {
-          ...action.abSelected,
-          sumPrice: +action.abSelected.qty * +action.abSelected.price,
-        },
-      };
-    case "SET_INCOMPATIBILITY":
-      return {
-        ...state,
-        incompatibility: action.incompatibility,
+        abSelected: action.abSelected,
       };
     default:
       return state;
@@ -105,23 +79,14 @@ const SummaryProvider = (props) => {
     });
   };
 
-  const setIncompatibility = (incompatibility) => {
-    dispatch({
-      type: "SET_INCOMPATIBILITY",
-      incompatibility,
-    });
-  };
-
   const value = {
     initialForm: state.initialForm,
     batterySelected: state.batterySelected,
     bmsSelected: state.bmsSelected,
     abSelected: state.abSelected,
-    incompatibility: state.incompatibility,
     setBattery,
     setBMS,
     setAB,
-    setIncompatibility,
     setInitForm,
   };
   console.log({ value });

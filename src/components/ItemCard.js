@@ -11,6 +11,7 @@ import SpecsTable from "./SpecsTable";
 import { batterySummary } from "../logic/battery-computations";
 import { SummaryContext } from "../context/summary-context";
 import QuickSpecs from "./QuickSpecs";
+import { stringCompatibility } from "../logic/incompatibiliy";
 
 const ItemCard = ({ item, openModal, selection }) => {
   const {
@@ -25,50 +26,83 @@ const ItemCard = ({ item, openModal, selection }) => {
   const [computedData, setComputedData] = useState();
   const bgSelect = () => {
     if (selection === "Battery") {
-      return batterySelected.id === item.id ? "lightgreen" : "";
+      if (batterySelected.id === item.id) {
+        if (
+          batterySelected.error &&
+          Object.keys(batterySelected.error).length !== 0
+        )
+          return "pink";
+        else return "lightgreen";
+      }
+      return "";
     }
     if (selection === "BMS") {
-      console.log({ bmsSelected });
-      return bmsSelected.id === item.id ? "lightgreen" : "";
+      if (bmsSelected.id === item.id) {
+        if (bmsSelected.error && Object.keys(bmsSelected.error).length !== 0)
+          return "pink";
+        else return "lightgreen";
+      }
+      return "";
     }
     if (selection === "Active Balancer") {
-      console.log({ abSelected });
-      return abSelected.id === item.id ? "lightgreen" : "";
+      if (abSelected.id === item.id) {
+        if (abSelected.error && Object.keys(abSelected.error).length !== 0)
+          return "pink";
+        else return "lightgreen";
+      }
+      return "";
     }
   };
 
   useEffect(() => {
     setComputedData(batterySummary(item, initialForm));
+    // if (
+    //   batterySelected.computedData &&
+    //   Object.keys(batterySelected.computedData).length !== 0
+    // ) {
+    setBattery({
+      ...batterySelected,
+      computedData: batterySummary(batterySelected, initialForm),
+    });
+    // }
   }, [initialForm]);
 
-  useEffect(() => {
-    if (batterySelected.id === item.id) {
-      setBattery({
-        ...batterySelected,
-        qty: computedData && computedData.totalQty,
-        battSeries: computedData && computedData.totalSeries,
-      });
+  const handleItemClick = () => {
+    console.log({ batterySelected });
+    var error;
+    if (
+      batterySelected.computedData &&
+      Object.keys(batterySelected.computedData).length !== 0
+    ) {
+      error = stringCompatibility(
+        +batterySelected.computedData.totalSeries,
+        +item.strings,
+        selection
+      );
     }
-  }, [computedData]);
-
-  const handleItemCick = () => {
     if (selection === "Battery") {
       setBattery({
-        id: item.id,
-        price: item.price_per_pc,
-        qty: computedData && computedData.totalQty,
-        battSeries: computedData && computedData.totalSeries,
+        ...batterySelected,
+        ...item,
+        computedData,
       });
     }
     if (selection === "BMS") {
-      setBMS({ id: item.id, qty: 1, price: item.price, strings: item.strings });
+      setBMS({
+        ...bmsSelected,
+        ...item,
+        error,
+      });
     }
     if (selection === "Active Balancer") {
-      setAB({ id: item.id, qty: 1, price: item.price, strings: item.strings });
+      setAB({
+        ...abSelected,
+        ...item,
+        error,
+      });
     }
   };
 
-  console.log({ computedData });
   return (
     <>
       <Card
@@ -142,7 +176,7 @@ const ItemCard = ({ item, openModal, selection }) => {
             variant="contained"
             size="small"
             sx={{ color: "white", margin: 1, textTransform: "none" }}
-            onClick={handleItemCick}
+            onClick={handleItemClick}
           >
             Select
           </Button>
