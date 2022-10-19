@@ -41,18 +41,34 @@ const ItemCard = ({ item, openModal, selection }) => {
     setComputedData(batterySummary(item, initialForm));
   }, [initialForm]);
 
-  const handleItemCick = (id, qty, price) => {
+  useEffect(() => {
+    if (batterySelected.id === item.id) {
+      setBattery({
+        ...batterySelected,
+        qty: computedData && computedData.totalQty,
+        battSeries: computedData && computedData.totalSeries,
+      });
+    }
+  }, [computedData]);
+
+  const handleItemCick = () => {
     if (selection === "Battery") {
-      setBattery({ id, qty: computedData && computedData.totalQty, price });
+      setBattery({
+        id: item.id,
+        price: item.price_per_pc,
+        qty: computedData && computedData.totalQty,
+        battSeries: computedData && computedData.totalSeries,
+      });
     }
     if (selection === "BMS") {
-      setBMS({ id, qty, price });
+      setBMS({ id: item.id, qty: 1, price: item.price, strings: item.strings });
     }
     if (selection === "Active Balancer") {
-      setAB({ id, qty, price });
+      setAB({ id: item.id, qty: 1, price: item.price, strings: item.strings });
     }
   };
 
+  console.log({ computedData });
   return (
     <>
       <Card
@@ -126,9 +142,7 @@ const ItemCard = ({ item, openModal, selection }) => {
             variant="contained"
             size="small"
             sx={{ color: "white", margin: 1, textTransform: "none" }}
-            onClick={() =>
-              handleItemCick(item.id, "1", item.price_per_pc || item.price)
-            }
+            onClick={handleItemCick}
           >
             Select
           </Button>

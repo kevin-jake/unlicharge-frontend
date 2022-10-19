@@ -67,8 +67,6 @@ const ItemLists = ({ selection }) => {
     setModalData(querySelect(selection).form_props);
     setShowFormModal({ open: true, operation: "Create" });
   };
-
-  console.log({ computedData });
   return (
     <>
       <Box sx={{ flexDirection: "row" }}>
