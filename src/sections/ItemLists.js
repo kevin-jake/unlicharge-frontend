@@ -54,7 +54,6 @@ const ItemLists = ({ selection }) => {
   }
 
   const openModal = (item, computedData) => {
-    console.log({ computedData });
     setShowModal(true);
     setComputedData(computedData);
     setModalData(item);
@@ -69,7 +68,7 @@ const ItemLists = ({ selection }) => {
     setShowFormModal({ open: true, operation: "Create" });
   };
 
-  console.log(itemData);
+  console.log({ computedData });
   return (
     <>
       <Box sx={{ flexDirection: "row" }}>

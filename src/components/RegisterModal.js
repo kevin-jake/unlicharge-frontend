@@ -74,7 +74,6 @@ const RegisterModal = ({
     },
     onError(err) {
       if (err.graphQLErrors[0]) {
-        console.log(err.graphQLErrors[0].extensions.errors);
         setErrors(err.graphQLErrors[0].extensions.errors);
       }
     },

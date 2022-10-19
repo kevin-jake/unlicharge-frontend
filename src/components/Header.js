@@ -80,8 +80,6 @@ const Header = () => {
     showSignInModal(false, fromFormModal);
     showRegisterModal(true, fromFormModal);
   };
-
-  console.log(isLoggedIn);
   // FIXME: Make this mobile responsive
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "rgb(17 24 39)" }}>

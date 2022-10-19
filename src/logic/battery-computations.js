@@ -92,7 +92,6 @@ const batterySummary = (data_battery, input_parameters) => {
   }
 
   if (totalNumber && totalLimits) {
-    console.log(totalNumber.total_quantity * +data_battery.price_per_pc);
     const totalPrice = (
       totalNumber.total_quantity * +data_battery.price_per_pc
     ).toFixed(2);

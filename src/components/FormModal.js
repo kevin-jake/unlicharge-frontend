@@ -59,8 +59,6 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
     }
   };
 
-  console.log(values);
-
   return (
     <Modal
       showModal={showFormModal.open}

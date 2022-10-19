@@ -104,7 +104,6 @@ export const useOperationForm = (partsTitle) => {
   };
 
   const onSubmit = (event, operation, image_url) => {
-    console.log(image_url);
     switch (operation) {
       case "Create": {
         if (image_url) {

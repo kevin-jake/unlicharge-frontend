@@ -43,7 +43,7 @@ const ItemCard = ({ item, openModal, selection }) => {
 
   const handleItemCick = (id, qty, price) => {
     if (selection === "Battery") {
-      setBattery({ id, qty: computedData && computedData.qty, price });
+      setBattery({ id, qty: computedData && computedData.totalQty, price });
     }
     if (selection === "BMS") {
       setBMS({ id, qty, price });

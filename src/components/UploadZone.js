@@ -107,8 +107,6 @@ const Upload = ({ imageFile, setImageFile }) => {
       alt={imageFile ? imageFile.name : ""}
     />
   );
-
-  console.log(preview);
   return (
     <Container {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>
       <input {...getInputProps()} />
