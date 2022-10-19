@@ -13,19 +13,23 @@ const initState = {
     qty: "",
     price: "",
     sumPrice: "",
+    battSeries: "",
   },
   bmsSelected: {
     id: "",
     qty: "",
     price: "",
     sumPrice: "",
+    strings: "",
   },
   abSelected: {
     id: "",
     qty: "",
     price: "",
     sumPrice: "",
+    strings: "",
   },
+  incompatibility: [],
 };
 
 const AppReducer = (state, action) => {
@@ -58,6 +62,11 @@ const AppReducer = (state, action) => {
           ...action.abSelected,
           sumPrice: +action.abSelected.qty * +action.abSelected.price,
         },
+      };
+    case "SET_INCOMPATIBILITY":
+      return {
+        ...state,
+        incompatibility: action.incompatibility,
       };
     default:
       return state;
@@ -96,14 +105,23 @@ const SummaryProvider = (props) => {
     });
   };
 
+  const setIncompatibility = (incompatibility) => {
+    dispatch({
+      type: "SET_INCOMPATIBILITY",
+      incompatibility,
+    });
+  };
+
   const value = {
     initialForm: state.initialForm,
     batterySelected: state.batterySelected,
     bmsSelected: state.bmsSelected,
     abSelected: state.abSelected,
+    incompatibility: state.incompatibility,
     setBattery,
     setBMS,
     setAB,
+    setIncompatibility,
     setInitForm,
   };
   console.log({ value });
