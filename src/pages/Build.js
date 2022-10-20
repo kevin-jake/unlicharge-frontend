@@ -18,36 +18,29 @@ const Build = () => {
   } = useContext(SummaryContext);
 
   useEffect(() => {
-    var error;
     if (
       batterySelected.computedData &&
       Object.keys(batterySelected.computedData).length !== 0
     ) {
-      console.log({ error });
-      if (selection === "BMS") {
-        setBMS({
-          ...bmsSelected,
-          error: stringCompatibility(
-            +batterySelected.computedData.totalSeries,
-            +bmsSelected.strings,
-            selection
-          ),
-        });
-      }
-      if (selection === "Active Balancer") {
-        setAB({
-          ...abSelected,
-          error: stringCompatibility(
-            +batterySelected.computedData.totalSeries,
-            +abSelected.strings,
-            selection
-          ),
-        });
-      }
+      setBMS({
+        ...bmsSelected,
+        error: stringCompatibility(
+          +batterySelected.computedData.totalSeries,
+          +bmsSelected.strings,
+          "BMS"
+        ),
+      });
+      setAB({
+        ...abSelected,
+        error: stringCompatibility(
+          +batterySelected.computedData.totalSeries,
+          +abSelected.strings,
+          "Active Balancer"
+        ),
+      });
     }
   }, [batterySelected, initialForm]);
 
-  console.log(selection);
   return (
     <>
       <InitialForm />
