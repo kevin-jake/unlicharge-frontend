@@ -88,6 +88,55 @@ const CREATE_BATT = gql`
   }
 `;
 
+const UPDATE_BATT = gql`
+  mutation EditBattery(
+    $battId: ID!
+    $name: String!
+    $type: String!
+    $model: String!
+    $nominal_voltage: String!
+    $capacity: String!
+    $price_per_pc: String!
+    $min_voltage: String
+    $max_voltage: String
+    $supplier: String
+  ) {
+    editBattery(
+      battId: $battId
+      batteryInput: {
+        name: $name
+        type: $type
+        model: $model
+        nominal_voltage: $nominal_voltage
+        capacity: $capacity
+        price_per_pc: $price_per_pc
+        min_voltage: $min_voltage
+        max_voltage: $max_voltage
+        supplier: $supplier
+      }
+    ) {
+      edit_request {
+        id
+        name
+        type
+        model
+        min_voltage
+        max_voltage
+        nominal_voltage
+        price_per_pc
+        c_Rate
+        supplier
+        requestor {
+          username
+        }
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 const CREATE_BMS = gql`
   mutation CreateBMS(
     $name: String!
@@ -170,4 +219,11 @@ const CREATE_AB = gql`
   }
 `;
 
-export { LOGIN_USER, REGISTER_USER, CREATE_AB, CREATE_BATT, CREATE_BMS };
+export {
+  LOGIN_USER,
+  REGISTER_USER,
+  CREATE_AB,
+  CREATE_BATT,
+  UPDATE_BATT,
+  CREATE_BMS,
+};

@@ -1,4 +1,10 @@
-import { Grid, InputAdornment, MenuItem, TextField } from "@mui/material";
+import {
+  Grid,
+  InputAdornment,
+  MenuItem,
+  styled,
+  TextField,
+} from "@mui/material";
 import React from "react";
 
 const format = (string) => {
@@ -6,7 +12,15 @@ const format = (string) => {
   return cleanString.charAt(0).toUpperCase() + cleanString.slice(1);
 };
 
-const FormFields = ({ prop, formData, values, onChange, onSubmit }) => {
+const URLFields = styled(TextField)({
+  "& .MuiFormHelperText-root": {
+    overflow: "hidden",
+    whiteSpace: "noWrap",
+    textOverflow: "ellipsis",
+  },
+});
+
+const FormFields = ({ prop, formData, values, onChange }) => {
   const toRender = (prop, formData) => {
     if (prop === "image_url") return null;
     switch (prop) {
@@ -152,6 +166,24 @@ const FormFields = ({ prop, formData, values, onChange, onSubmit }) => {
                     <InputAdornment position="end">A</InputAdornment>
                   ),
                 }}
+                value={
+                  formData[prop] && !values[prop]
+                    ? formData[prop]
+                    : values[prop]
+                }
+                onChange={onChange}
+              />
+            </Grid>
+          );
+        } else if (prop === "supplier") {
+          return (
+            <Grid item xs={3}>
+              <URLFields
+                required
+                fullWidth
+                id={prop}
+                label={format(prop)}
+                helperText={formData[prop]}
                 value={
                   formData[prop] && !values[prop]
                     ? formData[prop]

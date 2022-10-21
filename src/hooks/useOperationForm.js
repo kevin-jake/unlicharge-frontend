@@ -1,7 +1,12 @@
 import { useMutation } from "@apollo/client";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth-context";
-import { CREATE_AB, CREATE_BATT, CREATE_BMS } from "../util/graphql/Mutation";
+import {
+  CREATE_AB,
+  CREATE_BATT,
+  CREATE_BMS,
+  UPDATE_BATT,
+} from "../util/graphql/Mutation";
 import { FETCH_AB, FETCH_BATTERY, FETCH_BMS } from "../util/graphql/Query";
 
 export const useOperationForm = (partsTitle) => {
@@ -22,6 +27,7 @@ export const useOperationForm = (partsTitle) => {
             image_url: "",
           },
           gql_mutation: CREATE_BATT,
+          gql_mutation_edit: UPDATE_BATT,
           gql_query: FETCH_BATTERY,
           dataArray: "getBatteries",
         };
@@ -41,6 +47,8 @@ export const useOperationForm = (partsTitle) => {
             image_url: "",
           },
           gql_mutation: CREATE_BMS,
+          // FIXME:
+          gql_mutation_edit: UPDATE_BATT,
           gql_query: FETCH_BMS,
           dataArray: "getBMSes",
         };
@@ -58,6 +66,8 @@ export const useOperationForm = (partsTitle) => {
             image_url: "",
           },
           gql_mutation: CREATE_AB,
+          // FIXME:
+          gql_mutation_edit: UPDATE_BATT,
           gql_query: FETCH_AB,
           dataArray: "getActiveBalancers",
         };
@@ -71,7 +81,7 @@ export const useOperationForm = (partsTitle) => {
     setValues(titleSelect(partsTitle).initialState);
   }, [partsTitle]);
 
-  const [onCreate, { error }] = useMutation(
+  const [onCreate, createResponse] = useMutation(
     titleSelect(partsTitle).gql_mutation,
     {
       variables: values,
@@ -97,18 +107,28 @@ export const useOperationForm = (partsTitle) => {
     }
   );
 
+  const [onEdit, editResponse] = useMutation(
+    titleSelect(partsTitle).gql_mutation_edit,
+    {
+      variables: values,
+    }
+  );
+
   const onChange = (event) => {
     var prop;
     event.target.id ? (prop = event.target.id) : (prop = event.target.name);
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const onSubmit = (event, operation, image_url) => {
+  const onSubmit = (event, operation, image_url, id) => {
     switch (operation) {
       case "Create": {
         if (image_url) {
           onCreate({ variables: { ...values, image_url } });
         } else onCreate();
+      }
+      case "Edit": {
+        onEdit({ variables: { ...values, battId: id } });
       }
     }
   };
@@ -117,6 +137,7 @@ export const useOperationForm = (partsTitle) => {
   return {
     onChange,
     onSubmit,
+    setValues,
     values,
   };
 };

@@ -33,10 +33,15 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   const properties = Object.getOwnPropertyNames(formData);
   const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
   const operation = showFormModal.operation;
-  const { values, onChange, onSubmit } = useOperationForm(title);
+  const { values, setValues, onChange, onSubmit } = useOperationForm(title);
   const [imgButton, setImgButton] = useState(true);
   const [imageFile, setImageFile] = useState();
   const [uploadFile, { data }] = useMutation(uploadFileMutation);
+
+  useEffect(() => {
+    setValues(formData);
+    console.log({ formData });
+  }, [formData]);
 
   const handleSave = (event, operation) => {
     if (imageFile) {
@@ -46,7 +51,7 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
           onSubmit(event, operation, data.uploadFile.Location);
         },
       });
-    } else onSubmit(event, operation);
+    } else onSubmit(event, operation, null, formData.id);
     setShowFormModal(false);
   };
 
@@ -58,7 +63,6 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
       setImageFile();
     }
   };
-
   return (
     <Modal
       showModal={showFormModal.open}
@@ -90,6 +94,7 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
                 (prop) =>
                   !formDisplay.includes(prop) && (
                     <FormFields
+                      key={prop}
                       prop={prop}
                       formData={formData}
                       values={values}
