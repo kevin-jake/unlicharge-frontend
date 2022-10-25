@@ -1,8 +1,8 @@
 import React from "react";
-import DataTable from "../components/DataTable";
+import DataTab from "../components/DataTab";
 
 const Requests = () => {
-  return <DataTable />;
+  return <DataTab />;
 };
 
 export default Requests;
