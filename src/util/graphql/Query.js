@@ -139,6 +139,7 @@ const FETCH_PARTS_DEL_REQ = gql`
   query GetPartsDeleteRequests($table: String!) {
     getPartsDeleteRequests(table: $table) {
       id
+      name
       requestor {
         username
       }
