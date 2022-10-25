@@ -137,6 +137,23 @@ const UPDATE_BATT = gql`
   }
 `;
 
+const DELETE_BATT = gql`
+  mutation DeleteBattery($battId: ID!, $reason: String!) {
+    deleteBattery(battId: $battId, reason: $reason) {
+      delete_request {
+        id
+        requestor {
+          username
+        }
+        reason
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 const CREATE_BMS = gql`
   mutation CreateBMS(
     $name: String!
@@ -225,5 +242,6 @@ export {
   CREATE_AB,
   CREATE_BATT,
   UPDATE_BATT,
+  DELETE_BATT,
   CREATE_BMS,
 };

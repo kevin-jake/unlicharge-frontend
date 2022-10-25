@@ -28,19 +28,20 @@ const DetailsModal = ({
           padding: 2,
         }}
       >
-        {/* TODO: Dynamic image */}
-        <Box
-          component="img"
-          alt={modalData.name}
-          sx={{
-            width: 300,
-            margin: 2,
-            height: "30%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          src={modalData.image_url}
-        />
+        {modalData.image_url && (
+          <Box
+            component="img"
+            alt={modalData.name}
+            sx={{
+              width: 300,
+              margin: 2,
+              height: "30%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            src={modalData.image_url}
+          />
+        )}
         {/* <SpecsTable specs={modalData} modalDetails={true} /> */}
         <ItemTabs
           tab1={<SpecsTable specs={modalData} modalDetails={true} />}

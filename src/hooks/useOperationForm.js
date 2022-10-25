@@ -5,6 +5,7 @@ import {
   CREATE_AB,
   CREATE_BATT,
   CREATE_BMS,
+  DELETE_BATT,
   UPDATE_BATT,
 } from "../util/graphql/Mutation";
 import { FETCH_AB, FETCH_BATTERY, FETCH_BMS } from "../util/graphql/Query";
@@ -28,6 +29,7 @@ export const useOperationForm = (partsTitle) => {
           },
           gql_mutation: CREATE_BATT,
           gql_mutation_edit: UPDATE_BATT,
+          gql_mutation_delete: DELETE_BATT,
           gql_query: FETCH_BATTERY,
           dataArray: "getBatteries",
         };
@@ -114,6 +116,13 @@ export const useOperationForm = (partsTitle) => {
     }
   );
 
+  const [onDelete, deleteResponse] = useMutation(
+    titleSelect(partsTitle).gql_mutation_delete,
+    {
+      variables: values,
+    }
+  );
+
   const onChange = (event) => {
     var prop;
     event.target.id ? (prop = event.target.id) : (prop = event.target.name);
@@ -129,6 +138,9 @@ export const useOperationForm = (partsTitle) => {
       }
       case "Edit": {
         onEdit({ variables: { ...values, battId: id } });
+      }
+      case "Delete": {
+        onDelete({ variables: { reason: values.reason, battId: id } });
       }
     }
   };

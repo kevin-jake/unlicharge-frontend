@@ -31,7 +31,14 @@ const FormModal = ({ showFormModal, setShowFormModal, formData, title }) => {
   const { showSignInModal } = useContext(GlobalContext);
   const { isLoggedIn } = useContext(AuthContext);
   const properties = Object.getOwnPropertyNames(formData);
-  const formDisplay = ["id", "__typename", "createdAt", "publish_status"];
+  const formDisplay = [
+    "id",
+    "__typename",
+    "createdAt",
+    "publish_status",
+    "creator",
+    "requestor",
+  ];
   const operation = showFormModal.operation;
   const { values, setValues, onChange, onSubmit } = useOperationForm(title);
   const [imgButton, setImgButton] = useState(true);

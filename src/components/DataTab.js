@@ -3,21 +3,25 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import RequestTab from "../components/RequestTab";
+import LinearProgress from "@mui/material/LinearProgress";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import {
   FETCH_AB,
+  FETCH_AB_REQ,
   FETCH_BATTERY,
   FETCH_BATTERY_REQ,
   FETCH_BMS,
+  FETCH_BMS_REQ,
   FETCH_PARTS_DEL_REQ,
 } from "../util/graphql/Query";
 import { useQuery } from "@apollo/client";
+import DetailsModal from "./DetailsModal";
+import FormModal from "./FormModal";
 
 const columns = [
   { field: "id", headerName: "ID" },
-  { field: "name", headerName: "Name", width: 300 },
+  { field: "name", headerName: "Name", width: 600 },
   {
     field: "requestor",
     headerName: "Requestor",
@@ -28,7 +32,6 @@ const columns = [
     },
   },
   { field: "createdAt", headerName: "Requested At", width: 300 },
-  { field: "actions", headerName: "Action", width: 300 },
 ];
 
 function querySelect(selection, operation) {
@@ -48,15 +51,40 @@ function querySelect(selection, operation) {
             : operation === "Edit"
             ? "getBattEditRequests"
             : "getPartsDeleteRequests",
+        table: "Battery",
       };
-    // case "BMS":
-    //   return { gql_query: FETCH_BMS, form_props: BMS, data: "getBMSes" };
-    // case "Active Balancer":
-    //   return {
-    //     gql_query: FETCH_AB,
-    //     form_props: AB,
-    //     data: "getActiveBalancers",
-    //   };
+    case 1:
+      return {
+        gql_query:
+          operation === "Create"
+            ? FETCH_BMS
+            : operation === "Edit"
+            ? FETCH_BMS_REQ
+            : FETCH_PARTS_DEL_REQ,
+        data:
+          operation === "Create"
+            ? "getBMSes"
+            : operation === "Edit"
+            ? "getBMSEditRequests"
+            : "getPartsDeleteRequests",
+        table: "BMS",
+      };
+    case 2:
+      return {
+        gql_query:
+          operation === "Create"
+            ? FETCH_AB
+            : operation === "Edit"
+            ? FETCH_AB_REQ
+            : FETCH_PARTS_DEL_REQ,
+        data:
+          operation === "Create"
+            ? "getActiveBalancers"
+            : operation === "Edit"
+            ? "getABEditRequests"
+            : "getPartsDeleteRequests",
+        table: "Active Balancer",
+      };
   }
 }
 
@@ -93,13 +121,18 @@ export default function DataTab({}) {
   const [value, setValue] = useState(0);
   const [reqBtn, setReqBtn] = useState("Create");
   const [tableData, setTableData] = useState([]);
+  const [modalData, setModalData] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [showFormModal, setShowFormModal] = useState(false);
+
   const { loading, data } = useQuery(querySelect(value, reqBtn).gql_query, {
-    variables: reqBtn === "Delete" ? { table: "Battery" } : {},
+    variables:
+      reqBtn === "Delete" ? { table: querySelect(value, reqBtn).table } : {},
   });
 
-  console.log(data);
   useEffect(() => {
-    data && setTableData(data[querySelect(value, reqBtn).data]);
+    if (data) setTableData(data[querySelect(value, reqBtn).data]);
+    else setTableData([]);
   }, [data]);
 
   const handleChange = (event, newValue) => {
@@ -109,65 +142,101 @@ export default function DataTab({}) {
   const handleReqBtnClick = (event) => {
     setReqBtn(event.target.textContent);
   };
-  console.log({ tableData });
+
+  const handleCellClick = (event) => {
+    setModalData(event.row);
+    setShowModal(true);
+  };
+
+  const openFormModal = (operation) => {
+    setShowFormModal({ open: true, operation });
+  };
+
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
+    <>
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label="Battery" {...a11yProps(0)} />
+            <Tab label="BMS" {...a11yProps(1)} />
+            <Tab label="Active Balancer" {...a11yProps(2)} />
+          </Tabs>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            " *": {
+              m: 1,
+            },
+          }}
         >
-          <Tab label="Battery" {...a11yProps(0)} />
-          <Tab label="BMS" {...a11yProps(1)} />
-          <Tab label="Active Balancer" {...a11yProps(2)} />
-        </Tabs>
+          <Button
+            variant={reqBtn === "Create" ? "contained" : "outlined"}
+            onClick={handleReqBtnClick}
+          >
+            Create
+          </Button>
+          <Button
+            variant={reqBtn === "Edit" ? "contained" : "outlined"}
+            onClick={handleReqBtnClick}
+          >
+            Edit
+          </Button>
+          <Button
+            variant={reqBtn === "Delete" ? "contained" : "outlined"}
+            onClick={handleReqBtnClick}
+          >
+            Delete
+          </Button>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <div style={{ height: 700, width: "100%" }}>
+            <DataGrid
+              components={{
+                LoadingOverlay: LinearProgress,
+              }}
+              onCellClick={handleCellClick}
+              loading={loading}
+              rows={tableData}
+              columns={columns}
+              pageSize={12}
+            />
+          </div>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <div style={{ height: 700, width: "100%" }}>
+            <DataGrid rows={tableData} columns={columns} pageSize={12} />
+          </div>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <div style={{ height: 700, width: "100%" }}>
+            <DataGrid rows={tableData} columns={columns} pageSize={12} />
+          </div>
+        </TabPanel>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          " *": {
-            m: 1,
-          },
-        }}
-      >
-        <Button
-          variant={reqBtn === "Create" ? "contained" : "outlined"}
-          onClick={handleReqBtnClick}
-        >
-          Create
-        </Button>
-        <Button
-          variant={reqBtn === "Edit" ? "contained" : "outlined"}
-          onClick={handleReqBtnClick}
-        >
-          Edit
-        </Button>
-        <Button
-          variant={reqBtn === "Delete" ? "contained" : "outlined"}
-          onClick={handleReqBtnClick}
-        >
-          Delete
-        </Button>
-      </Box>
-      <TabPanel value={value} index={0}>
-        <div style={{ height: 700, width: "100%" }}>
-          <DataGrid rows={tableData} columns={columns} pageSize={12} />
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <div style={{ height: 700, width: "100%" }}>
-          <DataGrid rows={tableData} columns={columns} pageSize={12} />
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <div style={{ height: 700, width: "100%" }}>
-          <DataGrid rows={tableData} columns={columns} pageSize={12} />
-        </div>
-      </TabPanel>
-    </Box>
+      {modalData && (
+        <>
+          <DetailsModal
+            modalData={modalData}
+            showModal={showModal}
+            setShowModal={setShowModal}
+            openEditModal={openFormModal}
+          />
+          <FormModal
+            showFormModal={showFormModal}
+            setShowFormModal={setShowFormModal}
+            formData={modalData}
+            title={querySelect(value, reqBtn).table}
+          />
+        </>
+      )}
+    </>
   );
 }

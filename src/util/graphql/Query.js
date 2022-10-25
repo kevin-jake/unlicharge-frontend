@@ -60,9 +60,35 @@ const FETCH_BMS = gql`
       voltage
       price
       supplier
+      creator {
+        username
+      }
       image_url
       publish_status
       createdAt
+    }
+  }
+`;
+
+const FETCH_BMS_REQ = gql`
+  query GetBMSEditRequests {
+    getBMSEditRequests {
+      id
+      name
+      brand
+      strings
+      charge_current
+      discharge_current
+      port_type
+      voltage
+      price
+      supplier
+      creator {
+        username
+      }
+      status
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -78,6 +104,9 @@ const FETCH_AB = gql`
       balancing
       price
       supplier
+      creator {
+        username
+      }
       image_url
       publish_status
       createdAt
@@ -85,9 +114,30 @@ const FETCH_AB = gql`
   }
 `;
 
+const FETCH_AB_REQ = gql`
+  query GetABEditRequests {
+    getABEditRequests {
+      id
+      name
+      brand
+      strings
+      balance_current
+      balancing
+      price
+      supplier
+      requestor {
+        username
+      }
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 const FETCH_PARTS_DEL_REQ = gql`
-  query GetPartsDeleteRequests($partsListId: String!, $table: String!) {
-    getPartsDeleteRequests(partsListId: $partsListId, table: $table) {
+  query GetPartsDeleteRequests($table: String!) {
+    getPartsDeleteRequests(table: $table) {
       id
       requestor {
         username
@@ -104,6 +154,8 @@ export {
   FETCH_BATTERY,
   FETCH_BATTERY_REQ,
   FETCH_BMS,
+  FETCH_BMS_REQ,
   FETCH_AB,
+  FETCH_AB_REQ,
   FETCH_PARTS_DEL_REQ,
 };

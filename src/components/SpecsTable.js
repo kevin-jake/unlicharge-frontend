@@ -66,8 +66,8 @@ const SpecsTable = ({ specs, modalDetails }) => {
                       >
                         Buy here
                       </Link>
-                    ) : prop === "creator" ? (
-                      specs.creator.username
+                    ) : prop === "creator" || prop === "requestor" ? (
+                      specs[prop].username
                     ) : (
                       specs[prop]
                     )}
