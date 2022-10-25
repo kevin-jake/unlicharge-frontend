@@ -11,6 +11,7 @@ import {
   FETCH_BATTERY,
   FETCH_BATTERY_REQ,
   FETCH_BMS,
+  FETCH_PARTS_DEL_REQ,
 } from "../util/graphql/Query";
 import { useQuery } from "@apollo/client";
 
@@ -40,7 +41,7 @@ function querySelect(selection, operation) {
             ? FETCH_BATTERY
             : operation === "Edit"
             ? FETCH_BATTERY_REQ
-            : "",
+            : FETCH_PARTS_DEL_REQ,
         data:
           operation === "Create"
             ? "getBatteries"
@@ -92,7 +93,9 @@ export default function DataTab({}) {
   const [value, setValue] = useState(0);
   const [reqBtn, setReqBtn] = useState("Create");
   const [tableData, setTableData] = useState([]);
-  const { loading, data } = useQuery(querySelect(value, reqBtn).gql_query);
+  const { loading, data } = useQuery(querySelect(value, reqBtn).gql_query, {
+    variables: reqBtn === "Delete" ? { table: "Battery" } : {},
+  });
 
   console.log(data);
   useEffect(() => {

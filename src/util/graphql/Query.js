@@ -85,4 +85,25 @@ const FETCH_AB = gql`
   }
 `;
 
-export { FETCH_BATTERY, FETCH_BATTERY_REQ, FETCH_BMS, FETCH_AB };
+const FETCH_PARTS_DEL_REQ = gql`
+  query GetPartsDeleteRequests($partsListId: String!, $table: String!) {
+    getPartsDeleteRequests(partsListId: $partsListId, table: $table) {
+      id
+      requestor {
+        username
+      }
+      reason
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export {
+  FETCH_BATTERY,
+  FETCH_BATTERY_REQ,
+  FETCH_BMS,
+  FETCH_AB,
+  FETCH_PARTS_DEL_REQ,
+};

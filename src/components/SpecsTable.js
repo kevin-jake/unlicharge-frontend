@@ -27,6 +27,7 @@ const SpecsTable = ({ specs, modalDetails }) => {
     "publish_status",
     "createdAt",
     "image_url",
+    "creator",
   ];
   const modalDisplay = ["name", "id", "createdAt", "image_url", "error"];
 
@@ -65,6 +66,8 @@ const SpecsTable = ({ specs, modalDetails }) => {
                       >
                         Buy here
                       </Link>
+                    ) : prop === "creator" ? (
+                      specs.creator.username
                     ) : (
                       specs[prop]
                     )}
