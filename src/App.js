@@ -15,6 +15,7 @@ import { AuthProvider } from "./context/auth-context";
 import { createUploadLink } from "apollo-upload-client";
 import { GlobalProvider } from "./context/global-context";
 import { SummaryProvider } from "./context/summary-context";
+import Requests from "./pages/Requests";
 
 const httpLink = createUploadLink({
   uri: "http://localhost:5000",
@@ -50,8 +51,10 @@ function App() {
               <Box>
                 <Header />
                 <Routes>
-                  <Route exact="true" path="/" element={<Home />} />
+                  {/* <Route exact="true" path="/" element={<Home />} /> */}
+                  <Route exact="true" path="/" element={<Build />} />
                   <Route exact="true" path="/build" element={<Build />} />
+                  <Route exact="true" path="/requests" element={<Requests />} />
                 </Routes>
               </Box>
             </BrowserRouter>

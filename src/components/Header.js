@@ -84,10 +84,10 @@ const Header = () => {
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "rgb(17 24 39)" }}>
       <StyledToolbar>
-        <NavLink to="/tables" exact="true">
+        <NavLink to="/" exact="true">
           <Box
             component="img"
-            alt="The house from the offer."
+            alt="Logo"
             sx={{ width: 270, height: 70 }}
             src={logo}
           />
@@ -113,12 +113,14 @@ const Header = () => {
               Build
             </Button>
           </NavLink>
-          <Button
-            variant="text"
-            sx={{ minWidth: 100, color: "white", textTransform: "none" }}
-          >
-            Parts
-          </Button>
+          <NavLink to="/requests" exact="true">
+            <Button
+              variant="text"
+              sx={{ minWidth: 100, color: "white", textTransform: "none" }}
+            >
+              Requests
+            </Button>
+          </NavLink>
           {!isLoggedIn && (
             <Button variant="contained" onClick={openLogin} size="medium">
               Login
