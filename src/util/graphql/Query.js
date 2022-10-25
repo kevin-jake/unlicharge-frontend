@@ -11,11 +11,38 @@ const FETCH_BATTERY = gql`
       max_voltage
       nominal_voltage
       price_per_pc
+      c_Rate
       capacity
       supplier
       image_url
       publish_status
+      creator {
+        username
+      }
       createdAt
+    }
+  }
+`;
+
+const FETCH_BATTERY_REQ = gql`
+  query GetBattEditRequests {
+    getBattEditRequests {
+      id
+      name
+      type
+      model
+      min_voltage
+      max_voltage
+      nominal_voltage
+      price_per_pc
+      c_Rate
+      supplier
+      requestor {
+        username
+      }
+      status
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -58,4 +85,4 @@ const FETCH_AB = gql`
   }
 `;
 
-export { FETCH_BATTERY, FETCH_BMS, FETCH_AB };
+export { FETCH_BATTERY, FETCH_BATTERY_REQ, FETCH_BMS, FETCH_AB };

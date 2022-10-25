@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import CardsFilter from "../components/CardsFilter";
-import Upload from "../components/UploadZone";
 
 const Home = () => {
   return (

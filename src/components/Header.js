@@ -128,11 +128,11 @@ const Header = () => {
           )}
           {isLoggedIn && (
             <>
-              <Icons>
+              {/* <Icons>
                 <Badge badgeContent={4} color="error">
                   <Notifications color="white" />
                 </Badge>
-              </Icons>
+              </Icons> */}
               <CardHeader
                 onClick={handleClick}
                 avatar={

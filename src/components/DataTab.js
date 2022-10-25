@@ -6,12 +6,58 @@ import Box from "@mui/material/Box";
 import RequestTab from "../components/RequestTab";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
+import {
+  FETCH_AB,
+  FETCH_BATTERY,
+  FETCH_BATTERY_REQ,
+  FETCH_BMS,
+} from "../util/graphql/Query";
+import { useQuery } from "@apollo/client";
 
 const columns = [
   { field: "id", headerName: "ID" },
-  { field: "title", headerName: "Title", width: 300 },
-  { field: "body", headerName: "Body", width: 600 },
+  { field: "name", headerName: "Name", width: 300 },
+  {
+    field: "requestor",
+    headerName: "Requestor",
+    width: 300,
+    valueGetter: (params) => {
+      if (params.row.creator) return params.row.creator.username;
+      else return params.row.requestor.username;
+    },
+  },
+  { field: "createdAt", headerName: "Requested At", width: 300 },
+  { field: "actions", headerName: "Action", width: 300 },
 ];
+
+function querySelect(selection, operation) {
+  console.log({ operation });
+  switch (selection) {
+    case 0:
+      return {
+        gql_query:
+          operation === "Create"
+            ? FETCH_BATTERY
+            : operation === "Edit"
+            ? FETCH_BATTERY_REQ
+            : "",
+        data:
+          operation === "Create"
+            ? "getBatteries"
+            : operation === "Edit"
+            ? "getBattEditRequests"
+            : "getPartsDeleteRequests",
+      };
+    // case "BMS":
+    //   return { gql_query: FETCH_BMS, form_props: BMS, data: "getBMSes" };
+    // case "Active Balancer":
+    //   return {
+    //     gql_query: FETCH_AB,
+    //     form_props: AB,
+    //     data: "getActiveBalancers",
+    //   };
+  }
+}
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,25 +92,12 @@ export default function DataTab({}) {
   const [value, setValue] = useState(0);
   const [reqBtn, setReqBtn] = useState("Create");
   const [tableData, setTableData] = useState([]);
+  const { loading, data } = useQuery(querySelect(value, reqBtn).gql_query);
 
+  console.log(data);
   useEffect(() => {
-    if (value === 0 && reqBtn === "Create")
-      fetch("https://jsonplaceholder.typicode.com/posts")
-        .then((data) => data.json())
-        .then((data) => setTableData(data));
-    else if (value === 1 && reqBtn === "Edit")
-      fetch("https://jsonplaceholder.typicode.com/todos")
-        .then((data) => data.json())
-        .then((data) => setTableData(data));
-    else if (value === 2 && reqBtn === "Delete")
-      fetch("https://jsonplaceholder.typicode.com/comments")
-        .then((data) => data.json())
-        .then((data) => setTableData(data));
-    else
-      fetch("https://jsonplaceholder.typicode.com/posts")
-        .then((data) => data.json())
-        .then((data) => setTableData(data));
-  }, [value, reqBtn]);
+    data && setTableData(data[querySelect(value, reqBtn).data]);
+  }, [data]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
