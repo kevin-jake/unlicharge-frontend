@@ -83,7 +83,7 @@ const FETCH_BMS_REQ = gql`
       voltage
       price
       supplier
-      creator {
+      requestor {
         username
       }
       status

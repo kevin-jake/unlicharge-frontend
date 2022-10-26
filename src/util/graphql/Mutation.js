@@ -90,7 +90,7 @@ const CREATE_BATT = gql`
 
 const UPDATE_BATT = gql`
   mutation EditBattery(
-    $battId: ID!
+    $partId: ID!
     $name: String!
     $type: String!
     $model: String!
@@ -102,7 +102,7 @@ const UPDATE_BATT = gql`
     $supplier: String
   ) {
     editBattery(
-      battId: $battId
+      battId: $partId
       batteryInput: {
         name: $name
         type: $type
@@ -138,8 +138,8 @@ const UPDATE_BATT = gql`
 `;
 
 const DELETE_BATT = gql`
-  mutation DeleteBattery($battId: ID!, $reason: String!) {
-    deleteBattery(battId: $battId, reason: $reason) {
+  mutation DeleteBattery($partId: ID!, $reason: String!) {
+    deleteBattery(battId: $partId, reason: $reason) {
       delete_request {
         id
         requestor {
@@ -198,6 +198,73 @@ const CREATE_BMS = gql`
   }
 `;
 
+const UPDATE_BMS = gql`
+  mutation EditBMS(
+    $partId: ID!
+    $name: String!
+    $brand: String
+    $strings: String!
+    $charge_current: String!
+    $discharge_current: String!
+    $port_type: String
+    $voltage: String
+    $price: String!
+    $supplier: String
+  ) {
+    editBMS(
+      bmsId: $partId
+      bmsInput: {
+        name: $name
+        brand: $brand
+        strings: $strings
+        charge_current: $charge_current
+        discharge_current: $discharge_current
+        port_type: $port_type
+        voltage: $voltage
+        price: $price
+        supplier: $supplier
+      }
+    ) {
+      edit_request {
+        id
+        name
+        brand
+        strings
+        charge_current
+        discharge_current
+        port_type
+        voltage
+        price
+        supplier
+        requestor {
+          username
+        }
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+const DELETE_BMS = gql`
+  mutation DeleteBMS($partId: ID!, $reason: String!) {
+    deleteBMS(bmsId: $partId, reason: $reason) {
+      delete_request {
+        id
+        name
+        requestor {
+          username
+        }
+        reason
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 const CREATE_AB = gql`
   mutation CreateAB(
     $name: String!
@@ -236,12 +303,79 @@ const CREATE_AB = gql`
   }
 `;
 
+const UPDATE_AB = gql`
+  mutation EditAB(
+    $partId: ID!
+    $name: String!
+    $brand: String
+    $strings: String!
+    $balance_current: String
+    $balancing: String!
+    $price: String!
+    $supplier: String
+    $image_url: String
+  ) {
+    editAB(
+      abId: $partId
+      abInput: {
+        name: $name
+        brand: $brand
+        strings: $strings
+        balance_current: $balance_current
+        balancing: $balancing
+        price: $price
+        supplier: $supplier
+        image_url: $image_url
+      }
+    ) {
+      edit_request {
+        id
+        name
+        brand
+        strings
+        balance_current
+        balancing
+        price
+        supplier
+        requestor {
+          username
+        }
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+const DELETE_AB = gql`
+  mutation DeleteAB($partId: ID!, $reason: String!) {
+    deleteAB(abId: $partId, reason: $reason) {
+      delete_request {
+        id
+        name
+        requestor {
+          username
+        }
+        reason
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export {
   LOGIN_USER,
   REGISTER_USER,
-  CREATE_AB,
   CREATE_BATT,
   UPDATE_BATT,
   DELETE_BATT,
   CREATE_BMS,
+  UPDATE_BMS,
+  DELETE_BMS,
+  CREATE_AB,
+  UPDATE_AB,
+  DELETE_AB,
 };

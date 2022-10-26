@@ -127,7 +127,14 @@ export default function DataTab({}) {
 
   const { loading, data } = useQuery(querySelect(value, reqBtn).gql_query, {
     variables:
-      reqBtn === "Delete" ? { table: querySelect(value, reqBtn).table } : {},
+      reqBtn === "Delete"
+        ? {
+            table:
+              querySelect(value, reqBtn).table === "Active Balancer"
+                ? "Active_balancer"
+                : querySelect(value, reqBtn).table,
+          }
+        : {},
   });
 
   useEffect(() => {
@@ -172,25 +179,25 @@ export default function DataTab({}) {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            " *": {
-              m: 1,
-            },
           }}
         >
           <Button
             variant={reqBtn === "Create" ? "contained" : "outlined"}
+            sx={{ m: 1 }}
             onClick={handleReqBtnClick}
           >
             Create
           </Button>
           <Button
             variant={reqBtn === "Edit" ? "contained" : "outlined"}
+            sx={{ m: 1 }}
             onClick={handleReqBtnClick}
           >
             Edit
           </Button>
           <Button
             variant={reqBtn === "Delete" ? "contained" : "outlined"}
+            sx={{ m: 1 }}
             onClick={handleReqBtnClick}
           >
             Delete

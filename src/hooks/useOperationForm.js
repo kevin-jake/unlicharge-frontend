@@ -2,11 +2,15 @@ import { useMutation } from "@apollo/client";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth-context";
 import {
-  CREATE_AB,
   CREATE_BATT,
-  CREATE_BMS,
-  DELETE_BATT,
   UPDATE_BATT,
+  DELETE_BATT,
+  CREATE_BMS,
+  UPDATE_BMS,
+  DELETE_BMS,
+  CREATE_AB,
+  UPDATE_AB,
+  DELETE_AB,
 } from "../util/graphql/Mutation";
 import { FETCH_AB, FETCH_BATTERY, FETCH_BMS } from "../util/graphql/Query";
 
@@ -49,8 +53,8 @@ export const useOperationForm = (partsTitle) => {
             image_url: "",
           },
           gql_mutation: CREATE_BMS,
-          // FIXME:
-          gql_mutation_edit: UPDATE_BATT,
+          gql_mutation_edit: UPDATE_BMS,
+          gql_mutation_delete: DELETE_BMS,
           gql_query: FETCH_BMS,
           dataArray: "getBMSes",
         };
@@ -68,8 +72,8 @@ export const useOperationForm = (partsTitle) => {
             image_url: "",
           },
           gql_mutation: CREATE_AB,
-          // FIXME:
-          gql_mutation_edit: UPDATE_BATT,
+          gql_mutation_edit: UPDATE_AB,
+          gql_mutation_delete: DELETE_AB,
           gql_query: FETCH_AB,
           dataArray: "getActiveBalancers",
         };
@@ -123,6 +127,7 @@ export const useOperationForm = (partsTitle) => {
     }
   );
 
+  console.log(titleSelect(partsTitle));
   const onChange = (event) => {
     var prop;
     event.target.id ? (prop = event.target.id) : (prop = event.target.name);
@@ -135,12 +140,15 @@ export const useOperationForm = (partsTitle) => {
         if (image_url) {
           onCreate({ variables: { ...values, image_url } });
         } else onCreate();
+        break;
       }
       case "Edit": {
-        onEdit({ variables: { ...values, battId: id } });
+        onEdit({ variables: { ...values, partId: id } });
+        break;
       }
       case "Delete": {
-        onDelete({ variables: { reason: values.reason, battId: id } });
+        onDelete({ variables: { reason: values.reason, partId: id } });
+        break;
       }
     }
   };
