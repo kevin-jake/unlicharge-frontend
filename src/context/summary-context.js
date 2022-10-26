@@ -29,18 +29,33 @@ const AppReducer = (state, action) => {
     case "SET_BATT": {
       return {
         ...state,
-        batterySelected: action.batterySelected,
+        batterySelected:
+          action.batterySelected.id === state.batterySelected.id
+            ? {
+                error: {},
+              }
+            : action.batterySelected,
       };
     }
     case "SET_BMS":
       return {
         ...state,
-        bmsSelected: action.bmsSelected,
+        bmsSelected:
+          action.bmsSelected.id === state.bmsSelected.id
+            ? {
+                error: {},
+              }
+            : action.bmsSelected,
       };
     case "SET_AB":
       return {
         ...state,
-        abSelected: action.abSelected,
+        abSelected:
+          action.abSelected.id === state.abSelected.id
+            ? {
+                error: {},
+              }
+            : action.abSelected,
       };
     default:
       return state;

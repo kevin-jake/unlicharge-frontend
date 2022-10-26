@@ -153,7 +153,6 @@ export const useOperationForm = (partsTitle) => {
     }
   };
 
-  console.log({ values });
   return {
     onChange,
     onSubmit,

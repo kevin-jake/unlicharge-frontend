@@ -68,7 +68,6 @@ const ItemCard = ({ item, openModal, selection }) => {
   }, [initialForm]);
 
   const handleItemClick = () => {
-    console.log({ batterySelected });
     var error;
     if (
       batterySelected.computedData &&

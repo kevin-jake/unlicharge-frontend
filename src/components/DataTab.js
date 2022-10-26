@@ -219,12 +219,30 @@ export default function DataTab({}) {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <div style={{ height: 700, width: "100%" }}>
-            <DataGrid rows={tableData} columns={columns} pageSize={12} />
+            <DataGrid
+              components={{
+                LoadingOverlay: LinearProgress,
+              }}
+              onCellClick={handleCellClick}
+              loading={loading}
+              rows={tableData}
+              columns={columns}
+              pageSize={12}
+            />
           </div>
         </TabPanel>
         <TabPanel value={value} index={2}>
           <div style={{ height: 700, width: "100%" }}>
-            <DataGrid rows={tableData} columns={columns} pageSize={12} />
+            <DataGrid
+              components={{
+                LoadingOverlay: LinearProgress,
+              }}
+              onCellClick={handleCellClick}
+              loading={loading}
+              rows={tableData}
+              columns={columns}
+              pageSize={12}
+            />
           </div>
         </TabPanel>
       </Box>
