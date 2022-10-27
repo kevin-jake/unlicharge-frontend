@@ -158,8 +158,8 @@ const Header = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
+        {/* <MenuItem>Profile</MenuItem>
+        <MenuItem>My account</MenuItem> */}
         <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
       <SignInModal

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const FETCH_BATTERY = gql`
-  query GetBatteries($userId: ID) {
-    getBatteries(userId: $userId) {
+  query GetBatteries($userId: ID, $requests: Boolean) {
+    getBatteries(userId: $userId, requests: $requests) {
       id
       name
       type
@@ -48,8 +48,8 @@ const FETCH_BATTERY_REQ = gql`
 `;
 
 const FETCH_BMS = gql`
-  query GetBMSes($userId: ID) {
-    getBMSes(userId: $userId) {
+  query GetBMSes($userId: ID, $requests: Boolean) {
+    getBMSes(userId: $userId, requests: $requests) {
       id
       name
       brand
@@ -94,8 +94,8 @@ const FETCH_BMS_REQ = gql`
 `;
 
 const FETCH_AB = gql`
-  query GetActiveBalancers($userId: ID) {
-    getActiveBalancers(userId: $userId) {
+  query GetActiveBalancers($userId: ID, $requests: Boolean) {
+    getActiveBalancers(userId: $userId, requests: $requests) {
       id
       name
       brand

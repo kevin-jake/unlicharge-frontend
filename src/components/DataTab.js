@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -18,6 +18,7 @@ import {
 import { useQuery } from "@apollo/client";
 import DetailsModal from "./DetailsModal";
 import FormModal from "./FormModal";
+import { AuthContext } from "../context/auth-context";
 
 const columns = [
   { field: "id", headerName: "ID" },
@@ -118,6 +119,7 @@ function a11yProps(index) {
 }
 
 export default function DataTab({}) {
+  const { userId } = useContext(AuthContext);
   const [value, setValue] = useState(0);
   const [reqBtn, setReqBtn] = useState("Create");
   const [tableData, setTableData] = useState([]);
@@ -126,6 +128,7 @@ export default function DataTab({}) {
   const [showFormModal, setShowFormModal] = useState(false);
 
   const { loading, data } = useQuery(querySelect(value, reqBtn).gql_query, {
+    fetchPolicy: "network-only",
     variables:
       reqBtn === "Delete"
         ? {
@@ -134,19 +137,23 @@ export default function DataTab({}) {
                 ? "Active_balancer"
                 : querySelect(value, reqBtn).table,
           }
+        : reqBtn === "Create"
+        ? { userId, requests: true }
         : {},
   });
 
   useEffect(() => {
     if (data) setTableData(data[querySelect(value, reqBtn).data]);
     else setTableData([]);
-  }, [data]);
+  }, [data, loading, reqBtn, value]);
 
   const handleChange = (event, newValue) => {
+    console.log("change click");
     setValue(newValue);
   };
 
   const handleReqBtnClick = (event) => {
+    console.log("btn click");
     setReqBtn(event.target.textContent);
   };
 
@@ -158,7 +165,7 @@ export default function DataTab({}) {
   const openFormModal = (operation) => {
     setShowFormModal({ open: true, operation });
   };
-
+  console.log({ data });
   return (
     <>
       <Box sx={{ width: "100%" }}>

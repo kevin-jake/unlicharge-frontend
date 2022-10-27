@@ -18,6 +18,7 @@ import { SummaryProvider } from "./context/summary-context";
 import Requests from "./pages/Requests";
 
 const httpLink = createUploadLink({
+  // FIXME: make an env variable
   uri: "http://localhost:5000",
 });
 

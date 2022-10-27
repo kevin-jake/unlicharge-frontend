@@ -148,7 +148,11 @@ const ItemCard = ({ item, openModal, selection }) => {
             <CardMedia
               component="img"
               sx={{ width: 151, height: 151, margin: 2 }}
-              image={item.image_url}
+              image={
+                item.image_url
+                  ? item.image_url
+                  : "https://pharma.doh.gov.ph/wp-content/uploads/2020/08/placeholder.png"
+              }
               alt={item.name}
             />
           </Box>
