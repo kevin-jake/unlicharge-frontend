@@ -15,9 +15,6 @@ export const stringCompatibility = (
   partType, // Either BMS or Active Balancer
   input_battVoltage
 ) => {
-  console.log({ total_battInSeries });
-  console.log({ data_string });
-
   if (total_battInSeries && data_string) {
     if (total_battInSeries !== data_string) {
       return {

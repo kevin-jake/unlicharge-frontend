@@ -22,11 +22,11 @@ const PathCards = ({
   const [error, setError] = useState();
   const activeStyle = (title) => {
     if (selection === title) {
-      return { maxWidth: 450, backgroundColor: "lightblue" };
+      return { maxWidth: 450, backgroundColor: "lightblue", my: 2 };
     }
     if (error) {
-      return { maxWidth: 450, backgroundColor: "pink" };
-    } else return { maxWidth: 450 };
+      return { maxWidth: 450, backgroundColor: "pink", my: 2 };
+    } else return { maxWidth: 450, my: 2 };
   };
 
   useEffect(() => {

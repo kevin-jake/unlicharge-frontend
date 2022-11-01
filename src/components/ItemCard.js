@@ -80,25 +80,34 @@ const ItemCard = ({ item, openModal, selection }) => {
       );
     }
     if (selection === "Battery") {
-      setBattery({
-        ...batterySelected,
-        ...item,
-        computedData,
-      });
+      setBattery(
+        {
+          ...batterySelected,
+          ...item,
+          computedData,
+        },
+        true
+      );
     }
     if (selection === "BMS") {
-      setBMS({
-        ...bmsSelected,
-        ...item,
-        error,
-      });
+      setBMS(
+        {
+          ...bmsSelected,
+          ...item,
+          error,
+        },
+        true
+      );
     }
     if (selection === "Active Balancer") {
-      setAB({
-        ...abSelected,
-        ...item,
-        error,
-      });
+      setAB(
+        {
+          ...abSelected,
+          ...item,
+          error,
+        },
+        true
+      );
     }
   };
 

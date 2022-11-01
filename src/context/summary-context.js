@@ -30,33 +30,36 @@ const AppReducer = (state, action) => {
       return {
         ...state,
         batterySelected:
-          action.batterySelected.id === state.batterySelected.id
+          action.batterySelected.id === state.batterySelected.id &&
+          action.unselect
             ? {
                 error: {},
               }
             : action.batterySelected,
       };
     }
-    case "SET_BMS":
+    case "SET_BMS": {
       return {
         ...state,
         bmsSelected:
-          action.bmsSelected.id === state.bmsSelected.id
+          action.bmsSelected.id === state.bmsSelected.id && action.unselect
             ? {
                 error: {},
               }
             : action.bmsSelected,
       };
-    case "SET_AB":
+    }
+    case "SET_AB": {
       return {
         ...state,
         abSelected:
-          action.abSelected.id === state.abSelected.id
+          action.abSelected.id === state.abSelected.id && action.unselect
             ? {
                 error: {},
               }
             : action.abSelected,
       };
+    }
     default:
       return state;
   }
@@ -73,24 +76,30 @@ const SummaryProvider = (props) => {
     });
   };
 
-  const setBattery = (batterySelected) => {
+  const setBattery = (batterySelected, unselect = false) => {
+    console.log("SET_BATT");
     dispatch({
       type: "SET_BATT",
       batterySelected,
+      unselect,
     });
   };
 
-  const setBMS = (bmsSelected) => {
+  const setBMS = (bmsSelected, unselect = false) => {
+    console.log("SET_BMS");
     dispatch({
       type: "SET_BMS",
       bmsSelected,
+      unselect,
     });
   };
 
-  const setAB = (abSelected) => {
+  const setAB = (abSelected, unselect = false) => {
+    console.log("SET_AB");
     dispatch({
       type: "SET_AB",
       abSelected,
+      unselect,
     });
   };
 
@@ -105,6 +114,8 @@ const SummaryProvider = (props) => {
     setInitForm,
   };
   console.log({ value });
+  console.log({ state });
+
   return (
     <SummaryContext.Provider value={value}>
       {props.children}

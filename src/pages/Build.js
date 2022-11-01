@@ -18,6 +18,7 @@ const Build = () => {
   } = useContext(SummaryContext);
 
   useEffect(() => {
+    console.log({ bmsSelected });
     if (
       batterySelected.computedData &&
       Object.keys(batterySelected.computedData).length !== 0

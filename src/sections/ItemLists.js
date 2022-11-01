@@ -33,6 +33,8 @@ function querySelect(select) {
 }
 
 const ItemLists = ({ selection }) => {
+  const { batterySelected, bmsSelected, abSelected } =
+    useContext(SummaryContext);
   const { userId } = useContext(AuthContext);
   const { loading, data } = useQuery(querySelect(selection).gql_query, {
     variables: { userId },
@@ -127,23 +129,55 @@ const ItemLists = ({ selection }) => {
           />
         </>
       )}
-      {/* <SideSummary
+      <SideSummary
         components={
-          batterySelected && (
-            <PathCards
-              title="Battery"
-              icon={<MdBatteryChargingFull />}
-              description={
-                <div>
-                  <p> Selected Battery: {batterySelected.id} </p>
-                  <p> Battery Price: {batterySelected.price} </p>
-                  <p> Total Quantity: {batterySelected.qty} </p>
-                </div>
-              }
-            />
-          )
+          <>
+            {batterySelected.name && (
+              <PathCards
+                title="Battery"
+                description={
+                  <div>
+                    <p> Selected Battery: {batterySelected.name} </p>
+                    <p>
+                      Battery Price:
+                      {" " + batterySelected.computedData.totalPrice ||
+                        batterySelected.price_per_pc}
+                    </p>
+                    <p>
+                      Total Quantity:
+                      {" " + batterySelected.computedData.totalQty || "1"}
+                    </p>
+                  </div>
+                }
+              />
+            )}
+            {bmsSelected.name && (
+              <PathCards
+                title="BMS"
+                description={
+                  <div>
+                    <p> Selected Battery: {bmsSelected.name} </p>
+                    <p>BMS Price: {" " + bmsSelected.price}</p>
+                    <p>Quantity: 1</p>
+                  </div>
+                }
+              />
+            )}
+            {abSelected.name && (
+              <PathCards
+                title="Active Balancer"
+                description={
+                  <div>
+                    <p> Selected Battery: {abSelected.name} </p>
+                    <p>BMS Price: {" " + abSelected.price}</p>
+                    <p>Quantity: 1</p>
+                  </div>
+                }
+              />
+            )}
+          </>
         }
-      /> */}
+      />
     </>
   );
 };

@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import { Fab } from "@mui/material";
+import { Fab, Typography } from "@mui/material";
 
 export default function SideSummary({ components }) {
   const [state, setState] = React.useState({
@@ -21,7 +21,7 @@ export default function SideSummary({ components }) {
 
   const list = (anchor, components) => (
     <Box
-      sx={{ width: 300, p: 2, m: 0 }}
+      sx={{ width: 400, p: 2, m: 0 }}
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
@@ -49,6 +49,9 @@ export default function SideSummary({ components }) {
         open={state.right}
         onClose={toggleDrawer("right", false)}
       >
+        <Typography variant="h4" sx={{ m: 2 }}>
+          Summary
+        </Typography>
         {list("right", components)}
       </Drawer>
     </Box>
