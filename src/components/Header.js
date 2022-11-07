@@ -114,12 +114,14 @@ const Header = () => {
             </Button>
           </NavLink>
           <NavLink to="/requests" exact="true">
-            <Button
-              variant="text"
-              sx={{ minWidth: 100, color: "white", textTransform: "none" }}
-            >
-              Requests
-            </Button>
+            {isLoggedIn && (
+              <Button
+                variant="text"
+                sx={{ minWidth: 100, color: "white", textTransform: "none" }}
+              >
+                Requests
+              </Button>
+            )}
           </NavLink>
           {!isLoggedIn && (
             <Button variant="contained" onClick={openLogin} size="medium">

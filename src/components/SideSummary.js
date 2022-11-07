@@ -24,7 +24,8 @@ export default function SideSummary({ components, data }) {
   const handlePrice = (batterySelected, bmsSelected, abSelected) => {
     var battPrice, bmsPrice, abPrice;
     if (batterySelected && Object.hasOwn(batterySelected, "computedData")) {
-      battPrice = batterySelected.computedData.totalPrice;
+      if (batterySelected.computedData)
+        battPrice = batterySelected.computedData.totalPrice;
     }
     if (bmsSelected && Object.hasOwn(bmsSelected, "price"))
       bmsPrice = bmsSelected.price;

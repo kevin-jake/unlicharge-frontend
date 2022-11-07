@@ -133,7 +133,7 @@ const ItemLists = ({ selection }) => {
         data={{ batterySelected, bmsSelected, abSelected }}
         components={
           <>
-            {batterySelected.name && (
+            {batterySelected.name && batterySelected.computedData && (
               <PathCards
                 title="Battery"
                 description={
