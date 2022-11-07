@@ -97,8 +97,8 @@ const ItemLists = ({ selection }) => {
         </Grid>
         <Box
           display="flex"
-          justifyContent="flex-end"
-          alignItems="flex-end"
+          justifyContent="flex-start"
+          alignItems="flex-start"
           px={2}
           pb={5}
         >
@@ -130,6 +130,7 @@ const ItemLists = ({ selection }) => {
         </>
       )}
       <SideSummary
+        data={{ batterySelected, bmsSelected, abSelected }}
         components={
           <>
             {batterySelected.name && (

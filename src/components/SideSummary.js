@@ -1,9 +1,11 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import { Fab, Typography } from "@mui/material";
+import { Divider, Fab, Typography } from "@mui/material";
+import { computeTotalPrice } from "../logic/total-summary";
+import { numberWithCommas } from "../util/numberFormats";
 
-export default function SideSummary({ components }) {
+export default function SideSummary({ components, data }) {
   const [state, setState] = React.useState({
     right: false,
   });
@@ -19,6 +21,18 @@ export default function SideSummary({ components }) {
     setState({ ...state, [anchor]: open });
   };
 
+  const handlePrice = (batterySelected, bmsSelected, abSelected) => {
+    var battPrice, bmsPrice, abPrice;
+    if (batterySelected && Object.hasOwn(batterySelected, "computedData")) {
+      battPrice = batterySelected.computedData.totalPrice;
+    }
+    if (bmsSelected && Object.hasOwn(bmsSelected, "price"))
+      bmsPrice = bmsSelected.price;
+    if (abSelected && Object.hasOwn(abSelected, "price"))
+      abPrice = abSelected.price;
+    return computeTotalPrice(battPrice, bmsPrice, abPrice);
+  };
+
   const list = (anchor, components) => (
     <Box
       sx={{ width: 400, p: 2, m: 0 }}
@@ -28,7 +42,7 @@ export default function SideSummary({ components }) {
       {components}
     </Box>
   );
-
+  console.log({ data });
   return (
     <Box
       sx={{
@@ -43,6 +57,22 @@ export default function SideSummary({ components }) {
     >
       <Fab variant="extended" onClick={toggleDrawer("right", true)}>
         Summary
+        <Typography variant="caption" sx={{ m: 2 }}>
+          {handlePrice(
+            data.batterySelected,
+            data.bmsSelected,
+            data.abSelected
+          ) > 0
+            ? "Php" +
+              numberWithCommas(
+                handlePrice(
+                  data.batterySelected,
+                  data.bmsSelected,
+                  data.abSelected
+                )
+              )
+            : ""}
+        </Typography>
       </Fab>
       <Drawer
         anchor="right"
@@ -53,6 +83,24 @@ export default function SideSummary({ components }) {
           Summary
         </Typography>
         {list("right", components)}
+        <Divider variant="middle" />
+        <Typography variant="h5" sx={{ m: 2 }}>
+          Total Price:{" "}
+          {handlePrice(
+            data.batterySelected,
+            data.bmsSelected,
+            data.abSelected
+          ) > 0
+            ? "Php " +
+              numberWithCommas(
+                handlePrice(
+                  data.batterySelected,
+                  data.bmsSelected,
+                  data.abSelected
+                )
+              )
+            : ""}
+        </Typography>
       </Drawer>
     </Box>
   );
