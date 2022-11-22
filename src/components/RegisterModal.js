@@ -27,7 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import { REGISTER_USER } from "../util/graphql/Mutation";
 import { useForm } from "../hooks/useForm";
-// TODO: Add frontend validators
+// FIXME: Add frontend validators
 
 const RegisterModal = ({
   registerModal,

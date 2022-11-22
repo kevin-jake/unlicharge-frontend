@@ -29,10 +29,7 @@ const InitialForm = () => {
           >
             <MenuItem value="12">12 V</MenuItem>
             <MenuItem value="24">24 V</MenuItem>
-            <MenuItem value="36">36 V</MenuItem>
             <MenuItem value="48">48 V</MenuItem>
-            <MenuItem value="60">60 V</MenuItem>
-            <MenuItem value="72">72 V</MenuItem>
           </TextField>
         </Grid>
         <Grid item xs={4}>

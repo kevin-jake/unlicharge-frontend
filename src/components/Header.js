@@ -96,7 +96,12 @@ const Header = () => {
         {/* <Search>
           <InputBase placeholder="Search" />
         </Search> */}
-        <Box sx={{ display: "inline-flex", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: { sm: "inline-flex", xs: "none" },
+            alignItems: "center",
+          }}
+        >
           <NavLink to="/" exact="true">
             <Button
               variant="text"

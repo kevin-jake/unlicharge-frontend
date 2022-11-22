@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { SummaryContext } from "../context/summary-context";
-// TODO: Make this mobile responsive
+// FIXME: Make this mobile responsive
 // TODO: Add tooltip to the cards or helper
 const PathCards = ({
   title,

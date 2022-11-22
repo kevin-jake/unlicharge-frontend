@@ -11,12 +11,11 @@ import { setContext } from "apollo-link-context";
 import { Box } from "@mui/material";
 import Header from "./components/Header";
 import Build from "./pages/Build";
-import { AuthContext, AuthProvider } from "./context/auth-context";
+import { AuthProvider } from "./context/auth-context";
 import { createUploadLink } from "apollo-upload-client";
 import { GlobalProvider } from "./context/global-context";
 import { SummaryProvider } from "./context/summary-context";
 import Requests from "./pages/Requests";
-import { useContext } from "react";
 
 const httpLink = createUploadLink({
   // FIXME: make an env variable
@@ -28,7 +27,7 @@ const authLink = setContext(() => {
   return {
     headers: {
       Authorization: userData ? `Bearer ${userData.token}` : "",
-      // TODO: Make this headers more secure
+      // FIXME: Make this headers more secure
       "apollo-require-preflight": "test",
       "x-apollo-operation-name": "test",
     },
@@ -44,7 +43,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const { isLoggedIn } = useContext(AuthContext);
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
@@ -57,13 +55,7 @@ function App() {
                   {/* <Route exact="true" path="/" element={<Home />} /> */}
                   <Route exact="true" path="/" element={<Build />} />
                   <Route exact="true" path="/build" element={<Build />} />
-                  {isLoggedIn && (
-                    <Route
-                      exact="true"
-                      path="/requests"
-                      element={<Requests />}
-                    />
-                  )}
+                  <Route exact="true" path="/requests" element={<Requests />} />
                 </Routes>
               </Box>
             </BrowserRouter>
