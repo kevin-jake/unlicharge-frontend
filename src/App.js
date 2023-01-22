@@ -8,14 +8,16 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import { setContext } from "apollo-link-context";
-import { Box } from "@mui/material";
+import { Box, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import Header from "./components/Header";
 import Build from "./pages/Build";
 import { AuthProvider } from "./context/auth-context";
 import { createUploadLink } from "apollo-upload-client";
-import { GlobalProvider } from "./context/global-context";
-import { SummaryProvider } from "./context/summary-context";
 import Requests from "./pages/Requests";
+import Navbar from "./components/Navbar";
+import { useMemo } from "react";
+import { themeSettings } from "./theme";
+import { useSelector } from "react-redux";
 
 const httpLink = createUploadLink({
   // FIXME: make an env variable
@@ -43,24 +45,26 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const mode = useSelector((state) => state.mode);
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <GlobalProvider>
-          <SummaryProvider>
-            <BrowserRouter>
-              <Box>
-                <Header />
-                <Routes>
-                  {/* <Route exact="true" path="/" element={<Home />} /> */}
-                  <Route exact="true" path="/" element={<Build />} />
-                  <Route exact="true" path="/build" element={<Build />} />
-                  <Route exact="true" path="/requests" element={<Requests />} />
-                </Routes>
-              </Box>
-            </BrowserRouter>
-          </SummaryProvider>
-        </GlobalProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <BrowserRouter>
+            <Box>
+              <Navbar />
+              <Routes>
+                {/* <Route exact="true" path="/" element={<Home />} /> */}
+                {/* <Route exact="true" path="/" element={<Build />} />
+                <Route exact="true" path="/build" element={<Build />} />
+                <Route exact="true" path="/requests" element={<Requests />} /> */}
+              </Routes>
+            </Box>
+          </BrowserRouter>
+        </ThemeProvider>
       </AuthProvider>
     </ApolloProvider>
   );
