@@ -9,6 +9,9 @@ import {
   FormControl,
   useTheme,
   useMediaQuery,
+  Button,
+  CardHeader,
+  Avatar,
 } from "@mui/material";
 import {
   Search,
@@ -42,7 +45,7 @@ const Navbar = () => {
   const fullName = useMemo(() => "test", [user]);
 
   return (
-    <FlexBetween padding="1rem 6%" backgroundColor={alt}>
+    <FlexBetween padding="1rem 2% 1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
@@ -56,26 +59,17 @@ const Navbar = () => {
             },
           }}
         >
-          Sociopedia
+          Unlicharge
         </Typography>
-        {isNonMobileScreens && (
-          <FlexBetween
-            backgroundColor={neutralLight}
-            borderRadius="9px"
-            gap="3rem"
-            padding="0.1rem 1.5rem"
-          >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
-        )}
       </FlexBetween>
 
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
-        <FlexBetween gap="2rem">
+        <FlexBetween gap="1rem">
+          <Button>Home</Button>
+          <Button>Build</Button>
+          <Button>Complete Builds</Button>
+          <Button>Products</Button>
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
               <DarkMode sx={{ fontSize: "25px" }} />
@@ -83,11 +77,8 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
-          <Notifications sx={{ fontSize: "25px" }} />
-          <Help sx={{ fontSize: "25px" }} />
           <FormControl variant="standard" value={fullName}>
-            <Select
+            {/* <Select
               value={fullName}
               sx={{
                 backgroundColor: neutralLight,
@@ -108,7 +99,26 @@ const Navbar = () => {
                 <Typography>{fullName}</Typography>
               </MenuItem>
               <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-            </Select>
+            </Select> */}
+            <CardHeader
+              // onClick={handleClick}
+              sx={{
+                backgroundColor: neutralLight,
+                width: "150px",
+                borderRadius: "0.25rem",
+                p: "0.75rem 1rem",
+              }}
+              avatar={
+                <Avatar
+                  alt="User"
+                  sx={{ width: 30, height: 30 }}
+                  //  FIXME: Make this image from users correct pic
+                  src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                />
+              }
+              // title={username}
+              title="test"
+            />
           </FormControl>
         </FlexBetween>
       ) : (

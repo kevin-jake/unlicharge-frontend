@@ -1,4 +1,4 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import UserWidget from "../widgets/UserWidget";
@@ -7,9 +7,11 @@ import PostsWidget from "../widgets/PostsWidget";
 import AdvertWidget from "../widgets/AdvertWidget";
 import FriendListWidget from "../widgets/FriendListWidget";
 import Navbar from "../navbar/Navbar";
+import DataFilters from "../../components/DataFilters";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  const { palette } = useTheme();
   const { _id, picturePath } = useSelector((state) => {
     return state.user;
   });
@@ -24,15 +26,19 @@ const HomePage = () => {
         gap="0.5rem"
         justifyContent="space-between"
       >
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={_id} picturePath={picturePath} />
-        </Box>
-
         <Box
-          flexBasis={isNonMobileScreens ? "42%" : undefined}
+          flexBasis={isNonMobileScreens ? "100%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          <MyPostWidget picturePath={picturePath} />
+          <Typography
+            color={palette.neutral.dark}
+            variant="h3"
+            fontWeight="500"
+            sx={{ mb: "1.5rem" }}
+          >
+            Builds
+          </Typography>
+          <DataFilters />
           <PostsWidget userId={_id} />
         </Box>
 
