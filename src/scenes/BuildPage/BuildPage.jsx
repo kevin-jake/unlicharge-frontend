@@ -3,14 +3,15 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Grid,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React from "react";
 import Navbar from "../navbar/Navbar";
+import CategoryCards from "./CategoryCards";
 import InitialParams from "./InitialParams";
-import WidgetWrapper from "../../components/WidgetWrapper";
 
 function BuildPage() {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -35,18 +36,13 @@ function BuildPage() {
         display="block"
         justifyContent="space-between"
       >
-        <WidgetWrapper>
-          <Typography
-            marginBottom="1rem"
-            color={palette.neutral.medium}
-            variant="h5"
-            fontWeight="500"
-          >
-            Initial Parameters:
-          </Typography>
-          <InitialParams />
-        </WidgetWrapper>
+        <InitialParams />
       </Box>
+      <Grid marginY="0.5rem" container>
+        <CategoryCards />
+        <CategoryCards />
+        <CategoryCards />
+      </Grid>
     </Box>
   );
 }
