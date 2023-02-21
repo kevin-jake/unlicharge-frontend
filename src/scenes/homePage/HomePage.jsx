@@ -1,8 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
-import UserWidget from "../widgets/UserWidget";
-import MyPostWidget from "../widgets/MyPostWidget";
 import PostsWidget from "../widgets/PostsWidget";
 import AdvertWidget from "../widgets/AdvertWidget";
 import FriendListWidget from "../widgets/FriendListWidget";
@@ -21,24 +19,30 @@ const HomePage = () => {
       <Navbar />
       <Box
         width="100%"
-        padding="2rem 6%"
+        padding="1rem 2% 0.1rem 2%"
+        display={isNonMobileScreens ? "flex" : "block"}
+        justifyContent="space-between"
+      >
+        <Typography color={palette.neutral.dark} variant="h2" fontWeight="500">
+          Builds
+        </Typography>
+      </Box>
+      <Box
+        width="100%"
+        padding="2rem 3%"
         display={isNonMobileScreens ? "flex" : "block"}
         gap="0.5rem"
         justifyContent="space-between"
       >
+        {isNonMobileScreens && (
+          <Box flexBasis="26%">
+            <DataFilters />
+          </Box>
+        )}
         <Box
           flexBasis={isNonMobileScreens ? "100%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          <Typography
-            color={palette.neutral.dark}
-            variant="h3"
-            fontWeight="500"
-            sx={{ mb: "1.5rem" }}
-          >
-            Builds
-          </Typography>
-          <DataFilters />
           <PostsWidget userId={_id} />
         </Box>
 

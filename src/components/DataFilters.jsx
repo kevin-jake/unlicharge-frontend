@@ -1,12 +1,4 @@
-import {
-  EditOutlined,
-  DeleteOutlined,
-  AttachFileOutlined,
-  GifBoxOutlined,
-  ImageOutlined,
-  MicOutlined,
-  MoreHorizOutlined,
-} from "@mui/icons-material";
+import { Search } from "@mui/icons-material";
 import {
   Box,
   Divider,
@@ -15,20 +7,22 @@ import {
   useTheme,
   Button,
   IconButton,
-  useMediaQuery,
+  Slider,
+  Stack,
+  TextField,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../state/state";
+import FlexBetween from "./FlexBetween";
+import WidgetWrapper from "./WidgetWrapper";
 
-const DataFilters = ({ picturePath }) => {
-  const dispatch = useDispatch();
-  const [image, setImage] = useState(null);
-  const [post, setPost] = useState("");
+const DataFilters = () => {
   const { palette } = useTheme();
-  const { _id } = useSelector((state) => state.user);
-  const token = useSelector((state) => state.token);
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+  const neutralLight = palette.neutral.light;
+  const dark = palette.neutral.dark;
+  const medium = palette.neutral.medium;
 
   const handlePost = async () => {
     const formData = new FormData();
@@ -49,8 +43,86 @@ const DataFilters = ({ picturePath }) => {
     setImage(null);
     setPost("");
   };
-
-  return <></>;
+  // TODO: Add functionality
+  return (
+    <WidgetWrapper>
+      <FlexBetween padding="0.1rem" margin="5px">
+        <Typography color={dark} variant="h5" fontWeight="500">
+          Filters
+        </Typography>
+        <Button
+          variant="text"
+          sx={{ minWidth: 100, color: medium, textTransform: "none" }}
+        >
+          Clear All
+        </Button>
+      </FlexBetween>
+      <FlexBetween
+        backgroundColor={neutralLight}
+        borderRadius="9px"
+        padding="0.1rem 1.5rem"
+        marginBottom="20px"
+      >
+        <InputBase placeholder="Search..." />
+        <IconButton>
+          <Search />
+        </IconButton>
+      </FlexBetween>
+      <Divider color={neutralLight} />
+      <Typography marginTop="5px" color={medium} variant="h6" fontWeight="500">
+        Price
+      </Typography>
+      <FlexBetween
+        borderRadius="9px"
+        marginBottom="20px"
+        padding="0.1rem 1.5rem"
+      >
+        <Box variant="flex">
+          <Slider
+            defaultValue={50}
+            aria-label="Default"
+            valueLabelDisplay="auto"
+          />
+          <Stack
+            direction="row"
+            justifyContent="space-evenly"
+            alignItems="center"
+          >
+            <TextField
+              label="Min"
+              type="number"
+              variant="standard"
+              InputLabelProps={{ shrink: true }}
+              sx={{ width: "90px" }}
+            />
+            <Typography>-</Typography>
+            <TextField
+              label="Max"
+              type="number"
+              variant="standard"
+              InputLabelProps={{ shrink: true }}
+              sx={{ width: "90px" }}
+            />
+          </Stack>
+        </Box>
+      </FlexBetween>
+      <Divider color={neutralLight} />
+      <Typography marginTop="5px" color={medium} variant="h6" fontWeight="500">
+        Battery Type
+      </Typography>
+      <FlexBetween
+        borderRadius="9px"
+        marginBottom="20px"
+        padding="0.1rem 1.5rem"
+      >
+        <FormGroup>
+          <FormControlLabel control={<Checkbox />} label="Lead Acid" />
+          <FormControlLabel control={<Checkbox />} label="LiFePo4" />
+          <FormControlLabel control={<Checkbox />} label="Lithium Ion" />
+        </FormGroup>
+      </FlexBetween>
+    </WidgetWrapper>
+  );
 };
 
 export default DataFilters;
