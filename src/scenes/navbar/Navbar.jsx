@@ -24,7 +24,7 @@ import {
   Close,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
 import { setMode } from "../../state/state";
 
@@ -66,8 +66,12 @@ const Navbar = () => {
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
         <FlexBetween gap="1rem">
-          <Button>Home</Button>
-          <Button>Build</Button>
+          <NavLink to="/" exact="true">
+            <Button>Home</Button>
+          </NavLink>
+          <NavLink to="/build" exact="true">
+            <Button>Build</Button>
+          </NavLink>
           <Button>Complete Builds</Button>
           <Button>Products</Button>
           <IconButton onClick={() => dispatch(setMode())}>

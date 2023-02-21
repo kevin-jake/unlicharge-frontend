@@ -3,6 +3,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Grid,
   Typography,
   useMediaQuery,
   useTheme,
@@ -43,7 +44,7 @@ const HomePage = () => {
         gap="0.5rem"
         justifyContent="space-between"
       >
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+        <Box flexBasis={isNonMobileScreens ? "13%" : undefined}>
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -57,12 +58,9 @@ const HomePage = () => {
             </AccordionDetails>
           </Accordion>
         </Box>
-        <Box
-          flexBasis={isNonMobileScreens ? "100%" : undefined}
-          mt={isNonMobileScreens ? undefined : "2rem"}
-        >
+        <Grid container spacing={0.25}>
           <PostsWidget userId={_id} />
-        </Box>
+        </Grid>
 
         {isNonMobileScreens && (
           <Box flexBasis="26%">
