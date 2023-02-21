@@ -1,4 +1,13 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React from "react";
 import { useSelector } from "react-redux";
 import PostsWidget from "../widgets/PostsWidget";
@@ -34,11 +43,20 @@ const HomePage = () => {
         gap="0.5rem"
         justifyContent="space-between"
       >
-        {isNonMobileScreens && (
-          <Box flexBasis="26%">
-            <DataFilters />
-          </Box>
-        )}
+        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="filters"
+              id="filters"
+            >
+              <Typography variant="h5">Filter</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <DataFilters />
+            </AccordionDetails>
+          </Accordion>
+        </Box>
         <Box
           flexBasis={isNonMobileScreens ? "100%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}

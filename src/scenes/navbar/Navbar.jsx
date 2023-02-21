@@ -158,21 +158,19 @@ const Navbar = () => {
             alignItems="center"
             gap="3rem"
           >
-            <IconButton
-              onClick={() => dispatch(setMode())}
-              sx={{ fontSize: "25px" }}
-            >
+            <Button>Home</Button>
+            <Button>Build</Button>
+            <Button>Complete Builds</Button>
+            <Button>Products</Button>
+            <IconButton onClick={() => dispatch(setMode())}>
               {theme.palette.mode === "dark" ? (
                 <DarkMode sx={{ fontSize: "25px" }} />
               ) : (
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
             <FormControl variant="standard" value={fullName}>
-              <Select
+              {/* <Select
                 value={fullName}
                 sx={{
                   backgroundColor: neutralLight,
@@ -195,7 +193,26 @@ const Navbar = () => {
                 <MenuItem onClick={() => dispatch(setLogout())}>
                   Log Out
                 </MenuItem>
-              </Select>
+              </Select> */}
+              <CardHeader
+                // onClick={handleClick}
+                sx={{
+                  backgroundColor: neutralLight,
+                  width: "150px",
+                  borderRadius: "0.25rem",
+                  p: "0.75rem 1rem",
+                }}
+                avatar={
+                  <Avatar
+                    alt="User"
+                    sx={{ width: 30, height: 30 }}
+                    //  FIXME: Make this image from users correct pic
+                    src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                  />
+                }
+                // title={username}
+                title="test"
+              />
             </FormControl>
           </FlexBetween>
         </Box>

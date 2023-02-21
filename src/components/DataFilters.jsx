@@ -45,11 +45,8 @@ const DataFilters = () => {
   };
   // TODO: Add functionality
   return (
-    <WidgetWrapper>
-      <FlexBetween padding="0.1rem" margin="5px">
-        <Typography color={dark} variant="h5" fontWeight="500">
-          Filters
-        </Typography>
+    <>
+      <FlexBetween marginBottom="5px" sx={{ justifyContent: "flex-end" }}>
         <Button
           variant="text"
           sx={{ minWidth: 100, color: medium, textTransform: "none" }}
@@ -120,8 +117,8 @@ const DataFilters = () => {
           <FormControlLabel control={<Checkbox />} label="LiFePo4" />
           <FormControlLabel control={<Checkbox />} label="Lithium Ion" />
         </FormGroup>
-      </FlexBetween>
-    </WidgetWrapper>
+      </FlexBetween>{" "}
+    </>
   );
 };
 
