@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
-import Navbar from "../scenes/navbar/Navbar";
+import Navbar from "../scenes/NavBar/Navbar";
 
 const PageWrapper = ({ title, children }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
