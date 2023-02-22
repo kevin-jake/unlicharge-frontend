@@ -8,35 +8,22 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React from "react";
 import { useSelector } from "react-redux";
 import PostsWidget from "../widgets/PostsWidget";
 import AdvertWidget from "../widgets/AdvertWidget";
 import FriendListWidget from "../widgets/FriendListWidget";
-import Navbar from "../navbar/Navbar";
 import DataFilters from "../../components/DataFilters";
+import PageWrapper from "../../components/PageWrapper";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const { palette } = useTheme();
   const { _id, picturePath } = useSelector((state) => {
     return state.user;
   });
 
   return (
-    <Box>
-      <Navbar />
-      <Box
-        width="100%"
-        padding="1rem 2% 0.1rem 2%"
-        display={isNonMobileScreens ? "flex" : "block"}
-        justifyContent="space-between"
-      >
-        <Typography color={palette.neutral.dark} variant="h3" fontWeight="500">
-          Builds
-        </Typography>
-      </Box>
+    <PageWrapper title="Builds">
       <Box
         width="100%"
         padding="2rem 3%"
@@ -44,27 +31,7 @@ const HomePage = () => {
         gap="0.5rem"
         justifyContent="space-between"
       >
-        <Box
-          sx={{
-            position: isNonMobileScreens ? "sticky" : "static",
-            top: "1rem",
-            height: "100%",
-          }}
-          flexBasis={isNonMobileScreens ? "13%" : undefined}
-        >
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="filters"
-              id="filters"
-            >
-              <Typography variant="h5">Filter</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <DataFilters />
-            </AccordionDetails>
-          </Accordion>
-        </Box>
+        <DataFilters />
         <Grid container spacing={0.25}>
           <PostsWidget userId={_id} />
         </Grid>
@@ -77,7 +44,7 @@ const HomePage = () => {
           </Box>
         )}
       </Box>
-    </Box>
+    </PageWrapper>
   );
 };
 

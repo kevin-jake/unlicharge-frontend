@@ -44,27 +44,7 @@ function ProductPage() {
         gap="0.5rem"
         justifyContent="space-between"
       >
-        <Box
-          sx={{
-            position: isNonMobileScreens ? "sticky" : "static",
-            top: "1rem",
-            height: "100%",
-          }}
-          flexBasis={isNonMobileScreens ? "13%" : undefined}
-        >
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="filters"
-              id="filters"
-            >
-              <Typography variant="h5">Filter</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <DataFilters />
-            </AccordionDetails>
-          </Accordion>
-        </Box>
+        <DataFilters />
         <Grid container spacing={0.25}>
           <PostsWidget />
         </Grid>
