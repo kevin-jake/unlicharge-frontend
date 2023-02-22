@@ -8,6 +8,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import BuildPage from "./scenes/BuildPage/BuildPage";
+import ProductPage from "./scenes/ProductPage/ProductPage";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -23,6 +24,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/build" element={<BuildPage />} />
+            <Route path="/products" element={<ProductPage />} />
+
             <Route path="/login" element={<LoginPage />} />
             <Route path="/profile/:userId" element={<ProfilePage />} />
           </Routes>

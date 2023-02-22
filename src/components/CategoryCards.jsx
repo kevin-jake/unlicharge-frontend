@@ -18,9 +18,9 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
-import FlexBetween from "../../components/FlexBetween";
-import Friend from "../../components/Friend";
-import WidgetWrapper from "../../components/WidgetWrapper";
+import FlexBetween from "./FlexBetween";
+import Friend from "./Friend";
+import WidgetWrapper from "./WidgetWrapper";
 
 const CategoryCards = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");

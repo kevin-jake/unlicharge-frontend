@@ -11,7 +11,7 @@ import {
 import React from "react";
 import ProductCard from "../../components/ProductCards";
 import Navbar from "../navbar/Navbar";
-import CategoryCards from "./CategoryCards";
+import CategoryCards from "../../components/CategoryCards";
 import InitialParams from "./InitialParams";
 
 function BuildPage() {
@@ -27,7 +27,7 @@ function BuildPage() {
         display={isNonMobileScreens ? "flex" : "block"}
         justifyContent="space-between"
       >
-        <Typography color={palette.neutral.dark} variant="h2" fontWeight="500">
+        <Typography color={palette.neutral.dark} variant="h3" fontWeight="500">
           Estimate your build
         </Typography>
       </Box>
@@ -44,7 +44,7 @@ function BuildPage() {
         <CategoryCards />
         <CategoryCards />
       </Grid>
-      <Grid container spacing={0.25}>
+      <Grid paddingX="0.5rem" container spacing={0.5}>
         <ProductCard />
         <ProductCard />
         <ProductCard />

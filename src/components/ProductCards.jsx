@@ -53,13 +53,7 @@ const ProductCards = ({
 
   return (
     <Grid item xs={12} md={4}>
-      <WidgetWrapper m="1rem" flexBasis="50%">
-        <Friend
-          friendId={postUserId}
-          name={name}
-          subtitle={location}
-          userPicturePath={userPicturePath}
-        />
+      <WidgetWrapper m="0.25rem" flexBasis="50%">
         <Typography color={main} sx={{ mt: "1rem" }}>
           Test
         </Typography>
