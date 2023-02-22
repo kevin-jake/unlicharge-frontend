@@ -25,7 +25,7 @@ function BuildPage() {
       >
         <InitialParams />
       </Box>
-      <Grid marginY="0.5rem" container>
+      <Grid container>
         <CategoryCards />
         <CategoryCards />
         <CategoryCards />
