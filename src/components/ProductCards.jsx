@@ -92,6 +92,7 @@ const ProductCards = ({
             <Grid item>
               <Typography variant="caption"> Subs</Typography>
             </Grid>
+            {/* TODO: Extract this to a new component */}
             <Grid item>
               <Box
                 display="flex"
@@ -147,6 +148,7 @@ const ProductCards = ({
                 </Grid>
               </Box>
             </Grid>
+            {/* TODO: Extract this to a new component */}
             <Grid item zeroMinWidth>
               <List
                 dense
@@ -182,6 +184,7 @@ const ProductCards = ({
             </Grid>
           </Grid>
         </FlexBetween>
+        {/* TODO: Extract this to a new component */}
         <FlexBetween gap="0.3rem">
           <FlexBetween gap="0.5rem">
             <UserImage size="20px" />
