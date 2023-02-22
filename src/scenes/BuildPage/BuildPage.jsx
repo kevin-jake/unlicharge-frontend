@@ -9,6 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
+import ProductCard from "../../components/ProductCards";
 import Navbar from "../navbar/Navbar";
 import CategoryCards from "./CategoryCards";
 import InitialParams from "./InitialParams";
@@ -42,6 +43,13 @@ function BuildPage() {
         <CategoryCards />
         <CategoryCards />
         <CategoryCards />
+      </Grid>
+      <Grid container spacing={0.25}>
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
       </Grid>
     </Box>
   );
