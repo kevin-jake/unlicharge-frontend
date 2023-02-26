@@ -33,7 +33,7 @@ const HomePage = () => {
       >
         <DataFilters />
         <Grid container spacing={0.25}>
-          <PostsWidget userId={_id} />
+          <PostsWidget />
         </Grid>
 
         {isNonMobileScreens && (

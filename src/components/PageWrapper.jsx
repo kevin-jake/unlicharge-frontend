@@ -1,4 +1,4 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Fab, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import Navbar from "../scenes/NavBar/Navbar";
 
@@ -20,6 +20,19 @@ const PageWrapper = ({ title, children }) => {
         </Typography>
       </Box>
       {children}
+      <Box
+        sx={{
+          margin: "1rem",
+          right: 20,
+          bottom: 20,
+          left: "auto",
+          position: "fixed",
+        }}
+      >
+        <Fab variant="extended" size="small" color="primary" aria-label="add">
+          Summary
+        </Fab>
+      </Box>
     </Box>
   );
 };

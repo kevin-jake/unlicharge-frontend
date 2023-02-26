@@ -13,6 +13,8 @@ import ProductCard from "../../components/ProductCards";
 import CategoryCards from "../../components/CategoryCards";
 import InitialParams from "./InitialParams";
 import PageWrapper from "../../components/PageWrapper";
+import DialogWrapper from "../../components/DialogWrapper";
+import WidgetWrapper from "../../components/WidgetWrapper";
 
 function BuildPage() {
   return (
@@ -37,6 +39,10 @@ function BuildPage() {
         <ProductCard />
         <ProductCard />
       </Grid>
+      {/* TODO: Add a product card modal template */}
+      <DialogWrapper>
+        <ProductCard />
+      </DialogWrapper>
     </PageWrapper>
   );
 }
