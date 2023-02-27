@@ -122,6 +122,7 @@ const Form = () => {
           <Box
             display="grid"
             gap="30px"
+            marginTop="1.5rem"
             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },

@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import HomePage from "./scenes/HomePage/HomePage";
-import LoginPage from "./scenes/LoginPage/LoginPage";
 import ProfilePage from "./scenes/ProfilePage/ProfilePage";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -26,7 +25,6 @@ function App() {
             <Route path="/build" element={<BuildPage />} />
             <Route path="/products" element={<ProductPage />} />
 
-            <Route path="/login" element={<LoginPage />} />
             <Route path="/profile/:userId" element={<ProfilePage />} />
           </Routes>
         </ThemeProvider>

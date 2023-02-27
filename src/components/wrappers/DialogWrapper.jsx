@@ -8,12 +8,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const DialogWrapper = ({
-  children,
-  title = "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest",
-  showModal = false,
-  closeModal,
-}) => {
+const DialogWrapper = ({ children, title, showModal = false, closeModal }) => {
   const { palette } = useTheme();
 
   return (
