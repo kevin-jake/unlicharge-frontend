@@ -10,6 +10,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const ProfileButton = ({ fullName, isLoggedIn = true }) => {
   const { palette } = useTheme();
@@ -103,6 +104,14 @@ const ProfileButton = ({ fullName, isLoggedIn = true }) => {
             <MenuItem>
               <Typography textAlign="center">test</Typography>
             </MenuItem>
+            <MenuItem>
+              <NavLink to="/requests" exact="true">
+                <Typography textAlign="center" color={palette.neutral.dark}>
+                  My Requests
+                </Typography>
+              </NavLink>
+            </MenuItem>
+
             {/* ))} */}
           </Menu>
         </FormControl>
