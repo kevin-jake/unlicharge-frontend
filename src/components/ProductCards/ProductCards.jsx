@@ -61,7 +61,7 @@ const ProductCards = ({
   };
 
   return (
-    <Grid item s={12} xs={12} md={4}>
+    <Grid item s={12} xs={12} md={6}>
       <WidgetWrapper m="0.25rem" flexBasis="50%">
         <FlexBetween marginY="0.25rem" sx={{ justifyContent: "flex-start" }}>
           <Box width="130px" height="130px">
