@@ -6,13 +6,14 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Typography,
   useTheme,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 const DialogWrapper = ({
   children,
-  title = "Test",
+  title = "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest",
   showModal = true,
   closeModal,
 }) => {
@@ -23,9 +24,19 @@ const DialogWrapper = ({
       open={showModal ? showModal : false}
       onClose={closeModal}
       maxWidth="lg"
+      PaperProps={{
+        style: { borderRadius: "0.75rem" },
+      }}
     >
       <DialogTitle>
-        {title}
+        <Typography
+          noWrap
+          color={palette.neutral.dark}
+          variant="h4"
+          fontWeight="500"
+        >
+          {title}
+        </Typography>
         {closeModal ? (
           <IconButton
             aria-label="close"

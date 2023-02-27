@@ -9,12 +9,13 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
-import ProductCard from "../../components/ProductCards";
+import ProductCard from "../../components/ProductCards/ProductCards";
 import CategoryCards from "../../components/CategoryCards";
 import InitialParams from "./InitialParams";
 import PageWrapper from "../../components/wrappers/PageWrapper";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
+import ProductDialogContent from "../../components/ProductDialogContent";
 
 function BuildPage() {
   return (
@@ -41,7 +42,7 @@ function BuildPage() {
       </Grid>
       {/* TODO: Add a product card modal template */}
       <DialogWrapper>
-        <ProductCard />
+        <ProductDialogContent />
       </DialogWrapper>
     </PageWrapper>
   );
