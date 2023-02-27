@@ -11,7 +11,7 @@ import CloseIcon from "@mui/icons-material/Close";
 const DialogWrapper = ({
   children,
   title = "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest",
-  showModal = true,
+  showModal = false,
   closeModal,
 }) => {
   const { palette } = useTheme();

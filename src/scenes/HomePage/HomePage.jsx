@@ -15,6 +15,7 @@ import AdvertWidget from "../widgets/AdvertWidget";
 import FriendListWidget from "../widgets/FriendListWidget";
 import DataFilters from "../../components/DataFilters";
 import PageWrapper from "../../components/wrappers/PageWrapper";
+import SortFilter from "../../components/SortFilter";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -33,6 +34,9 @@ const HomePage = () => {
       >
         <DataFilters />
         <Grid container spacing={0.25}>
+          <Grid item xs={12}>
+            <SortFilter />
+          </Grid>
           <PostsWidget />
         </Grid>
 

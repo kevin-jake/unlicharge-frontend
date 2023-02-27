@@ -7,10 +7,9 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import React from "react";
+import CompleteSpecs from "./CompleteSpecs";
 import ItemTabs from "./ItemTabs";
 import PriceCompute from "./ProductCards/PriceCompute";
-import QuickSpecs from "./ProductCards/QuickSpecs";
-import FlexBetween from "./wrappers/FlexBetween";
 
 const ProductDialogContent = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -18,7 +17,6 @@ const ProductDialogContent = () => {
   return (
     <>
       <DialogContent dividers>
-        {/* <FlexBetween marginY="0.25rem" sx={{ justifyContent: "flex-start" }}> */}
         <Grid
           item
           xs
@@ -48,9 +46,8 @@ const ProductDialogContent = () => {
               },
             }}
           >
-            <ItemTabs tab1={<QuickSpecs />} tab2={<PriceCompute />} />
+            <ItemTabs tab1={<CompleteSpecs />} tab2={<PriceCompute />} />
           </Grid>
-          {/* </FlexBetween> */}
         </Grid>
       </DialogContent>
       <DialogActions>

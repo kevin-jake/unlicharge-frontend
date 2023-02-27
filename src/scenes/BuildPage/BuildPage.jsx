@@ -16,6 +16,7 @@ import PageWrapper from "../../components/wrappers/PageWrapper";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import ProductDialogContent from "../../components/ProductDialogContent";
+import SortFilter from "../../components/SortFilter";
 
 function BuildPage() {
   return (
@@ -34,6 +35,9 @@ function BuildPage() {
         <CategoryCards />
       </Grid>
       <Grid paddingX="0.5rem" container spacing={0.5}>
+        <Grid item xs={12}>
+          <SortFilter />
+        </Grid>
         <ProductCard />
         <ProductCard />
         <ProductCard />

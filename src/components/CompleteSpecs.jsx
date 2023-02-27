@@ -1,7 +1,7 @@
 import { Grid, List, ListItem, ListItemText, useTheme } from "@mui/material";
 import React from "react";
 
-const QuickSpecs = () => {
+const CompleteSpecs = () => {
   const { palette } = useTheme();
   return (
     <Grid item zeroMinWidth>
@@ -46,4 +46,4 @@ const QuickSpecs = () => {
   );
 };
 
-export default QuickSpecs;
+export default CompleteSpecs;
