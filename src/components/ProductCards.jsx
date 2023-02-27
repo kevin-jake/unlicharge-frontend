@@ -17,8 +17,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import FlexBetween from "./FlexBetween";
-import WidgetWrapper from "./WidgetWrapper";
+import FlexBetween from "./wrappers/FlexBetween";
+import WidgetWrapper from "./wrappers/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../state/state";

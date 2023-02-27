@@ -12,9 +12,9 @@ import React from "react";
 import ProductCard from "../../components/ProductCards";
 import CategoryCards from "../../components/CategoryCards";
 import InitialParams from "./InitialParams";
-import PageWrapper from "../../components/PageWrapper";
-import DialogWrapper from "../../components/DialogWrapper";
-import WidgetWrapper from "../../components/WidgetWrapper";
+import PageWrapper from "../../components/wrappers/PageWrapper";
+import DialogWrapper from "../../components/wrappers/DialogWrapper";
+import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 
 function BuildPage() {
   return (

@@ -14,7 +14,7 @@ import PostsWidget from "../widgets/PostsWidget";
 import AdvertWidget from "../widgets/AdvertWidget";
 import FriendListWidget from "../widgets/FriendListWidget";
 import DataFilters from "../../components/DataFilters";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/wrappers/PageWrapper";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");

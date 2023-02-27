@@ -12,7 +12,7 @@ import {
 import { Formik } from "formik";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React from "react";
-import WidgetWrapper from "../../components/WidgetWrapper";
+import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 
 const initialValuesRegister = {
   firstName: "",

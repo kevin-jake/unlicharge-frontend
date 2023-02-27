@@ -25,7 +25,7 @@ import {
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import FlexBetween from "../../components/FlexBetween";
+import FlexBetween from "../../components/wrappers/FlexBetween";
 import { setMode } from "../../state/state";
 
 const Navbar = () => {

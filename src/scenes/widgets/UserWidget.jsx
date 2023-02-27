@@ -7,10 +7,10 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import WidgetWrapper from "../../components/WidgetWrapper";
+import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import UserImage from "../../components/UserImage";
 import { Box, Divider, Typography, useTheme } from "@mui/material";
-import FlexBetween from "../../components/FlexBetween";
+import FlexBetween from "../../components/wrappers/FlexBetween";
 
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);

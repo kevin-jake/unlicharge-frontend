@@ -12,7 +12,7 @@ import React from "react";
 import DataFilters from "../../components/DataFilters";
 import PostsWidget from "../widgets/PostsWidget";
 import CategoryCards from "../../components/CategoryCards";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/wrappers/PageWrapper";
 
 function ProductPage() {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");

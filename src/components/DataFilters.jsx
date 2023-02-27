@@ -19,7 +19,7 @@ import {
   AccordionDetails,
 } from "@mui/material";
 import { setPosts } from "../state/state";
-import FlexBetween from "./FlexBetween";
+import FlexBetween from "./wrappers/FlexBetween";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const DataFilters = () => {
