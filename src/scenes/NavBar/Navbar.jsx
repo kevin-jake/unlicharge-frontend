@@ -69,26 +69,35 @@ const Navbar = () => {
 
         {/* DESKTOP NAV */}
         {isNonMobileScreens ? (
-          <FlexBetween gap="1rem">
-            <NavLink to="/" exact="true">
-              <Button>Home</Button>
-            </NavLink>
-            <NavLink to="/build" exact="true">
-              <Button>Build</Button>
-            </NavLink>
-            {/* <Button>Complete Builds</Button> */}
-            <NavLink to="/products" exact="true">
-              <Button>Products</Button>
-            </NavLink>
-            <IconButton onClick={() => dispatch(setMode())}>
-              {theme.palette.mode === "dark" ? (
-                <DarkMode sx={{ fontSize: "25px" }} />
-              ) : (
-                <LightMode sx={{ color: dark, fontSize: "25px" }} />
-              )}
-            </IconButton>
-            <ProfileButton />
-          </FlexBetween>
+          <>
+            <Box
+              gap="1rem"
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
+            >
+              <NavLink to="/" exact="true">
+                <Button>Home</Button>
+              </NavLink>
+              <NavLink to="/build" exact="true">
+                <Button>Build</Button>
+              </NavLink>
+              {/* <Button>Complete Builds</Button> */}
+              <NavLink to="/products" exact="true">
+                <Button>Products</Button>
+              </NavLink>
+              <IconButton onClick={() => dispatch(setMode())}>
+                {theme.palette.mode === "dark" ? (
+                  <DarkMode sx={{ fontSize: "25px" }} />
+                ) : (
+                  <LightMode sx={{ color: dark, fontSize: "25px" }} />
+                )}
+              </IconButton>
+              <ProfileButton />
+            </Box>
+          </>
         ) : (
           <IconButton
             onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}

@@ -59,8 +59,23 @@ const ProfileButton = ({ fullName, isLoggedIn = true }) => {
             title={
               <>
                 <Box flexDirection="column" display="flex">
-                  <Typography variant="body">test</Typography>
-                  <Typography variant="caption" color={palette.neutral.medium}>
+                  <Typography
+                    noWrap
+                    variant="body"
+                    sx={{
+                      maxWidth: "130px",
+                    }}
+                  >
+                    test
+                  </Typography>
+                  <Typography
+                    noWrap
+                    variant="caption"
+                    sx={{
+                      maxWidth: "130px",
+                    }}
+                    color={palette.neutral.medium}
+                  >
                     test
                   </Typography>
                 </Box>
