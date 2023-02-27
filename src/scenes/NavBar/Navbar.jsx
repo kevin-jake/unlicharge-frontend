@@ -29,6 +29,7 @@ import FlexBetween from "../../components/wrappers/FlexBetween";
 import LoginRegisterDialogContent from "../LoginRegisterDialog/LoginRegisterDialogContent";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import { setMode } from "../../state/state";
+import ProfileButton from "./ProfileButton";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -86,49 +87,7 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
-            <FormControl variant="standard" value={fullName}>
-              {/* <Select
-              value={fullName}
-              sx={{
-                backgroundColor: neutralLight,
-                width: "150px",
-                borderRadius: "0.25rem",
-                p: "0.25rem 1rem",
-                "& .MuiSvgIcon-root": {
-                  pr: "0.25rem",
-                  width: "3rem",
-                },
-                "& .MuiSelect-select:focus": {
-                  backgroundColor: neutralLight,
-                },
-              }}
-              input={<InputBase />}
-            >
-              <MenuItem value={fullName}>
-                <Typography>{fullName}</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-            </Select> */}
-              <CardHeader
-                // onClick={handleClick}
-                sx={{
-                  backgroundColor: neutralLight,
-                  width: "150px",
-                  borderRadius: "0.25rem",
-                  p: "0.75rem 1rem",
-                }}
-                avatar={
-                  <Avatar
-                    alt="User"
-                    sx={{ width: 30, height: 30 }}
-                    //  FIXME: Make this image from users correct pic
-                    src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-                  />
-                }
-                // title={username}
-                title="test"
-              />
-            </FormControl>
+            <ProfileButton />
           </FlexBetween>
         ) : (
           <IconButton
@@ -184,51 +143,7 @@ const Navbar = () => {
                   <LightMode sx={{ color: dark, fontSize: "25px" }} />
                 )}
               </IconButton>
-              <FormControl variant="standard" value={fullName}>
-                {/* <Select
-                value={fullName}
-                sx={{
-                  backgroundColor: neutralLight,
-                  width: "150px",
-                  borderRadius: "0.25rem",
-                  p: "0.25rem 1rem",
-                  "& .MuiSvgIcon-root": {
-                    pr: "0.25rem",
-                    width: "3rem",
-                  },
-                  "& .MuiSelect-select:focus": {
-                    backgroundColor: neutralLight,
-                  },
-                }}
-                input={<InputBase />}
-              >
-                <MenuItem value={fullName}>
-                  <Typography>{fullName}</Typography>
-                </MenuItem>
-                <MenuItem onClick={() => dispatch(setLogout())}>
-                  Log Out
-                </MenuItem>
-              </Select> */}
-                <CardHeader
-                  // onClick={handleClick}
-                  sx={{
-                    backgroundColor: neutralLight,
-                    width: "150px",
-                    borderRadius: "0.25rem",
-                    p: "0.75rem 1rem",
-                  }}
-                  avatar={
-                    <Avatar
-                      alt="User"
-                      sx={{ width: 30, height: 30 }}
-                      //  FIXME: Make this image from users correct pic
-                      src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-                    />
-                  }
-                  // title={username}
-                  title="test"
-                />
-              </FormControl>
+              <ProfileButton />
             </FlexBetween>
           </Box>
         )}

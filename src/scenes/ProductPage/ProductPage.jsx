@@ -16,7 +16,6 @@ import PageWrapper from "../../components/wrappers/PageWrapper";
 
 function ProductPage() {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const { palette } = useTheme();
 
   return (
     <PageWrapper title="Products">

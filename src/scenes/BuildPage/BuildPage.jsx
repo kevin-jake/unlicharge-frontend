@@ -65,7 +65,7 @@ function BuildPage() {
           Summary
         </Fab>
       </Box>
-      <DialogWrapper showModal={true}>
+      <DialogWrapper showModal={false}>
         <ProductDialogContent />
       </DialogWrapper>
     </PageWrapper>
