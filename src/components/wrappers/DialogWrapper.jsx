@@ -1,9 +1,6 @@
 import React from "react";
 import {
-  Button,
   Dialog,
-  DialogActions,
-  DialogContent,
   DialogTitle,
   IconButton,
   Typography,
@@ -53,12 +50,7 @@ const DialogWrapper = ({
         ) : null}
       </DialogTitle>
 
-      <DialogContent dividers>{children}</DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={closeModal}>
-          Save changes
-        </Button>
-      </DialogActions>
+      {children}
     </Dialog>
   );
 };
