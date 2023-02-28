@@ -38,6 +38,7 @@ const ProductCards = ({
   userPicturePath,
   likes,
   comments,
+  openModal,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
@@ -88,7 +89,8 @@ const ProductCards = ({
             }}
           >
             <ProductName
-            // name subName
+              openModal={openModal}
+              // name subName
             />
             <PriceCompute />
             <QuickSpecs />

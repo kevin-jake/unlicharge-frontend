@@ -1,5 +1,5 @@
 import { Box, Container, Fab, Grid } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import ProductCard from "../../components/ProductCards/ProductCards";
 import CategoryCards from "../../components/CategoryCards";
 import InitialParams from "./InitialParams";
@@ -10,6 +10,12 @@ import SortFilter from "../../components/SortFilter";
 import SummarySideBar from "../SummarySideBar/SummarySideBar";
 
 function BuildPage() {
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  console.log(
+    "🚀 ~ file: BuildPage.jsx:14 ~ BuildPage ~ isProductModalOpen:",
+    isProductModalOpen
+  );
+
   return (
     <PageWrapper title="Estimate your build">
       <Box
@@ -31,7 +37,7 @@ function BuildPage() {
             <SortFilter />
           </Grid>
           {/* TODO: Make this responsive 3 cards if large screen and one card on mobile */}
-          <ProductCard />
+          <ProductCard openModal={() => setIsProductModalOpen(true)} />
           <ProductCard />
           <ProductCard />
           <ProductCard />
@@ -65,7 +71,11 @@ function BuildPage() {
           Summary
         </Fab>
       </Box>
-      <DialogWrapper showModal={false}>
+      <DialogWrapper
+        isOpen={isProductModalOpen}
+        title="testTESTASAASDFasdfasdfasdfasdf"
+        closeModal={() => setIsProductModalOpen(false)}
+      >
         <ProductDialogContent />
       </DialogWrapper>
     </PageWrapper>

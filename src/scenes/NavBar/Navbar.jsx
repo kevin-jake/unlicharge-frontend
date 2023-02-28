@@ -157,7 +157,7 @@ const Navbar = () => {
           </Box>
         )}
       </FlexBetween>
-      <DialogWrapper showModal={false} title="Login">
+      <DialogWrapper isOpen={false} title="Login">
         <LoginRegisterDialogContent title="Login" />
       </DialogWrapper>
     </>
