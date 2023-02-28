@@ -5,7 +5,7 @@ import CategoryCards from "../../components/CategoryCards";
 import InitialParams from "./InitialParams";
 import PageWrapper from "../../components/wrappers/PageWrapper";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
-import ProductDialogContent from "../../components/ProductDialogContent";
+import ProductDialogContent from "../ProductDialog/ProductDialogContent";
 import SortFilter from "../../components/SortFilter";
 import SummarySideBar from "../SummarySideBar/SummarySideBar";
 

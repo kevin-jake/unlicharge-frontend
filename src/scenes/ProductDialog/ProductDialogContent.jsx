@@ -8,8 +8,8 @@ import {
 } from "@mui/material";
 import React from "react";
 import CompleteSpecs from "./CompleteSpecs";
-import ItemTabs from "./ItemTabs";
-import PriceCompute from "./ProductCards/PriceCompute";
+import ItemTabs from "../../components/ItemTabs";
+import PriceCompute from "../../components/ProductCards/PriceCompute";
 
 const ProductDialogContent = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
