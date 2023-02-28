@@ -1,5 +1,5 @@
 import { Box, Container, Fab, Grid } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCards/ProductCards";
 import CategoryCards from "../../components/CategoryCards";
 import InitialParams from "./InitialParams";
@@ -9,14 +9,35 @@ import ProductDialogContent from "../ProductDialog/ProductDialogContent";
 import SortFilter from "../../components/SortFilter";
 import SummarySideBar from "../SummarySideBar/SummarySideBar";
 import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
+import { useDispatch, useSelector } from "react-redux";
+import { setProducts } from "../../store/slices/productSlice";
 
 function BuildPage() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
-  console.log(
-    "🚀 ~ file: BuildPage.jsx:14 ~ BuildPage ~ isProductModalOpen:",
-    isProductModalOpen
-  );
+  const products = useSelector(({ auth }) => auth.productsArray);
+  const category = useSelector((state) => {
+    console.log({ state });
+    return state.category;
+  });
+  const dispatch = useDispatch();
 
+  console.log("🚀 ~ file: BuildPage.jsx:19 ~ BuildPage ~ category:", category);
+  // Get Product Data
+  const getProducts = async () => {
+    const response = await fetch(`http://localhost:5000/products/${category}`, {
+      method: "GET",
+      // headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    console.log({ data });
+    dispatch(setProducts({ productsArray: data }));
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  console.log("🚀 ~ file: BuildPage.jsx:18 ~ BuildPage ~ products:", products);
   return (
     <PageWrapper title="Estimate your build">
       <Box

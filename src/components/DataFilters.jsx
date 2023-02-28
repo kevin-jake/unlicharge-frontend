@@ -18,7 +18,7 @@ import {
   useMediaQuery,
   AccordionDetails,
 } from "@mui/material";
-import { setPosts } from "../state/state";
+import { setPosts } from "../store/slices/authSlice";
 import FlexBetween from "./wrappers/FlexBetween";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 

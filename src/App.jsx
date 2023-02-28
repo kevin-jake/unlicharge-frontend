@@ -11,9 +11,9 @@ import ProductPage from "./scenes/ProductPage/ProductPage";
 import RequestsPage from "./scenes/RequestsPage/RequestsPage";
 
 function App() {
-  const mode = useSelector((state) => state.mode);
+  const mode = useSelector(({ auth }) => auth.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  const isAuth = Boolean(useSelector((state) => state.token));
+  const isAuth = Boolean(useSelector(({ auth }) => auth.token));
 
   return (
     <div className="app">

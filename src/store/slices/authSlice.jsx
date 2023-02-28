@@ -42,7 +42,6 @@ export const authSlice = createSlice({
   },
 });
 
-console.log("🚀 ~ file: state.jsx:9 ~ initialState:", initialState);
 export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } =
   authSlice.actions;
 export default authSlice.reducer;

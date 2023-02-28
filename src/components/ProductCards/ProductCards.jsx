@@ -21,7 +21,7 @@ import FlexBetween from "../wrappers/FlexBetween";
 import WidgetWrapper from "../wrappers/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPost } from "../../state/state";
+import { setPost } from "../../store/slices/authSlice";
 import UserImage from "../UserImage";
 import ProductName from "./ProductName";
 import PriceCompute from "./PriceCompute";
@@ -42,11 +42,12 @@ const ProductCards = ({
 }) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.token);
-  const loggedInUserId = useSelector((state) => state.user._id);
+  const token = useSelector(({ auth }) => auth.token);
+  const loggedInUserId = useSelector(({ auth }) => auth.user._id);
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
+  console.log("🚀 ~ file: ProductCards.jsx:46 ~ token:", token);
 
   const patchLike = async () => {
     const response = await fetch(`http://localhost:5000/posts/${postId}/like`, {
