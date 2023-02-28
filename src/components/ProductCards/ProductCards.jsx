@@ -47,7 +47,6 @@ const ProductCards = ({
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
-  console.log("🚀 ~ file: ProductCards.jsx:46 ~ token:", token);
 
   const patchLike = async () => {
     const response = await fetch(`http://localhost:5000/posts/${postId}/like`, {

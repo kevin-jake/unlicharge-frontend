@@ -14,14 +14,10 @@ import { setProducts } from "../../store/slices/productSlice";
 
 function BuildPage() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
-  const products = useSelector(({ auth }) => auth.productsArray);
-  const category = useSelector((state) => {
-    console.log({ state });
-    return state.category;
-  });
+  const products = useSelector(({ product }) => product.productsArray);
+  const category = useSelector(({ product }) => product.category);
   const dispatch = useDispatch();
 
-  console.log("🚀 ~ file: BuildPage.jsx:19 ~ BuildPage ~ category:", category);
   // Get Product Data
   const getProducts = async () => {
     const response = await fetch(`http://localhost:5000/products/${category}`, {
@@ -37,7 +33,6 @@ function BuildPage() {
     getProducts();
   }, []);
 
-  console.log("🚀 ~ file: BuildPage.jsx:18 ~ BuildPage ~ products:", products);
   return (
     <PageWrapper title="Estimate your build">
       <Box
