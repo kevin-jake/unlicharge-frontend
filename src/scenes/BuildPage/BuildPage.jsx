@@ -8,6 +8,7 @@ import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import ProductDialogContent from "../ProductDialog/ProductDialogContent";
 import SortFilter from "../../components/SortFilter";
 import SummarySideBar from "../SummarySideBar/SummarySideBar";
+import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
 
 function BuildPage() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
@@ -77,6 +78,9 @@ function BuildPage() {
         closeModal={() => setIsProductModalOpen(false)}
       >
         <ProductDialogContent />
+      </DialogWrapper>
+      <DialogWrapper isOpen={false} title="Create Battery">
+        <CRUDDialogContent />
       </DialogWrapper>
     </PageWrapper>
   );

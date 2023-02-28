@@ -10,6 +10,8 @@ import React from "react";
 import CompleteSpecs from "./CompleteSpecs";
 import ItemTabs from "../../components/ItemTabs";
 import PriceCompute from "../../components/ProductCards/PriceCompute";
+import DialogWrapper from "../../components/wrappers/DialogWrapper";
+import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
 
 const ProductDialogContent = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -53,6 +55,9 @@ const ProductDialogContent = () => {
       <DialogActions>
         <Button autoFocus>Save changes</Button>
       </DialogActions>
+      <DialogWrapper isOpen={false} title="Edit Battery">
+        <CRUDDialogContent />
+      </DialogWrapper>
     </>
   );
 };
