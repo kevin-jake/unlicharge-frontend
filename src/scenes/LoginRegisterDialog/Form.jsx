@@ -20,13 +20,14 @@ import {
 } from "../../store/slices/auth/authApiSlice";
 
 const registerSchema = yup.object().shape({
+  username: yup.string().required("required"),
   firstName: yup.string().required("required"),
   lastName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
   location: yup.string().required("required"),
   occupation: yup.string().required("required"),
-  picture: yup.string().required("required"),
+  // picture: yup.string().required("required"),
 });
 
 const loginSchema = yup.object().shape({
@@ -35,13 +36,14 @@ const loginSchema = yup.object().shape({
 });
 
 const initialValuesRegister = {
+  username: "",
   firstName: "",
   lastName: "",
   email: "",
   password: "",
   location: "",
   occupation: "",
-  picture: "",
+  // picture: "",
 };
 
 const initialValuesLogin = {
@@ -82,6 +84,23 @@ const Form = ({ setModalType, pageType, closeModal }) => {
   //   }
   // };
 
+  const handleRegister = async (values, onSubmitProps) => {
+    // TODO: Upload photos for new registers
+    // const formData = new FormData();
+    // for (let value in values) {
+    //   formData.append(value, values[value]);
+    // }
+    // formData.append("picturePath", values.picture.name);
+    const userData = await register(values).unwrap();
+    console.log(
+      "🚀 ~ file: Form.jsx:92 ~ handleRegister ~ userData:",
+      userData
+    );
+    onSubmitProps.resetForm();
+    dispatch(setLogin(userData));
+    closeModal();
+  };
+
   const handleLogin = async (values, onSubmitProps) => {
     const userData = await login(values).unwrap();
     onSubmitProps.resetForm();
@@ -91,7 +110,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await handleLogin(values, onSubmitProps);
-    if (isRegister) await register(values, onSubmitProps);
+    if (isRegister) await handleRegister(values, onSubmitProps);
   };
 
   return (
@@ -120,8 +139,39 @@ const Form = ({ setModalType, pageType, closeModal }) => {
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
             }}
           >
+            <TextField
+              label="Email"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.email}
+              name="email"
+              error={Boolean(touched.email) && Boolean(errors.email)}
+              helperText={touched.email && errors.email}
+              sx={{ gridColumn: "span 4" }}
+            />
+            <TextField
+              label="Password"
+              type="password"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.password}
+              name="password"
+              error={Boolean(touched.password) && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
+              sx={{ gridColumn: "span 4" }}
+            />
             {isRegister && (
               <>
+                <TextField
+                  label="Username"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.username}
+                  name="username"
+                  error={Boolean(touched.username) && Boolean(errors.username)}
+                  helperText={touched.username && errors.username}
+                  sx={{ gridColumn: "span 4" }}
+                />
                 <TextField
                   label="First Name"
                   onBlur={handleBlur}
@@ -155,6 +205,19 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
+                  label="Mobile Number"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.mobileNumber}
+                  name="mobileNumber"
+                  error={
+                    Boolean(touched.mobileNumber) &&
+                    Boolean(errors.mobileNumber)
+                  }
+                  helperText={touched.mobileNumber && errors.mobileNumber}
+                  sx={{ gridColumn: "span 2" }}
+                />
+                <TextField
                   label="Occupation"
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -164,7 +227,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                     Boolean(touched.occupation) && Boolean(errors.occupation)
                   }
                   helperText={touched.occupation && errors.occupation}
-                  sx={{ gridColumn: "span 4" }}
+                  sx={{ gridColumn: "span 2" }}
                 />
                 <Box
                   gridColumn="span 4"
@@ -201,28 +264,6 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                 </Box>
               </>
             )}
-
-            <TextField
-              label="Email"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.email}
-              name="email"
-              error={Boolean(touched.email) && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
-              sx={{ gridColumn: "span 4" }}
-            />
-            <TextField
-              label="Password"
-              type="password"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.password}
-              name="password"
-              error={Boolean(touched.password) && Boolean(errors.password)}
-              helperText={touched.password && errors.password}
-              sx={{ gridColumn: "span 4" }}
-            />
           </Box>
 
           {/* BUTTONS */}

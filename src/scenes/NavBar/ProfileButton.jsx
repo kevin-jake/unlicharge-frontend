@@ -105,8 +105,7 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {/* TODO: */}
-            {/* {settings.map((setting) => ( */}
+            {/* TODO: Add an Edit Profile and My Builds home profile pages */}
             <MenuItem>
               <Typography textAlign="center">test</Typography>
             </MenuItem>
