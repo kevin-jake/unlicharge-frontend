@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   mode: "light",
-  user: { _id: "test", picturePath: "test" },
-  token: "test",
+  user: null,
+  token: null,
 };
 
 export const authSlice = createSlice({

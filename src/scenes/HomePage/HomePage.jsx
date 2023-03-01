@@ -20,7 +20,7 @@ import { selectUser } from "../../store/slices/auth/authSlice";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const { _id, picturePath } = useSelector(selectUser);
+  const user = useSelector(selectUser);
 
   return (
     <PageWrapper title="Builds">
@@ -36,14 +36,14 @@ const HomePage = () => {
           <Grid item xs={12}>
             <SortFilter />
           </Grid>
-          <PostsWidget />
+          {/* <PostsWidget /> */}
         </Grid>
 
         {isNonMobileScreens && (
           <Box flexBasis="26%">
             <AdvertWidget />
             <Box m="2rem 0" />
-            <FriendListWidget userId={_id} />
+            {/* <FriendListWidget userId={user?._id} /> */}
           </Box>
         )}
       </Box>

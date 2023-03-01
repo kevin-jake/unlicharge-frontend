@@ -33,7 +33,7 @@ function ProductPage() {
       >
         <DataFilters />
         <Grid container spacing={0.25}>
-          <PostsWidget />
+          {/* <PostsWidget /> */}
         </Grid>
       </Box>
     </PageWrapper>

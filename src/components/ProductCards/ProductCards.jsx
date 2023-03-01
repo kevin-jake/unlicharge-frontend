@@ -21,7 +21,7 @@ import FlexBetween from "../wrappers/FlexBetween";
 import WidgetWrapper from "../wrappers/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPost } from "../../store/slices/auth/authSlice";
+import { selectUser, setPost } from "../../store/slices/auth/authSlice";
 import UserImage from "../UserImage";
 import ProductName from "./ProductName";
 import PriceCompute from "./PriceCompute";
@@ -43,23 +43,23 @@ const ProductCards = ({
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector(({ auth }) => auth.token);
-  const loggedInUserId = useSelector(({ auth }) => auth.user._id);
+  // const {loggedInUserId: _id} = useSelector(selectUser);
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
 
-  const patchLike = async () => {
-    const response = await fetch(`http://localhost:5000/posts/${postId}/like`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId: loggedInUserId }),
-    });
-    const updatedPost = await response.json();
-    dispatch(setPost({ post: updatedPost }));
-  };
+  // const patchLike = async () => {
+  //   const response = await fetch(`http://localhost:5000/posts/${postId}/like`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ userId: loggedInUserId }),
+  //   });
+  //   const updatedPost = await response.json();
+  //   dispatch(setPost({ post: updatedPost }));
+  // };
 
   return (
     <Grid item s={12} xs={12} md={6}>

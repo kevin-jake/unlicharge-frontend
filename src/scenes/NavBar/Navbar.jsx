@@ -1,51 +1,33 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   IconButton,
-  InputBase,
   Typography,
-  Select,
-  MenuItem,
-  FormControl,
   useTheme,
   useMediaQuery,
   Button,
-  CardHeader,
-  Avatar,
 } from "@mui/material";
-import {
-  Search,
-  Message,
-  DarkMode,
-  LightMode,
-  Notifications,
-  Help,
-  Menu,
-  Close,
-} from "@mui/icons-material";
+import { DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import LoginRegisterDialogContent from "../LoginRegisterDialog/LoginRegisterDialogContent";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
-import { setMode } from "../../store/slices/auth/authSlice";
+import { selectUser, setMode } from "../../store/slices/auth/authSlice";
 import ProfileButton from "./ProfileButton";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(({ auth }) => auth.user);
+  const user = useSelector(selectUser);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   const theme = useTheme();
-  const neutralLight = theme.palette.neutral.light;
   const dark = theme.palette.neutral.dark;
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
-
-  const fullName = useMemo(() => "test", [user]);
 
   return (
     <>
@@ -95,7 +77,7 @@ const Navbar = () => {
                   <LightMode sx={{ color: dark, fontSize: "25px" }} />
                 )}
               </IconButton>
-              <ProfileButton />
+              <ProfileButton isLoggedIn={user} />
             </Box>
           </>
         ) : (
@@ -152,7 +134,7 @@ const Navbar = () => {
                   <LightMode sx={{ color: dark, fontSize: "25px" }} />
                 )}
               </IconButton>
-              <ProfileButton />
+              <ProfileButton isLoggedIn={user} />
             </FlexBetween>
           </Box>
         )}
