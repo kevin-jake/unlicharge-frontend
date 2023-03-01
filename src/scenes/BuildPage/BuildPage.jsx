@@ -19,7 +19,6 @@ function BuildPage() {
   const category = useSelector(({ product }) => product.category);
   const dispatch = useDispatch();
   const { data, isLoading } = useGetProductsQuery(category);
-  console.log("🚀 ~ file: BuildPage.jsx:22 ~ BuildPage ~ loading:", isLoading);
 
   // Get Product Data
   // const getProducts = async () => {
