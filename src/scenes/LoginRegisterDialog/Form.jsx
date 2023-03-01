@@ -20,19 +20,21 @@ import {
 } from "../../store/slices/auth/authApiSlice";
 
 const registerSchema = yup.object().shape({
-  username: yup.string().required("required"),
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  password: yup.string().required("required"),
-  location: yup.string().required("required"),
-  occupation: yup.string().required("required"),
-  // picture: yup.string().required("required"),
+  username: yup.string().required("Required"),
+  firstName: yup.string().required("Required"),
+  lastName: yup.string().required("Required"),
+  email: yup
+    .string()
+    .email("Please enter a valid email address")
+    .required("Required"),
+  password: yup.string().required("Required"),
+  mobileNumber: yup.string().required("Required"),
+  // picture: yup.string().required("Required"),
 });
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email("invalid email").required("required"),
-  password: yup.string().required("required"),
+  email: yup.string().email("invalid email").required("Required"),
+  password: yup.string().required("Required"),
 });
 
 const initialValuesRegister = {
@@ -145,6 +147,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
               onChange={handleChange}
               value={values.email}
               name="email"
+              required={isRegister}
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={touched.email && errors.email}
               sx={{ gridColumn: "span 4" }}
@@ -156,6 +159,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
               onChange={handleChange}
               value={values.password}
               name="password"
+              required={isRegister}
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
               sx={{ gridColumn: "span 4" }}
@@ -168,6 +172,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                   onChange={handleChange}
                   value={values.username}
                   name="username"
+                  required
                   error={Boolean(touched.username) && Boolean(errors.username)}
                   helperText={touched.username && errors.username}
                   sx={{ gridColumn: "span 4" }}
@@ -178,6 +183,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                   onChange={handleChange}
                   value={values.firstName}
                   name="firstName"
+                  required
                   error={
                     Boolean(touched.firstName) && Boolean(errors.firstName)
                   }
@@ -190,6 +196,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                   onChange={handleChange}
                   value={values.lastName}
                   name="lastName"
+                  required
                   error={Boolean(touched.lastName) && Boolean(errors.lastName)}
                   helperText={touched.lastName && errors.lastName}
                   sx={{ gridColumn: "span 2" }}
@@ -210,6 +217,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                   onChange={handleChange}
                   value={values.mobileNumber}
                   name="mobileNumber"
+                  required
                   error={
                     Boolean(touched.mobileNumber) &&
                     Boolean(errors.mobileNumber)
