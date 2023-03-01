@@ -1,4 +1,4 @@
-import { Box, Container, Fab, Grid } from "@mui/material";
+import { Box, CircularProgress, Container, Fab, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCards/ProductCards";
 import CategoryCards from "../../components/CategoryCards";
@@ -12,13 +12,14 @@ import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../../store/slices/products/productSlice";
 import { useGetProductsQuery } from "../../store/slices/products/productApiSlice";
+import FlexBetween from "../../components/wrappers/FlexBetween";
 
 function BuildPage() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
-  const products = useSelector(({ product }) => product.productsArray);
   const category = useSelector(({ product }) => product.category);
   const dispatch = useDispatch();
-  const { data, isLoading } = useGetProductsQuery(category);
+  const { data, isLoading, isSuccess } = useGetProductsQuery(category);
+  console.log("🚀 ~ file: BuildPage.jsx:22 ~ BuildPage ~ data:", data);
 
   // Get Product Data
   // const getProducts = async () => {
@@ -56,11 +57,20 @@ function BuildPage() {
             <SortFilter />
           </Grid>
           {/* TODO: Make this responsive 3 cards if large screen and one card on mobile */}
-          <ProductCard openModal={() => setIsProductModalOpen(true)} />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {isLoading && (
+            <FlexBetween>
+              <CircularProgress />
+            </FlexBetween>
+          )}
+          {isSuccess && (
+            <>
+              <ProductCard openModal={() => setIsProductModalOpen(true)} />
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />{" "}
+            </>
+          )}
         </Grid>
         <Grid
           item
