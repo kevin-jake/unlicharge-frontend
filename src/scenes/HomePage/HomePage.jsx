@@ -16,12 +16,11 @@ import FriendListWidget from "../widgets/FriendListWidget";
 import DataFilters from "../../components/DataFilters";
 import PageWrapper from "../../components/wrappers/PageWrapper";
 import SortFilter from "../../components/SortFilter";
+import { selectUser } from "../../store/slices/auth/authSlice";
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const { _id, picturePath } = useSelector((state) => {
-    return state.user;
-  });
+  const { _id, picturePath } = useSelector(selectUser);
 
   return (
     <PageWrapper title="Builds">

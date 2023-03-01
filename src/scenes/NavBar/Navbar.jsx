@@ -28,7 +28,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import LoginRegisterDialogContent from "../LoginRegisterDialog/LoginRegisterDialogContent";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
-import { setMode } from "../../store/slices/authSlice";
+import { setMode } from "../../store/slices/auth/authSlice";
 import ProfileButton from "./ProfileButton";
 
 const Navbar = () => {

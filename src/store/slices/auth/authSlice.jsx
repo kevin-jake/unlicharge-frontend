@@ -4,7 +4,6 @@ const initialState = {
   mode: "light",
   user: { _id: "test", picturePath: "test" },
   token: "test",
-  posts: [],
 };
 
 export const authSlice = createSlice({
@@ -44,4 +43,9 @@ export const authSlice = createSlice({
 
 export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } =
   authSlice.actions;
+
+export const selectUser = (state) => state.auth.user;
+export const selectToken = (state) => state.auth.token;
+export const selectMode = (state) => state.auth.mode;
+
 export default authSlice.reducer;

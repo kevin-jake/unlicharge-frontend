@@ -21,7 +21,7 @@ import FlexBetween from "../wrappers/FlexBetween";
 import WidgetWrapper from "../wrappers/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPost } from "../../store/slices/authSlice";
+import { setPost } from "../../store/slices/auth/authSlice";
 import UserImage from "../UserImage";
 import ProductName from "./ProductName";
 import PriceCompute from "./PriceCompute";

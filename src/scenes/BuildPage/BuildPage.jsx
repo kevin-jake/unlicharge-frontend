@@ -10,28 +10,31 @@ import SortFilter from "../../components/SortFilter";
 import SummarySideBar from "../SummarySideBar/SummarySideBar";
 import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
 import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../../store/slices/productSlice";
+import { setProducts } from "../../store/slices/products/productSlice";
+import { useGetProductsQuery } from "../../store/slices/products/productApiSlice";
 
 function BuildPage() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const products = useSelector(({ product }) => product.productsArray);
   const category = useSelector(({ product }) => product.category);
   const dispatch = useDispatch();
+  const { data, isLoading } = useGetProductsQuery(category);
+  console.log("🚀 ~ file: BuildPage.jsx:22 ~ BuildPage ~ loading:", isLoading);
 
   // Get Product Data
-  const getProducts = async () => {
-    const response = await fetch(`http://localhost:5000/products/${category}`, {
-      method: "GET",
-      // headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-    console.log({ data });
-    dispatch(setProducts({ productsArray: data }));
-  };
+  // const getProducts = async () => {
+  //   const response = await fetch(`http://localhost:5000/products/${category}`, {
+  //     method: "GET",
+  //     // headers: { Authorization: `Bearer ${token}` },
+  //   });
+  //   const data = await response.json();
+  //   console.log({ data });
+  //   dispatch(setProducts({ productsArray: data }));
+  // };
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+  // useEffect(() => {
+  //   getProducts();
+  // }, []);
 
   return (
     <PageWrapper title="Estimate your build">

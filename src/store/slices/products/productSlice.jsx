@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   category: "battery",
   productsArray: [],
-  productSpecs: {},
 };
 
 export const productSlice = createSlice({

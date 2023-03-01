@@ -26,7 +26,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/wrappers/FlexBetween";
-import { setMode } from "../../store/slices/authSlice";
+import { setMode } from "../../store/slices/auth/authSlice";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import CategoryCards from "../../components/CategoryCards";
 

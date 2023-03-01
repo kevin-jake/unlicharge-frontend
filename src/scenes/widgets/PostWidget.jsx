@@ -17,7 +17,7 @@ import FlexBetween from "../../components/wrappers/FlexBetween";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setPost } from "../../store/slices/authSlice";
+import { setPost } from "../../store/slices/auth/authSlice";
 
 const PostWidget = ({
   postId,
