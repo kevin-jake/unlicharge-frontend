@@ -10,9 +10,10 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
+import { useState } from "react";
 import Form from "./Form";
 
-const LoginRegisterDialogContent = ({ title }) => {
+const LoginRegisterDialogContent = ({ pageType, setModalType }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
 
@@ -32,7 +33,7 @@ const LoginRegisterDialogContent = ({ title }) => {
               Estimate, create and share your builds.
             </Typography>
             <Divider sx={{ marginTop: "1rem" }} textAlign="left">
-              <Typography variant="h6">{title} via</Typography>
+              <Typography variant="h6">{pageType} via</Typography>
             </Divider>
             <Box
               display="flex"
@@ -48,7 +49,8 @@ const LoginRegisterDialogContent = ({ title }) => {
               </IconButton>
             </Box>
             <Divider>or</Divider>
-            <Form />
+            {/* Register or Login selection happens here */}
+            <Form setModalType={setModalType} pageType={pageType} />
           </Box>
         </Box>
       </DialogContent>

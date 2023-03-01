@@ -12,7 +12,7 @@ import {
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const ProfileButton = ({ fullName, isLoggedIn = true }) => {
+const ProfileButton = ({ fullName, isLoggedIn, openModal }) => {
   const { palette } = useTheme();
   const neutralLight = palette.neutral.light;
 
@@ -129,6 +129,7 @@ const ProfileButton = ({ fullName, isLoggedIn = true }) => {
               "&:hover": { color: palette.primary.main },
               marginX: "0.25rem",
             }}
+            onClick={() => openModal("Login")}
           >
             Login
           </Button>
@@ -137,6 +138,7 @@ const ProfileButton = ({ fullName, isLoggedIn = true }) => {
               "&:hover": { color: palette.primary.main },
               marginX: "0.25rem",
             }}
+            onClick={() => openModal("Register")}
           >
             Register
           </Button>

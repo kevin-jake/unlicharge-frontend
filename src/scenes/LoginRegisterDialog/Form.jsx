@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Box,
   Button,
@@ -46,14 +45,13 @@ const initialValuesLogin = {
   password: "",
 };
 
-const Form = () => {
-  const [pageType, setPageType] = useState("login");
+const Form = ({ setModalType, pageType }) => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const isLogin = pageType === "login";
-  const isRegister = pageType === "register";
+  const isLogin = pageType === "Login";
+  const isRegister = pageType === "Register";
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
@@ -250,7 +248,7 @@ const Form = () => {
             </Button>
             <Typography
               onClick={() => {
-                setPageType(isLogin ? "register" : "login");
+                setModalType(isLogin ? "Register" : "Login");
                 resetForm();
               }}
               sx={{

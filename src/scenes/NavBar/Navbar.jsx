@@ -18,16 +18,23 @@ import ProfileButton from "./ProfileButton";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const [modalType, setModalType] = useState("Login");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   const theme = useTheme();
   const dark = theme.palette.neutral.dark;
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
+
+  const handleOpenModal = (pageType) => {
+    setModalType(pageType);
+    setIsModalOpen(true);
+  };
 
   return (
     <>
@@ -77,7 +84,7 @@ const Navbar = () => {
                   <LightMode sx={{ color: dark, fontSize: "25px" }} />
                 )}
               </IconButton>
-              <ProfileButton isLoggedIn={user} />
+              <ProfileButton isLoggedIn={user} openModal={handleOpenModal} />
             </Box>
           </>
         ) : (
@@ -134,13 +141,20 @@ const Navbar = () => {
                   <LightMode sx={{ color: dark, fontSize: "25px" }} />
                 )}
               </IconButton>
-              <ProfileButton isLoggedIn={user} />
+              <ProfileButton isLoggedIn={user} openModal={handleOpenModal} />
             </FlexBetween>
           </Box>
         )}
       </FlexBetween>
-      <DialogWrapper isOpen={false} title="Login">
-        <LoginRegisterDialogContent title="Login" />
+      <DialogWrapper
+        isOpen={isModalOpen}
+        title={modalType}
+        closeModal={() => setIsModalOpen(false)}
+      >
+        <LoginRegisterDialogContent
+          pageType={modalType}
+          setModalType={setModalType}
+        />
       </DialogWrapper>
     </>
   );
