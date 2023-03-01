@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import Form from "./Form";
 
-const LoginRegisterDialogContent = ({ pageType, setModalType }) => {
+const LoginRegisterDialogContent = ({ pageType, setModalType, closeModal }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
 
@@ -50,7 +50,11 @@ const LoginRegisterDialogContent = ({ pageType, setModalType }) => {
             </Box>
             <Divider>or</Divider>
             {/* Register or Login selection happens here */}
-            <Form setModalType={setModalType} pageType={pageType} />
+            <Form
+              setModalType={setModalType}
+              pageType={pageType}
+              closeModal={closeModal}
+            />
           </Box>
         </Box>
       </DialogContent>

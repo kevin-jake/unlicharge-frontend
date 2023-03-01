@@ -84,7 +84,11 @@ const Navbar = () => {
                   <LightMode sx={{ color: dark, fontSize: "25px" }} />
                 )}
               </IconButton>
-              <ProfileButton isLoggedIn={user} openModal={handleOpenModal} />
+              <ProfileButton
+                user={user}
+                isLoggedIn={user}
+                openModal={handleOpenModal}
+              />
             </Box>
           </>
         ) : (
@@ -154,6 +158,7 @@ const Navbar = () => {
         <LoginRegisterDialogContent
           pageType={modalType}
           setModalType={setModalType}
+          closeModal={() => setIsModalOpen(false)}
         />
       </DialogWrapper>
     </>

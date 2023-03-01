@@ -12,7 +12,8 @@ import {
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const ProfileButton = ({ fullName, isLoggedIn, openModal }) => {
+const ProfileButton = ({ user, isLoggedIn, openModal }) => {
+  console.log("🚀 ~ file: ProfileButton.jsx:16 ~ ProfileButton ~ user:", user);
   const { palette } = useTheme();
   const neutralLight = palette.neutral.light;
 
@@ -37,7 +38,10 @@ const ProfileButton = ({ fullName, isLoggedIn, openModal }) => {
   return (
     <>
       {isLoggedIn ? (
-        <FormControl variant="standard" value={fullName}>
+        <FormControl
+          variant="standard"
+          value={`${user?.firstName} ${user?.lastName}`}
+        >
           <CardHeader
             onClick={handleOpenUserMenu}
             sx={{
@@ -67,7 +71,7 @@ const ProfileButton = ({ fullName, isLoggedIn, openModal }) => {
                       maxWidth: "130px",
                     }}
                   >
-                    test
+                    {user?.username}
                   </Typography>
                   <Typography
                     noWrap
@@ -77,7 +81,7 @@ const ProfileButton = ({ fullName, isLoggedIn, openModal }) => {
                     }}
                     color={palette.neutral.medium}
                   >
-                    test
+                    {user?.role}
                   </Typography>
                 </Box>
               </>

@@ -14,6 +14,10 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../store/slices/auth/authSlice";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/wrappers/FlexBetween";
+import {
+  useLoginMutation,
+  useRegisterMutation,
+} from "../../store/slices/auth/authApiSlice";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -45,58 +49,49 @@ const initialValuesLogin = {
   password: "",
 };
 
-const Form = ({ setModalType, pageType }) => {
+const Form = ({ setModalType, pageType, closeModal }) => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "Login";
   const isRegister = pageType === "Register";
+  const [login, { isLoading: loginLoading }] = useLoginMutation();
+  const [register, { isLoading: registerLoading }] = useRegisterMutation();
 
-  const register = async (values, onSubmitProps) => {
-    // this allows us to send form info with image
-    const formData = new FormData();
-    for (let value in values) {
-      formData.append(value, values[value]);
-    }
-    formData.append("picturePath", values.picture.name);
+  // const register = async (values, onSubmitProps) => {
+  //   // this allows us to send form info with image
+  //   const formData = new FormData();
+  //   for (let value in values) {
+  //     formData.append(value, values[value]);
+  //   }
+  //   formData.append("picturePath", values.picture.name);
 
-    const savedUserResponse = await fetch(
-      "http://localhost:5000/auth/register",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-    const savedUser = await savedUserResponse.json();
+  //   const savedUserResponse = await fetch(
+  //     "http://localhost:5000/auth/register",
+  //     {
+  //       method: "POST",
+  //       body: formData,
+  //     }
+  //   );
+  //   const savedUser = await savedUserResponse.json();
+  //   onSubmitProps.resetForm();
+
+  //   if (savedUser) {
+  //     setPageType("login");
+  //   }
+  // };
+
+  const handleLogin = async (values, onSubmitProps) => {
+    const userData = await login(values).unwrap();
+    console.log("🚀 ~ file: Form.jsx:87 ~ handleLogin ~ userData:", userData);
     onSubmitProps.resetForm();
-
-    if (savedUser) {
-      setPageType("login");
-    }
-  };
-
-  const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:5000/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-    const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm();
-    if (loggedIn) {
-      dispatch(
-        setLogin({
-          user: loggedIn.user,
-          token: loggedIn.token,
-        })
-      );
-      navigate("/home");
-    }
+    dispatch(setLogin(userData));
+    closeModal();
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-    if (isLogin) await login(values, onSubmitProps);
+    if (isLogin) await handleLogin(values, onSubmitProps);
     if (isRegister) await register(values, onSubmitProps);
   };
 
