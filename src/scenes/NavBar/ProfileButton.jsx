@@ -10,10 +10,12 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { setLogout } from "../../store/slices/auth/authSlice";
 
 const ProfileButton = ({ user, isLoggedIn, openModal }) => {
-  console.log("🚀 ~ file: ProfileButton.jsx:16 ~ ProfileButton ~ user:", user);
+  const dispatch = useDispatch();
   const { palette } = useTheme();
   const neutralLight = palette.neutral.light;
 
@@ -114,6 +116,9 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
                   My Requests
                 </Typography>
               </NavLink>
+            </MenuItem>
+            <MenuItem onClick={() => dispatch(setLogout())}>
+              <Typography textAlign="center">Log out</Typography>
             </MenuItem>
 
             {/* ))} */}

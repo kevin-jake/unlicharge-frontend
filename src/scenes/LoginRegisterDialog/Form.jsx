@@ -84,7 +84,6 @@ const Form = ({ setModalType, pageType, closeModal }) => {
 
   const handleLogin = async (values, onSubmitProps) => {
     const userData = await login(values).unwrap();
-    console.log("🚀 ~ file: Form.jsx:87 ~ handleLogin ~ userData:", userData);
     onSubmitProps.resetForm();
     dispatch(setLogin(userData));
     closeModal();
