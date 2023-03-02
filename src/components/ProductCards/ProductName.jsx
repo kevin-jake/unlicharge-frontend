@@ -7,6 +7,7 @@ const ProductName = ({ name, subName, openModal }) => {
       <Grid item>
         <Typography
           noWrap
+          fontWeight="500"
           variant="h3"
           onClick={openModal}
           sx={{

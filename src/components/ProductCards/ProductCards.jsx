@@ -25,6 +25,7 @@ const ProductCards = ({
   creator,
   openModal,
   isInitParamsPresent = false,
+  isSummaryOpen,
 }) => {
   const dispatch = useDispatch();
   // const {loggedInUserId: _id} = useSelector(selectUser);
@@ -46,8 +47,9 @@ const ProductCards = ({
   // };
 
   return (
-    <Grid item s={12} xs={12} md={6}>
-      <WidgetWrapper m="0.25rem" flexBasis="50%">
+    <Grid item s={12} xs={12} md={isSummaryOpen ? 6 : 4}>
+      <WidgetWrapper m="0.25rem">
+        <ProductName openModal={openModal} name={specs.name} />
         <FlexBetween marginY="0.25rem" sx={{ justifyContent: "flex-start" }}>
           <Box width="130px" height="130px">
             <img
@@ -68,25 +70,17 @@ const ProductCards = ({
             zeroMinWidth
             sx={{
               "& > div": {
-                my: 0.25,
+                marginTop: "0.5rem",
               },
             }}
           >
-            <ProductName openModal={openModal} name={specs.name} />
             {isInitParamsPresent ? (
               <PriceCompute />
             ) : (
-              <Box
-                sx={{
-                  // display: "flex",
-                  // justifyContent: "center",
-                  // alignItems: "center",
-                  marginTop: "0.5rem",
-                }}
-              >
+              <Box>
                 <Typography
                   variant="h4"
-                  fontWeight="500"
+                  fontWeight="700"
                   sx={{ color: primary }}
                 >
                   {`Php ${

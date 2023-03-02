@@ -22,6 +22,8 @@ import EqualizerIcon from "@mui/icons-material/Equalizer";
 
 function BuildPage() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [isSummaryOpen, setIsSummaryOpen] = useState(false);
+
   const category = useSelector(({ product }) => product.category);
   const dispatch = useDispatch();
   const { data, isLoading, isSuccess } = useGetProductsQuery(category);
@@ -32,20 +34,6 @@ function BuildPage() {
     { name: "BMS", icon: <AccountTreeIcon fontSize="large" /> },
     { name: "Active Balancer", icon: <EqualizerIcon size={50} /> },
   ];
-  // Get Product Data
-  // const getProducts = async () => {
-  //   const response = await fetch(`http://localhost:5000/products/${category}`, {
-  //     method: "GET",
-  //     // headers: { Authorization: `Bearer ${token}` },
-  //   });
-  //   const data = await response.json();
-  //   console.log({ data });
-  //   dispatch(setProducts({ productsArray: data }));
-  // };
-
-  // useEffect(() => {
-  //   getProducts();
-  // }, []);
 
   return (
     <PageWrapper title="Estimate your build">
@@ -63,15 +51,25 @@ function BuildPage() {
         ))}
       </Grid>
       <Grid container>
-        <Grid paddingX="0.5rem" container spacing={0.5} item md={9}>
+        <Grid
+          paddingX="0.5rem"
+          container
+          spacing={0.5}
+          item
+          md={isSummaryOpen ? 9 : 12}
+        >
           <Grid item xs={12}>
             <SortFilter />
           </Grid>
           {/* TODO: Make this responsive 3 cards if large screen and one card on mobile */}
           {isLoading && (
-            <FlexBetween>
+            <Grid
+              item
+              xs={12}
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
               <CircularProgress />
-            </FlexBetween>
+            </Grid>
           )}
           {isSuccess &&
             data.products.map((product) => (
@@ -81,6 +79,7 @@ function BuildPage() {
                 productId={product._id}
                 specs={product.specs}
                 creator={product.creator}
+                isSummaryOpen={isSummaryOpen}
               />
             ))}
         </Grid>
@@ -95,7 +94,7 @@ function BuildPage() {
             overflow: "hidden",
           }}
         >
-          <SummarySideBar />
+          {isSummaryOpen && <SummarySideBar />}
         </Grid>
       </Grid>
       <Box
