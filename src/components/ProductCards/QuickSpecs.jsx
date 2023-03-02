@@ -1,8 +1,29 @@
-import { Grid, List, ListItem, ListItemText, useTheme } from "@mui/material";
+import {
+  Grid,
+  Link,
+  List,
+  ListItem,
+  ListItemText,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 
-const QuickSpecs = () => {
+const toDisplay = [
+  "type",
+  "brand",
+  "capacity",
+  "nominalVoltage",
+  "supplierLink",
+];
+
+const QuickSpecs = ({ specs }) => {
   const { palette } = useTheme();
+
+  const specsProperties = Object.keys(specs);
+  const filteredSpecs = specsProperties.filter((specProp) =>
+    toDisplay.includes(specProp)
+  );
+
   return (
     <Grid item zeroMinWidth>
       <List
@@ -26,21 +47,27 @@ const QuickSpecs = () => {
           columns: 2,
         }}
       >
-        <ListItem sx={{ display: "list-item" }}>
-          <ListItemText primary="Battery Type" secondary="test2" />
-        </ListItem>
-        <ListItem sx={{ display: "list-item" }}>
-          <ListItemText primary="Brand" secondary="test2" />
-        </ListItem>
-        <ListItem sx={{ display: "list-item" }}>
-          <ListItemText primary="test" />
-        </ListItem>
-        <ListItem sx={{ display: "list-item" }}>
-          <ListItemText primary="test" />
-        </ListItem>
-        <ListItem sx={{ display: "list-item" }}>
-          <ListItemText primary="test" />
-        </ListItem>
+        {filteredSpecs.map((specName) => (
+          <ListItem key={specName} sx={{ display: "list-item" }}>
+            <ListItemText
+              primary={specName}
+              secondary={
+                specName === "supplierLink" ? (
+                  <Link
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    href={specs[specName]}
+                    underline="none"
+                  >
+                    Buy here
+                  </Link>
+                ) : (
+                  specs[specName]
+                )
+              }
+            />
+          </ListItem>
+        ))}
       </List>
     </Grid>
   );

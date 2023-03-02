@@ -78,7 +78,7 @@ const ProductCards = ({ productId, specs, creator, openModal }) => {
           >
             <ProductName openModal={openModal} name={specs.name} />
             <PriceCompute />
-            <QuickSpecs />
+            <QuickSpecs specs={specs} />
           </Grid>
         </FlexBetween>
         <ProductCardFooter
