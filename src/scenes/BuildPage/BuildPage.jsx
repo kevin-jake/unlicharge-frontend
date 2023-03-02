@@ -106,8 +106,13 @@ function BuildPage() {
           position: "fixed",
         }}
       >
-        {/* TODO: Make dynamic or mobile responsive */}
-        <Fab variant="extended" size="small" color="primary" aria-label="add">
+        <Fab
+          variant="extended"
+          size="small"
+          color="primary"
+          aria-label="add"
+          onClick={() => setIsSummaryOpen(!isSummaryOpen)}
+        >
           Summary
         </Fab>
       </Box>
