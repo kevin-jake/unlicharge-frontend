@@ -1,26 +1,23 @@
 import {
-  Battery1BarOutlined,
-  ChatBubbleOutlineOutlined,
-  FavoriteBorderOutlined,
-  FavoriteOutlined,
-  ShareOutlined,
-} from "@mui/icons-material";
-import {
-  Box,
   Card,
   CardActionArea,
   CardContent,
-  Divider,
   Grid,
-  IconButton,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setCategory } from "../store/slices/products/productSlice";
 import FlexBetween from "./wrappers/FlexBetween";
 
-const CategoryCards = () => {
+const CategoryCards = ({ category, icon }) => {
+  console.log(
+    "🚀 ~ file: CategoryCards.jsx:16 ~ CategoryCards ~ category:",
+    category
+  );
+  const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
 
@@ -31,14 +28,21 @@ const CategoryCards = () => {
           backgroundColor: palette.background.alt,
           borderRadius: "0.75rem",
         }}
+        onClick={() =>
+          dispatch(
+            setCategory(
+              category === "Active Balancer" ? "ab" : category.toLowerCase()
+            )
+          )
+        }
       >
         <CardActionArea>
           <CardContent>
             <FlexBetween mt="0.25rem" sx={{ justifyContent: "center" }}>
               <FlexBetween mt="0.25rem">
-                <Battery1BarOutlined fontSize="large" />
+                {icon}
                 <Typography variant="h4" sx={{ marginLeft: "0.25rem" }}>
-                  Battery
+                  {category}
                 </Typography>
               </FlexBetween>
             </FlexBetween>

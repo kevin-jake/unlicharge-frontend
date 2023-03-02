@@ -10,7 +10,7 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     setCategory: (state, action) => {
-      state.category = action.payload.category;
+      state.category = action.payload;
     },
     setProducts: (state, action) => {
       state.productsArray = action.payload.productsArray;

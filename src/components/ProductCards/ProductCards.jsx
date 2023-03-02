@@ -90,7 +90,7 @@ const ProductCards = ({
                   sx={{ color: primary }}
                 >
                   {`Php ${
-                    numberWithCommas(specs.pricePerPc) ||
+                    (specs.pricePerPc && numberWithCommas(specs.pricePerPc)) ||
                     numberWithCommas(specs.price)
                   }`}
                 </Typography>

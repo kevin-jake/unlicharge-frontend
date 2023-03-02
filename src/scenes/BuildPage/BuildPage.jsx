@@ -10,17 +10,28 @@ import SortFilter from "../../components/SortFilter";
 import SummarySideBar from "../SummarySideBar/SummarySideBar";
 import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
 import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../../store/slices/products/productSlice";
+import {
+  setCategory,
+  setProducts,
+} from "../../store/slices/products/productSlice";
 import { useGetProductsQuery } from "../../store/slices/products/productApiSlice";
 import FlexBetween from "../../components/wrappers/FlexBetween";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
+import EqualizerIcon from "@mui/icons-material/Equalizer";
 
 function BuildPage() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const category = useSelector(({ product }) => product.category);
   const dispatch = useDispatch();
   const { data, isLoading, isSuccess } = useGetProductsQuery(category);
-  console.log("🚀 ~ file: BuildPage.jsx:22 ~ BuildPage ~ data:", data);
+  console.log("🚀 ~ file: BuildPage.jsx:22 ~ BuildPage ~ category:", category);
 
+  const categories = [
+    { name: "Battery", icon: <Battery5BarIcon fontSize="large" /> },
+    { name: "BMS", icon: <AccountTreeIcon fontSize="large" /> },
+    { name: "Active Balancer", icon: <EqualizerIcon size={50} /> },
+  ];
   // Get Product Data
   // const getProducts = async () => {
   //   const response = await fetch(`http://localhost:5000/products/${category}`, {
@@ -47,9 +58,9 @@ function BuildPage() {
         <InitialParams />
       </Box>
       <Grid container>
-        <CategoryCards />
-        <CategoryCards />
-        <CategoryCards />
+        {categories.map(({ name, icon }) => (
+          <CategoryCards key={name} category={name} icon={icon} />
+        ))}
       </Grid>
       <Grid container>
         <Grid paddingX="0.5rem" container spacing={0.5} item md={9}>
