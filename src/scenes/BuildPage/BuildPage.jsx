@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Container, Fab, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ProductCard from "../../components/ProductCards/ProductCards";
+import ProductCards from "../../components/ProductCards/ProductCards";
 import CategoryCards from "../../components/CategoryCards";
 import InitialParams from "./InitialParams";
 import PageWrapper from "../../components/wrappers/PageWrapper";
@@ -62,15 +62,16 @@ function BuildPage() {
               <CircularProgress />
             </FlexBetween>
           )}
-          {isSuccess && (
-            <>
-              <ProductCard openModal={() => setIsProductModalOpen(true)} />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />{" "}
-            </>
-          )}
+          {isSuccess &&
+            data.products.map((product) => (
+              <ProductCards
+                key={product._id}
+                openModal={() => setIsProductModalOpen(true)}
+                productId={product._id}
+                specs={product.specs}
+                creator={product.creator}
+              />
+            ))}
         </Grid>
         <Grid
           item

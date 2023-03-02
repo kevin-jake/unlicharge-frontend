@@ -27,22 +27,10 @@ import ProductName from "./ProductName";
 import PriceCompute from "./PriceCompute";
 import QuickSpecs from "./QuickSpecs";
 import ProductCardFooter from "./ProductCardFooter";
+import moment from "moment";
 
-const ProductCards = ({
-  postId,
-  postUserId,
-  name,
-  description,
-  location,
-  picturePath,
-  userPicturePath,
-  likes,
-  comments,
-  openModal,
-}) => {
-  const [isComments, setIsComments] = useState(false);
+const ProductCards = ({ productId, specs, creator, openModal }) => {
   const dispatch = useDispatch();
-  const token = useSelector(({ auth }) => auth.token);
   // const {loggedInUserId: _id} = useSelector(selectUser);
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -88,15 +76,16 @@ const ProductCards = ({
               },
             }}
           >
-            <ProductName
-              openModal={openModal}
-              // name subName
-            />
+            <ProductName openModal={openModal} name={specs.name} />
             <PriceCompute />
             <QuickSpecs />
           </Grid>
         </FlexBetween>
-        <ProductCardFooter />
+        <ProductCardFooter
+          creatorImage={creator.imagePath}
+          creatorName={creator.username}
+          lastUpdated={moment(specs.updatedAt).fromNow()}
+        />
       </WidgetWrapper>
     </Grid>
   );

@@ -15,11 +15,11 @@ const ProductName = ({ name, subName, openModal }) => {
             },
           }}
         >
-          Lorem Ipsum is simply dummy text of the printing and typesetting
+          {name}
         </Typography>
       </Grid>
       <Grid item>
-        <Typography variant="caption"> Subs</Typography>
+        <Typography variant="caption"> {subName}</Typography>
       </Grid>
     </>
   );
