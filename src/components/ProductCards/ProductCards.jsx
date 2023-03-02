@@ -5,18 +5,7 @@ import {
   ShareOutlined,
 } from "@mui/icons-material";
 import CircleIcon from "@mui/icons-material/Circle";
-import {
-  Box,
-  Divider,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
 import FlexBetween from "../wrappers/FlexBetween";
 import WidgetWrapper from "../wrappers/WidgetWrapper";
 import { useState } from "react";
@@ -28,8 +17,15 @@ import PriceCompute from "./PriceCompute";
 import QuickSpecs from "./QuickSpecs";
 import ProductCardFooter from "./ProductCardFooter";
 import moment from "moment";
+import { numberWithCommas } from "../../util/numberFormats";
 
-const ProductCards = ({ productId, specs, creator, openModal }) => {
+const ProductCards = ({
+  productId,
+  specs,
+  creator,
+  openModal,
+  isInitParamsPresent = false,
+}) => {
   const dispatch = useDispatch();
   // const {loggedInUserId: _id} = useSelector(selectUser);
   const { palette } = useTheme();
@@ -77,7 +73,29 @@ const ProductCards = ({ productId, specs, creator, openModal }) => {
             }}
           >
             <ProductName openModal={openModal} name={specs.name} />
-            <PriceCompute />
+            {isInitParamsPresent ? (
+              <PriceCompute />
+            ) : (
+              <Box
+                sx={{
+                  // display: "flex",
+                  // justifyContent: "center",
+                  // alignItems: "center",
+                  marginTop: "0.5rem",
+                }}
+              >
+                <Typography
+                  variant="h4"
+                  fontWeight="500"
+                  sx={{ color: primary }}
+                >
+                  {`Php ${
+                    numberWithCommas(specs.pricePerPc) ||
+                    numberWithCommas(specs.price)
+                  }`}
+                </Typography>
+              </Box>
+            )}
             <QuickSpecs specs={specs} />
           </Grid>
         </FlexBetween>
