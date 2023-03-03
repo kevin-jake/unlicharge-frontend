@@ -19,6 +19,7 @@ import ProductCardFooter from "./ProductCardFooter";
 import moment from "moment";
 import { numberWithCommas } from "../../util/numberFormats";
 
+// TODO: Add color-coding and in SortFilter add filters for Requests, Approved and Deleted
 const ProductCards = ({
   productId,
   specs,

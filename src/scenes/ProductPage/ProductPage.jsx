@@ -13,16 +13,25 @@ import DataFilters from "../../components/DataFilters";
 import PostsWidget from "../widgets/PostsWidget";
 import CategoryCards from "../../components/CategoryCards";
 import PageWrapper from "../../components/wrappers/PageWrapper";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
+import EqualizerIcon from "@mui/icons-material/Equalizer";
 
 function ProductPage() {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
+  const categories = [
+    { name: "Battery", icon: <Battery5BarIcon fontSize="large" /> },
+    { name: "BMS", icon: <AccountTreeIcon fontSize="large" /> },
+    { name: "Active Balancer", icon: <EqualizerIcon fontSize="large" /> },
+  ];
+
   return (
     <PageWrapper title="Products">
       <Grid marginY="0.5rem" container>
-        <CategoryCards />
-        <CategoryCards />
-        <CategoryCards />
+        {categories.map(({ name, icon }) => (
+          <CategoryCards key={name} category={name} icon={icon} />
+        ))}
       </Grid>
       <Box
         width="100%"

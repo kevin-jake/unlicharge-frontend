@@ -30,7 +30,7 @@ function BuildPage() {
   const categories = [
     { name: "Battery", icon: <Battery5BarIcon fontSize="large" /> },
     { name: "BMS", icon: <AccountTreeIcon fontSize="large" /> },
-    { name: "Active Balancer", icon: <EqualizerIcon size={50} /> },
+    { name: "Active Balancer", icon: <EqualizerIcon fontSize="large" /> },
   ];
 
   return (

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Dialog,
-  DialogTitle,
-  IconButton,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Dialog, DialogTitle, IconButton, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 const DialogWrapper = ({ children, title, isOpen, closeModal }) => {
@@ -20,15 +14,13 @@ const DialogWrapper = ({ children, title, isOpen, closeModal }) => {
         style: { borderRadius: "0.75rem" },
       }}
     >
-      <DialogTitle>
-        <Typography
-          noWrap
-          color={palette.neutral.dark}
-          variant="h4"
-          fontWeight="500"
-        >
-          {title}
-        </Typography>
+      <DialogTitle
+        noWrap
+        color={palette.neutral.dark}
+        variant="h4"
+        fontWeight="500"
+      >
+        {title}
         {closeModal ? (
           <IconButton
             aria-label="close"
