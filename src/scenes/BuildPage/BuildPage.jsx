@@ -19,6 +19,7 @@ import { selectUser } from "../../store/slices/auth/authSlice";
 function BuildPage() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
+  const [focusedProduct, setFocusedProduct] = useState({});
   const isLoggedIn = Boolean(useSelector(selectUser));
   const category = useSelector(({ product }) => product.category);
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery(category);
@@ -33,6 +34,10 @@ function BuildPage() {
     { name: "Active Balancer", icon: <EqualizerIcon fontSize="large" /> },
   ];
 
+  const handleOpenProductModal = (product) => {
+    setIsProductModalOpen(true);
+    setFocusedProduct(product);
+  };
   return (
     <PageWrapper title="Estimate your build">
       <Box
@@ -78,7 +83,7 @@ function BuildPage() {
             data.products.map((product) => (
               <ProductCards
                 key={product._id}
-                openModal={() => setIsProductModalOpen(true)}
+                openModal={() => handleOpenProductModal(product)}
                 productId={product._id}
                 specs={product.specs}
                 creator={product.creator}
@@ -121,10 +126,14 @@ function BuildPage() {
       </Box>
       <DialogWrapper
         isOpen={isProductModalOpen}
-        title="testTESTASAASDFasdfasdfasdfasdf"
+        title={focusedProduct?.specs?.name || ""}
         closeModal={() => setIsProductModalOpen(false)}
       >
-        <ProductDialogContent />
+        <ProductDialogContent
+          specs={focusedProduct?.specs}
+          creator={focusedProduct?.creator}
+          productId={focusedProduct?._id}
+        />
       </DialogWrapper>
       <DialogWrapper isOpen={false} title="Create Battery">
         <CRUDDialogContent />

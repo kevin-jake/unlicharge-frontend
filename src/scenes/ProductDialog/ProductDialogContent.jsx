@@ -13,7 +13,7 @@ import PriceCompute from "../../components/ProductCards/PriceCompute";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
 
-const ProductDialogContent = () => {
+const ProductDialogContent = ({ specs, computation, creator, productId }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   return (
@@ -48,12 +48,27 @@ const ProductDialogContent = () => {
               },
             }}
           >
-            <ItemTabs tab1={<CompleteSpecs />} tab2={<PriceCompute />} />
+            <ItemTabs
+              tab1={<CompleteSpecs specs={specs} />}
+              tab2={<PriceCompute />}
+            />
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions>
-        <Button autoFocus>Save changes</Button>
+      <DialogActions sx={{ justifyContent: "space-between" }}>
+        <Box>
+          <Button variant="contained" autoFocus>
+            Select
+          </Button>
+        </Box>
+        <Box sx={{ gap: 2 }}>
+          <Button variant="contained" autoFocus sx={{ marginX: "0.25rem" }}>
+            Edit
+          </Button>
+          <Button variant="outlined" autoFocus>
+            Delete
+          </Button>
+        </Box>
       </DialogActions>
       <DialogWrapper isOpen={false} title="Edit Battery">
         <CRUDDialogContent />
