@@ -14,9 +14,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { api } from "./api";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 
-const persistConfig = { key: "root", storage, version: 1 };
-const auth = persistReducer(persistConfig, authReducer);
-const product = persistReducer(persistConfig, productReducer);
+const authPersistConfig = { key: "auth", storage, version: 1 };
+const productPersistConfig = { key: "product", storage, version: 1 };
+const auth = persistReducer(authPersistConfig, authReducer);
+const product = persistReducer(productPersistConfig, productReducer);
 const store = configureStore({
   reducer: { auth, product, [api.reducerPath]: api.reducer },
   middleware: (getDefaultMiddleware) =>
