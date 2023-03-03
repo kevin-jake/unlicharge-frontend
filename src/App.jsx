@@ -28,9 +28,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const tokenExpirationDate = new Date(
-      new Date().getTime() + 1000 * 20 //* 60
-    );
+    const tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 60);
     if (isAuth && tokenExpirationDate) {
       const remainingTime =
         tokenExpirationDate.getTime() - new Date().getTime();

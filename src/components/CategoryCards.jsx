@@ -12,11 +12,7 @@ import { useDispatch } from "react-redux";
 import { setCategory } from "../store/slices/products/productSlice";
 import FlexBetween from "./wrappers/FlexBetween";
 
-const CategoryCards = ({ category, icon }) => {
-  console.log(
-    "🚀 ~ file: CategoryCards.jsx:16 ~ CategoryCards ~ category:",
-    category
-  );
+const CategoryCards = ({ category, icon, refetch }) => {
   const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
@@ -28,13 +24,14 @@ const CategoryCards = ({ category, icon }) => {
           backgroundColor: palette.background.alt,
           borderRadius: "0.75rem",
         }}
-        onClick={() =>
+        onClick={() => {
+          refetch();
           dispatch(
             setCategory(
               category === "Active Balancer" ? "ab" : category.toLowerCase()
             )
-          )
-        }
+          );
+        }}
       >
         <CardActionArea>
           <CardContent>

@@ -145,7 +145,10 @@ const Navbar = () => {
                   <LightMode sx={{ color: dark, fontSize: "25px" }} />
                 )}
               </IconButton>
-              <ProfileButton isLoggedIn={user} openModal={handleOpenModal} />
+              <ProfileButton
+                isLoggedIn={Boolean(user)}
+                openModal={handleOpenModal}
+              />
             </FlexBetween>
           </Box>
         )}

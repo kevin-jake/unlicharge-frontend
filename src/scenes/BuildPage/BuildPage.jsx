@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Container, Fab, Grid } from "@mui/material";
+import { Box, CircularProgress, Fab, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ProductCards from "../../components/ProductCards/ProductCards";
 import CategoryCards from "../../components/CategoryCards";
@@ -9,25 +9,23 @@ import ProductDialogContent from "../ProductDialog/ProductDialogContent";
 import SortFilter from "../../components/SortFilter";
 import SummarySideBar from "../SummarySideBar/SummarySideBar";
 import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setCategory,
-  setProducts,
-} from "../../store/slices/products/productSlice";
+import { useSelector } from "react-redux";
 import { useGetProductsQuery } from "../../store/slices/products/productApiSlice";
-import FlexBetween from "../../components/wrappers/FlexBetween";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
+import { selectUser } from "../../store/slices/auth/authSlice";
 
 function BuildPage() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
-
+  const isLoggedIn = Boolean(useSelector(selectUser));
   const category = useSelector(({ product }) => product.category);
-  const dispatch = useDispatch();
-  const { data, isLoading, isSuccess } = useGetProductsQuery(category);
-  console.log("🚀 ~ file: BuildPage.jsx:22 ~ BuildPage ~ category:", category);
+  const { data, isLoading, isSuccess, refetch } = useGetProductsQuery(category);
+
+  useEffect(() => {
+    refetch();
+  }, [isLoggedIn]);
 
   const categories = [
     { name: "Battery", icon: <Battery5BarIcon fontSize="large" /> },
@@ -47,7 +45,12 @@ function BuildPage() {
       </Box>
       <Grid container>
         {categories.map(({ name, icon }) => (
-          <CategoryCards key={name} category={name} icon={icon} />
+          <CategoryCards
+            key={name}
+            category={name}
+            icon={icon}
+            refetch={refetch}
+          />
         ))}
       </Grid>
       <Grid container>
