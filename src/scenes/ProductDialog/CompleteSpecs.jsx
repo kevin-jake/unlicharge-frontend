@@ -27,7 +27,6 @@ const CompleteSpecs = ({ specs }) => {
   const filteredSpecs = specsProperties.filter(
     (specProp) => !toNotDisplay.includes(specProp)
   );
-  console.log("rendered");
   return (
     <Grid item zeroMinWidth>
       <List

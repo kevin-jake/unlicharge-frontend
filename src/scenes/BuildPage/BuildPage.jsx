@@ -17,11 +17,15 @@ import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { selectUser } from "../../store/slices/auth/authSlice";
 
 function BuildPage() {
+  const category = useSelector(({ product }) => product.category);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [focusedProduct, setFocusedProduct] = useState({});
+  const [crudModalState, setCrudModalState] = useState({
+    isOpen: false,
+    title: `Create ${category}`,
+  });
   const isLoggedIn = Boolean(useSelector(selectUser));
-  const category = useSelector(({ product }) => product.category);
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery(category);
 
   useEffect(() => {
@@ -135,7 +139,13 @@ function BuildPage() {
           productId={focusedProduct?._id}
         />
       </DialogWrapper>
-      <DialogWrapper isOpen={false} title="Create Battery">
+      <DialogWrapper
+        isOpen={crudModalState.isOpen}
+        title={crudModalState.title}
+        closeModal={() =>
+          setCrudModalState({ ...crudModalState, isOpen: false })
+        }
+      >
         <CRUDDialogContent />
       </DialogWrapper>
     </PageWrapper>
