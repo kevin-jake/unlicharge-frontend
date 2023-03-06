@@ -38,6 +38,7 @@ function BuildPage() {
     isOpen: false,
     operation: "Create",
     category: categories.filter((item) => item.apiPath === category)[0].name,
+    oldValues: {},
   });
   const isLoggedIn = Boolean(useSelector(selectUser));
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery(category);
@@ -111,6 +112,7 @@ function BuildPage() {
             sx={{ margin: "1rem" }}
             onClick={() =>
               setCrudModalState({
+                ...crudModalState,
                 operation: "Create",
                 category: categories.filter(
                   (item) => item.apiPath === category
@@ -180,6 +182,7 @@ function BuildPage() {
         <CRUDDialogContent
           operation={crudModalState.operation}
           category={crudModalState.category}
+          oldValues={crudModalState.oldValues}
         />
       </DialogWrapper>
     </PageWrapper>

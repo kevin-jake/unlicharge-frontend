@@ -78,6 +78,7 @@ const ProductDialogContent = ({
                 operation: "Edit",
                 category: category,
                 isOpen: true,
+                oldValues: { specs },
               })
             }
           >

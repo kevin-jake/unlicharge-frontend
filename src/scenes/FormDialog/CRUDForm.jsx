@@ -23,7 +23,7 @@ import {
 } from "./formSchemas";
 import { specMap } from "../../util/specDisplayFormat";
 
-const CRUDForm = ({ operation, category }) => {
+const CRUDForm = ({ operation, category, oldValues }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -32,29 +32,36 @@ const CRUDForm = ({ operation, category }) => {
   const isDelete = operation === "Delete";
 
   const operationType = useCallback(
-    (cat) => {
+    (category, operation) => {
       let initialValues, validationSchema, textFields;
-      if (cat === "Battery") {
+      if (category === "Battery") {
         initialValues = initialBatteryValues;
         validationSchema = batterySchema;
-      } else if (cat === "BMS") {
+      } else if (category === "BMS") {
         initialValues = initialBMSValues;
         validationSchema = bmsSchema;
-      } else if (cat === "Active Balancer") {
+      } else if (category === "Active Balancer") {
         initialValues = initialABValues;
         validationSchema = abSchema;
       }
-      textFields = specMap.filter((specItem) => specItem.specOf.includes(cat));
+
+      if (operation === "Edit") {
+        initialValues = oldValues.specs;
+      }
+
+      textFields = specMap.filter((specItem) =>
+        specItem.specOf.includes(category)
+      );
       return {
         initialValues,
         validationSchema,
         textFields,
       };
     },
-    [category, operation]
+    [category, operation, oldValues]
   );
 
-  const formikProps = operationType(category);
+  const formikProps = operationType(category, operation);
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
