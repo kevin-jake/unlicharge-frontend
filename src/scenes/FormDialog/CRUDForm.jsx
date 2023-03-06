@@ -67,59 +67,57 @@ const CRUDForm = ({ operation, category }) => {
         handleSubmit,
         setFieldValue,
         resetForm,
-      }) => {
-        console.log("🚀 ~ file: CRUDForm.jsx:72 ~ CRUDForm ~ values:", values);
-        return (
-          <form onSubmit={handleSubmit} id="crud-form">
-            <Box
-              display="grid"
-              gap="30px"
-              marginTop="1.5rem"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
-              {(isCreate || isEdit) && (
-                <>
-                  {batteryFields.map((field) => (
-                    <TextField
-                      key={field.specProps}
-                      label={field.nameDisplay}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values[field.specProps]}
-                      InputProps={{
-                        endAdornment:
-                          field.unit !== "Php" ? (
-                            <InputAdornment position="end">
-                              {field.unit}
-                            </InputAdornment>
-                          ) : (
-                            ""
-                          ),
-                        startAdornment:
-                          field.unit === "Php" ? (
-                            <InputAdornment position="start">
-                              {field.unit}
-                            </InputAdornment>
-                          ) : (
-                            ""
-                          ),
-                      }}
-                      name={field.specProps}
-                      error={
-                        Boolean(touched[field.specProps]) &&
-                        Boolean(errors[field.specProps])
-                      }
-                      helperText={
-                        touched[field.specProps] && errors[field.specProps]
-                      }
-                      sx={{ gridColumn: "span 12" }}
-                    />
-                  ))}
+      }) => (
+        <form onSubmit={handleSubmit} id="crud-form">
+          <Box
+            display="grid"
+            gap="30px"
+            marginTop="1.5rem"
+            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+            sx={{
+              "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+            }}
+          >
+            {(isCreate || isEdit) && (
+              <>
+                {batteryFields.map((field) => (
+                  <TextField
+                    key={field.specProps}
+                    label={field.nameDisplay}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values[field.specProps]}
+                    InputProps={{
+                      endAdornment:
+                        field.unit !== "Php" ? (
+                          <InputAdornment position="end">
+                            {field.unit}
+                          </InputAdornment>
+                        ) : (
+                          ""
+                        ),
+                      startAdornment:
+                        field.unit === "Php" ? (
+                          <InputAdornment position="start">
+                            {field.unit}
+                          </InputAdornment>
+                        ) : (
+                          ""
+                        ),
+                    }}
+                    name={field.specProps}
+                    error={
+                      Boolean(touched[field.specProps]) &&
+                      Boolean(errors[field.specProps])
+                    }
+                    helperText={
+                      touched[field.specProps] && errors[field.specProps]
+                    }
+                    sx={{ gridColumn: "span 12" }}
+                  />
+                ))}
 
-                  {/* <Box
+                {/* <Box
                     gridColumn="span 4"
                     border={`1px solid ${palette.neutral.medium}`}
                     borderRadius="5px"
@@ -152,12 +150,11 @@ const CRUDForm = ({ operation, category }) => {
                       )}
                     </Dropzone>
                   </Box> */}
-                </>
-              )}
-            </Box>
-          </form>
-        );
-      }}
+              </>
+            )}
+          </Box>
+        </form>
+      )}
     </Formik>
   );
 };

@@ -33,7 +33,7 @@ export const specMap = [
   {
     nameDisplay: "Capacity",
     specProps: "capacity",
-    unit: "mAh",
+    unit: "Ah",
     specOf: ["Battery"],
   },
   {
@@ -104,4 +104,11 @@ export const specMap = [
 
 export const specDisplay = (spec) => {
   return specMap.filter((specs) => specs.specProps === spec)[0].nameDisplay;
+};
+
+export const specWithUnit = (spec, value) => {
+  const specUnit = specMap.filter((specs) => specs.specProps === spec)[0].unit;
+  if (specUnit) {
+    return specUnit === "Php" ? `${specUnit} ${value}` : `${value} ${specUnit}`;
+  } else return value;
 };

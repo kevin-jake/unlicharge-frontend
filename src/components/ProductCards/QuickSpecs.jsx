@@ -7,7 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
-import { specDisplay } from "../../util/specDisplayFormat";
+import { specDisplay, specWithUnit } from "../../util/specDisplayFormat";
 
 const toDisplay = [
   "type",
@@ -66,7 +66,7 @@ const QuickSpecs = ({ specs }) => {
                     Buy here
                   </Link>
                 ) : (
-                  specs[specName]
+                  specWithUnit(specName, specs[specName])
                 )
               }
             />
