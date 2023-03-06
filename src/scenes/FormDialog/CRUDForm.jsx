@@ -6,6 +6,7 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  InputAdornment,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -83,11 +84,29 @@ const CRUDForm = ({ operation, category }) => {
                 <>
                   {batteryFields.map((field) => (
                     <TextField
-                      key={field.name}
+                      key={field.specProps}
                       label={field.nameDisplay}
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values[field.name]}
+                      value={values[field.specProps]}
+                      InputProps={{
+                        endAdornment:
+                          field.unit !== "Php" ? (
+                            <InputAdornment position="end">
+                              {field.unit}
+                            </InputAdornment>
+                          ) : (
+                            ""
+                          ),
+                        startAdornment:
+                          field.unit === "Php" ? (
+                            <InputAdornment position="start">
+                              {field.unit}
+                            </InputAdornment>
+                          ) : (
+                            ""
+                          ),
+                      }}
                       name={field.name}
                       sx={{ gridColumn: "span 12" }}
                     />
