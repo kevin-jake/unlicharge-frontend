@@ -8,13 +8,13 @@ import {
 import React from "react";
 import CRUDForm from "./CRUDForm";
 
-const CRUDDialogContent = ({ operation }) => {
+const CRUDDialogContent = (props) => {
   const { palette } = useTheme();
   return (
     <>
       <DialogContent dividers>
         <Box>
-          <CRUDForm />
+          <CRUDForm {...props} />
         </Box>
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center" }}>
@@ -28,7 +28,7 @@ const CRUDDialogContent = ({ operation }) => {
             "&:hover": { color: palette.primary.main },
           }}
         >
-          Test
+          Save
         </Button>
         <Button
           sx={{

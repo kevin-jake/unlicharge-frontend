@@ -36,9 +36,8 @@ function BuildPage() {
   const [focusedProduct, setFocusedProduct] = useState({});
   const [crudModalState, setCrudModalState] = useState({
     isOpen: false,
-    title: `Create ${
-      categories.filter((item) => item.apiPath === category)[0].name
-    }`,
+    operation: "Create",
+    category: categories.filter((item) => item.apiPath === category)[0].name,
   });
   const isLoggedIn = Boolean(useSelector(selectUser));
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery(category);
@@ -112,9 +111,10 @@ function BuildPage() {
             sx={{ margin: "1rem" }}
             onClick={() =>
               setCrudModalState({
-                title: `Create ${
-                  categories.filter((item) => item.apiPath === category)[0].name
-                }`,
+                operation: "Create",
+                category: categories.filter(
+                  (item) => item.apiPath === category
+                )[0].name,
                 isOpen: true,
               })
             }
@@ -168,12 +168,15 @@ function BuildPage() {
       </DialogWrapper>
       <DialogWrapper
         isOpen={crudModalState.isOpen}
-        title={crudModalState.title}
+        title={`${crudModalState.operation} ${crudModalState.category}`}
         closeModal={() =>
           setCrudModalState({ ...crudModalState, isOpen: false })
         }
       >
-        <CRUDDialogContent />
+        <CRUDDialogContent
+          operation={crudModalState.operation}
+          category={crudModalState.category}
+        />
       </DialogWrapper>
     </PageWrapper>
   );
