@@ -8,7 +8,7 @@ import {
 import React from "react";
 import CRUDForm from "./CRUDForm";
 
-const CRUDDialogContent = () => {
+const CRUDDialogContent = ({ operation }) => {
   const { palette } = useTheme();
   return (
     <>

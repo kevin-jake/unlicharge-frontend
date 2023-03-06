@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Fab, Grid } from "@mui/material";
+import { Box, Button, CircularProgress, Fab, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ProductCards from "../../components/ProductCards/ProductCards";
 import CategoryCards from "../../components/CategoryCards";
@@ -17,13 +17,28 @@ import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { selectUser } from "../../store/slices/auth/authSlice";
 
 function BuildPage() {
+  const categories = [
+    {
+      name: "Battery",
+      icon: <Battery5BarIcon fontSize="large" />,
+      apiPath: "battery",
+    },
+    { name: "BMS", icon: <AccountTreeIcon fontSize="large" />, apiPath: "bms" },
+    {
+      name: "Active Balancer",
+      icon: <EqualizerIcon fontSize="large" />,
+      apiPath: "ab",
+    },
+  ];
   const category = useSelector(({ product }) => product.category);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [focusedProduct, setFocusedProduct] = useState({});
   const [crudModalState, setCrudModalState] = useState({
     isOpen: false,
-    title: `Create ${category}`,
+    title: `Create ${
+      categories.filter((item) => item.apiPath === category)[0].name
+    }`,
   });
   const isLoggedIn = Boolean(useSelector(selectUser));
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery(category);
@@ -31,12 +46,6 @@ function BuildPage() {
   useEffect(() => {
     refetch();
   }, [isLoggedIn]);
-
-  const categories = [
-    { name: "Battery", icon: <Battery5BarIcon fontSize="large" /> },
-    { name: "BMS", icon: <AccountTreeIcon fontSize="large" /> },
-    { name: "Active Balancer", icon: <EqualizerIcon fontSize="large" /> },
-  ];
 
   const handleOpenProductModal = (product) => {
     setIsProductModalOpen(true);
@@ -53,10 +62,11 @@ function BuildPage() {
         <InitialParams />
       </Box>
       <Grid container>
-        {categories.map(({ name, icon }) => (
+        {categories.map(({ name, icon, apiPath }) => (
           <CategoryCards
             key={name}
             category={name}
+            apiPath={apiPath}
             icon={icon}
             refetch={refetch}
           />
@@ -94,6 +104,22 @@ function BuildPage() {
                 isSummaryOpen={isSummaryOpen}
               />
             ))}
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            sx={{ margin: "1rem" }}
+            onClick={() =>
+              setCrudModalState({
+                title: `Create ${
+                  categories.filter((item) => item.apiPath === category)[0].name
+                }`,
+                isOpen: true,
+              })
+            }
+          >
+            Add
+          </Button>
         </Grid>
         <Grid
           item
