@@ -52,7 +52,10 @@ const CompleteSpecs = ({ specs }) => {
         }}
       >
         {filteredSpecs.map((specName) => (
-          <ListItem key={specName} sx={{ display: "list-item" }}>
+          <ListItem
+            key={specName}
+            sx={{ display: "list-item", pageBreakInside: "avoid" }}
+          >
             <ListItemText
               primary={specDisplay(specName)}
               secondary={
