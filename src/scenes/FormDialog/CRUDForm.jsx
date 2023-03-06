@@ -107,7 +107,14 @@ const CRUDForm = ({ operation, category }) => {
                             ""
                           ),
                       }}
-                      name={field.name}
+                      name={field.specProps}
+                      error={
+                        Boolean(touched[field.specProps]) &&
+                        Boolean(errors[field.specProps])
+                      }
+                      helperText={
+                        touched[field.specProps] && errors[field.specProps]
+                      }
                       sx={{ gridColumn: "span 12" }}
                     />
                   ))}

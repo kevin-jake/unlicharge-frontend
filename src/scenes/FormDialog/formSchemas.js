@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 export const batterySchema = yup.object().shape({
   name: yup.string().required("Name is required"),
-  type: yup.string().required("Battery Type is required"),
+  battType: yup.string().required("Battery Type is required"),
   nominalVoltage: yup
     .number()
     .typeError("Nominal Voltage must be a number")
@@ -36,7 +36,7 @@ export const batterySchema = yup.object().shape({
 
 export const initialBatteryValues = {
   name: "",
-  type: "",
+  battType: "",
   nominalVoltage: "",
   capacity: "",
   pricePerPc: "",
