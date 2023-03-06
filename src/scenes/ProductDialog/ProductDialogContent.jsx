@@ -13,7 +13,14 @@ import PriceCompute from "../../components/ProductCards/PriceCompute";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
 
-const ProductDialogContent = ({ specs, computation, creator, productId }) => {
+const ProductDialogContent = ({
+  specs,
+  computation,
+  creator,
+  productId,
+  setCrudModalState,
+  category,
+}) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   return (
@@ -62,7 +69,18 @@ const ProductDialogContent = ({ specs, computation, creator, productId }) => {
           </Button>
         </Box>
         <Box sx={{ gap: 2 }}>
-          <Button variant="contained" autoFocus sx={{ marginX: "0.25rem" }}>
+          <Button
+            variant="contained"
+            autoFocus
+            sx={{ marginX: "0.25rem" }}
+            onClick={() =>
+              setCrudModalState({
+                operation: "Edit",
+                category: category,
+                isOpen: true,
+              })
+            }
+          >
             Edit
           </Button>
           <Button variant="outlined" autoFocus>

@@ -164,6 +164,10 @@ function BuildPage() {
           specs={focusedProduct?.specs}
           creator={focusedProduct?.creator}
           productId={focusedProduct?._id}
+          setCrudModalState={setCrudModalState}
+          category={
+            categories.filter((item) => item.apiPath === category)[0].name
+          }
         />
       </DialogWrapper>
       <DialogWrapper

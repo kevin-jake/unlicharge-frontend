@@ -69,12 +69,12 @@ export const specMap = [
   {
     nameDisplay: "Charging Current",
     specProps: "chargeCurrent",
-    specOf: ["Active Balancer"],
+    specOf: ["BMS"],
     unit: "A",
   },
   {
     nameDisplay: "Discharging Current",
-    specOf: ["Active Balancer"],
+    specOf: ["BMS"],
     specProps: "dischargeCurrent",
     unit: "A",
   },

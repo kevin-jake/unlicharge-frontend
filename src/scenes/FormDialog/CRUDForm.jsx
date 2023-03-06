@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback } from "react";
 import {
   Box,
   Button,
@@ -8,45 +8,53 @@ import {
   useTheme,
   InputAdornment,
 } from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../../store/slices/auth/authSlice";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/wrappers/FlexBetween";
-import { batterySchema, initialBatteryValues } from "./formSchemas";
+import {
+  abSchema,
+  batterySchema,
+  bmsSchema,
+  initialABValues,
+  initialBatteryValues,
+  initialBMSValues,
+} from "./formSchemas";
 import { specMap } from "../../util/specDisplayFormat";
 
 const CRUDForm = ({ operation, category }) => {
-  const [dialogType, setDialogType] = useState(operation);
-  const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const isCreate = dialogType === "Create";
-  const isEdit = dialogType === "Edit";
-  const isDelete = dialogType === "Delete";
+  const isCreate = operation === "Create";
+  const isEdit = operation === "Edit";
+  const isDelete = operation === "Delete";
 
-  const operationType = (cat) => {
-    let initialValues, validationSchema;
-    if (cat === "Battery") {
-      initialValues = initialBatteryValues;
-      validationSchema = batterySchema;
-    } else if (cat === "BMS") {
-      // initialValues = initialBatteryValues;
-      // validationSchema = batterySchema;
-    }
-    return {
-      initialValues,
-      validationSchema,
-    };
-  };
+  const operationType = useCallback(
+    (cat) => {
+      let initialValues, validationSchema, textFields;
+      if (cat === "Battery") {
+        initialValues = initialBatteryValues;
+        validationSchema = batterySchema;
+      } else if (cat === "BMS") {
+        initialValues = initialBMSValues;
+        validationSchema = bmsSchema;
+      } else if (cat === "Active Balancer") {
+        initialValues = initialABValues;
+        validationSchema = abSchema;
+      }
+      textFields = specMap.filter((specItem) => specItem.specOf.includes(cat));
+      return {
+        initialValues,
+        validationSchema,
+        textFields,
+      };
+    },
+    [category, operation]
+  );
 
   const formikProps = operationType(category);
-  const batteryFields = specMap.filter((specItem) =>
-    specItem.specOf.includes(category)
-  );
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
@@ -80,7 +88,7 @@ const CRUDForm = ({ operation, category }) => {
           >
             {(isCreate || isEdit) && (
               <>
-                {batteryFields.map((field) => (
+                {formikProps.textFields.map((field) => (
                   <TextField
                     key={field.specProps}
                     label={field.nameDisplay}

@@ -48,7 +48,83 @@ export const initialBatteryValues = {
   supplier: "",
 };
 
-export const initialValuesLogin = {
-  email: "",
-  password: "",
+export const bmsSchema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+  strings: yup
+    .number()
+    .typeError("Strings must be a number")
+    .positive("Strings must be greater than zero")
+    .required("Strings is required"),
+  chargeCurrent: yup
+    .number()
+    .typeError("Charge Current must be a number")
+    .positive("Charge Current must be greater than zero")
+    .required("Charge Current is required"),
+  dischargeCurrent: yup
+    .number()
+    .typeError("Discharge Current must be a number")
+    .positive("Discharge Current must be greater than zero")
+    .required("Discharge Current is required"),
+  price: yup
+    .number()
+    .typeError("Price must be a number")
+    .positive("Price must be greater than zero")
+    .required("Price is required"),
+  supplierLink: yup
+    .string()
+    .matches(
+      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+      "Enter a valid link!"
+    ),
+});
+
+export const initialBMSValues = {
+  name: "",
+  imagePath: "",
+  brand: "",
+  supplierLink: "",
+  supplier: "",
+  strings: "",
+  chargeCurrent: "",
+  dischargeCurrent: "",
+  portType: "",
+  voltage: "",
+  price: "",
+};
+
+export const abSchema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+  strings: yup
+    .number()
+    .typeError("Strings must be a number")
+    .positive("Strings must be greater than zero")
+    .required("Strings is required"),
+  balanceCurrent: yup
+    .number()
+    .typeError("Balancing Current must be a number")
+    .positive("Balancing Current must be greater than zero")
+    .required("Balancing Current is required"),
+  price: yup
+    .number()
+    .typeError("Price must be a number")
+    .positive("Price must be greater than zero")
+    .required("Price is required"),
+  supplierLink: yup
+    .string()
+    .matches(
+      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+      "Enter a valid link!"
+    ),
+});
+
+export const initialABValues = {
+  name: "",
+  imagePath: "",
+  brand: "",
+  supplierLink: "",
+  supplier: "",
+  strings: "",
+  balanceCurrent: "",
+  balancingType: "",
+  price: "",
 };
