@@ -7,6 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
+import { specDisplay } from "../../util/specDisplayFormat";
 
 const toNotDisplay = [
   "__v",
@@ -53,7 +54,7 @@ const CompleteSpecs = ({ specs }) => {
         {filteredSpecs.map((specName) => (
           <ListItem key={specName} sx={{ display: "list-item" }}>
             <ListItemText
-              primary={specName}
+              primary={specDisplay(specName)}
               secondary={
                 specName === "supplierLink" ? (
                   <Link

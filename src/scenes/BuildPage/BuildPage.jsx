@@ -42,6 +42,7 @@ function BuildPage() {
   });
   const isLoggedIn = Boolean(useSelector(selectUser));
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery(category);
+  console.log("🚀 ~ file: BuildPage.jsx:45 ~ BuildPage ~ data:", data);
 
   useEffect(() => {
     refetch();
