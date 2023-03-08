@@ -8,11 +8,12 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCategory } from "../store/slices/products/productSlice";
 import FlexBetween from "./wrappers/FlexBetween";
 
 const CategoryCards = ({ category, icon, apiPath, refetch }) => {
+  const selectedCategory = useSelector((state) => state.product.category);
   const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
@@ -21,7 +22,10 @@ const CategoryCards = ({ category, icon, apiPath, refetch }) => {
     <Grid item xs={4} padding="1rem">
       <Card
         sx={{
-          backgroundColor: palette.background.alt,
+          backgroundColor:
+            selectedCategory === apiPath
+              ? palette.primary.dark
+              : palette.background.alt,
           borderRadius: "0.75rem",
         }}
         onClick={() => {
