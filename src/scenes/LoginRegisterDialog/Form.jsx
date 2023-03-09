@@ -20,16 +20,15 @@ import {
 } from "../../store/slices/auth/authApiSlice";
 
 const registerSchema = yup.object().shape({
-  // username: yup.string().required("Required"),
-  // firstName: yup.string().required("Required"),
-  // lastName: yup.string().required("Required"),
-  // email: yup
-  //   .string()
-  //   .email("Please enter a valid email address")
-  //   .required("Required"),
-  // password: yup.string().required("Required"),
-  // mobileNumber: yup.string().required("Required"),
-  // picture: yup.string().required("Required"),
+  username: yup.string().required("Required"),
+  firstName: yup.string().required("Required"),
+  lastName: yup.string().required("Required"),
+  email: yup
+    .string()
+    .email("Please enter a valid email address")
+    .required("Required"),
+  password: yup.string().required("Required"),
+  mobileNumber: yup.string().required("Required"),
 });
 
 const loginSchema = yup.object().shape({
@@ -63,58 +62,30 @@ const Form = ({ setModalType, pageType, closeModal }) => {
   const [login, { isLoading: loginLoading }] = useLoginMutation();
   const [register, { isLoading: registerLoading }] = useRegisterMutation();
 
-  // const register = async (values, onSubmitProps) => {
-  //   // this allows us to send form info with image
-  //   const formData = new FormData();
-  //   for (let value in values) {
-  //     formData.append(value, values[value]);
-  //   }
-  //   formData.append("picturePath", values.picture.name);
-
-  //   const savedUserResponse = await fetch(
-  //     "http://localhost:5000/auth/register",
-  //     {
-  //       method: "POST",
-  //       body: formData,
-  //     }
-  //   );
-  //   const savedUser = await savedUserResponse.json();
-  //   onSubmitProps.resetForm();
-
-  //   if (savedUser) {
-  //     setPageType("login");
-  //   }
-  // };
-
   const handleRegister = async (values, onSubmitProps) => {
-    console.log("🚀 ~ file: Form.jsx:90 ~ handleRegister ~ values:", values);
-    const formData = new FormData();
-    for (let value in values) {
-      formData.append(value, values[value]);
+    let updatedImageData = {};
+    if (values.imagePath) {
+      const formData = new FormData();
+      for (let value in values) {
+        formData.append(value, values[value]);
+      }
+      const imageUrl = await fetch("http://localhost:5000/image", {
+        method: "POST",
+        body: formData,
+      });
+      const imagePath = await imageUrl.json();
+      updatedImageData = { ...values, imagePath };
     }
-    const savedUserResponse = await fetch("http://localhost:5000/upload", {
-      method: "POST",
-      body: formData,
-    });
-    const savedUser = await savedUserResponse.json();
-    console.log(
-      "🚀 ~ file: Form.jsx:101 ~ handleRegister ~ savedUser:",
-      savedUser
-    );
-    // TODO: Uncomment this to register data and use the image upload result to be put in the formdata
-    // const userData = await register(values).unwrap();
-    // console.log(
-    //   "🚀 ~ file: Form.jsx:92 ~ handleRegister ~ userData:",
-    //   userData
-    // );
-    // onSubmitProps.resetForm();
-    // dispatch(setLogin(userData));
-    // closeModal();
+    const userData = await register(
+      values.imagePath ? updatedImageData : values
+    ).unwrap();
+    onSubmitProps.resetForm();
+    dispatch(setLogin(userData));
+    closeModal();
   };
 
   const handleLogin = async (values, onSubmitProps) => {
     const userData = await login(values).unwrap();
-    console.log("🚀 ~ file: Form.jsx:112 ~ handleLogin ~ userData:", userData);
     onSubmitProps.resetForm();
     dispatch(setLogin(userData));
     closeModal();
@@ -157,7 +128,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
               onChange={handleChange}
               value={values.email}
               name="email"
-              // required={isRegister}
+              required={isRegister}
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={touched.email && errors.email}
               sx={{ gridColumn: "span 4" }}
@@ -169,7 +140,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
               onChange={handleChange}
               value={values.password}
               name="password"
-              // required={isRegister}
+              required={isRegister}
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
               sx={{ gridColumn: "span 4" }}
@@ -182,7 +153,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                   onChange={handleChange}
                   value={values.username}
                   name="username"
-                  // required
+                  required
                   error={Boolean(touched.username) && Boolean(errors.username)}
                   helperText={touched.username && errors.username}
                   sx={{ gridColumn: "span 4" }}
@@ -193,7 +164,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                   onChange={handleChange}
                   value={values.firstName}
                   name="firstName"
-                  // required
+                  required
                   error={
                     Boolean(touched.firstName) && Boolean(errors.firstName)
                   }
@@ -206,7 +177,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                   onChange={handleChange}
                   value={values.lastName}
                   name="lastName"
-                  // required
+                  required
                   error={Boolean(touched.lastName) && Boolean(errors.lastName)}
                   helperText={touched.lastName && errors.lastName}
                   sx={{ gridColumn: "span 2" }}
@@ -227,7 +198,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                   onChange={handleChange}
                   value={values.mobileNumber}
                   name="mobileNumber"
-                  // required
+                  required
                   error={
                     Boolean(touched.mobileNumber) &&
                     Boolean(errors.mobileNumber)
