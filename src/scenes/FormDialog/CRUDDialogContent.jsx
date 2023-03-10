@@ -37,6 +37,7 @@ const CRUDDialogContent = (props) => {
             color: palette.background.alt,
             "&:hover": { color: palette.primary.main },
           }}
+          onClick={props.closeModal}
         >
           Cancel
         </Button>

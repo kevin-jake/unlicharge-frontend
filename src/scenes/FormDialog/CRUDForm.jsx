@@ -63,10 +63,12 @@ const CRUDForm = ({ operation, category, oldValues }) => {
 
   const formikProps = operationType(category, operation);
 
+  // TODO: Handle form submission for add and edit
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
     if (isRegister) await register(values, onSubmitProps);
   };
+  // TODO: Add form for delete request
   return (
     <Formik
       onSubmit={handleFormSubmit}
@@ -99,8 +101,10 @@ const CRUDForm = ({ operation, category, oldValues }) => {
                   <TextField
                     key={field.specProps}
                     label={field.nameDisplay}
+                    type={field.unit ? "number" : "text"}
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    required={field.required}
                     value={values[field.specProps]}
                     InputProps={{
                       endAdornment:

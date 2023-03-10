@@ -183,6 +183,9 @@ function BuildPage() {
           operation={crudModalState.operation}
           category={crudModalState.category}
           oldValues={crudModalState.oldValues}
+          closeModal={() =>
+            setCrudModalState({ ...crudModalState, isOpen: false })
+          }
         />
       </DialogWrapper>
     </PageWrapper>

@@ -3,6 +3,7 @@ export const specMap = [
     nameDisplay: "Name",
     specProps: "name",
     specOf: ["Battery", "BMS", "Active Balancer"],
+    required: true,
   },
   {
     nameDisplay: "Brand",
@@ -24,23 +25,27 @@ export const specMap = [
     specProps: "price",
     unit: "Php",
     specOf: ["BMS", "Active Balancer"],
+    required: true,
   },
   {
     nameDisplay: "Battery Type",
     specProps: "battType",
     specOf: ["Battery"],
+    required: true,
   },
   {
     nameDisplay: "Capacity",
     specProps: "capacity",
     unit: "Ah",
     specOf: ["Battery"],
+    required: true,
   },
   {
     nameDisplay: "Nominal Voltage",
     specProps: "nominalVoltage",
     unit: "V",
     specOf: ["Battery"],
+    required: true,
   },
   {
     nameDisplay: "Maximum Voltage",
@@ -59,23 +64,27 @@ export const specMap = [
     specProps: "pricePerPc",
     specOf: ["Battery"],
     unit: "Php",
+    required: true,
   },
   {
     nameDisplay: "Strings",
     specProps: "strings",
     specOf: ["BMS", "Active Balancer"],
     unit: "S",
+    required: true,
   },
   {
     nameDisplay: "Charging Current",
     specProps: "chargeCurrent",
     specOf: ["BMS"],
     unit: "A",
+    required: true,
   },
   {
     nameDisplay: "Discharging Current",
     specOf: ["BMS"],
     specProps: "dischargeCurrent",
+    required: true,
     unit: "A",
   },
   {
