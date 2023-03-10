@@ -23,6 +23,7 @@ import { numberWithCommas } from "../../util/numberFormats";
 const ProductCards = ({
   productId,
   specs,
+  publishStatus,
   creator,
   openModal,
   isInitParamsPresent = false,
@@ -50,7 +51,11 @@ const ProductCards = ({
   return (
     <Grid item s={12} xs={12} md={isSummaryOpen ? 6 : 4}>
       <WidgetWrapper m="0.25rem">
-        <ProductName openModal={openModal} name={specs.name} />
+        <ProductName
+          openModal={openModal}
+          name={specs.name}
+          publishStatus={publishStatus}
+        />
         <FlexBetween marginY="0.25rem" sx={{ justifyContent: "flex-start" }}>
           <Box width="130px" height="130px">
             <img
