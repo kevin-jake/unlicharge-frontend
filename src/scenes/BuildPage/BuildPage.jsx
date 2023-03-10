@@ -106,7 +106,20 @@ function BuildPage() {
               />
             ))}
         </Grid>
-        <Grid item>
+        <Grid
+          item
+          lg={3}
+          sx={{
+            borderRadius: "0.75rem",
+            height: "fit-content",
+            top: "1rem",
+            position: "sticky",
+            overflow: "hidden",
+          }}
+        >
+          {isSummaryOpen && <SummarySideBar />}
+        </Grid>
+        <Grid item xs={12}>
           <Button
             variant="contained"
             sx={{ margin: "1rem" }}
@@ -123,19 +136,6 @@ function BuildPage() {
           >
             Add
           </Button>
-        </Grid>
-        <Grid
-          item
-          lg={3}
-          sx={{
-            borderRadius: "0.75rem",
-            height: "fit-content",
-            top: "1rem",
-            position: "sticky",
-            overflow: "hidden",
-          }}
-        >
-          {isSummaryOpen && <SummarySideBar />}
         </Grid>
       </Grid>
       <Box
