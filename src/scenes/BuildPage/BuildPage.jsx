@@ -30,6 +30,7 @@ function BuildPage() {
       apiPath: "ab",
     },
   ];
+  // TODO: Remove category on the redux and just use props
   const category = useSelector(({ product }) => product.category);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
