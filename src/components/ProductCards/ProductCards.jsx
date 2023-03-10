@@ -50,13 +50,20 @@ const ProductCards = ({
 
   return (
     <Grid item s={12} xs={12} md={isSummaryOpen ? 6 : 4}>
-      <WidgetWrapper m="0.25rem">
+      <WidgetWrapper
+        m="0.25rem"
+        sx={{
+          backgroundColor:
+            publishStatus === "Request" &&
+            `${palette.compliment.main} !important`,
+        }}
+      >
         <ProductName
           openModal={openModal}
           name={specs.name}
           publishStatus={publishStatus}
         />
-        <FlexBetween marginY="0.25rem" sx={{ justifyContent: "flex-start" }}>
+        <FlexBetween marginY="1rem" sx={{ justifyContent: "flex-start" }}>
           <Box width="130px" height="130px">
             <img
               style={{ objectFit: "cover", borderRadius: "0.75rem" }}

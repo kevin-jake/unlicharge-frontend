@@ -35,7 +35,13 @@ const CategoryCards = ({ category, icon, apiPath, refetch }) => {
       >
         <CardActionArea>
           <CardContent>
-            <FlexBetween mt="0.25rem" sx={{ justifyContent: "center" }}>
+            <FlexBetween
+              mt="0.25rem"
+              sx={{
+                justifyContent: "center",
+                color: selectedCategory === apiPath && "white",
+              }}
+            >
               <FlexBetween mt="0.25rem">
                 {icon}
                 <Typography variant="h4" sx={{ marginLeft: "0.25rem" }}>

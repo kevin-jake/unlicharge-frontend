@@ -28,15 +28,15 @@ export const colorTokens = {
     900: "#284228",
   },
   compliment: {
-    50: "#D2CAE9",
-    100: "#A595D5",
-    200: "#8A76C9",
-    300: "#B4A7DD",
-    400: "#7B6F9F",
-    500: "#6D54BB",
-    600: "#361E7F",
-    700: "#251555",
-    800: "#1B0F3F",
+    50: "#d4edff",
+    100: "#8097AA",
+    200: "#385D7B",
+    300: "#06355A",
+    400: "#0B0E2A",
+    500: "#0B1D2A",
+    600: "#08151F",
+    700: "#060F15",
+    800: "#040B0F",
   },
 };
 
@@ -79,7 +79,7 @@ export const themeSettings = (mode) => {
             },
             compliment: {
               dark: colorTokens.compliment[100],
-              main: colorTokens.compliment[500],
+              main: colorTokens.compliment[50],
               light: colorTokens.primary[800],
             },
             neutral: {
