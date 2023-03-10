@@ -9,7 +9,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { setLogout } from "../../store/slices/auth/authSlice";
@@ -19,22 +19,20 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const { palette } = useTheme();
   const neutralLight = palette.neutral.light;
 
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const anchorRef = useRef(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+  const handleOpen = () => {
+    setIsOpen(true);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleClose = () => {
+    setIsOpen(false);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const handleLogOut = () => {
+    setIsOpen(false);
+    dispatch(setLogout());
   };
 
   return (
@@ -45,7 +43,8 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
           value={`${user?.firstName} ${user?.lastName}`}
         >
           <CardHeader
-            onClick={handleOpenUserMenu}
+            ref={anchorRef}
+            onClick={handleOpen}
             sx={{
               backgroundColor: neutralLight,
               borderRadius: "0.25rem",
@@ -59,7 +58,7 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
                 alt="User"
                 sx={{ width: 30, height: 30 }}
                 //  FIXME: Make this image from users correct pic
-                src="https://images.pexels.com/photos/340780/pexels-photo-340780.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                src={user.imagePath}
               />
             }
             // title={username}
@@ -92,7 +91,7 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
           <Menu
             sx={{ mt: "45px" }}
             id="menu-appbar"
-            anchorEl={anchorElUser}
+            anchorEl={anchorRef.current}
             anchorOrigin={{
               vertical: "top",
               horizontal: "right",
@@ -102,8 +101,8 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
               vertical: "top",
               horizontal: "right",
             }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
+            open={isOpen}
+            onClose={handleClose}
           >
             {/* TODO: Add an Edit Profile and My Builds home profile pages */}
             <MenuItem>
@@ -116,7 +115,7 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
                 </Typography>
               </NavLink>
             </MenuItem>
-            <MenuItem onClick={() => dispatch(setLogout())}>
+            <MenuItem onClick={handleLogOut}>
               <Typography textAlign="center">Log out</Typography>
             </MenuItem>
 
@@ -156,4 +155,4 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   );
 };
 
-export default ProfileButton;
+export default memo(ProfileButton);
