@@ -1,4 +1,3 @@
-import { ShareOutlined } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import UserImage from "../UserImage";
