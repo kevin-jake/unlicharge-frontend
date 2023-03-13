@@ -23,6 +23,7 @@ import {
 } from "../../store/slices/auth/authApiSlice";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { uploadImage } from "../../util/uploadImage";
 
 const registerSchema = yup.object().shape({
   username: yup.string().required("Required"),
@@ -74,21 +75,9 @@ const Form = ({ setModalType, pageType, closeModal }) => {
   };
 
   const handleRegister = async (values, onSubmitProps) => {
-    let updatedImageData = {};
-    if (values.imagePath) {
-      const formData = new FormData();
-      for (let value in values) {
-        formData.append(value, values[value]);
-      }
-      const imageUrl = await fetch("http://localhost:5000/image", {
-        method: "POST",
-        body: formData,
-      });
-      const imagePath = await imageUrl.json();
-      updatedImageData = { ...values, imagePath };
-    }
+    const valuesWithImage = await uploadImage(values);
     const userData = await register(
-      values.imagePath ? updatedImageData : values
+      values.imagePath ? valuesWithImage : values
     ).unwrap();
     onSubmitProps.resetForm();
     dispatch(setLogin(userData));
