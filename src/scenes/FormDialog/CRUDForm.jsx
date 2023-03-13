@@ -86,10 +86,6 @@ const CRUDForm = ({
   const formikProps = operationType(category, operation);
 
   const handleFormSubmit = async (values) => {
-    console.log(
-      "🚀 ~ file: CRUDForm.jsx:89 ~ handleFormSubmit ~ values:",
-      values
-    );
     if (isCreate)
       await createProductRequest({ category: apiCategory, specs: values });
     if (isEdit)
@@ -98,8 +94,8 @@ const CRUDForm = ({
         id: productId,
         specs: values,
       });
-    // refetch();
-    // closeModal();
+    refetch();
+    closeModal();
   };
   // TODO: Add form for delete request
   return (

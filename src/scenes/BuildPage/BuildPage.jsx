@@ -48,11 +48,22 @@ function BuildPage() {
   useEffect(() => {
     refetch();
   }, [isLoggedIn]);
+  useEffect(() => {
+    const newFocus = data.products.filter(
+      (item) => item._id === focusedProduct._id
+    );
+
+    setFocusedProduct(newFocus[0]);
+  }, [data]);
 
   const handleOpenProductModal = (product) => {
     setIsProductModalOpen(true);
     setFocusedProduct(product);
   };
+  console.log(
+    "🚀 ~ file: BuildPage.jsx:38 ~ BuildPage ~ focusedProduct:",
+    focusedProduct
+  );
   return (
     <PageWrapper title="Estimate your build">
       <Box

@@ -30,23 +30,9 @@ const ProductCards = ({
   isSummaryOpen,
 }) => {
   const dispatch = useDispatch();
-  // const {loggedInUserId: _id} = useSelector(selectUser);
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
-
-  // const patchLike = async () => {
-  //   const response = await fetch(`http://localhost:5000/posts/${postId}/like`, {
-  //     method: "PATCH",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ userId: loggedInUserId }),
-  //   });
-  //   const updatedPost = await response.json();
-  //   dispatch(setPost({ post: updatedPost }));
-  // };
 
   return (
     <Grid item s={12} xs={12} md={isSummaryOpen ? 6 : 4}>

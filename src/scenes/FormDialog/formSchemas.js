@@ -21,15 +21,21 @@ export const batterySchema = yup.object().shape({
   maxVoltage: yup
     .number()
     .typeError("Max Voltage must be a number")
-    .positive("Max Voltage must be greater than zero"),
+    .transform((value) =>
+      isNaN(value) || value === null || value === undefined ? 0 : value
+    )
+    .moreThan(-1, "Max Voltage must be greater than a negative number"),
   minVoltage: yup
     .number()
     .typeError("Min Voltage must be a number")
-    .positive("Min Voltage must be greater than zero"),
+    .transform((value) =>
+      isNaN(value) || value === null || value === undefined ? 0 : value
+    )
+    .moreThan(-1, "Min Voltage must be greater than a negative number"),
   supplierLink: yup
     .string()
     .matches(
-      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/,
       "Enter a valid link!"
     ),
 });
