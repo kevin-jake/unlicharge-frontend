@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import {
@@ -22,14 +22,19 @@ import {
   initialBMSValues,
 } from "./formSchemas";
 import { specMap } from "../../util/specDisplayFormat";
+import { useCreateProductRequestMutation } from "../../store/slices/products/productApiSlice";
 
-const CRUDForm = ({ operation, category, oldValues }) => {
+const CRUDForm = ({ operation, category, oldValues, closeModal, refetch }) => {
+  const apiCategory = useSelector(({ product }) => product.category);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isCreate = operation === "Create";
   const isEdit = operation === "Edit";
   const isDelete = operation === "Delete";
+
+  const [createProductRequest, { isLoading: createLoading }] =
+    useCreateProductRequestMutation();
 
   const operationType = useCallback(
     (category, operation) => {
@@ -65,8 +70,12 @@ const CRUDForm = ({ operation, category, oldValues }) => {
 
   // TODO: Handle form submission for add and edit
   const handleFormSubmit = async (values, onSubmitProps) => {
-    if (isLogin) await login(values, onSubmitProps);
-    if (isRegister) await register(values, onSubmitProps);
+    if (isCreate) {
+      await createProductRequest({ category: apiCategory, specs: values });
+      refetch();
+      closeModal();
+    }
+    // if (isEdit) await register(values, onSubmitProps);
   };
   // TODO: Add form for delete request
   return (

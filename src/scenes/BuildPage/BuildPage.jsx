@@ -43,7 +43,7 @@ function BuildPage() {
   });
   const isLoggedIn = Boolean(useSelector(selectUser));
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery(category);
-  console.log("🚀 ~ file: BuildPage.jsx:45 ~ BuildPage ~ data:", data);
+  console.log("🚀 ~ file: BuildPage.jsx:46 ~ BuildPage ~ category:", category);
 
   useEffect(() => {
     refetch();
@@ -188,6 +188,7 @@ function BuildPage() {
           closeModal={() =>
             setCrudModalState({ ...crudModalState, isOpen: false })
           }
+          refetch={refetch}
         />
       </DialogWrapper>
     </PageWrapper>
