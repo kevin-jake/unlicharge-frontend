@@ -185,6 +185,7 @@ function BuildPage() {
           operation={crudModalState.operation}
           category={crudModalState.category}
           oldValues={crudModalState.oldValues}
+          productId={crudModalState.productId}
           closeModal={() =>
             setCrudModalState({ ...crudModalState, isOpen: false })
           }

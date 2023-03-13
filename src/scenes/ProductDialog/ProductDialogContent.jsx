@@ -22,7 +22,16 @@ const ProductDialogContent = ({
   category,
 }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-
+  const {
+    _id,
+    __v,
+    id,
+    updatedAt,
+    createdAt,
+    specCreator,
+    productId: prodID,
+    ...specsRest
+  } = specs;
   return (
     <>
       <DialogContent dividers>
@@ -78,7 +87,8 @@ const ProductDialogContent = ({
                 operation: "Edit",
                 category: category,
                 isOpen: true,
-                oldValues: { specs },
+                oldValues: specsRest,
+                productId,
               })
             }
           >
@@ -89,9 +99,6 @@ const ProductDialogContent = ({
           </Button>
         </Box>
       </DialogActions>
-      <DialogWrapper isOpen={false} title="Edit Battery">
-        <CRUDDialogContent />
-      </DialogWrapper>
     </>
   );
 };

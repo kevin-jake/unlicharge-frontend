@@ -23,18 +23,18 @@ import {
 } from "./formSchemas";
 import { specMap } from "../../util/specDisplayFormat";
 import { useCreateProductRequestMutation } from "../../store/slices/products/productApiSlice";
+import { useEditProductRequestMutation } from "../../store/slices/requests/requestApiSlice";
 
 const CRUDForm = ({
   operation,
   category,
+  productId,
   oldValues,
   closeModal,
   refetch,
   setIsLoading,
 }) => {
   const apiCategory = useSelector(({ product }) => product.category);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isCreate = operation === "Create";
   const isEdit = operation === "Edit";
@@ -42,6 +42,12 @@ const CRUDForm = ({
 
   const [createProductRequest, { isLoading: createLoading }] =
     useCreateProductRequestMutation();
+  const [editProductRequest, { isLoading: editLoading }] =
+    useEditProductRequestMutation();
+
+  useEffect(() => {
+    setIsLoading(createLoading);
+  }, [createLoading]);
 
   useEffect(() => {
     setIsLoading(createLoading);
@@ -62,7 +68,7 @@ const CRUDForm = ({
       }
 
       if (operation === "Edit") {
-        initialValues = oldValues.specs;
+        initialValues = oldValues;
       }
 
       textFields = specMap.filter((specItem) =>
@@ -79,14 +85,21 @@ const CRUDForm = ({
 
   const formikProps = operationType(category, operation);
 
-  // TODO: Handle form submission for add and edit
-  const handleFormSubmit = async (values, onSubmitProps) => {
-    if (isCreate) {
+  const handleFormSubmit = async (values) => {
+    console.log(
+      "🚀 ~ file: CRUDForm.jsx:89 ~ handleFormSubmit ~ values:",
+      values
+    );
+    if (isCreate)
       await createProductRequest({ category: apiCategory, specs: values });
-      refetch();
-      closeModal();
-    }
-    if (isEdit) await register(values, onSubmitProps);
+    if (isEdit)
+      await editProductRequest({
+        category: apiCategory,
+        id: productId,
+        specs: values,
+      });
+    // refetch();
+    // closeModal();
   };
   // TODO: Add form for delete request
   return (
