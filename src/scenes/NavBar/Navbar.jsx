@@ -146,7 +146,8 @@ const Navbar = () => {
                 )}
               </IconButton>
               <ProfileButton
-                isLoggedIn={Boolean(user)}
+                user={user}
+                isLoggedIn={user}
                 openModal={handleOpenModal}
               />
             </FlexBetween>

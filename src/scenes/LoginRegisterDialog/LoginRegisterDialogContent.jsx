@@ -32,7 +32,7 @@ const LoginRegisterDialogContent = ({ pageType, setModalType, closeModal }) => {
             >
               Estimate, create and share your builds.
             </Typography>
-            <Divider sx={{ marginTop: "1rem" }} textAlign="left">
+            {/* <Divider sx={{ marginTop: "1rem" }} textAlign="left">
               <Typography variant="h6">{pageType} via</Typography>
             </Divider>
             <Box
@@ -48,8 +48,7 @@ const LoginRegisterDialogContent = ({ pageType, setModalType, closeModal }) => {
                 <Google />
               </IconButton>
             </Box>
-            <Divider>or</Divider>
-            {/* Register or Login selection happens here */}
+            <Divider>or</Divider> */}
             <Form
               setModalType={setModalType}
               pageType={pageType}

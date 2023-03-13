@@ -47,8 +47,8 @@ const ProductDialogContent = ({
               style={{ objectFit: "cover", borderRadius: "0.75rem" }}
               width="200px"
               height="200px"
-              alt="user"
-              src="/test.jpg"
+              alt={specs.name}
+              src={specs.imagePath}
             />
           </Box>
           <Grid

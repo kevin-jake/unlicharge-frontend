@@ -155,7 +155,11 @@ const CRUDForm = ({
                           <p>Add Picture Here</p>
                         ) : (
                           <FlexBetween>
-                            <Typography>{values.imagePath.name}</Typography>
+                            <Typography>
+                              {values.imagePath.name
+                                ? values.imagePath.name
+                                : values.imagePath}
+                            </Typography>
                             <EditOutlinedIcon />
                           </FlexBetween>
                         )}
