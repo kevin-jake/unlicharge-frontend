@@ -5,6 +5,7 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  CircularProgress,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -268,7 +269,23 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                 "&:hover": { color: palette.primary.main },
               }}
             >
-              {isLogin ? "LOGIN" : "REGISTER"}
+              {isLogin ? (
+                loginLoading ? (
+                  <CircularProgress
+                    size={20}
+                    sx={{ color: palette.secondary.light }}
+                  />
+                ) : (
+                  "LOGIN"
+                )
+              ) : registerLoading ? (
+                <CircularProgress
+                  size={20}
+                  sx={{ color: palette.secondary.light }}
+                />
+              ) : (
+                "REGISTER"
+              )}
             </Button>
             <Typography
               onClick={() => {

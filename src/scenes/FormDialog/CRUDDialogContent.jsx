@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   DialogActions,
   DialogContent,
   useTheme,
@@ -16,6 +17,7 @@ const CRUDDialogContent = (props) => {
   // TODO: Make the login modal into a component
   const [modalType, setModalType] = useState("Login");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const isLoggedIn = Boolean(useSelector(selectUser));
   const { palette } = useTheme();
 
@@ -27,7 +29,7 @@ const CRUDDialogContent = (props) => {
     <>
       <DialogContent dividers>
         <Box>
-          <CRUDForm {...props} />
+          <CRUDForm {...props} setIsLoading={setIsLoading} />
         </Box>
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center" }}>
@@ -43,7 +45,14 @@ const CRUDDialogContent = (props) => {
                 "&:hover": { color: palette.primary.main },
               }}
             >
-              Save
+              {isLoading ? (
+                <CircularProgress
+                  size={20}
+                  sx={{ color: palette.secondary.light }}
+                />
+              ) : (
+                "Save"
+              )}
             </Button>
             <Button
               sx={{

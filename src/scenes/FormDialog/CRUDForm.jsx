@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import {
   Box,
   Button,
@@ -24,7 +24,14 @@ import {
 import { specMap } from "../../util/specDisplayFormat";
 import { useCreateProductRequestMutation } from "../../store/slices/products/productApiSlice";
 
-const CRUDForm = ({ operation, category, oldValues, closeModal, refetch }) => {
+const CRUDForm = ({
+  operation,
+  category,
+  oldValues,
+  closeModal,
+  refetch,
+  setIsLoading,
+}) => {
   const apiCategory = useSelector(({ product }) => product.category);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,6 +42,10 @@ const CRUDForm = ({ operation, category, oldValues, closeModal, refetch }) => {
 
   const [createProductRequest, { isLoading: createLoading }] =
     useCreateProductRequestMutation();
+
+  useEffect(() => {
+    setIsLoading(createLoading);
+  }, [createLoading]);
 
   const operationType = useCallback(
     (category, operation) => {
@@ -75,7 +86,7 @@ const CRUDForm = ({ operation, category, oldValues, closeModal, refetch }) => {
       refetch();
       closeModal();
     }
-    // if (isEdit) await register(values, onSubmitProps);
+    if (isEdit) await register(values, onSubmitProps);
   };
   // TODO: Add form for delete request
   return (
