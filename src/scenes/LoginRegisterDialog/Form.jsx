@@ -6,6 +6,8 @@ import {
   Typography,
   useTheme,
   CircularProgress,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -19,6 +21,8 @@ import {
   useLoginMutation,
   useRegisterMutation,
 } from "../../store/slices/auth/authApiSlice";
+import { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const registerSchema = yup.object().shape({
   username: yup.string().required("Required"),
@@ -56,12 +60,18 @@ const initialValuesLogin = {
 const Form = ({ setModalType, pageType, closeModal }) => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "Login";
   const isRegister = pageType === "Register";
   const [login, { isLoading: loginLoading }] = useLoginMutation();
   const [register, { isLoading: registerLoading }] = useRegisterMutation();
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleRegister = async (values, onSubmitProps) => {
     let updatedImageData = {};
@@ -136,11 +146,25 @@ const Form = ({ setModalType, pageType, closeModal }) => {
             />
             <TextField
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.password}
               name="password"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               required={isRegister}
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}

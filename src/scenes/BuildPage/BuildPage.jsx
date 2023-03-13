@@ -50,7 +50,11 @@ function BuildPage() {
   }, [isLoggedIn]);
   useEffect(() => {
     const newFocus = data.products.filter(
-      (item) => item._id === focusedProduct._id
+      (item) => item._id === focusedProduct?._id
+    );
+    console.log(
+      "🚀 ~ file: BuildPage.jsx:55 ~ useEffect ~ newFocus:",
+      newFocus
     );
 
     setFocusedProduct(newFocus[0]);
