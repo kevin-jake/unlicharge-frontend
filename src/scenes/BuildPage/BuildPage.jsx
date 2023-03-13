@@ -49,15 +49,12 @@ function BuildPage() {
     refetch();
   }, [isLoggedIn]);
   useEffect(() => {
-    const newFocus = data.products.filter(
-      (item) => item._id === focusedProduct?._id
-    );
-    console.log(
-      "🚀 ~ file: BuildPage.jsx:55 ~ useEffect ~ newFocus:",
-      newFocus
-    );
-
-    setFocusedProduct(newFocus[0]);
+    if (isSuccess) {
+      const newFocus = data.products.filter(
+        (item) => item._id === focusedProduct?._id
+      );
+      setFocusedProduct(newFocus[0]);
+    }
   }, [data]);
 
   const handleOpenProductModal = (product) => {

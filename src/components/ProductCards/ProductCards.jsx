@@ -55,8 +55,8 @@ const ProductCards = ({
               style={{ objectFit: "cover", borderRadius: "0.75rem" }}
               width="130px"
               height="130px"
-              alt="user"
-              src="/test.jpg"
+              alt={specs.name}
+              src={specs.imagePath}
             />
           </Box>
           <Grid
