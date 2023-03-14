@@ -10,6 +10,7 @@ import React from "react";
 import CompleteSpecs from "./CompleteSpecs";
 import ItemTabs from "../../components/ItemTabs";
 import PriceCompute from "../../components/ProductCards/PriceCompute";
+import { toast } from "react-toastify";
 
 const ProductDialogContent = ({
   specs,

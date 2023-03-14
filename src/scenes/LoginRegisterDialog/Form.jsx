@@ -24,6 +24,7 @@ import {
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { uploadImage } from "../../util/uploadImage";
+import { toast } from "react-toastify";
 
 const registerSchema = yup.object().shape({
   username: yup.string().required("Required"),
@@ -65,8 +66,14 @@ const Form = ({ setModalType, pageType, closeModal }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "Login";
   const isRegister = pageType === "Register";
-  const [login, { isLoading: loginLoading }] = useLoginMutation();
+  const [login, { isLoading: loginLoading, isError }] = useLoginMutation();
   const [register, { isLoading: registerLoading }] = useRegisterMutation();
+
+  const notifyError = (error) => {
+    const errMsg = `${error.data.message}`;
+    toast.error(errMsg);
+    throw new Error(errMsg);
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -85,15 +92,26 @@ const Form = ({ setModalType, pageType, closeModal }) => {
   };
 
   const handleLogin = async (values, onSubmitProps) => {
-    const userData = await login(values).unwrap();
+    const userData = await login(values)
+      .unwrap()
+      .then()
+      .catch((error) => notifyError(error));
     onSubmitProps.resetForm();
     dispatch(setLogin(userData));
     closeModal();
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-    if (isLogin) await handleLogin(values, onSubmitProps);
-    if (isRegister) await handleRegister(values, onSubmitProps);
+    try {
+      if (isLogin) {
+        await handleLogin(values, onSubmitProps);
+        toast.success("Logged in successfully");
+      }
+      if (isRegister) {
+        await handleRegister(values, onSubmitProps);
+        toast.success("Registered and Logged in successfully");
+      }
+    } catch (error) {}
   };
 
   return (

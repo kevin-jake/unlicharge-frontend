@@ -14,6 +14,8 @@ import {
   selectUser,
   setLogout,
 } from "./store/slices/auth/authSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let logoutTimer;
 
@@ -43,6 +45,13 @@ function App() {
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <ToastContainer
+            limit={3}
+            hideProgressBar={true}
+            autoClose={2000}
+            position="top-center"
+            theme={mode}
+          />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/home" element={<HomePage />} />
