@@ -134,3 +134,12 @@ export const initialABValues = {
   balancingType: "",
   price: "",
 };
+
+export const initialDeleteFormValues = {
+  deleteReason: "",
+  commentBody: "",
+};
+
+export const deleteFormSchema = yup.object().shape({
+  deleteReason: yup.string().required("Reason is required"),
+});

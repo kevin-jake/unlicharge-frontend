@@ -9,7 +9,17 @@ export const requestApiSlice = api.injectEndpoints({
         body: specs,
       }),
     }),
+    deleteProductRequest: builder.mutation({
+      query: ({ category, id, deleteBody }) => ({
+        url: `requests/${category}/${id}/delete`,
+        method: "POST",
+        body: deleteBody,
+      }),
+    }),
   }),
 });
 
-export const { useEditProductRequestMutation } = requestApiSlice;
+export const {
+  useEditProductRequestMutation,
+  useDeleteProductRequestMutation,
+} = requestApiSlice;

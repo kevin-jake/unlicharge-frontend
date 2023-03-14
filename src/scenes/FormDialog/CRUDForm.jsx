@@ -16,13 +16,18 @@ import {
   abSchema,
   batterySchema,
   bmsSchema,
+  deleteFormSchema,
   initialABValues,
   initialBatteryValues,
   initialBMSValues,
+  initialDeleteFormValues,
 } from "./formSchemas";
 import { specMap } from "../../util/specDisplayFormat";
 import { useCreateProductRequestMutation } from "../../store/slices/products/productApiSlice";
-import { useEditProductRequestMutation } from "../../store/slices/requests/requestApiSlice";
+import {
+  useDeleteProductRequestMutation,
+  useEditProductRequestMutation,
+} from "../../store/slices/requests/requestApiSlice";
 import { uploadImage } from "../../util/uploadImage";
 
 const CRUDForm = ({
@@ -45,6 +50,8 @@ const CRUDForm = ({
     useCreateProductRequestMutation();
   const [editProductRequest, { isLoading: editLoading }] =
     useEditProductRequestMutation();
+  const [deleteProductRequest, { isLoading: deleteLoading }] =
+    useDeleteProductRequestMutation();
 
   useEffect(() => {
     setIsLoading(createLoading);
@@ -53,6 +60,10 @@ const CRUDForm = ({
   useEffect(() => {
     setIsLoading(editLoading);
   }, [editLoading]);
+
+  useEffect(() => {
+    setIsLoading(deleteLoading);
+  }, [deleteLoading]);
 
   const operationType = useCallback(
     (category, operation) => {
@@ -75,6 +86,11 @@ const CRUDForm = ({
       textFields = specMap.filter((specItem) =>
         specItem.specOf.includes(category)
       );
+
+      if (operation === "Delete") {
+        initialValues = initialDeleteFormValues;
+        validationSchema = deleteFormSchema;
+      }
       return {
         initialValues,
         validationSchema,
@@ -98,10 +114,15 @@ const CRUDForm = ({
         id: productId,
         specs,
       });
+    if (isDelete)
+      await deleteProductRequest({
+        category: apiCategory,
+        id: productId,
+        deleteBody: values,
+      });
     refetch();
     closeModal();
   };
-  // TODO: Add form for delete request
   return (
     <Formik
       onSubmit={handleFormSubmit}
@@ -205,6 +226,26 @@ const CRUDForm = ({
                     sx={{ gridColumn: "span 12" }}
                   />
                 ))}
+              </>
+            )}
+            {isDelete && (
+              <>
+                <TextField
+                  label="Reason"
+                  rows={4}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  required
+                  value={values.deleteReason}
+                  name="deleteReason"
+                  multiline
+                  error={
+                    Boolean(touched.deleteReason) &&
+                    Boolean(errors.deleteReason)
+                  }
+                  helperText={touched.deleteReason && errors.deleteReason}
+                  sx={{ gridColumn: "span 12" }}
+                />
               </>
             )}
           </Box>

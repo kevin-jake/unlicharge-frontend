@@ -10,8 +10,6 @@ import React from "react";
 import CompleteSpecs from "./CompleteSpecs";
 import ItemTabs from "../../components/ItemTabs";
 import PriceCompute from "../../components/ProductCards/PriceCompute";
-import DialogWrapper from "../../components/wrappers/DialogWrapper";
-import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
 
 const ProductDialogContent = ({
   specs,
@@ -94,7 +92,18 @@ const ProductDialogContent = ({
           >
             Edit
           </Button>
-          <Button variant="outlined" autoFocus>
+          <Button
+            variant="outlined"
+            autoFocus
+            onClick={() =>
+              setCrudModalState({
+                operation: "Delete",
+                category: category,
+                isOpen: true,
+                productId,
+              })
+            }
+          >
             Delete
           </Button>
         </Box>
