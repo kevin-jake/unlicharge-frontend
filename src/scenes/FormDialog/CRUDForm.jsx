@@ -101,10 +101,10 @@ const CRUDForm = ({
   );
 
   const formikProps = operationType(category, operation);
-
+  // TODO: Add toast notification after submit
   const handleFormSubmit = async (values) => {
-    let specs = {};
-    if (Boolean(values.imagePath)) {
+    let specs = values;
+    if (Boolean(values.imagePath) && typeof values.imagePath === "object") {
       specs = await uploadImage(values);
     }
     if (isCreate) await createProductRequest({ category: apiCategory, specs });
@@ -123,6 +123,7 @@ const CRUDForm = ({
     refetch();
     closeModal();
   };
+
   return (
     <Formik
       onSubmit={handleFormSubmit}

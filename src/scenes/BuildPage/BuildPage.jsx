@@ -43,11 +43,11 @@ function BuildPage() {
   });
   const isLoggedIn = Boolean(useSelector(selectUser));
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery(category);
-  console.log("🚀 ~ file: BuildPage.jsx:46 ~ BuildPage ~ category:", category);
 
   useEffect(() => {
     refetch();
   }, [isLoggedIn]);
+
   useEffect(() => {
     if (isSuccess) {
       const newFocus = data.products.filter(

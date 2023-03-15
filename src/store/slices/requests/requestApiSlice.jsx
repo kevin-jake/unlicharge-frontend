@@ -17,7 +17,7 @@ export const requestApiSlice = api.injectEndpoints({
       }),
     }),
     getEditRequests: builder.query({
-      query: ({ category }) => `requests/${category}/edits`,
+      query: ({ category }) => `requests/${category}/edit`,
     }),
   }),
 });
