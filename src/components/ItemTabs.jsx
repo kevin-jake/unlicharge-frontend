@@ -11,8 +11,8 @@ function TabPanel(props) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`product-dialog-tabpanel-${index}`}
+      aria-labelledby={`product-dialog-tab-${index}`}
       {...other}
     >
       {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
@@ -28,8 +28,8 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+    id: `product-dialog-tab-${index}`,
+    "aria-controls": `product-dialog-tabpanel-${index}`,
   };
 }
 
@@ -45,7 +45,7 @@ export default function ItemTabs({ tab1, tab2, tab3 }) {
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
+          aria-label="product-dialog-tabs"
         >
           <Tab label="Specifications" {...a11yProps(0)} />
           {tab2 && <Tab label="Computation" {...a11yProps(1)} />}

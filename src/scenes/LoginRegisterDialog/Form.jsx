@@ -105,7 +105,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
     try {
       if (isLogin) {
         await handleLogin(values, onSubmitProps);
-        toast.success("Logged in successfully");
+        toast.success("Log in successful");
       }
       if (isRegister) {
         await handleRegister(values, onSubmitProps);
