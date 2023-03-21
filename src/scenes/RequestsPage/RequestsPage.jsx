@@ -1,8 +1,10 @@
 import { Box, Button, Tab, Tabs } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useState } from "react";
+import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import PageWrapper from "../../components/wrappers/PageWrapper";
 import { useGetRequestsQuery } from "../../store/slices/requests/requestApiSlice";
+import RequestDialogContent from "./RequestDialog/RequestDialogContent";
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -65,6 +67,8 @@ const columns = (request) => [
 const RequestsPage = () => {
   const [reqBtn, setReqBtn] = useState("Create");
   const [tabIndex, setTabIndex] = useState(0);
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [focusedProduct, setFocusedProduct] = useState({});
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
@@ -146,7 +150,6 @@ const RequestsPage = () => {
         <TabPanel value={tabIndex} index={tabIndex}>
           <div style={{ width: "100%", height: "390px" }}>
             <DataGrid
-              sx={{ overflowX: "scroll" }}
               loading={isLoading || !data}
               getRowId={(row) => row._id}
               rows={(data && data[dataArray]) || []}
@@ -169,6 +172,21 @@ const RequestsPage = () => {
           </div>
         </TabPanel>
       </Box>
+      {/* TODO: Fix opening of request dialog */}
+      <DialogWrapper
+        isOpen={isProductModalOpen}
+        title={focusedProduct?.specs?.name || ""}
+        closeModal={() => setIsProductModalOpen(false)}
+      >
+        <RequestDialogContent
+          specs={focusedProduct?.specs}
+          creator={focusedProduct?.creator}
+          productId={focusedProduct?._id}
+          // category={
+          //   categories.filter((item) => item.apiPath === category)[0].name
+          // }
+        />
+      </DialogWrapper>
     </PageWrapper>
   );
 };
