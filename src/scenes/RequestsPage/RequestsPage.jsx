@@ -1,9 +1,8 @@
 import { Box, Button, Tab, Tabs } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import React, { useState } from "react";
 import PageWrapper from "../../components/wrappers/PageWrapper";
-import { useGetEditRequestsQuery } from "../../store/slices/requests/requestApiSlice";
+import { useGetRequestsQuery } from "../../store/slices/requests/requestApiSlice";
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -26,38 +25,34 @@ function a11yProps(index) {
   };
 }
 
-const columns = [
+const columns = (request) => [
   {
     field: "_id",
     headerName: "ID",
     flex: 1,
   },
   {
-    field: "userId",
-    headerName: "User ID",
-    flex: 1,
+    field: request === "Create" ? "specs" : "requestedProduct",
+    headerName: "Product Name",
+    flex: 2,
+    sortable: false,
+    renderCell: (params) =>
+      request === "Create" ? params.value.name : params.value.specs.name,
   },
   {
     field: "category",
     headerName: "Category",
-    flex: 1,
+    flex: 0.5,
   },
   {
-    field: "status",
+    field: request === "Create" ? "publishStatus" : "status",
     headerName: "Status",
-    flex: 1,
+    flex: 0.5,
   },
   {
     field: "createdAt",
-    headerName: "CreatedAt",
+    headerName: "Created At",
     flex: 1,
-  },
-  {
-    field: "newSpecs",
-    headerName: "Specs",
-    flex: 0.5,
-    sortable: false,
-    renderCell: (params) => console.log(params),
   },
   //   {
   //     field: "cost",
@@ -68,7 +63,6 @@ const columns = [
 ];
 
 const RequestsPage = () => {
-  const [category, setCategory] = useState("battery");
   const [reqBtn, setReqBtn] = useState("Create");
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -79,7 +73,7 @@ const RequestsPage = () => {
 
   const [searchInput, setSearchInput] = useState("");
 
-  const { data, isLoading } = useGetEditRequestsQuery({
+  const { data, isLoading, refetch } = useGetRequestsQuery({
     category:
       tabIndex === 0
         ? "battery"
@@ -88,6 +82,7 @@ const RequestsPage = () => {
         : tabIndex === 2
         ? "ab"
         : "",
+    request: reqBtn.toLowerCase(),
   });
 
   const handleChange = (event, newValue) => {
@@ -96,7 +91,15 @@ const RequestsPage = () => {
 
   const handleReqBtnClick = (reqValue) => {
     setReqBtn(reqValue);
+    refetch();
   };
+
+  const dataArray =
+    reqBtn === "Create"
+      ? "createRequests"
+      : reqBtn === "Edit"
+      ? "editRequests"
+      : "deleteRequests";
 
   return (
     <PageWrapper title="My Requests">
@@ -143,11 +146,12 @@ const RequestsPage = () => {
         <TabPanel value={tabIndex} index={tabIndex}>
           <div style={{ width: "100%", height: "390px" }}>
             <DataGrid
+              sx={{ overflowX: "scroll" }}
               loading={isLoading || !data}
               getRowId={(row) => row._id}
-              rows={(data && data.editRequests) || []}
-              columns={columns}
-              rowCount={(data && data.editRequests.length) || 0}
+              rows={(data && data[dataArray]) || []}
+              columns={columns(reqBtn)}
+              rowCount={(data && data[dataArray]?.length) || 0}
               rowsPerPageOptions={[20, 50, 100]}
               pagination
               // page={page}

@@ -16,8 +16,8 @@ export const requestApiSlice = api.injectEndpoints({
         body: deleteBody,
       }),
     }),
-    getEditRequests: builder.query({
-      query: ({ category }) => `requests/${category}/edit`,
+    getRequests: builder.query({
+      query: ({ category, request }) => `requests/${category}/${request}`,
     }),
   }),
 });
@@ -25,5 +25,5 @@ export const requestApiSlice = api.injectEndpoints({
 export const {
   useEditProductRequestMutation,
   useDeleteProductRequestMutation,
-  useGetEditRequestsQuery,
+  useGetRequestsQuery,
 } = requestApiSlice;
