@@ -83,9 +83,10 @@ const Form = ({ setModalType, pageType, closeModal }) => {
 
   const handleRegister = async (values, onSubmitProps) => {
     const valuesWithImage = await uploadImage(values);
-    const userData = await register(
-      values.imagePath ? valuesWithImage : values
-    ).unwrap();
+    const userData = await register(values.imagePath ? valuesWithImage : values)
+      .unwrap()
+      .then()
+      .catch((error) => notifyError(error));
     onSubmitProps.resetForm();
     dispatch(setLogin(userData));
     closeModal();
@@ -109,7 +110,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
       }
       if (isRegister) {
         await handleRegister(values, onSubmitProps);
-        toast.success("Registered and Logged in successfully");
+        toast.success("Registered successfully. Log in successful.");
       }
     } catch (error) {}
   };

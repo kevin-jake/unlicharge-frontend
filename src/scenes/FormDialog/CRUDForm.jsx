@@ -29,6 +29,8 @@ import {
   useEditProductRequestMutation,
 } from "../../store/slices/requests/requestApiSlice";
 import { uploadImage } from "../../util/uploadImage";
+import { selectUser } from "../../store/slices/auth/authSlice";
+import { toast } from "react-toastify";
 
 const CRUDForm = ({
   operation,
@@ -41,10 +43,12 @@ const CRUDForm = ({
 }) => {
   const { palette } = useTheme();
   const apiCategory = useSelector(({ product }) => product.category);
+  const { role, userId } = useSelector(selectUser);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isCreate = operation === "Create";
   const isEdit = operation === "Edit";
   const isDelete = operation === "Delete";
+  const { specCreator, ...initValue } = oldValues;
 
   const [createProductRequest, { isLoading: createLoading }] =
     useCreateProductRequestMutation();
@@ -80,7 +84,7 @@ const CRUDForm = ({
       }
 
       if (operation === "Edit") {
-        initialValues = oldValues;
+        initialValues = initValue;
       }
 
       textFields = specMap.filter((specItem) =>
@@ -100,6 +104,12 @@ const CRUDForm = ({
     [category, operation, oldValues]
   );
 
+  const notifyError = (error) => {
+    const errMsg = `${error.data.message}`;
+    toast.error(errMsg);
+    throw new Error(errMsg);
+  };
+
   const formikProps = operationType(category, operation);
   // TODO: Add toast notification after submit
   const handleFormSubmit = async (values) => {
@@ -107,19 +117,50 @@ const CRUDForm = ({
     if (Boolean(values.imagePath) && typeof values.imagePath === "object") {
       specs = await uploadImage(values);
     }
-    if (isCreate) await createProductRequest({ category: apiCategory, specs });
-    if (isEdit)
+    if (isCreate) {
+      await createProductRequest({ category: apiCategory, specs })
+        .unwrap()
+        .then()
+        .catch((error) => notifyError(error));
+      if (role === "User")
+        toast.success(
+          "Request submitted successfully. This part will only be visible to you. Once approved it will be visible to public."
+        );
+    }
+    if (isEdit) {
       await editProductRequest({
         category: apiCategory,
         id: productId,
         specs,
-      });
-    if (isDelete)
+      })
+        .unwrap()
+        .then()
+        .catch((error) => notifyError(error));
+      if (specCreator.id === userId) toast.success("Product edit saved.");
+      else if (role === "User")
+        toast.success(
+          "Edit Request submitted successfully. Once approved it will be visible to public."
+        );
+    }
+    if (isDelete) {
       await deleteProductRequest({
         category: apiCategory,
         id: productId,
         deleteBody: values,
-      });
+      })
+        .unwrap()
+        .then()
+        .catch((error) => notifyError(error));
+      if (specCreator.id === userId)
+        toast.success("Product deleted successfully.");
+      else if (role === "User")
+        toast.success(
+          "Delete Request submitted successfully. Once approved it will be visible to public."
+        );
+    }
+    if (role === "Admin") {
+      toast.success("Part created successfully.");
+    }
     refetch();
     closeModal();
   };

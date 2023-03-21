@@ -97,7 +97,6 @@ function BuildPage() {
           <Grid item xs={12}>
             <SortFilter />
           </Grid>
-          {/* TODO: Make this responsive 3 cards if large screen and one card on mobile */}
           {isLoading && (
             <Grid
               item

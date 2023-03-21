@@ -27,7 +27,7 @@ const ProductDialogContent = ({
     id,
     updatedAt,
     createdAt,
-    specCreator,
+    // specCreator,
     productId: prodID,
     ...specsRest
   } = specs;

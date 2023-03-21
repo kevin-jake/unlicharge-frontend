@@ -57,7 +57,6 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
               <Avatar
                 alt="User"
                 sx={{ width: 30, height: 30 }}
-                //  FIXME: Make this image from users correct pic
                 src={user.imagePath}
               />
             }
