@@ -64,8 +64,16 @@ const ProductDialogContent = ({
             }}
           >
             <ItemTabs
-              tab1={<CompleteSpecs specs={specs} />}
-              tab2={<PriceCompute />}
+              tabArray={[
+                {
+                  tabTitle: "Specifications",
+                  tabComp: <CompleteSpecs specs={specs} />,
+                },
+                {
+                  tabTitle: "Computation",
+                  tabComp: <PriceCompute />,
+                },
+              ]}
             />
           </Grid>
         </Grid>

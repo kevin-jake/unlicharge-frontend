@@ -32,8 +32,14 @@ function a11yProps(index) {
     "aria-controls": `product-dialog-tabpanel-${index}`,
   };
 }
-
-export default function ItemTabs({ tab1, tab2, tab3 }) {
+// TODO: Make dynamic tabs
+export default function ItemTabs({ tabArray }) {
+  // tabArray model = [
+  //   {
+  //     tabTitle: <String>
+  //       tabComp: <React component>
+  //   }
+  // ]
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -47,20 +53,24 @@ export default function ItemTabs({ tab1, tab2, tab3 }) {
           onChange={handleChange}
           aria-label="product-dialog-tabs"
         >
-          <Tab label="Specifications" {...a11yProps(0)} />
-          {tab2 && <Tab label="Computation" {...a11yProps(1)} />}
-          <Tab label="Description" {...a11yProps(2)} />
+          {tabArray.map((tab, index) => (
+            <Tab
+              key={`tab-${tab.tabTitle}-${index}`}
+              label={tab.tabTitle}
+              {...a11yProps(index)}
+            />
+          ))}
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        {tab1}
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        {tab2}
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        {tab3}
-      </TabPanel>
+      {tabArray.map((tab, index) => (
+        <TabPanel
+          key={`tabpanel-${tab.tabTitle}-${index}`}
+          value={value}
+          index={index}
+        >
+          {tab.tabComp}
+        </TabPanel>
+      ))}
     </Box>
   );
 }

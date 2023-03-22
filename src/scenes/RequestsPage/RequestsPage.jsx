@@ -68,14 +68,21 @@ const RequestsPage = () => {
   const [reqBtn, setReqBtn] = useState("Create");
   const [tabIndex, setTabIndex] = useState(0);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
-  const [focusedProduct, setFocusedProduct] = useState({});
+  const [focusedRequest, setFocusedProduct] = useState({});
+  console.log(
+    "🚀 ~ file: RequestsPage.jsx:72 ~ RequestsPage ~ focusedRequest:",
+    focusedRequest
+  );
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
-
   const [searchInput, setSearchInput] = useState("");
+
+  const isCreate = reqBtn === "Create";
+  const isEdit = reqBtn === "Edit";
+  const isDelete = reqBtn === "Delete";
 
   const { data, isLoading, refetch } = useGetRequestsQuery({
     category:
@@ -98,12 +105,16 @@ const RequestsPage = () => {
     refetch();
   };
 
-  const dataArray =
-    reqBtn === "Create"
-      ? "createRequests"
-      : reqBtn === "Edit"
-      ? "editRequests"
-      : "deleteRequests";
+  const handleRowClick = (params) => {
+    setFocusedProduct(params.row);
+    setIsProductModalOpen(true);
+  };
+
+  const dataArray = isCreate
+    ? "createRequests"
+    : isEdit
+    ? "editRequests"
+    : "deleteRequests";
 
   return (
     <PageWrapper title="My Requests">
@@ -117,21 +128,21 @@ const RequestsPage = () => {
         >
           <Box>
             <Button
-              variant={reqBtn === "Create" ? "contained" : "outlined"}
+              variant={isCreate ? "contained" : "outlined"}
               sx={{ m: 1 }}
               onClick={() => handleReqBtnClick("Create")}
             >
               Create
             </Button>
             <Button
-              variant={reqBtn === "Edit" ? "contained" : "outlined"}
+              variant={isEdit ? "contained" : "outlined"}
               sx={{ m: 1 }}
               onClick={() => handleReqBtnClick("Edit")}
             >
               Edit
             </Button>
             <Button
-              variant={reqBtn === "Delete" ? "contained" : "outlined"}
+              variant={isDelete ? "contained" : "outlined"}
               sx={{ m: 1 }}
               onClick={() => handleReqBtnClick("Delete")}
             >
@@ -157,6 +168,7 @@ const RequestsPage = () => {
               rowCount={(data && data[dataArray]?.length) || 0}
               rowsPerPageOptions={[20, 50, 100]}
               pagination
+              onRowClick={handleRowClick}
               // page={page}
               // pageSize={pageSize}
               // paginationMode="server"
@@ -172,19 +184,28 @@ const RequestsPage = () => {
           </div>
         </TabPanel>
       </Box>
-      {/* TODO: Fix opening of request dialog */}
       <DialogWrapper
         isOpen={isProductModalOpen}
-        title={focusedProduct?.specs?.name || ""}
+        title={
+          isCreate
+            ? focusedRequest?.specs?.name
+            : focusedRequest?.requestedProduct?.specs?.name || ""
+        }
         closeModal={() => setIsProductModalOpen(false)}
       >
         <RequestDialogContent
-          specs={focusedProduct?.specs}
-          creator={focusedProduct?.creator}
-          productId={focusedProduct?._id}
-          // category={
-          //   categories.filter((item) => item.apiPath === category)[0].name
-          // }
+          specs={
+            isCreate
+              ? focusedRequest?.specs
+              : isEdit
+              ? focusedRequest?.newSpecs
+              : focusedRequest?.requestedProduct?.specs
+          }
+          oldValues={focusedRequest?.requestedProduct?.specs}
+          creator={
+            isCreate ? focusedRequest?.creator : focusedRequest?.requestor
+          }
+          productId={focusedRequest?._id}
         />
       </DialogWrapper>
     </PageWrapper>
