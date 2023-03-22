@@ -8,7 +8,9 @@ import {
 } from "@mui/material";
 import React from "react";
 import CompleteSpecs from "../../ProductDialog/CompleteSpecs";
+
 import ItemTabs from "../../../components/ItemTabs";
+import DialogFooter from "../../../components/DialogFooter";
 
 const RequestDialogContent = ({ specs, oldValues }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -17,11 +19,15 @@ const RequestDialogContent = ({ specs, oldValues }) => {
     __v,
     id,
     updatedAt,
-    createdAt,
+    // createdAt,
     // specCreator,
     productId: prodID,
     ...specsRest
   } = specs;
+  console.log(
+    "🚀 ~ file: RequestDialogContent.jsx:27 ~ RequestDialogContent ~ specs:",
+    specs?.specCreator?.username
+  );
   return (
     <>
       <DialogContent dividers>
@@ -66,7 +72,15 @@ const RequestDialogContent = ({ specs, oldValues }) => {
             />
           </Grid>
         </Grid>
+        <DialogFooter
+          isRequest={true}
+          userImage={specs?.specCreator?.imagePath}
+          userName={specs?.specCreator?.username}
+          createdAt={specs?.createdAt}
+          lastUpdated={specs?.updatedAt}
+        />
       </DialogContent>
+
       {/* <DialogActions sx={{ justifyContent: "space-between" }}>
         <Box>
           <Button variant="contained" autoFocus>

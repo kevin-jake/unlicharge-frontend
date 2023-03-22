@@ -1,23 +1,12 @@
-import {
-  ChatBubbleOutlineOutlined,
-  FavoriteBorderOutlined,
-  FavoriteOutlined,
-  ShareOutlined,
-} from "@mui/icons-material";
-import CircleIcon from "@mui/icons-material/Circle";
 import { Box, Grid, Typography, useTheme } from "@mui/material";
 import FlexBetween from "../wrappers/FlexBetween";
 import WidgetWrapper from "../wrappers/WidgetWrapper";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUser, setPost } from "../../store/slices/auth/authSlice";
-import UserImage from "../UserImage";
+import { useDispatch } from "react-redux";
 import ProductName from "./ProductName";
 import PriceCompute from "./PriceCompute";
 import QuickSpecs from "./QuickSpecs";
-import ProductCardFooter from "./ProductCardFooter";
-import moment from "moment";
 import { numberWithCommas } from "../../util/numberFormats";
+import DialogFooter from "../DialogFooter";
 
 // TODO: Add color-coding and in SortFilter add filters for Requests, Approved and Deleted
 const ProductCards = ({
@@ -92,10 +81,11 @@ const ProductCards = ({
             <QuickSpecs specs={specs} />
           </Grid>
         </FlexBetween>
-        <ProductCardFooter
-          creatorImage={creator.imagePath}
-          creatorName={creator.username}
-          lastUpdated={moment(specs.updatedAt).fromNow()}
+        <DialogFooter
+          isProduct={true}
+          userImage={creator.imagePath}
+          userName={creator.username}
+          lastUpdated={specs.updatedAt}
         />
       </WidgetWrapper>
     </Grid>
