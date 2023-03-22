@@ -8,8 +8,8 @@ import {
 } from "@mui/material";
 import React from "react";
 import CompleteSpecs from "./CompleteSpecs";
-import ItemTabs from "../../components/ItemTabs";
-import PriceCompute from "../../components/ProductCards/PriceCompute";
+import ItemTabs from "../../../components/ItemTabs";
+import PriceCompute from "../PriceCompute";
 import { toast } from "react-toastify";
 
 const ProductDialogContent = ({

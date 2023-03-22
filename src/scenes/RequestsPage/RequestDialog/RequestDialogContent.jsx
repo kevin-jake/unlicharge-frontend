@@ -7,12 +7,13 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import React from "react";
-import CompleteSpecs from "../../ProductDialog/CompleteSpecs";
 
 import ItemTabs from "../../../components/ItemTabs";
 import DialogFooter from "../../../components/DialogFooter";
+import CompleteSpecs from "../../ProductCards/ProductDialog/CompleteSpecs";
+import CommentTab from "./CommentTab";
 
-const RequestDialogContent = ({ specs, oldValues }) => {
+const RequestDialogContent = ({ specs, oldValues, comments }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const {
     _id,
@@ -24,10 +25,25 @@ const RequestDialogContent = ({ specs, oldValues }) => {
     productId: prodID,
     ...specsRest
   } = specs;
-  console.log(
-    "🚀 ~ file: RequestDialogContent.jsx:27 ~ RequestDialogContent ~ specs:",
-    specs?.specCreator?.username
-  );
+
+  const tabArray = Boolean(comments?.length)
+    ? [
+        {
+          tabTitle: "Specifications",
+          tabComp: <CompleteSpecs specs={specs} oldValues={oldValues} />,
+        },
+        {
+          tabTitle: "Comments",
+          tabComp: <CommentTab comments={comments} />,
+        },
+      ]
+    : [
+        {
+          tabTitle: "Specifications",
+          tabComp: <CompleteSpecs specs={specs} oldValues={oldValues} />,
+        },
+      ];
+
   return (
     <>
       <DialogContent dividers>
@@ -60,16 +76,8 @@ const RequestDialogContent = ({ specs, oldValues }) => {
               },
             }}
           >
-            <ItemTabs
-              tabArray={[
-                {
-                  tabTitle: "Specifications",
-                  tabComp: (
-                    <CompleteSpecs specs={specs} oldValues={oldValues} />
-                  ),
-                },
-              ]}
-            />
+            {/* TODO: Add comment tab create?? */}
+            <ItemTabs tabArray={tabArray} />
           </Grid>
         </Grid>
         <DialogFooter

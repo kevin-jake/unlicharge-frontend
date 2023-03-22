@@ -1,6 +1,6 @@
 import { Chip, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
-import FlexBetween from "../wrappers/FlexBetween";
+import FlexBetween from "../../components/wrappers/FlexBetween";
 
 const ProductName = ({ name, subName, openModal, publishStatus }) => {
   return (

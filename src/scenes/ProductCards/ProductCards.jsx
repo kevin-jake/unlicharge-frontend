@@ -1,12 +1,12 @@
 import { Box, Grid, Typography, useTheme } from "@mui/material";
-import FlexBetween from "../wrappers/FlexBetween";
-import WidgetWrapper from "../wrappers/WidgetWrapper";
+import FlexBetween from "../../components/wrappers/FlexBetween";
+import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import { useDispatch } from "react-redux";
 import ProductName from "./ProductName";
 import PriceCompute from "./PriceCompute";
 import QuickSpecs from "./QuickSpecs";
 import { numberWithCommas } from "../../util/numberFormats";
-import DialogFooter from "../DialogFooter";
+import DialogFooter from "../../components/DialogFooter";
 
 // TODO: Add color-coding and in SortFilter add filters for Requests, Approved and Deleted
 const ProductCards = ({

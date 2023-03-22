@@ -1,11 +1,11 @@
 import { Box, Button, CircularProgress, Fab, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ProductCards from "../../components/ProductCards/ProductCards";
 import CategoryCards from "../../components/CategoryCards";
+import ProductCards from "../ProductCards/ProductCards";
 import InitialParams from "./InitialParams";
 import PageWrapper from "../../components/wrappers/PageWrapper";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
-import ProductDialogContent from "../ProductDialog/ProductDialogContent";
+import ProductDialogContent from "../ProductCards/ProductDialog/ProductDialogContent";
 import SortFilter from "../../components/SortFilter";
 import SummarySideBar from "../SummarySideBar/SummarySideBar";
 import CRUDDialogContent from "../FormDialog/CRUDDialogContent";

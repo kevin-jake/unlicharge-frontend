@@ -1,5 +1,6 @@
 import { Box, Button, Tab, Tabs } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import moment from "moment";
 import React, { useState } from "react";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import PageWrapper from "../../components/wrappers/PageWrapper";
@@ -55,6 +56,7 @@ const columns = (request) => [
     field: "createdAt",
     headerName: "Created At",
     flex: 1,
+    renderCell: (params) => moment(params.value).format("lll"),
   },
   //   {
   //     field: "cost",
@@ -202,6 +204,7 @@ const RequestsPage = () => {
               : focusedRequest?.requestedProduct?.specs
           }
           oldValues={focusedRequest?.requestedProduct?.specs}
+          comments={focusedRequest?.comment}
           creator={
             isCreate ? focusedRequest?.creator : focusedRequest?.requestor
           }

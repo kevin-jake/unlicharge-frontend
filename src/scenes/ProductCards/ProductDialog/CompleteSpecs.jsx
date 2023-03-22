@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
-import { specDisplay, specWithUnit } from "../../util/specDisplayFormat";
+import { specDisplay, specWithUnit } from "../../../util/specDisplayFormat";
 
 const toNotDisplay = [
   "__v",
