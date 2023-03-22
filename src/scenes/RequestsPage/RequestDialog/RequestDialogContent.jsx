@@ -8,16 +8,9 @@ import {
 } from "@mui/material";
 import React from "react";
 import CompleteSpecs from "../../ProductDialog/CompleteSpecs";
-import { toast } from "react-toastify";
 import ItemTabs from "../../../components/ItemTabs";
 
-const RequestDialogContent = ({
-  specs,
-  creator,
-  productId,
-  setCrudModalState,
-  category,
-}) => {
+const RequestDialogContent = ({ specs, oldValues }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const {
     _id,
@@ -61,11 +54,20 @@ const RequestDialogContent = ({
               },
             }}
           >
-            <ItemTabs tab1={<CompleteSpecs specs={specs} />} />
+            <ItemTabs
+              tabArray={[
+                {
+                  tabTitle: "Specifications",
+                  tabComp: (
+                    <CompleteSpecs specs={specs} oldValues={oldValues} />
+                  ),
+                },
+              ]}
+            />
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions sx={{ justifyContent: "space-between" }}>
+      {/* <DialogActions sx={{ justifyContent: "space-between" }}>
         <Box>
           <Button variant="contained" autoFocus>
             Select
@@ -103,7 +105,7 @@ const RequestDialogContent = ({
             Delete
           </Button>
         </Box>
-      </DialogActions>
+      </DialogActions> */}
     </>
   );
 };
