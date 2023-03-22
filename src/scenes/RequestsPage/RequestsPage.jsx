@@ -33,11 +33,13 @@ const columns = (request) => [
     field: "_id",
     headerName: "ID",
     flex: 1,
+    minWidth: 200,
   },
   {
     field: request === "Create" ? "specs" : "requestedProduct",
     headerName: "Product Name",
     flex: 2,
+    minWidth: 300,
     sortable: false,
     renderCell: (params) =>
       request === "Create" ? params.value.name : params.value.specs.name,
@@ -46,16 +48,19 @@ const columns = (request) => [
     field: "category",
     headerName: "Category",
     flex: 0.5,
+    minWidth: 100,
   },
   {
     field: request === "Create" ? "publishStatus" : "status",
     headerName: "Status",
     flex: 0.5,
+    minWidth: 120,
   },
   {
     field: "createdAt",
     headerName: "Created At",
     flex: 1,
+    minWidth: 180,
     renderCell: (params) => moment(params.value).format("lll"),
   },
   //   {
@@ -161,7 +166,7 @@ const RequestsPage = () => {
         </Box>
 
         <TabPanel value={tabIndex} index={tabIndex}>
-          <div style={{ width: "100%", height: "390px" }}>
+          <Box style={{ width: "100%", height: "75vh" }}>
             <DataGrid
               loading={isLoading || !data}
               getRowId={(row) => row._id}
@@ -183,7 +188,7 @@ const RequestsPage = () => {
               //   toolbar: { searchInput, setSearchInput, setSearch },
               // }}
             />
-          </div>
+          </Box>
         </TabPanel>
       </Box>
       <DialogWrapper
