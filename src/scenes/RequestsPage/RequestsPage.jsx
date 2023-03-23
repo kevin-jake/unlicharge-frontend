@@ -1,10 +1,15 @@
 import { Box, Button, Tab, Tabs } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import PageWrapper from "../../components/wrappers/PageWrapper";
-import { useGetRequestsQuery } from "../../store/slices/requests/requestApiSlice";
+import {
+  useGetRequestsQuery,
+  useProcessRequestMutation,
+} from "../../store/slices/requests/requestApiSlice";
+import ConfirmationDialogContent from "./RequestDialog/ConfirmationDialogContent";
 import RequestDialogContent from "./RequestDialog/RequestDialogContent";
 
 function TabPanel({ children, value, index, ...other }) {
@@ -74,9 +79,15 @@ const columns = (request) => [
 const RequestsPage = () => {
   const [reqBtn, setReqBtn] = useState("Create");
   const [tabIndex, setTabIndex] = useState(0);
-  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [decision, setDecision] = useState("");
   const [isMyRequestOnly, setIsMyRequestOnly] = useState(false);
   const [focusedRequest, setFocusedProduct] = useState({});
+  console.log(
+    "🚀 ~ file: RequestsPage.jsx:84 ~ RequestsPage ~ focusedRequest:",
+    focusedRequest
+  );
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
@@ -88,31 +99,88 @@ const RequestsPage = () => {
   const isEdit = reqBtn === "Edit";
   const isDelete = reqBtn === "Delete";
 
+  const category =
+    tabIndex === 0
+      ? "battery"
+      : tabIndex === 1
+      ? "bms"
+      : tabIndex === 2
+      ? "ab"
+      : "";
+  const request = reqBtn.toLowerCase();
+
+  const [processRequest, { isLoading: processLoading }] =
+    useProcessRequestMutation();
+
   const { data, isLoading, refetch } = useGetRequestsQuery({
-    category:
-      tabIndex === 0
-        ? "battery"
-        : tabIndex === 1
-        ? "bms"
-        : tabIndex === 2
-        ? "ab"
-        : "",
-    request: reqBtn.toLowerCase(),
+    category,
+    request,
     filters: { isMyRequestOnly },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [reqBtn, tabIndex]);
+
+  const notifyError = (error) => {
+    const errMsg = `${error.data.message}`;
+    toast.error(errMsg);
+    throw new Error(errMsg);
+  };
 
   const handleChange = (event, newValue) => {
     setTabIndex(newValue);
   };
 
+  const handleProcess = async ({ commentBody }) => {
+    console.log(
+      "🚀 ~ file: RequestsPage.jsx:125 ~ handleProcess ~ requestBody:",
+      commentBody
+    );
+    let requestBody = {};
+    let productId = "";
+    if (isCreate) productId = focusedRequest.id;
+    else {
+      productId = focusedRequest.requestedProduct.id;
+      requestBody = {
+        reqId: focusedRequest.id,
+        commentBody,
+      };
+    }
+    await processRequest({
+      category,
+      productId,
+      request,
+      requestBody,
+      decision,
+    })
+      .unwrap()
+      .then()
+      .catch((error) => notifyError(error));
+    if (decision === "approve" && isCreate)
+      toast.success("Product approved. Product is now visible to the public.");
+    if (decision === "approve" && isEdit)
+      toast.success("Edit Request approved. Product updated.");
+    if (decision === "approve" && isDelete)
+      toast.success(
+        "Delete Request approved. Product is now removed on the list."
+      );
+    if (decision === "reject" && isCreate) toast.success("Product rejected.");
+    if (decision === "reject" && isEdit)
+      toast.success("Edit request rejected.");
+    if (decision === "reject" && isDelete)
+      toast.success("Delete request rejected.");
+    refetch();
+    setIsConfirmModalOpen(false);
+  };
+
   const handleReqBtnClick = (reqValue) => {
     setReqBtn(reqValue);
-    refetch();
   };
 
   const handleRowClick = (params) => {
     setFocusedProduct(params.row);
-    setIsProductModalOpen(true);
+    setIsRequestModalOpen(true);
   };
 
   const dataArray = isCreate
@@ -190,19 +258,38 @@ const RequestsPage = () => {
         </TabPanel>
       </Box>
       <DialogWrapper
-        isOpen={isProductModalOpen}
+        isOpen={isRequestModalOpen}
         title={
           isCreate
             ? focusedRequest?.specs?.name
             : focusedRequest?.requestedProduct?.specs?.name || ""
         }
-        closeModal={() => setIsProductModalOpen(false)}
+        closeModal={() => setIsRequestModalOpen(false)}
       >
         <RequestDialogContent
           focusedRequest={focusedRequest}
           isCreate={isCreate}
           isEdit={isEdit}
           isDelete={isDelete}
+          approve={() => {
+            setIsConfirmModalOpen(true);
+            setDecision("approve");
+          }}
+          reject={() => {
+            setIsConfirmModalOpen(true);
+            setDecision("reject");
+          }}
+        />
+      </DialogWrapper>
+      <DialogWrapper
+        isOpen={isConfirmModalOpen}
+        title={`Are you sure you want to ${decision}`}
+        closeModal={() => setIsConfirmModalOpen(false)}
+      >
+        <ConfirmationDialogContent
+          isLoading={processLoading}
+          handleFormSubmit={handleProcess}
+          closeModal={() => setIsConfirmModalOpen(false)}
         />
       </DialogWrapper>
     </PageWrapper>

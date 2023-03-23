@@ -111,7 +111,6 @@ const CRUDForm = ({
   };
 
   const formikProps = operationType(category, operation);
-  // TODO: Add toast notification after submit
   const handleFormSubmit = async (values) => {
     let specs = values;
     if (Boolean(values.imagePath) && typeof values.imagePath === "object") {
@@ -126,6 +125,9 @@ const CRUDForm = ({
         toast.success(
           "Request submitted successfully. This part will only be visible to you. Once approved it will be visible to public."
         );
+      else if (role === "Admin") {
+        toast.success("Part created successfully.");
+      }
     }
     if (isEdit) {
       await editProductRequest({
@@ -158,9 +160,6 @@ const CRUDForm = ({
           "Delete Request submitted successfully. Once approved it will be visible to public."
         );
     }
-    if (role === "Admin") {
-      toast.success("Part created successfully.");
-    }
     refetch();
     closeModal();
   };
@@ -179,7 +178,6 @@ const CRUDForm = ({
         handleChange,
         handleSubmit,
         setFieldValue,
-        resetForm,
       }) => (
         <form onSubmit={handleSubmit} id="crud-form">
           <Box

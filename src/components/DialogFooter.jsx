@@ -49,7 +49,7 @@ const DialogFooter = ({
             height="fit-content"
           >
             <Box display="flex" flexDirection="column">
-              <Typography variant="caption">Requested by:</Typography>
+              <Typography variant="caption">Request by:</Typography>
               <Typography variant="body"> {userName}</Typography>
             </Box>
             <Divider orientation="vertical" variant="middle" flexItem />

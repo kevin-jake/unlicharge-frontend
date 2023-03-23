@@ -17,9 +17,18 @@ import CommentTab from "./CommentTab";
 import FlexBetween from "../../../components/wrappers/FlexBetween";
 import UserImage from "../../../components/UserImage";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../store/slices/auth/authSlice";
 
-const RequestDialogContent = ({ focusedRequest, isCreate, isEdit }) => {
+const RequestDialogContent = ({
+  focusedRequest,
+  isCreate,
+  isEdit,
+  approve,
+  reject,
+}) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  const { userId, role } = useSelector(selectUser);
   let specs,
     oldValues,
     comments,
@@ -173,54 +182,32 @@ const RequestDialogContent = ({ focusedRequest, isCreate, isEdit }) => {
             <ItemTabs tabArray={tabArray} />
           </Grid>
         </Grid>
-        <DialogFooter
-          isRequest={true}
-          userImage={requestor?.imagePath}
-          userName={requestor?.username}
-          createdAt={requestCreated}
-          lastUpdated={requestUpdated}
-        />
+        <FlexBetween gap="0.5rem">
+          <DialogFooter
+            isRequest={true}
+            userImage={requestor?.imagePath}
+            userName={requestor?.username}
+            createdAt={requestCreated}
+            lastUpdated={requestUpdated}
+          />
+          {role === "Admin" ||
+            (userId === creator?.id && status === "Request" && (
+              <Box sx={{ gap: 2 }}>
+                <Button
+                  variant="contained"
+                  autoFocus
+                  sx={{ marginX: "0.25rem" }}
+                  onClick={() => approve()}
+                >
+                  Approve
+                </Button>
+                <Button variant="outlined" autoFocus onClick={() => reject()}>
+                  Reject
+                </Button>
+              </Box>
+            ))}
+        </FlexBetween>
       </DialogContent>
-
-      {/* <DialogActions sx={{ justifyContent: "space-between" }}>
-        <Box>
-          <Button variant="contained" autoFocus>
-            Select
-          </Button>
-        </Box>
-        <Box sx={{ gap: 2 }}>
-          <Button
-            variant="contained"
-            autoFocus
-            sx={{ marginX: "0.25rem" }}
-            onClick={() =>
-              setCrudModalState({
-                operation: "Edit",
-                category: category,
-                isOpen: true,
-                oldValues: specsRest,
-                productId,
-              })
-            }
-          >
-            Edit
-          </Button>
-          <Button
-            variant="outlined"
-            autoFocus
-            onClick={() =>
-              setCrudModalState({
-                operation: "Delete",
-                category: category,
-                isOpen: true,
-                productId,
-              })
-            }
-          >
-            Delete
-          </Button>
-        </Box>
-      </DialogActions> */}
     </>
   );
 };

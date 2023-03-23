@@ -14,7 +14,6 @@ import LoginRegisterDialogContent from "../LoginRegisterDialog/LoginRegisterDial
 import CRUDForm from "./CRUDForm";
 
 const CRUDDialogContent = (props) => {
-  // TODO: Make the login modal into a component
   const [modalType, setModalType] = useState("Login");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

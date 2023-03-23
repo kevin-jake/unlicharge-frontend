@@ -16,6 +16,13 @@ export const requestApiSlice = api.injectEndpoints({
         body: deleteBody,
       }),
     }),
+    processRequest: builder.mutation({
+      query: ({ category, productId, request, requestBody, decision }) => ({
+        url: `requests/${category}/${productId}/${request}/${decision}`,
+        method: "POST",
+        body: requestBody,
+      }),
+    }),
     getRequests: builder.query({
       query: ({ category, request, filters }) => ({
         url: `requests/${category}/${request}`,
@@ -29,5 +36,6 @@ export const requestApiSlice = api.injectEndpoints({
 export const {
   useEditProductRequestMutation,
   useDeleteProductRequestMutation,
+  useProcessRequestMutation,
   useGetRequestsQuery,
 } = requestApiSlice;
