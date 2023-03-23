@@ -40,15 +40,15 @@ const columns = (request) => [
     headerName: "Product Name",
     flex: 2,
     minWidth: 300,
-    sortable: false,
     renderCell: (params) =>
-      request === "Create" ? params.value.name : params.value.specs.name,
+      request === "Create" ? params.value.name : params.value?.specs?.name,
   },
   {
-    field: "category",
-    headerName: "Category",
+    field: request === "Create" ? "creator" : "requestor",
+    headerName: "Requested by",
     flex: 0.5,
     minWidth: 100,
+    renderCell: (params) => params.value.username,
   },
   {
     field: request === "Create" ? "publishStatus" : "status",
@@ -75,11 +75,8 @@ const RequestsPage = () => {
   const [reqBtn, setReqBtn] = useState("Create");
   const [tabIndex, setTabIndex] = useState(0);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [isMyRequestOnly, setIsMyRequestOnly] = useState(false);
   const [focusedRequest, setFocusedProduct] = useState({});
-  console.log(
-    "🚀 ~ file: RequestsPage.jsx:79 ~ RequestsPage ~ focusedRequest:",
-    focusedRequest
-  );
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
@@ -101,6 +98,7 @@ const RequestsPage = () => {
         ? "ab"
         : "",
     request: reqBtn.toLowerCase(),
+    filters: { isMyRequestOnly },
   });
 
   const handleChange = (event, newValue) => {
@@ -201,19 +199,10 @@ const RequestsPage = () => {
         closeModal={() => setIsProductModalOpen(false)}
       >
         <RequestDialogContent
-          specs={
-            isCreate
-              ? focusedRequest?.specs
-              : isEdit
-              ? focusedRequest?.newSpecs
-              : focusedRequest?.requestedProduct?.specs
-          }
-          oldValues={focusedRequest?.requestedProduct?.specs}
-          comments={focusedRequest?.comment}
-          creator={
-            isCreate ? focusedRequest?.creator : focusedRequest?.requestor
-          }
-          productId={focusedRequest?._id}
+          focusedRequest={focusedRequest}
+          isCreate={isCreate}
+          isEdit={isEdit}
+          isDelete={isDelete}
         />
       </DialogWrapper>
     </PageWrapper>

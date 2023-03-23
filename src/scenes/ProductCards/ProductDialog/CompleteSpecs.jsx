@@ -120,7 +120,10 @@ const CompleteSpecs = ({ specs, oldValues, requestStatus }) => {
           ))}
           {Boolean(requestStatus) && (
             <ListItem sx={{ display: "list-item", pageBreakInside: "avoid" }}>
-              <ListItemText primary="Request Status" secondary={"test"} />
+              <ListItemText
+                primary="Request Status"
+                secondary={requestStatus}
+              />
             </ListItem>
           )}
         </List>
