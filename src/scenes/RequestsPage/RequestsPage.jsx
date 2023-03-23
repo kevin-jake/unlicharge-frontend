@@ -83,7 +83,7 @@ const RequestsPage = () => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [decision, setDecision] = useState("");
   const [isMyRequestOnly, setIsMyRequestOnly] = useState(false);
-  const [focusedRequest, setFocusedProduct] = useState({});
+  const [focusedRequest, setFocusedRequest] = useState({});
   console.log(
     "🚀 ~ file: RequestsPage.jsx:84 ~ RequestsPage ~ focusedRequest:",
     focusedRequest
@@ -99,6 +99,12 @@ const RequestsPage = () => {
   const isEdit = reqBtn === "Edit";
   const isDelete = reqBtn === "Delete";
 
+  const dataArray = isCreate
+    ? "createRequests"
+    : isEdit
+    ? "editRequests"
+    : "deleteRequests";
+
   const category =
     tabIndex === 0
       ? "battery"
@@ -112,7 +118,7 @@ const RequestsPage = () => {
   const [processRequest, { isLoading: processLoading }] =
     useProcessRequestMutation();
 
-  const { data, isLoading, refetch } = useGetRequestsQuery({
+  const { data, isLoading, isSuccess, refetch } = useGetRequestsQuery({
     category,
     request,
     filters: { isMyRequestOnly },
@@ -121,6 +127,15 @@ const RequestsPage = () => {
   useEffect(() => {
     refetch();
   }, [reqBtn, tabIndex]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      const newFocus = data[dataArray].filter(
+        (item) => item._id === focusedRequest?._id
+      );
+      setFocusedRequest(newFocus[0]);
+    }
+  }, [data]);
 
   const notifyError = (error) => {
     const errMsg = `${error.data.message}`;
@@ -133,10 +148,6 @@ const RequestsPage = () => {
   };
 
   const handleProcess = async ({ commentBody }) => {
-    console.log(
-      "🚀 ~ file: RequestsPage.jsx:125 ~ handleProcess ~ requestBody:",
-      commentBody
-    );
     let requestBody = {};
     let productId = "";
     if (isCreate) productId = focusedRequest.id;
@@ -179,15 +190,9 @@ const RequestsPage = () => {
   };
 
   const handleRowClick = (params) => {
-    setFocusedProduct(params.row);
+    setFocusedRequest(params.row);
     setIsRequestModalOpen(true);
   };
-
-  const dataArray = isCreate
-    ? "createRequests"
-    : isEdit
-    ? "editRequests"
-    : "deleteRequests";
 
   return (
     <PageWrapper title="My Requests">

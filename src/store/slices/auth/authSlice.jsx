@@ -18,7 +18,7 @@ export const authSlice = createSlice({
     },
     setLogout: (state) => {
       state.user = null;
-      toast.info("You have been logged out", { autoClose: false });
+      toast.info("You have been logged out", { autoClose: 10000 });
     },
     setFriends: (state, action) => {
       if (state.user) {
