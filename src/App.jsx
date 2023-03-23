@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./scenes/HomePage/HomePage";
 import ProfilePage from "./scenes/ProfilePage/ProfilePage";
 import { useCallback, useEffect, useMemo } from "react";
@@ -54,11 +54,15 @@ function App() {
           />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/home" element={<HomePage />} />
             <Route path="/build" element={<BuildPage />} />
             <Route path="/products" element={<ProductPage />} />
-            <Route path="/requests" element={<RequestsPage />} />
-            <Route path="/profile/:userId" element={<ProfilePage />} />
+            {isAuth && (
+              <>
+                <Route path="/requests" element={<RequestsPage />} />
+                <Route path="/profile/:userId" element={<ProfilePage />} />{" "}
+              </>
+            )}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
