@@ -17,7 +17,11 @@ export const requestApiSlice = api.injectEndpoints({
       }),
     }),
     getRequests: builder.query({
-      query: ({ category, request }) => `requests/${category}/${request}`,
+      query: ({ category, request, filters }) => ({
+        url: `requests/${category}/${request}`,
+        method: "GET",
+        params: filters,
+      }),
     }),
   }),
 });

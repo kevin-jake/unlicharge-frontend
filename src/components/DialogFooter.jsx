@@ -48,10 +48,13 @@ const DialogFooter = ({
             width="auto"
             height="fit-content"
           >
-            <Typography variant="body"> {userName}</Typography>
+            <Box display="flex" flexDirection="column">
+              <Typography variant="caption">Requested by:</Typography>
+              <Typography variant="body"> {userName}</Typography>
+            </Box>
             <Divider orientation="vertical" variant="middle" flexItem />
             <Box display="flex" flexDirection="column">
-              <Typography variant="caption" sx={{ fontSize: "0." }}>
+              <Typography variant="caption">
                 Request Created: {moment(createdAt).format("lll")}
               </Typography>
               <Typography variant="caption">

@@ -32,7 +32,6 @@ function a11yProps(index) {
     "aria-controls": `product-dialog-tabpanel-${index}`,
   };
 }
-// TODO: Make dynamic tabs
 export default function ItemTabs({ tabArray }) {
   // tabArray model = [
   //   {
