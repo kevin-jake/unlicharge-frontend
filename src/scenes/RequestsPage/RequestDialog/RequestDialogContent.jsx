@@ -13,7 +13,7 @@ import DialogFooter from "../../../components/DialogFooter";
 import CompleteSpecs from "../../ProductCards/ProductDialog/CompleteSpecs";
 import CommentTab from "./CommentTab";
 
-const RequestDialogContent = ({ specs, oldValues, comments }) => {
+const RequestDialogContent = ({ specs, oldValues, comments, creator }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const {
     _id,
@@ -30,7 +30,7 @@ const RequestDialogContent = ({ specs, oldValues, comments }) => {
     ? [
         {
           tabTitle: "Specifications",
-          tabComp: <CompleteSpecs specs={specs} oldValues={oldValues} />,
+          tabComp: <CompleteSpecs specs={specsRest} oldValues={oldValues} />,
         },
         {
           tabTitle: "Comments",
@@ -40,7 +40,7 @@ const RequestDialogContent = ({ specs, oldValues, comments }) => {
     : [
         {
           tabTitle: "Specifications",
-          tabComp: <CompleteSpecs specs={specs} oldValues={oldValues} />,
+          tabComp: <CompleteSpecs specs={specsRest} oldValues={oldValues} />,
         },
       ];
 
@@ -82,8 +82,8 @@ const RequestDialogContent = ({ specs, oldValues, comments }) => {
         </Grid>
         <DialogFooter
           isRequest={true}
-          userImage={specs?.specCreator?.imagePath}
-          userName={specs?.specCreator?.username}
+          userImage={creator?.imagePath}
+          userName={creator?.username}
           createdAt={specs?.createdAt}
           lastUpdated={specs?.updatedAt}
         />

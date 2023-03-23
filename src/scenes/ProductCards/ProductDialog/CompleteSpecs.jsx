@@ -20,6 +20,7 @@ const toNotDisplay = [
   "createdAt",
   "updatedAt",
   "editRequest",
+  "deleteRequest",
   "productId",
   "imagePath",
 ];

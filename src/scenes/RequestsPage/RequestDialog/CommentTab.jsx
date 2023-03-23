@@ -1,8 +1,9 @@
 import { Box, Divider, Grid, Stack, Typography, useTheme } from "@mui/material";
 import WidgetWrapper from "../../../components/wrappers/WidgetWrapper";
-import { useState } from "react";
+import React, { useState } from "react";
 import UserImage from "../../../components/UserImage";
 import FlexBetween from "../../../components/wrappers/FlexBetween";
+import moment from "moment";
 
 const CommentTab = ({ comments }) => {
   const { palette } = useTheme();
@@ -15,8 +16,8 @@ const CommentTab = ({ comments }) => {
         <>
           <Divider />
           {comments.map((comment, i) => (
-            <>
-              <Grid key={`${comment.userId?.id}-${i}`} container item xs={12}>
+            <React.Fragment key={`${comment.userId?.id}-${i}`}>
+              <Grid container item xs={12}>
                 <Grid
                   item
                   xs={2}
@@ -31,6 +32,12 @@ const CommentTab = ({ comments }) => {
                 <Grid item xs={10}>
                   <Typography variant="h6" sx={{ color: main, pl: "1rem" }}>
                     {comment.userId?.username}
+                    <Typography
+                      variant="caption"
+                      sx={{ color: palette.neutral.mediumMain, pl: "1rem" }}
+                    >
+                      {moment(comment.createdAt).fromNow()}
+                    </Typography>
                   </Typography>
                   <Typography
                     variant="body"
@@ -46,7 +53,7 @@ const CommentTab = ({ comments }) => {
                 </Grid>
               </Grid>
               <Divider />
-            </>
+            </React.Fragment>
           ))}
         </>
       )}

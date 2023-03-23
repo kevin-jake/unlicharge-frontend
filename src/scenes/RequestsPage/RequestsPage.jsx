@@ -77,7 +77,7 @@ const RequestsPage = () => {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [focusedRequest, setFocusedProduct] = useState({});
   console.log(
-    "🚀 ~ file: RequestsPage.jsx:72 ~ RequestsPage ~ focusedRequest:",
+    "🚀 ~ file: RequestsPage.jsx:79 ~ RequestsPage ~ focusedRequest:",
     focusedRequest
   );
 
