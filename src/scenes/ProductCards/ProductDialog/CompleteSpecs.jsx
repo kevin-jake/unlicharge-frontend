@@ -109,7 +109,8 @@ const CompleteSpecs = ({ specs, oldValues, requestStatus }) => {
                               color: palette.grey[500],
                             }}
                           >
-                            Old value: {oldValues[specName]}
+                            Old value:{" "}
+                            {specWithUnit(specName, oldValues[specName])}
                           </Typography>
                         )}
                     </>
