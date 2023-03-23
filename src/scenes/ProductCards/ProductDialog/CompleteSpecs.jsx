@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Divider,
   Grid,
@@ -26,7 +27,7 @@ const toNotDisplay = [
   "imagePath",
 ];
 
-const CompleteSpecs = ({ specs, oldValues, requestStatus }) => {
+const CompleteSpecs = ({ specs, oldValues, requestStatus, productStatus }) => {
   const { palette } = useTheme();
   const specsProperties = Object.keys(specs);
   let filteredSpecs = specsProperties.filter(
@@ -134,6 +135,9 @@ const CompleteSpecs = ({ specs, oldValues, requestStatus }) => {
             </ListItem>
           )}
         </List>
+        {productStatus === "Deleted" && (
+          <Alert severity="warning">This product is already deleted</Alert>
+        )}
       </Grid>
     </>
   );

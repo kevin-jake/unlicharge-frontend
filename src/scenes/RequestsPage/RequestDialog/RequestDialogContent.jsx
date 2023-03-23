@@ -80,6 +80,7 @@ const RequestDialogContent = ({
               specs={specsRest}
               oldValues={oldValues}
               requestStatus={status}
+              productStatus={requestedProduct?.publishStatus}
             />
           ),
         },
@@ -96,6 +97,7 @@ const RequestDialogContent = ({
               specs={specsRest}
               oldValues={oldValues}
               requestStatus={status}
+              productStatus={requestedProduct?.publishStatus}
             />
           ),
         },
@@ -191,21 +193,23 @@ const RequestDialogContent = ({
             lastUpdated={requestUpdated}
           />
           {role === "Admin" ||
-            (userId === creator?.id && status === "Request" && (
-              <Box sx={{ gap: 2 }}>
-                <Button
-                  variant="contained"
-                  autoFocus
-                  sx={{ marginX: "0.25rem" }}
-                  onClick={() => approve()}
-                >
-                  Approve
-                </Button>
-                <Button variant="outlined" autoFocus onClick={() => reject()}>
-                  Reject
-                </Button>
-              </Box>
-            ))}
+            (userId === creator?.id &&
+              status === "Request" &&
+              requestedProduct?.publishStatus === "Approved" && (
+                <Box sx={{ gap: 2 }}>
+                  <Button
+                    variant="contained"
+                    autoFocus
+                    sx={{ marginX: "0.25rem" }}
+                    onClick={() => approve()}
+                  >
+                    Approve
+                  </Button>
+                  <Button variant="outlined" autoFocus onClick={() => reject()}>
+                    Reject
+                  </Button>
+                </Box>
+              ))}
         </FlexBetween>
       </DialogContent>
     </>
