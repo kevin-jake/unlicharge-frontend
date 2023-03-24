@@ -83,7 +83,27 @@ const RequestDialogContent = ({
       marginTop={!isNonMobileScreens ? "1rem" : 0}
       display="flex"
       justifyContent="center"
+      gap="0.75rem"
     >
+      {Boolean(replacedValues?.imagePath) &&
+        replacedValues?.imagePath !== specs.imagePath && (
+          <Box display="flex" flexDirection="column">
+            <Typography variant="body2" marginBottom="0.75rem">
+              Old photo:{" "}
+            </Typography>
+            <img
+              style={{ objectFit: "cover", borderRadius: "0.75rem" }}
+              width="100px"
+              height="100px"
+              alt={replacedValues?.name}
+              src={replacedValues?.imagePath}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null;
+                currentTarget.src = "/placeholder-image.jpg";
+              }}
+            />
+          </Box>
+        )}
       {Boolean(specs.imagePath) && (
         <img
           style={{ objectFit: "cover", borderRadius: "0.75rem" }}
