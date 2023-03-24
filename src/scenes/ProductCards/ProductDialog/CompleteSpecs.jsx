@@ -1,7 +1,6 @@
 import {
   Alert,
   Box,
-  Divider,
   Grid,
   Link,
   List,
@@ -37,6 +36,7 @@ const CompleteSpecs = ({
   requestStatus,
   productStatus,
   processedBy,
+  imageComponent,
 }) => {
   const { palette } = useTheme();
   const specsProperties = Object.keys(specs);
@@ -45,6 +45,7 @@ const CompleteSpecs = ({
   );
   return (
     <>
+      {imageComponent}
       <Grid item zeroMinWidth>
         <List
           dense
@@ -184,11 +185,16 @@ const CompleteSpecs = ({
           {Boolean(processedBy) && (
             <ListItem sx={{ display: "list-item", pageBreakInside: "avoid" }}>
               <ListItemText
+                disableTypography
                 primary={
-                  requestStatus === "Approved" ? "Approved by" : "Rejected by:"
+                  <Typography variant="body2" color={palette.grey[500]}>
+                    {requestStatus === "Approved"
+                      ? "Approved by:"
+                      : "Rejected by:"}
+                  </Typography>
                 }
                 secondary={
-                  <FlexBetween gap="0.3rem">
+                  <FlexBetween gap="0.3rem" marginTop="0.25rem">
                     <FlexBetween gap="0.5rem">
                       <UserImage size="20px" image={processedBy?.imagePath} />
                       <Box

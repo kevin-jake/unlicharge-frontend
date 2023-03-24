@@ -10,6 +10,10 @@ const UserImage = ({ image, size = "60px" }) => {
         height={size}
         alt="user"
         src={image}
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null;
+          currentTarget.src = "/placeholder-avatar.png";
+        }}
       />
     </Box>
   );

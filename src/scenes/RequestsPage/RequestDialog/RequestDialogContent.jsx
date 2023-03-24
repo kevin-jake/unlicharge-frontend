@@ -78,6 +78,28 @@ const RequestDialogContent = ({
     ...specsRest
   } = specs;
 
+  const imageComponent = (
+    <Box
+      marginTop={!isNonMobileScreens ? "1rem" : 0}
+      display="flex"
+      justifyContent="center"
+    >
+      {Boolean(specs.imagePath) && (
+        <img
+          style={{ objectFit: "cover", borderRadius: "0.75rem" }}
+          width="200px"
+          height="200px"
+          alt={specs.name}
+          src={specs.imagePath}
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null;
+            currentTarget.src = "/placeholder-image.jpg";
+          }}
+        />
+      )}
+    </Box>
+  );
+
   const tabArray = Boolean(comments?.length)
     ? [
         {
@@ -90,6 +112,7 @@ const RequestDialogContent = ({
               requestStatus={status}
               productStatus={requestedProduct?.publishStatus}
               processedBy={focusedRequest?.processedBy}
+              imageComponent={imageComponent}
             />
           ),
         },
@@ -109,6 +132,7 @@ const RequestDialogContent = ({
               requestStatus={status}
               productStatus={requestedProduct?.publishStatus}
               processedBy={focusedRequest?.processedBy}
+              imageComponent={imageComponent}
             />
           ),
         },
@@ -162,38 +186,17 @@ const RequestDialogContent = ({
           xs
           container
           direction={isNonMobileScreens ? "row" : "column"}
-          sx={{ alignItems: "center" }}
+          wrap="nowrap"
+          zeroMinWidth
+          sx={{
+            "& > div": {
+              my: 0.25,
+            },
+            alignItems: "center",
+          }}
         >
-          <Box
-            width="200px"
-            height="200px"
-            marginRight="0.75rem"
-            marginTop={!isNonMobileScreens ? "1rem" : 0}
-          >
-            <img
-              style={{ objectFit: "cover", borderRadius: "0.75rem" }}
-              width="200px"
-              height="200px"
-              alt={specs.name}
-              src={specs.imagePath}
-            />
-          </Box>
-          <Grid
-            item
-            xs
-            container
-            direction="column"
-            wrap="nowrap"
-            zeroMinWidth
-            sx={{
-              "& > div": {
-                my: 0.25,
-              },
-            }}
-          >
-            {/* TODO: Add comment tab create?? */}
-            <ItemTabs tabArray={tabArray} />
-          </Grid>
+          {/* TODO: Add comment tab create?? */}
+          <ItemTabs tabArray={tabArray} />
         </Grid>
         <FlexBetween gap="0.5rem">
           <DialogFooter
