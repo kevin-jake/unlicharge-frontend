@@ -18,9 +18,16 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const neutralLight = palette.neutral.light;
+  const [imgUrl, setImgUrl] = useState(
+    user?.imagePath ? user?.imagePath : "/placeholder-avatar.png"
+  );
 
   const [isOpen, setIsOpen] = useState(false);
   const anchorRef = useRef(null);
+
+  const handleImgError = () => {
+    setImgUrl("/placeholder-avatar.png");
+  };
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -57,7 +64,10 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
               <Avatar
                 alt="User"
                 sx={{ width: 30, height: 30 }}
-                src={user.imagePath}
+                src={imgUrl}
+                imgProps={{
+                  onError: () => handleImgError(),
+                }}
               />
             }
             // title={username}
