@@ -81,6 +81,7 @@ const RequestDialogContent = ({
               oldValues={oldValues}
               requestStatus={status}
               productStatus={requestedProduct?.publishStatus}
+              processedBy={focusedRequest?.processedBy}
             />
           ),
         },
@@ -98,6 +99,7 @@ const RequestDialogContent = ({
               oldValues={oldValues}
               requestStatus={status}
               productStatus={requestedProduct?.publishStatus}
+              processedBy={focusedRequest?.processedBy}
             />
           ),
         },

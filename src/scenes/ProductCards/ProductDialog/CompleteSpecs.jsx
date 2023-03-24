@@ -11,6 +11,8 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
+import UserImage from "../../../components/UserImage";
+import FlexBetween from "../../../components/wrappers/FlexBetween";
 import { specDisplay, specWithUnit } from "../../../util/specDisplayFormat";
 
 const toNotDisplay = [
@@ -27,7 +29,17 @@ const toNotDisplay = [
   "imagePath",
 ];
 
-const CompleteSpecs = ({ specs, oldValues, requestStatus, productStatus }) => {
+const CompleteSpecs = ({
+  specs,
+  oldValues,
+  requestStatus,
+  productStatus,
+  processedBy,
+}) => {
+  console.log(
+    "🚀 ~ file: CompleteSpecs.jsx:33 ~ CompleteSpecs ~ specs:",
+    processedBy
+  );
   const { palette } = useTheme();
   const specsProperties = Object.keys(specs);
   let filteredSpecs = specsProperties.filter(
@@ -131,6 +143,42 @@ const CompleteSpecs = ({ specs, oldValues, requestStatus, productStatus }) => {
               <ListItemText
                 primary="Request Status"
                 secondary={requestStatus}
+              />
+            </ListItem>
+          )}
+          {Boolean(processedBy) && (
+            <ListItem sx={{ display: "list-item", pageBreakInside: "avoid" }}>
+              <ListItemText
+                primary={
+                  requestStatus === "Approved" ? "Approved by" : "Rejected by:"
+                }
+                secondary={
+                  <FlexBetween gap="0.3rem">
+                    <FlexBetween gap="0.5rem">
+                      <UserImage size="20px" image={processedBy?.imagePath} />
+                      <Box
+                        display="flex"
+                        sx={{
+                          "& hr": {
+                            mx: 1,
+                          },
+                          "& .css-1idn90j-MuiGrid-root": {
+                            display: "flex",
+                            justifyContent: "center",
+                          },
+                        }}
+                        alignItems="center"
+                        justifyContent="center"
+                        width="auto"
+                        height="fit-content"
+                      >
+                        <Typography variant="body">
+                          {processedBy?.username}
+                        </Typography>
+                      </Box>
+                    </FlexBetween>
+                  </FlexBetween>
+                }
               />
             </ListItem>
           )}
