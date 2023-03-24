@@ -30,12 +30,13 @@ const RequestDialogContent = ({
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { userId, role } = useSelector(selectUser);
   let specs,
-    oldValues,
+    currentValues,
     comments,
     creator,
     requestor,
     requestedProduct,
     status,
+    replacedValues,
     productCreated,
     productUpdated;
   if (isCreate) {
@@ -53,7 +54,8 @@ const RequestDialogContent = ({
   }
   if (isEdit) {
     specs = focusedRequest?.newSpecs;
-    oldValues = requestedProduct?.specs;
+    currentValues = requestedProduct?.specs;
+    replacedValues = focusedRequest?.specsToReplace;
   } else if (!isCreate && !isEdit) {
     specs = focusedRequest?.requestedProduct?.specs;
   }
@@ -83,7 +85,8 @@ const RequestDialogContent = ({
           tabComp: (
             <CompleteSpecs
               specs={specsRest}
-              oldValues={oldValues}
+              currentValues={currentValues}
+              replacedValues={replacedValues}
               requestStatus={status}
               productStatus={requestedProduct?.publishStatus}
               processedBy={focusedRequest?.processedBy}
@@ -101,7 +104,8 @@ const RequestDialogContent = ({
           tabComp: (
             <CompleteSpecs
               specs={specsRest}
-              oldValues={oldValues}
+              currentValues={currentValues}
+              replacedValues={replacedValues}
               requestStatus={status}
               productStatus={requestedProduct?.publishStatus}
               processedBy={focusedRequest?.processedBy}

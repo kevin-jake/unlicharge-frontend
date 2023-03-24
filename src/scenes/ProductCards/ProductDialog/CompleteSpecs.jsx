@@ -29,9 +29,11 @@ const toNotDisplay = [
   "imagePath",
 ];
 
+// TODO: separate this component from request and product to be able to display the image effectively
 const CompleteSpecs = ({
   specs,
-  oldValues,
+  currentValues,
+  replacedValues,
   requestStatus,
   productStatus,
   processedBy,
@@ -41,7 +43,6 @@ const CompleteSpecs = ({
   let filteredSpecs = specsProperties.filter(
     (specProp) => !toNotDisplay.includes(specProp)
   );
-
   return (
     <>
       <Grid item zeroMinWidth>
@@ -90,8 +91,31 @@ const CompleteSpecs = ({
                       >
                         Buy here
                       </Link>
-                      {Boolean(oldValues) &&
-                        oldValues[specName] !== specs[specName] && (
+                      {Boolean(currentValues) &&
+                        requestStatus === "Request" &&
+                        currentValues[specName] !== specs[specName] && (
+                          <Box
+                            sx={{
+                              "& .MuiLink-root": {
+                                fontSize: "0.75rem",
+                                fontStyle: "italic",
+                                color: palette.compliment[500],
+                              },
+                            }}
+                          >
+                            <Link
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              href={specs[specName]}
+                              underline="none"
+                            >
+                              Current link
+                            </Link>
+                          </Box>
+                        )}
+                      {Boolean(replacedValues) &&
+                        requestStatus === "Approved" &&
+                        replacedValues[specName] !== specs[specName] && (
                           <Box
                             sx={{
                               "& .MuiLink-root": {
@@ -115,8 +139,9 @@ const CompleteSpecs = ({
                   ) : (
                     <>
                       {specWithUnit(specName, specs[specName])}
-                      {Boolean(oldValues) &&
-                        oldValues[specName] !== specs[specName] && (
+                      {Boolean(currentValues) &&
+                        requestStatus === "Request" &&
+                        currentValues[specName] !== specs[specName] && (
                           <Typography
                             variant="caption"
                             sx={{
@@ -125,7 +150,21 @@ const CompleteSpecs = ({
                             }}
                           >
                             Current value:{" "}
-                            {specWithUnit(specName, oldValues[specName])}
+                            {specWithUnit(specName, currentValues[specName])}
+                          </Typography>
+                        )}
+                      {Boolean(replacedValues) &&
+                        requestStatus === "Approved" &&
+                        replacedValues[specName] !== specs[specName] && (
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              fontStyle: "italic",
+                              color: palette.grey[500],
+                            }}
+                          >
+                            Replaced value:{" "}
+                            {specWithUnit(specName, replacedValues[specName])}
                           </Typography>
                         )}
                     </>
