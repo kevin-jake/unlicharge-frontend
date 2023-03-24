@@ -36,10 +36,6 @@ const CompleteSpecs = ({
   productStatus,
   processedBy,
 }) => {
-  console.log(
-    "🚀 ~ file: CompleteSpecs.jsx:33 ~ CompleteSpecs ~ specs:",
-    processedBy
-  );
   const { palette } = useTheme();
   const specsProperties = Object.keys(specs);
   let filteredSpecs = specsProperties.filter(
@@ -128,7 +124,7 @@ const CompleteSpecs = ({
                               color: palette.grey[500],
                             }}
                           >
-                            Old value:{" "}
+                            Current value:{" "}
                             {specWithUnit(specName, oldValues[specName])}
                           </Typography>
                         )}
