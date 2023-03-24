@@ -27,10 +27,10 @@ const ProductDialogContent = ({
     id,
     updatedAt,
     createdAt,
-    // specCreator,
     productId: prodID,
     ...specsRest
   } = specs;
+  console.log("🚀 ~ file: ProductDialogContent.jsx:34 ~ specsRest:", specsRest);
   return (
     <>
       <DialogContent dividers>
@@ -109,6 +109,7 @@ const ProductDialogContent = ({
                 operation: "Delete",
                 category: category,
                 isOpen: true,
+                oldValues: specsRest,
                 productId,
               })
             }

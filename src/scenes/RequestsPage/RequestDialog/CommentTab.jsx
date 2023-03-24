@@ -9,7 +9,6 @@ const CommentTab = ({ comments }) => {
   const { palette } = useTheme();
   const main = palette.compliment.light;
   const commentColor = palette.neutral.main;
-  console.log("🚀 ~ file: CommentTab.jsx:6 ~ CommentTab ~ comments:", comments);
   return (
     <Stack spacing={1}>
       {comments?.length > 0 && (
