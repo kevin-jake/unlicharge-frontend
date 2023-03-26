@@ -1,12 +1,12 @@
 import {
   Box,
   Button,
-  DialogActions,
   DialogContent,
   Divider,
   Grid,
   Typography,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 
@@ -19,14 +19,17 @@ import UserImage from "../../../components/UserImage";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../store/slices/auth/authSlice";
+import WidgetWrapper from "../../../components/wrappers/WidgetWrapper";
 
 const RequestDialogContent = ({
   focusedRequest,
   isCreate,
   isEdit,
+  isDelete,
   approve,
   reject,
 }) => {
+  const { palette } = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { userId, role } = useSelector(selectUser);
   let specs,
@@ -36,6 +39,7 @@ const RequestDialogContent = ({
     requestor,
     requestedProduct,
     status,
+    deleteReason,
     replacedValues,
     productCreated,
     productUpdated;
@@ -58,6 +62,7 @@ const RequestDialogContent = ({
     replacedValues = focusedRequest?.specsToReplace;
   } else if (!isCreate && !isEdit) {
     specs = focusedRequest?.requestedProduct?.specs;
+    deleteReason = focusedRequest?.deleteReason;
   }
   const { createdAt: requestCreated, updatedAt: requestUpdated } =
     focusedRequest;
@@ -79,45 +84,62 @@ const RequestDialogContent = ({
   } = specs;
 
   const imageComponent = (
-    <Box
-      marginTop={!isNonMobileScreens ? "1rem" : 0}
-      display="flex"
-      justifyContent="center"
-      gap="0.75rem"
-    >
-      {Boolean(replacedValues?.imagePath) &&
-        replacedValues?.imagePath !== specs.imagePath && (
-          <Box display="flex" flexDirection="column">
-            <Typography variant="body2" marginBottom="0.75rem">
-              Old photo:{" "}
-            </Typography>
-            <img
-              style={{ objectFit: "cover", borderRadius: "0.75rem" }}
-              width="100px"
-              height="100px"
-              alt={replacedValues?.name}
-              src={replacedValues?.imagePath}
-              onError={({ currentTarget }) => {
-                currentTarget.onerror = null;
-                currentTarget.src = "/placeholder-image.jpg";
-              }}
-            />
-          </Box>
-        )}
-      {Boolean(specs.imagePath) && (
-        <img
-          style={{ objectFit: "cover", borderRadius: "0.75rem" }}
-          width="200px"
-          height="200px"
-          alt={specs.name}
-          src={specs.imagePath}
-          onError={({ currentTarget }) => {
-            currentTarget.onerror = null;
-            currentTarget.src = "/placeholder-image.jpg";
+    <>
+      {isDelete && (
+        <WidgetWrapper
+          m="1rem"
+          flexBasis="50%"
+          sx={{
+            padding: "1rem !important",
+            backgroundColor: `${palette.compliment.main} !important`,
           }}
-        />
+        >
+          <Typography variant="h5" color={palette.primary.main}>
+            Delete Reason:
+          </Typography>
+          {deleteReason}
+        </WidgetWrapper>
       )}
-    </Box>
+      <Box
+        marginTop={!isNonMobileScreens ? "1rem" : 0}
+        display="flex"
+        justifyContent="center"
+        gap="0.75rem"
+      >
+        {Boolean(replacedValues?.imagePath) &&
+          replacedValues?.imagePath !== specs.imagePath && (
+            <Box display="flex" flexDirection="column">
+              <Typography variant="body2" marginBottom="0.75rem">
+                Old photo:{" "}
+              </Typography>
+              <img
+                style={{ objectFit: "cover", borderRadius: "0.75rem" }}
+                width="100px"
+                height="100px"
+                alt={replacedValues?.name}
+                src={replacedValues?.imagePath}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null;
+                  currentTarget.src = "/placeholder-image.jpg";
+                }}
+              />
+            </Box>
+          )}
+        {Boolean(specs.imagePath) && (
+          <img
+            style={{ objectFit: "cover", borderRadius: "0.75rem" }}
+            width="200px"
+            height="200px"
+            alt={specs.name}
+            src={specs.imagePath}
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null;
+              currentTarget.src = "/placeholder-image.jpg";
+            }}
+          />
+        )}
+      </Box>
+    </>
   );
 
   const tabArray = Boolean(comments?.length)
