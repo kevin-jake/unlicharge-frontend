@@ -42,8 +42,9 @@ function BuildPage() {
     oldValues: {},
   });
   const isLoggedIn = Boolean(useSelector(selectUser));
-  const { data, isLoading, isSuccess, refetch } =
-    useGetProductsQuery(selectedCategory);
+  const { data, isLoading, isSuccess, refetch } = useGetProductsQuery({
+    category: selectedCategory,
+  });
 
   useEffect(() => {
     refetch();
@@ -62,10 +63,6 @@ function BuildPage() {
     setIsProductModalOpen(true);
     setFocusedProduct(product);
   };
-  console.log(
-    "🚀 ~ file: BuildPage.jsx:38 ~ BuildPage ~ focusedProduct:",
-    focusedProduct
-  );
   return (
     <PageWrapper title="Estimate your build">
       <Box
@@ -74,7 +71,7 @@ function BuildPage() {
         display="block"
         justifyContent="space-between"
       >
-        <InitialParams />
+        <InitialParams category={selectedCategory} />
       </Box>
       <Grid container>
         {categories.map(({ name, icon, apiPath }) => (

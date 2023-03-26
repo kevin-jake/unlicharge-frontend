@@ -13,20 +13,37 @@ import { Formik } from "formik";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React from "react";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
+import { useDispatch, useSelector } from "react-redux";
+import { productApiSlice } from "../../store/slices/products/productApiSlice";
+import {
+  selectInitParams,
+  setInitParams,
+} from "../../store/slices/products/productSlice";
 
-const initialValuesRegister = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  location: "",
-  occupation: "",
-  picture: "",
-};
-
-const InitialParams = () => {
+const InitialParams = ({ category }) => {
+  const dispatch = useDispatch();
+  const initParams = useSelector(selectInitParams);
   const { palette } = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  const initialValuesRegister = {
+    batteryVoltage: initParams?.batteryVoltage || "",
+    batteryCapacity: initParams?.batteryCapacity || "",
+    maxVoltage: initParams?.maxVoltage || "",
+    minVoltage: initParams?.minVoltage || "",
+    dod: initParams?.dod || "",
+  };
+
+  const handleCalculate = (values) => {
+    dispatch(setInitParams(values));
+    dispatch(
+      productApiSlice.endpoints.getProducts.initiate(
+        { category, initParams: JSON.stringify(values) },
+        { subscribe: false, forceRefetch: true }
+      )
+    );
+  };
+
   return (
     <WidgetWrapper>
       <Typography
@@ -37,7 +54,7 @@ const InitialParams = () => {
       >
         Initial Parameters:
       </Typography>
-      <Formik initialValues={initialValuesRegister}>
+      <Formik initialValues={initialValuesRegister} onSubmit={handleCalculate}>
         {({
           values,
           errors,
@@ -61,20 +78,26 @@ const InitialParams = () => {
                 label="Battery Voltage"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={Boolean(touched.firstName) && Boolean(errors.firstName)}
-                helperText={touched.firstName && errors.firstName}
+                value={values.batteryVoltage}
+                name="batteryVoltage"
+                error={
+                  Boolean(touched.batteryVoltage) &&
+                  Boolean(errors.batteryVoltage)
+                }
+                helperText={touched.batteryVoltage && errors.batteryVoltage}
                 sx={{ gridColumn: "span 6" }}
               />
               <TextField
                 label="Battery Capacity"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                helperText={touched.lastName && errors.lastName}
+                value={values.batteryCapacity}
+                name="batteryCapacity"
+                error={
+                  Boolean(touched.batteryCapacity) &&
+                  Boolean(errors.batteryCapacity)
+                }
+                helperText={touched.batteryCapacity && errors.batteryCapacity}
                 sx={{ gridColumn: "span 6" }}
               />
               <Accordion sx={{ gridColumn: "span 12" }}>
@@ -102,7 +125,7 @@ const InitialParams = () => {
                       label="Max. Voltage"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.location}
+                      value={values.maxVoltage}
                       name="maxVoltage"
                       sx={{ gridColumn: "span 4" }}
                     />
@@ -110,7 +133,7 @@ const InitialParams = () => {
                       label="Min. Voltage"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.occupation}
+                      value={values.minVoltage}
                       name="minVoltage"
                       sx={{ gridColumn: "span 4" }}
                     />
@@ -118,7 +141,7 @@ const InitialParams = () => {
                       label="DOD"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.occupation}
+                      value={values.dod}
                       name="dod"
                       sx={{ gridColumn: "span 4" }}
                     />
