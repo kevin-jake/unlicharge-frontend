@@ -14,13 +14,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React from "react";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import { useDispatch, useSelector } from "react-redux";
-import { productApiSlice } from "../../store/slices/products/productApiSlice";
 import {
   selectInitParams,
   setInitParams,
 } from "../../store/slices/products/productSlice";
 
-const InitialParams = ({ category }) => {
+const InitialParams = ({ refetch }) => {
   const dispatch = useDispatch();
   const initParams = useSelector(selectInitParams);
   const { palette } = useTheme();
@@ -36,12 +35,7 @@ const InitialParams = ({ category }) => {
 
   const handleCalculate = (values) => {
     dispatch(setInitParams(values));
-    dispatch(
-      productApiSlice.endpoints.getProducts.initiate(
-        { category, initParams: JSON.stringify(values) },
-        { subscribe: false, forceRefetch: true }
-      )
-    );
+    refetch();
   };
 
   return (

@@ -9,7 +9,7 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     setInitParams: (state, action) => {
-      state.productsArray = action.payload.initParams;
+      state.initParams = action.payload;
     },
   },
 });

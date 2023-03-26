@@ -20,6 +20,7 @@ const ProductDialogContent = ({
   setCrudModalState,
   category,
 }) => {
+  console.log("🚀 ~ file: ProductDialogContent.jsx:23 ~ specs:", specs);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const {
     _id,

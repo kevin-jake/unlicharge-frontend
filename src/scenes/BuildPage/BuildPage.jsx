@@ -15,6 +15,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { selectUser } from "../../store/slices/auth/authSlice";
+import { selectInitParams } from "../../store/slices/products/productSlice";
 
 function BuildPage() {
   const categories = [
@@ -30,6 +31,7 @@ function BuildPage() {
       apiPath: "ab",
     },
   ];
+
   const [selectedCategory, setSelectedCategory] = useState("battery");
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
@@ -41,10 +43,13 @@ function BuildPage() {
       .name,
     oldValues: {},
   });
+  const initParams = useSelector(selectInitParams);
   const isLoggedIn = Boolean(useSelector(selectUser));
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery({
     category: selectedCategory,
+    initParams: JSON.stringify(initParams),
   });
+  console.log("🚀 ~ file: BuildPage.jsx:48 ~ BuildPage ~ data:", data);
 
   useEffect(() => {
     refetch();
@@ -71,7 +76,7 @@ function BuildPage() {
         display="block"
         justifyContent="space-between"
       >
-        <InitialParams category={selectedCategory} />
+        <InitialParams category={selectedCategory} refetch={refetch} />
       </Box>
       <Grid container>
         {categories.map(({ name, icon, apiPath }) => (
