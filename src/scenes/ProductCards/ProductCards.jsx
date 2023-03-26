@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,8 @@ import PriceCompute from "./PriceCompute";
 import QuickSpecs from "./QuickSpecs";
 import { numberWithCommas } from "../../util/numberFormats";
 import DialogFooter from "../../components/DialogFooter";
+import ReactCardFlip from "react-card-flip";
+import { useState } from "react";
 
 // TODO: Add color-coding and in SortFilter add filters for Requests, Approved and Deleted
 const ProductCards = ({
@@ -21,9 +23,15 @@ const ProductCards = ({
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
+  const [isFlipped, setIsFlipped] = useState(false);
+  const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
+
+  const handleFlip = () => {
+    setIsFlipped((prevIsFlipped) => !prevIsFlipped);
+  };
 
   return (
-    <Grid item s={12} xs={12} md={isSummaryOpen ? 6 : 4}>
+    <Grid item s={12} xs={12} lg={isSummaryOpen ? 6 : 4} md={12}>
       <WidgetWrapper
         m="0.25rem"
         sx={{
@@ -62,13 +70,47 @@ const ProductCards = ({
             }}
           >
             {Boolean(specs.computedSpecs) ? (
-              <WidgetWrapper
-                sx={{ backgroundColor: `${palette.neutral.light} !important` }}
-              >
-                <PriceCompute computedSpecs={specs.computedSpecs} />
-              </WidgetWrapper>
+              <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+                <WidgetWrapper
+                  sx={{
+                    backgroundColor: `${palette.neutral.light} !important`,
+                    padding: "0.5rem !important",
+                    cursor: "pointer",
+                    width: "fit-content",
+                  }}
+                  onClick={handleFlip}
+                >
+                  <PriceCompute computedSpecs={specs.computedSpecs} />
+                </WidgetWrapper>
+
+                <WidgetWrapper
+                  sx={{
+                    backgroundColor: `${palette.neutral.light} !important`,
+                    padding: "0.5rem !important",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleFlip}
+                >
+                  <Typography
+                    variant="h4"
+                    fontWeight="700"
+                    sx={{ color: primary }}
+                  >
+                    {`Php ${
+                      (specs.pricePerPc &&
+                        numberWithCommas(specs.pricePerPc)) ||
+                      numberWithCommas(specs.price)
+                    }`}
+                  </Typography>
+                </WidgetWrapper>
+              </ReactCardFlip>
             ) : (
-              <Box>
+              <WidgetWrapper
+                sx={{
+                  backgroundColor: `${palette.neutral.light} !important`,
+                  padding: "0.5rem !important",
+                }}
+              >
                 <Typography
                   variant="h4"
                   fontWeight="700"
@@ -79,7 +121,7 @@ const ProductCards = ({
                     numberWithCommas(specs.price)
                   }`}
                 </Typography>
-              </Box>
+              </WidgetWrapper>
             )}
             <QuickSpecs specs={specs} />
           </Grid>
