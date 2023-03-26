@@ -30,19 +30,20 @@ function BuildPage() {
       apiPath: "ab",
     },
   ];
-  // TODO: Remove category on the redux and just use props
-  const category = useSelector(({ product }) => product.category);
+  const [selectedCategory, setSelectedCategory] = useState("battery");
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [focusedProduct, setFocusedProduct] = useState({});
   const [crudModalState, setCrudModalState] = useState({
     isOpen: false,
     operation: "Create",
-    category: categories.filter((item) => item.apiPath === category)[0].name,
+    category: categories.filter((item) => item.apiPath === selectedCategory)[0]
+      .name,
     oldValues: {},
   });
   const isLoggedIn = Boolean(useSelector(selectUser));
-  const { data, isLoading, isSuccess, refetch } = useGetProductsQuery(category);
+  const { data, isLoading, isSuccess, refetch } =
+    useGetProductsQuery(selectedCategory);
 
   useEffect(() => {
     refetch();
@@ -83,6 +84,8 @@ function BuildPage() {
             apiPath={apiPath}
             icon={icon}
             refetch={refetch}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
           />
         ))}
       </Grid>
@@ -141,7 +144,7 @@ function BuildPage() {
                 ...crudModalState,
                 operation: "Create",
                 category: categories.filter(
-                  (item) => item.apiPath === category
+                  (item) => item.apiPath === selectedCategory
                 )[0].name,
                 isOpen: true,
               })
@@ -181,7 +184,8 @@ function BuildPage() {
           productId={focusedProduct?._id}
           setCrudModalState={setCrudModalState}
           category={
-            categories.filter((item) => item.apiPath === category)[0].name
+            categories.filter((item) => item.apiPath === selectedCategory)[0]
+              .name
           }
         />
       </DialogWrapper>
