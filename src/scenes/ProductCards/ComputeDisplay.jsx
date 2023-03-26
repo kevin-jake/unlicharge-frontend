@@ -1,14 +1,26 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
 
 const ComputeDisplay = ({ title, value }) => {
+  const { palette } = useTheme();
   return (
     <Grid container item>
       <Grid item xs={12}>
         <Typography variant="body"> {title}</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h4"> {value}</Typography>
+        {title === "Price" && (
+          <Typography
+            variant="caption"
+            color={palette.neutral.main}
+            marginRight="0.25rem"
+          >
+            Php
+          </Typography>
+        )}
+        <Typography variant="h5" color={palette.primary.main}>
+          {value}
+        </Typography>
       </Grid>
     </Grid>
   );

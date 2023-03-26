@@ -1,8 +1,9 @@
 import { Box, Divider, Grid, useTheme } from "@mui/material";
 import React from "react";
+import { numberWithCommas } from "../../util/numberFormats";
 import ComputeDisplay from "./ComputeDisplay";
 
-const PriceCompute = () => {
+const PriceCompute = ({ computedSpecs }) => {
   const { palette } = useTheme();
   const primary = palette.primary.main;
   return (
@@ -23,14 +24,20 @@ const PriceCompute = () => {
         width="auto"
         height="fit-content"
       >
-        <ComputeDisplay title="Price" value="test" />
+        <ComputeDisplay
+          title="Price"
+          value={`${numberWithCommas(computedSpecs?.totalPrice)}`}
+        />
         <Divider
           color={primary}
           orientation="vertical"
           variant="middle"
           flexItem
         />
-        <ComputeDisplay title="Capacity" value="test" />
+        <ComputeDisplay
+          title="Capacity"
+          value={`${numberWithCommas(computedSpecs?.totalCapacity)} Ah`}
+        />
 
         <Divider
           color={primary}
@@ -38,7 +45,10 @@ const PriceCompute = () => {
           variant="middle"
           flexItem
         />
-        <ComputeDisplay title="Quantity" value="test" />
+        <ComputeDisplay
+          title="Quantity"
+          value={`${numberWithCommas(computedSpecs?.totalQty)}`}
+        />
       </Box>
     </Grid>
   );

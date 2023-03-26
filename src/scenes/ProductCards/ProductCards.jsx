@@ -15,7 +15,6 @@ const ProductCards = ({
   publishStatus,
   creator,
   openModal,
-  isInitParamsPresent = false,
   isSummaryOpen,
 }) => {
   const dispatch = useDispatch();
@@ -62,8 +61,12 @@ const ProductCards = ({
               },
             }}
           >
-            {isInitParamsPresent ? (
-              <PriceCompute />
+            {Boolean(specs.computedSpecs) ? (
+              <WidgetWrapper
+                sx={{ backgroundColor: `${palette.neutral.light} !important` }}
+              >
+                <PriceCompute computedSpecs={specs.computedSpecs} />
+              </WidgetWrapper>
             ) : (
               <Box>
                 <Typography

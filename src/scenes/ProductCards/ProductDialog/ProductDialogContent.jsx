@@ -14,23 +14,14 @@ import { toast } from "react-toastify";
 
 const ProductDialogContent = ({
   specs,
-  computation,
-  creator,
   productId,
   setCrudModalState,
   category,
 }) => {
   console.log("🚀 ~ file: ProductDialogContent.jsx:23 ~ specs:", specs);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const {
-    _id,
-    __v,
-    id,
-    updatedAt,
-    createdAt,
-    productId: prodID,
-    ...specsRest
-  } = specs;
+  const { _id, __v, id, updatedAt, createdAt, computedSpecs, ...specsRest } =
+    specs;
   console.log("🚀 ~ file: ProductDialogContent.jsx:34 ~ specsRest:", specsRest);
   return (
     <>
@@ -72,7 +63,7 @@ const ProductDialogContent = ({
                 },
                 {
                   tabTitle: "Computation",
-                  tabComp: <PriceCompute />,
+                  tabComp: <PriceCompute computedSpecs={specs.computedSpecs} />,
                 },
               ]}
             />

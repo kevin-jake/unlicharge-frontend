@@ -18,6 +18,7 @@ const toNotDisplay = [
   "__v",
   "specCreator",
   "_id",
+  "computedSpecs",
   "id",
   "status",
   "createdAt",

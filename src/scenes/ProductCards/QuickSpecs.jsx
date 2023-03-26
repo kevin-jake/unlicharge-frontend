@@ -24,7 +24,6 @@ const QuickSpecs = ({ specs }) => {
   const filteredSpecs = specsProperties.filter((specProp) =>
     toDisplay.includes(specProp)
   );
-  // FIXME: Fix quick specs ListItem primary text
   return (
     <Grid item zeroMinWidth>
       <List
