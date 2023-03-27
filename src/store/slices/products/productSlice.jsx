@@ -2,9 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   initParams: {},
-  filters: {
+  pagination: {
     limit: 5,
   },
+  filters: {},
 };
 
 export const productSlice = createSlice({
@@ -15,18 +16,19 @@ export const productSlice = createSlice({
       state.initParams = action.payload;
     },
     setFilters: (state, action) => {
-      console.log(
-        "🚀 ~ file: productSlice.jsx:20 ~ action.payload:",
-        action.payload
-      );
       state.filters = action.payload;
+    },
+    setPagination: (state, action) => {
+      state.pagination = action.payload;
     },
   },
 });
 
-export const { setInitParams } = productSlice.actions;
+export const { setInitParams, setFilters, setPagination } =
+  productSlice.actions;
 
 export const selectInitParams = (state) => state.product.initParams;
 export const selectFilters = (state) => state.product.filters;
+export const selectPagination = (state) => state.product.pagination;
 
 export default productSlice.reducer;

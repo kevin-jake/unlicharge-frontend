@@ -9,7 +9,7 @@ import ProductDialogContent from "../ProductCards/ProductDialog/ProductDialogCon
 import SortFilter from "../../components/SortFilter";
 import SummarySideBar from "../SummarySideBar/SummarySideBar";
 import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetProductsQuery } from "../../store/slices/products/productApiSlice";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
@@ -18,6 +18,9 @@ import { selectUser } from "../../store/slices/auth/authSlice";
 import {
   selectFilters,
   selectInitParams,
+  selectPagination,
+  setFilters,
+  setPagination,
 } from "../../store/slices/products/productSlice";
 import BuildFilters from "./BuildFilters";
 import FlexBetween from "../../components/wrappers/FlexBetween";
@@ -38,7 +41,7 @@ function BuildPage() {
       apiPath: "ab",
     },
   ];
-
+  const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState("battery");
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
@@ -52,12 +55,18 @@ function BuildPage() {
   });
   const initParams = useSelector(selectInitParams);
   const filters = useSelector(selectFilters);
-
+  const pagination = useSelector(selectPagination);
   const isLoggedIn = Boolean(useSelector(selectUser));
+  console.log(
+    "🚀 ~ file: BuildPage.jsx:55 ~ BuildPage ~ pagination:",
+    pagination
+  );
+
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery({
     category: selectedCategory,
     initParams: JSON.stringify(initParams),
     filters: JSON.stringify(filters),
+    pagination: JSON.stringify(pagination),
   });
   console.log("🚀 ~ file: BuildPage.jsx:48 ~ BuildPage ~ data:", data);
 
@@ -71,6 +80,18 @@ function BuildPage() {
         (item) => item._id === focusedProduct?._id
       );
       setFocusedProduct(newFocus[0]);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(
+        setPagination({
+          limit: data.limit,
+          page: data.page,
+          total: data.total,
+        })
+      );
     }
   }, [data]);
 
@@ -174,7 +195,18 @@ function BuildPage() {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <PageFooter />
+        <PageFooter
+          {...pagination}
+          setPagination={(page, limit) => {
+            dispatch(
+              setPagination({
+                limit,
+                page,
+              })
+            );
+            refetch();
+          }}
+        />
       </Grid>
       <Box
         sx={{

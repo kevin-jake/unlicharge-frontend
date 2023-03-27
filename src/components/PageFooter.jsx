@@ -11,10 +11,13 @@ import {
 import React from "react";
 import FlexBetween from "./wrappers/FlexBetween";
 
-const PageFooter = ({ currentPage = 1, total = 100, limits = 5 }) => {
-  const pageNumbers = Math.ceil(total / limits);
-  const handleChange = (event) => {
-    console.log(event);
+const PageFooter = ({ page = 1, total = 100, limit = 5, setPagination }) => {
+  const pageNumbers = Math.ceil(total / limit);
+  const handlePageChange = (event) => {
+    setPagination(event.target.outerText, limit);
+  };
+  const handleLimitChange = (event) => {
+    setPagination(page, event.target.value);
   };
   return (
     <>
@@ -24,10 +27,14 @@ const PageFooter = ({ currentPage = 1, total = 100, limits = 5 }) => {
         alignItems="center"
         flexDirection="column"
       >
-        <Pagination count={pageNumbers} page={currentPage} />
+        <Pagination
+          count={pageNumbers}
+          page={page}
+          onChange={handlePageChange}
+        />
         <FlexBetween>
           <Typography variant="caption" sx={{ margin: "0.25rem" }}>
-            Page {currentPage} of {pageNumbers}
+            Page {page} of {pageNumbers}
           </Typography>
           <Divider orientation="vertical" marginX="1rem" />
           <Typography variant="caption" sx={{ margin: "0.25rem" }}>
@@ -40,9 +47,9 @@ const PageFooter = ({ currentPage = 1, total = 100, limits = 5 }) => {
           <Select
             labelId="numberOfResults-label"
             id="numberOfResults-label"
-            value={limits}
+            value={limit}
             label="Results per page:"
-            onChange={handleChange}
+            onChange={handleLimitChange}
           >
             <MenuItem value={5}>5</MenuItem>
             <MenuItem value={10}>10</MenuItem>

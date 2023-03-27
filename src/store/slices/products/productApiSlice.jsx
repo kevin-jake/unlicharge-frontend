@@ -3,10 +3,10 @@ import { api } from "../../api";
 export const productApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: ({ category, initParams, filters }) => ({
+      query: ({ category, initParams, filters, pagination }) => ({
         url: `products/${category}`,
         method: "GET",
-        params: { initParams, filters },
+        params: { initParams, filters, pagination },
       }),
     }),
     createProductRequest: builder.mutation({
