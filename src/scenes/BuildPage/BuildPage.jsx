@@ -57,10 +57,6 @@ function BuildPage() {
   const filters = useSelector(selectFilters);
   const pagination = useSelector(selectPagination);
   const isLoggedIn = Boolean(useSelector(selectUser));
-  console.log(
-    "🚀 ~ file: BuildPage.jsx:55 ~ BuildPage ~ pagination:",
-    pagination
-  );
 
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery({
     category: selectedCategory,
