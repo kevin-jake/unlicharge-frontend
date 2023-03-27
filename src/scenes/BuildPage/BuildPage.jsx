@@ -15,9 +15,14 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { selectUser } from "../../store/slices/auth/authSlice";
-import { selectInitParams } from "../../store/slices/products/productSlice";
+import {
+  selectFilters,
+  selectInitParams,
+} from "../../store/slices/products/productSlice";
 import BuildFilters from "./BuildFilters";
 import FlexBetween from "../../components/wrappers/FlexBetween";
+import PageFooter from "../../components/PageFooter";
+import { AddCircle } from "@mui/icons-material";
 
 function BuildPage() {
   const categories = [
@@ -46,10 +51,13 @@ function BuildPage() {
     oldValues: {},
   });
   const initParams = useSelector(selectInitParams);
+  const filters = useSelector(selectFilters);
+
   const isLoggedIn = Boolean(useSelector(selectUser));
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery({
     category: selectedCategory,
     initParams: JSON.stringify(initParams),
+    filters: JSON.stringify(filters),
   });
   console.log("🚀 ~ file: BuildPage.jsx:48 ~ BuildPage ~ data:", data);
 
@@ -142,24 +150,31 @@ function BuildPage() {
         >
           {isSummaryOpen && <SummarySideBar />}
         </Grid>
+
         <Grid item xs={12}>
-          <Button
-            variant="contained"
-            sx={{ margin: "1rem" }}
-            onClick={() =>
-              setCrudModalState({
-                ...crudModalState,
-                operation: "Create",
-                category: categories.filter(
-                  (item) => item.apiPath === selectedCategory
-                )[0].name,
-                isOpen: true,
-              })
-            }
-          >
-            Add
-          </Button>
+          <Box display="flex" justifyContent="center">
+            <Button
+              startIcon={<AddCircle />}
+              variant="contained"
+              sx={{ margin: "1rem", width: 300 }}
+              onClick={() =>
+                setCrudModalState({
+                  ...crudModalState,
+                  operation: "Create",
+                  category: categories.filter(
+                    (item) => item.apiPath === selectedCategory
+                  )[0].name,
+                  isOpen: true,
+                })
+              }
+            >
+              Add
+            </Button>
+          </Box>
         </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <PageFooter />
       </Grid>
       <Box
         sx={{
