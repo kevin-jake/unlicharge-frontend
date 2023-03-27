@@ -4,6 +4,10 @@ import {
   AccordionSummary,
   Box,
   Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
   useMediaQuery,
@@ -68,7 +72,28 @@ const InitialParams = ({ refetch }) => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 12" },
               }}
             >
-              <TextField
+              <FormControl fullWidth sx={{ gridColumn: "span 6" }}>
+                <InputLabel id="battVoltage-label">Battery Voltage</InputLabel>
+                <Select
+                  labelId="battVoltage-label"
+                  id="battVoltage"
+                  label="Battery Voltage"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.batteryVoltage}
+                  name="batteryVoltage"
+                  error={
+                    Boolean(touched.batteryVoltage) &&
+                    Boolean(errors.batteryVoltage)
+                  }
+                  helperText={touched.batteryVoltage && errors.batteryVoltage}
+                >
+                  <MenuItem value={12}>12 V</MenuItem>
+                  <MenuItem value={24}>24 V</MenuItem>
+                  <MenuItem value={48}>48 V</MenuItem>
+                </Select>
+              </FormControl>
+              {/* <TextField
                 label="Battery Voltage"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -80,7 +105,7 @@ const InitialParams = ({ refetch }) => {
                 }
                 helperText={touched.batteryVoltage && errors.batteryVoltage}
                 sx={{ gridColumn: "span 6" }}
-              />
+              /> */}
               <TextField
                 label="Battery Capacity"
                 onBlur={handleBlur}

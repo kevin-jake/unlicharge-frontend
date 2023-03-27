@@ -23,6 +23,24 @@ const ProductDialogContent = ({
   const { _id, __v, id, updatedAt, createdAt, computedSpecs, ...specsRest } =
     specs;
   console.log("🚀 ~ file: ProductDialogContent.jsx:34 ~ specsRest:", specsRest);
+
+  const tabArray = Boolean(specs.computedSpecs)
+    ? [
+        {
+          tabTitle: "Specifications",
+          tabComp: <CompleteSpecs specs={specs} />,
+        },
+        {
+          tabTitle: "Computation",
+          tabComp: <PriceCompute computedSpecs={specs.computedSpecs} />,
+        },
+      ]
+    : [
+        {
+          tabTitle: "Specifications",
+          tabComp: <CompleteSpecs specs={specs} />,
+        },
+      ];
   return (
     <>
       <DialogContent dividers>
@@ -55,18 +73,7 @@ const ProductDialogContent = ({
               },
             }}
           >
-            <ItemTabs
-              tabArray={[
-                {
-                  tabTitle: "Specifications",
-                  tabComp: <CompleteSpecs specs={specs} />,
-                },
-                {
-                  tabTitle: "Computation",
-                  tabComp: <PriceCompute computedSpecs={specs.computedSpecs} />,
-                },
-              ]}
-            />
+            <ItemTabs tabArray={tabArray} />
           </Grid>
         </Grid>
       </DialogContent>

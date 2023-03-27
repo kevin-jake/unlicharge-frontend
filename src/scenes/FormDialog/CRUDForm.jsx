@@ -43,7 +43,7 @@ const CRUDForm = ({
 }) => {
   const { palette } = useTheme();
   const apiCategory = useSelector(({ product }) => product.category);
-  const { role, userId } = useSelector(selectUser);
+  const { role, userId } = useSelector(selectUser) || {};
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isCreate = operation === "Create";
   const isEdit = operation === "Edit";
