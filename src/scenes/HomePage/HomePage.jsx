@@ -1,13 +1,4 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Grid,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Grid, useMediaQuery } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import PostsWidget from "../widgets/PostsWidget";

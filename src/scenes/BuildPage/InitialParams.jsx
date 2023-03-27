@@ -119,7 +119,7 @@ const InitialParams = ({ refetch }) => {
                 helperText={touched.batteryCapacity && errors.batteryCapacity}
                 sx={{ gridColumn: "span 6" }}
               />
-              <Accordion sx={{ gridColumn: "span 12" }}>
+              <Accordion sx={{ gridColumn: "span 12", boxShadow: 0 }}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="initparam"

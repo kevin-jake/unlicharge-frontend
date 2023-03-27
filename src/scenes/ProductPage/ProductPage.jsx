@@ -1,16 +1,6 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Grid,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Grid, useMediaQuery } from "@mui/material";
 import React from "react";
 import DataFilters from "../../components/DataFilters";
-import PostsWidget from "../widgets/PostsWidget";
 import CategoryCards from "../../components/CategoryCards";
 import PageWrapper from "../../components/wrappers/PageWrapper";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";

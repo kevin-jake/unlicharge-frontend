@@ -16,6 +16,8 @@ import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { selectUser } from "../../store/slices/auth/authSlice";
 import { selectInitParams } from "../../store/slices/products/productSlice";
+import BuildFilters from "./BuildFilters";
+import FlexBetween from "../../components/wrappers/FlexBetween";
 
 function BuildPage() {
   const categories = [
@@ -100,7 +102,10 @@ function BuildPage() {
           md={isSummaryOpen ? 9 : 12}
         >
           <Grid item xs={12}>
-            <SortFilter />
+            <FlexBetween>
+              <SortFilter />
+              <BuildFilters />
+            </FlexBetween>
           </Grid>
           {isLoading && (
             <Grid

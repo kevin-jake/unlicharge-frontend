@@ -18,7 +18,6 @@ import {
   useMediaQuery,
   AccordionDetails,
 } from "@mui/material";
-import { setPosts } from "../store/slices/auth/authSlice";
 import FlexBetween from "./wrappers/FlexBetween";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -26,28 +25,8 @@ const DataFilters = () => {
   const { palette } = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const neutralLight = palette.neutral.light;
-  const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
 
-  const handlePost = async () => {
-    const formData = new FormData();
-    formData.append("userId", _id);
-    formData.append("description", post);
-    if (image) {
-      formData.append("picture", image);
-      formData.append("picturePath", image.name);
-    }
-
-    const response = await fetch(`http://localhost:5000/posts`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
-    const posts = await response.json();
-    dispatch(setPosts({ posts }));
-    setImage(null);
-    setPost("");
-  };
   // TODO: Add functionality
   return (
     <Box
@@ -58,7 +37,11 @@ const DataFilters = () => {
       }}
       flexBasis={isNonMobileScreens ? "13%" : undefined}
     >
-      <Accordion>
+      <Accordion
+        sx={{
+          boxShadow: 0,
+        }}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="filters"
