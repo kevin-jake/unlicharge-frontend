@@ -11,20 +11,21 @@ import {
 import React from "react";
 import FlexBetween from "./wrappers/FlexBetween";
 
-const PageFooter = ({
-  page = 1,
-  total = 100,
-  limit = 5,
-  setPagination,
-  isShown,
-}) => {
+const PageFooter = ({ page, total, limit = 1, setPagination, isShown }) => {
   const pageNumbers = Math.ceil(total / limit);
-  const handlePageChange = (event) => {
-    setPagination(event.target.outerText, limit);
+  console.log("🚀 ~ file: PageFooter.jsx:16 ~ PageFooter ~ limit:", limit);
+  console.log("🚀 ~ file: PageFooter.jsx:16 ~ PageFooter ~ total:", total);
+  console.log(
+    "🚀 ~ file: PageFooter.jsx:16 ~ PageFooter ~ pageNumbers:",
+    pageNumbers
+  );
+  const handlePageChange = (event, value) => {
+    setPagination(value, limit);
   };
   const handleLimitChange = (event) => {
     setPagination(page, event.target.value);
   };
+  console.log("🚀 ~ file: PageFooter.jsx:40 ~ page:", page);
   return (
     <>
       {isShown && (
@@ -35,12 +36,12 @@ const PageFooter = ({
           flexDirection="column"
         >
           <Pagination
-            count={pageNumbers}
-            page={page}
+            count={pageNumbers || +page}
+            page={+page}
             onChange={handlePageChange}
           />
           <FlexBetween>
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <FormControl sx={{ m: "1rem", minWidth: 120 }} size="small">
               <InputLabel id="numberOfResults-label">
                 Results per page:
               </InputLabel>
@@ -51,6 +52,11 @@ const PageFooter = ({
                 label="Results per page:"
                 onChange={handleLimitChange}
               >
+                {/* FIXME: For testing purposes*/}
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                {/* FIXME: For testing purposes*/}
+
                 <MenuItem value={5}>5</MenuItem>
                 <MenuItem value={10}>10</MenuItem>
                 <MenuItem value={20}>20</MenuItem>
