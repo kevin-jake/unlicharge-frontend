@@ -50,7 +50,13 @@ const QuickSpecs = ({ specs }) => {
         {filteredSpecs.map((specName) => (
           <ListItem
             key={specName}
-            sx={{ display: "list-item", pageBreakInside: "avoid" }}
+            sx={{
+              display: "list-item",
+              pageBreakInside: "avoid",
+              "& span": {
+                whiteSpace: "normal",
+              },
+            }}
           >
             <ListItemText
               primary={specDisplay(specName)}

@@ -60,7 +60,7 @@ const ProductCards = ({
             xs
             container
             direction="column"
-            marginX="1rem"
+            marginLeft="1rem"
             wrap="nowrap"
             zeroMinWidth
             sx={{
@@ -76,7 +76,6 @@ const ProductCards = ({
                     backgroundColor: `${palette.neutral.light} !important`,
                     padding: "0.5rem !important",
                     cursor: "pointer",
-                    width: "fit-content",
                   }}
                   onClick={handleFlip}
                 >
