@@ -10,7 +10,7 @@ const NoResults = () => {
       justifyContent="center"
       alignItems="center"
       width="100%"
-      height={300}
+      height="40vh"
       flexDirection="column"
     >
       <ErrorIcon fontSize="large" sx={{ color: palette.neutral.medium }} />

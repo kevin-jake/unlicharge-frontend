@@ -22,11 +22,12 @@ const HomePage = () => {
         gap="0.5rem"
         justifyContent="space-between"
       >
-        <DataFilters />
+        <Box display="flex" flexDirection="column">
+          <SortFilter />
+          <DataFilters />
+        </Box>
         <Grid container spacing={0.25}>
-          <Grid item xs={12}>
-            <SortFilter />
-          </Grid>
+          <Grid item xs={12}></Grid>
           {/* <PostsWidget /> */}
         </Grid>
 

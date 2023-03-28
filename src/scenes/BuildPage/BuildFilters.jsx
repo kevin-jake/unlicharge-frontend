@@ -36,14 +36,16 @@ const BuildFilters = ({ refetch }) => {
   const [expanded, setExpanded] = useState(false);
   const neutralLight = palette.neutral.light;
   const medium = palette.neutral.medium;
-
+  const parsedBattType = Boolean(filters?.battType)
+    ? JSON.parse(filters?.battType)
+    : [];
   const [searchBattType, setSearchBattType] = useState({
-    "Lead Acid": false,
-    LiFePo4: false,
-    "Li-On": false,
+    "Lead Acid": parsedBattType.includes("Lead Acid"),
+    LiFePo4: parsedBattType.includes("LiFePo4"),
+    "Li-On": parsedBattType.includes("Li-On"),
   });
   // TODO: convert this to useRef
-  const [searchBar, setSearchBar] = useState("");
+  const [searchBar, setSearchBar] = useState(filters.search);
 
   const handleCheckbox = (e) => {
     setSearchBattType({
@@ -111,6 +113,7 @@ const BuildFilters = ({ refetch }) => {
                 placeholder="Search..."
                 value={searchBar}
                 onChange={(e) => setSearchBar(e.target.value)}
+                sx={{ width: "inherit" }}
               />
               <IconButton onClick={handleSearch}>
                 <Search />

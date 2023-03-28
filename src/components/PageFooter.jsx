@@ -19,7 +19,6 @@ const PageFooter = ({ page, total, limit = 1, setPagination, isShown }) => {
   const handleLimitChange = (event) => {
     setPagination(page, event.target.value);
   };
-  console.log("🚀 ~ file: PageFooter.jsx:40 ~ page:", page);
   return (
     <>
       {isShown && (

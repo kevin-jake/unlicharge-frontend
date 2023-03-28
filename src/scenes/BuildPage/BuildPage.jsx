@@ -68,7 +68,7 @@ function BuildPage() {
   const pagination = useSelector(selectPagination);
   const sort = useSelector(selectSort);
   const isLoggedIn = Boolean(useSelector(selectUser));
-  const { data, isLoading, isFetching, isSuccess, refetch } =
+  const { data, isLoading, isFetching, isSuccess, isError, refetch } =
     useGetProductsQuery({
       category,
       initParams,
@@ -76,6 +76,10 @@ function BuildPage() {
       pagination,
       sort,
     });
+  console.log(
+    "🚀 ~ file: BuildPage.jsx:72 ~ BuildPage ~ isLoading:",
+    isLoading
+  );
 
   useEffect(() => {
     refetch();
@@ -148,21 +152,21 @@ function BuildPage() {
               <BuildFilters refetch={refetch} />
             </FlexBetween>
           </Grid>
-          {isLoading ||
-            (isFetching && (
-              <Grid
-                item
-                xs={12}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                height="300px"
-              >
-                <CircularProgress />
-              </Grid>
-            ))}
+
+          {(isLoading || isFetching) && (
+            <Grid
+              item
+              xs={12}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              height="40vh"
+            >
+              <CircularProgress />
+            </Grid>
+          )}
           {isSuccess &&
             !isFetching &&
             data.total > 0 &&
@@ -177,7 +181,30 @@ function BuildPage() {
                 isSummaryOpen={isSummaryOpen}
               />
             ))}
-          {isSuccess && !isFetching && data.total == 0 && <NoResults />}
+          {((isSuccess && !isFetching && data.total == 0) || isError) && (
+            <NoResults />
+          )}
+          <Grid item xs={12}>
+            <Box display="flex" justifyContent="center">
+              <Button
+                startIcon={<AddCircle />}
+                variant="contained"
+                sx={{ margin: "1rem", width: 300 }}
+                onClick={() =>
+                  setCrudModalState({
+                    ...crudModalState,
+                    operation: "Create",
+                    category: categories.filter(
+                      (item) => item.apiPath === category
+                    )[0].name,
+                    isOpen: true,
+                  })
+                }
+              >
+                Add
+              </Button>
+            </Box>
+          </Grid>
         </Grid>
         <Grid
           item
@@ -191,28 +218,6 @@ function BuildPage() {
           }}
         >
           {isSummaryOpen && <SummarySideBar />}
-        </Grid>
-
-        <Grid item xs={12}>
-          <Box display="flex" justifyContent="center">
-            <Button
-              startIcon={<AddCircle />}
-              variant="contained"
-              sx={{ margin: "1rem", width: 300 }}
-              onClick={() =>
-                setCrudModalState({
-                  ...crudModalState,
-                  operation: "Create",
-                  category: categories.filter(
-                    (item) => item.apiPath === category
-                  )[0].name,
-                  isOpen: true,
-                })
-              }
-            >
-              Add
-            </Button>
-          </Box>
         </Grid>
       </Grid>
       <Grid item xs={12}>

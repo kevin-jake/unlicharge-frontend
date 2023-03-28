@@ -66,7 +66,6 @@ const SortFilter = ({ isComputedSpecsShown, refetch, isNonMobileScreens }) => {
         backgroundColor: palette.background.alt,
         borderRadius: 0,
         display: "flex",
-        height: "100%",
       }}
       marginY={isNonMobileScreens ? "" : "0.5rem"}
       width={isNonMobileScreens ? "auto" : "100%"}
