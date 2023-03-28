@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategory } from "../store/slices/products/productSlice";
+import { setCategory, setSort } from "../store/slices/products/productSlice";
 import FlexBetween from "./wrappers/FlexBetween";
 
-const CategoryCards = ({ category, icon, apiPath, refetch }) => {
+const CategoryCards = ({ category, icon, apiPath }) => {
   const selectedCategory = useSelector((state) => state.product.category);
   const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -29,7 +29,6 @@ const CategoryCards = ({ category, icon, apiPath, refetch }) => {
           borderRadius: "0.75rem",
         }}
         onClick={() => {
-          refetch();
           dispatch(setCategory(apiPath));
         }}
       >

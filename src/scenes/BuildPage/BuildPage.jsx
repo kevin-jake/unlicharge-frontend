@@ -16,7 +16,6 @@ import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { selectUser } from "../../store/slices/auth/authSlice";
 import {
-  resetSort,
   selectFilters,
   selectInitParams,
   selectPagination,
@@ -43,6 +42,7 @@ function BuildPage() {
       apiPath: "ab",
     },
   ];
+  const dispatch = useDispatch();
   const category = useSelector(({ product }) => product.category);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
@@ -84,7 +84,7 @@ function BuildPage() {
       dispatch(
         setPagination({
           limit: data.limit,
-          page: data.page,
+          page: data.products.length === 0 ? 1 : data.page,
           total: data.total,
         })
       );
@@ -96,11 +96,6 @@ function BuildPage() {
     setFocusedProduct(product);
   };
 
-  const handleSelectCategory = (apiPath) => {
-    dispatch(resetSort());
-    setSelectedCategory(apiPath);
-    refetch();
-  };
   return (
     <PageWrapper title="Estimate your build">
       <Box
@@ -109,7 +104,7 @@ function BuildPage() {
         display="block"
         justifyContent="space-between"
       >
-        <InitialParams category={selectedCategory} refetch={refetch} />
+        <InitialParams refetch={refetch} />
       </Box>
       <Grid container>
         {categories.map(({ name, icon, apiPath }) => (
@@ -133,7 +128,6 @@ function BuildPage() {
           <Grid item xs={12}>
             <FlexBetween>
               <SortFilter
-                category={selectedCategory}
                 isComputedSpecsShown={Boolean(
                   data?.products[0]?.specs.computedSpecs
                 )}
@@ -189,7 +183,7 @@ function BuildPage() {
                   ...crudModalState,
                   operation: "Create",
                   category: categories.filter(
-                    (item) => item.apiPath === selectedCategory
+                    (item) => item.apiPath === category
                   )[0].name,
                   isOpen: true,
                 })

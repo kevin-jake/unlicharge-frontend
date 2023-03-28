@@ -1,4 +1,4 @@
-import { ArrowDownward, ArrowUpward, North, South } from "@mui/icons-material";
+import { North, South } from "@mui/icons-material";
 import {
   Box,
   FormControl,
@@ -13,9 +13,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSort, setSort } from "../store/slices/products/productSlice";
 
-const SortFilter = ({ category, isComputedSpecsShown, refetch }) => {
+const SortFilter = ({ isComputedSpecsShown, refetch }) => {
   const sort = useSelector(selectSort);
   const dispatch = useDispatch();
+  const category = useSelector(({ product }) => product.category);
   const { palette } = useTheme();
   const { sortBy, sortArrangement } = sort || {};
   let menuItemsArray = [

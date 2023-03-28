@@ -18,6 +18,7 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     setCategory: (state, action) => {
+      if (state.category != action.payload) state.sort = initialState.sort;
       state.category = action.payload;
     },
     setInitParams: (state, action) => {
@@ -32,9 +33,6 @@ export const productSlice = createSlice({
     setSort: (state, action) => {
       state.sort = action.payload;
     },
-    resetSort: (state) => {
-      state.sort = initialState.sort;
-    },
   },
 });
 
@@ -44,7 +42,6 @@ export const {
   setFilters,
   setPagination,
   setSort,
-  resetSort,
 } = productSlice.actions;
 
 export const selectInitParams = (state) => state.product.initParams;

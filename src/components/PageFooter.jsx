@@ -13,12 +13,6 @@ import FlexBetween from "./wrappers/FlexBetween";
 
 const PageFooter = ({ page, total, limit = 1, setPagination, isShown }) => {
   const pageNumbers = Math.ceil(total / limit);
-  console.log("🚀 ~ file: PageFooter.jsx:16 ~ PageFooter ~ limit:", limit);
-  console.log("🚀 ~ file: PageFooter.jsx:16 ~ PageFooter ~ total:", total);
-  console.log(
-    "🚀 ~ file: PageFooter.jsx:16 ~ PageFooter ~ pageNumbers:",
-    pageNumbers
-  );
   const handlePageChange = (event, value) => {
     setPagination(value, limit);
   };
