@@ -13,7 +13,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSort, setSort } from "../store/slices/products/productSlice";
 
-const SortFilter = ({ isComputedSpecsShown, refetch }) => {
+const SortFilter = ({ isComputedSpecsShown, refetch, isNonMobileScreens }) => {
   const sort = useSelector(selectSort);
   const dispatch = useDispatch();
   const category = useSelector(({ product }) => product.category);
@@ -68,8 +68,13 @@ const SortFilter = ({ isComputedSpecsShown, refetch }) => {
         display: "flex",
         height: "100%",
       }}
+      marginY={isNonMobileScreens ? "" : "0.5rem"}
+      width={isNonMobileScreens ? "auto" : "100%"}
     >
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+      <FormControl
+        sx={{ m: 1, minWidth: 120, width: isNonMobileScreens ? "" : "100%" }}
+        size="small"
+      >
         <InputLabel id="sort-by">Sort by:</InputLabel>
         <Select
           labelId="sort-by"

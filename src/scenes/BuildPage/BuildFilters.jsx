@@ -27,7 +27,7 @@ import {
   setFilters,
 } from "../../store/slices/products/productSlice";
 
-const BuildFilters = () => {
+const BuildFilters = ({ refetch }) => {
   const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
   const category = useSelector(selectCategory);
@@ -66,6 +66,14 @@ const BuildFilters = () => {
         search: searchBar,
       })
     );
+    if (
+      filters !=
+      {
+        battType: JSON.stringify(battType),
+        search: searchBar,
+      }
+    )
+      refetch();
   };
   return (
     <Box
@@ -96,6 +104,8 @@ const BuildFilters = () => {
               backgroundColor={neutralLight}
               borderRadius="9px"
               padding="0.1rem 1.5rem"
+              marginX="1rem"
+              width="100%"
             >
               <InputBase
                 placeholder="Search..."

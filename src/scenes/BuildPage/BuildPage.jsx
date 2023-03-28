@@ -1,4 +1,11 @@
-import { Box, Button, CircularProgress, Fab, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Fab,
+  Grid,
+  useMediaQuery,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CategoryCards from "../../components/CategoryCards";
 import ProductCards from "../ProductCards/ProductCards";
@@ -28,6 +35,7 @@ import BuildFilters from "./BuildFilters";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import PageFooter from "../../components/PageFooter";
 import { AddCircle } from "@mui/icons-material";
+import NoResults from "../../components/NoResults";
 
 function BuildPage() {
   const categories = [
@@ -44,6 +52,7 @@ function BuildPage() {
     },
   ];
   const dispatch = useDispatch();
+  const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
   const category = useSelector(selectCategory);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
@@ -59,13 +68,14 @@ function BuildPage() {
   const pagination = useSelector(selectPagination);
   const sort = useSelector(selectSort);
   const isLoggedIn = Boolean(useSelector(selectUser));
-  const { data, isLoading, isSuccess, refetch } = useGetProductsQuery({
-    category,
-    initParams,
-    filters,
-    pagination,
-    sort,
-  });
+  const { data, isLoading, isFetching, isSuccess, refetch } =
+    useGetProductsQuery({
+      category,
+      initParams,
+      filters,
+      pagination,
+      sort,
+    });
 
   useEffect(() => {
     refetch();
@@ -127,26 +137,35 @@ function BuildPage() {
           md={isSummaryOpen ? 9 : 12}
         >
           <Grid item xs={12}>
-            <FlexBetween>
+            <FlexBetween flexDirection={isNonMobileScreens ? "row" : "column"}>
               <SortFilter
                 isComputedSpecsShown={Boolean(
                   data?.products[0]?.specs.computedSpecs
                 )}
                 refetch={refetch}
+                isNonMobileScreens={isNonMobileScreens}
               />
-              <BuildFilters category={category} />
+              <BuildFilters refetch={refetch} />
             </FlexBetween>
           </Grid>
-          {isLoading && (
-            <Grid
-              item
-              xs={12}
-              sx={{ display: "flex", justifyContent: "center" }}
-            >
-              <CircularProgress />
-            </Grid>
-          )}
+          {isLoading ||
+            (isFetching && (
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                height="300px"
+              >
+                <CircularProgress />
+              </Grid>
+            ))}
           {isSuccess &&
+            !isFetching &&
+            data.total > 0 &&
             data.products.map((product) => (
               <ProductCards
                 key={product._id}
@@ -158,6 +177,7 @@ function BuildPage() {
                 isSummaryOpen={isSummaryOpen}
               />
             ))}
+          {isSuccess && !isFetching && data.total == 0 && <NoResults />}
         </Grid>
         <Grid
           item
