@@ -6,7 +6,7 @@ export const productApiSlice = api.injectEndpoints({
       query: ({ category, initParams, filters, pagination, sort }) => {
         const { inputVoltage, inputCapacity } = initParams || {};
         const { page, limit } = pagination || {};
-        const { battType, minPrice, maxPrice } = filters || {};
+        const { battType, minPrice, maxPrice, search } = filters || {};
         const { sortBy, sortArrangement } = sort || {};
         return {
           url: `products/${category}`,
@@ -18,6 +18,7 @@ export const productApiSlice = api.injectEndpoints({
             limit,
             sortBy,
             sortArrangement,
+            search,
             battType,
             minPrice,
             maxPrice,

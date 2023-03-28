@@ -20,15 +20,53 @@ import {
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCategory,
+  selectFilters,
+  setFilters,
+} from "../../store/slices/products/productSlice";
 
 const BuildFilters = () => {
+  const dispatch = useDispatch();
+  const filters = useSelector(selectFilters);
+  const category = useSelector(selectCategory);
   const { palette } = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const [expanded, setExpanded] = useState(false);
   const neutralLight = palette.neutral.light;
   const medium = palette.neutral.medium;
 
-  // TODO: Add functionality
+  const [searchBattType, setSearchBattType] = useState({
+    "Lead Acid": false,
+    LiFePo4: false,
+    "Li-On": false,
+  });
+  // TODO: convert this to useRef
+  const [searchBar, setSearchBar] = useState("");
+
+  const handleCheckbox = (e) => {
+    setSearchBattType({
+      ...searchBattType,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
+  const handleSearch = () => {
+    const battType = Object.keys(searchBattType).filter(
+      (prop) => searchBattType[prop]
+    );
+    console.log(
+      "🚀 ~ file: BuildFilters.jsx:60 ~ handleSearch ~ battType:",
+      battType
+    );
+    dispatch(
+      setFilters({
+        battType: JSON.stringify(battType),
+        search: searchBar,
+      })
+    );
+  };
   return (
     <Box
       sx={{
@@ -54,26 +92,32 @@ const BuildFilters = () => {
           }}
         >
           <FlexBetween>
-            <Typography variant="h5">Filters</Typography>
             <FlexBetween
               backgroundColor={neutralLight}
               borderRadius="9px"
               padding="0.1rem 1.5rem"
             >
-              <InputBase placeholder="Search..." />
-              <IconButton>
+              <InputBase
+                placeholder="Search..."
+                value={searchBar}
+                onChange={(e) => setSearchBar(e.target.value)}
+              />
+              <IconButton onClick={handleSearch}>
                 <Search />
               </IconButton>
             </FlexBetween>
+            <Typography variant="h5">Filters</Typography>
           </FlexBetween>
         </AccordionSummary>
         <AccordionDetails>
-          <Button
-            variant="text"
-            sx={{ minWidth: 100, color: medium, textTransform: "none" }}
-          >
-            Clear All
-          </Button>
+          <Box display="flex" justifyContent="flex-end">
+            <Button
+              variant="text"
+              sx={{ minWidth: 100, color: medium, textTransform: "none" }}
+            >
+              Clear All
+            </Button>
+          </Box>
           <FlexBetween margin="5px">
             <Box width="100%">
               <Typography
@@ -118,36 +162,65 @@ const BuildFilters = () => {
                 </Box>
               </FlexBetween>
             </Box>
-            <Divider
-              color={neutralLight}
-              orientation="vertical"
-              variant="middle"
-              flexItem
-            />
-            <Box width="100%" marginX="1rem">
-              <Typography
-                marginTop="5px"
-                color={medium}
-                variant="h6"
-                fontWeight="500"
-              >
-                Battery Type
-              </Typography>
-              <FlexBetween
-                borderRadius="9px"
-                marginBottom="20px"
-                padding="0.1rem 1.5rem"
-              >
-                <FormGroup row>
-                  <FormControlLabel control={<Checkbox />} label="Lead Acid" />
-                  <FormControlLabel control={<Checkbox />} label="LiFePo4" />
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label="Lithium Ion"
-                  />
-                </FormGroup>
-              </FlexBetween>
-            </Box>
+            {/* TODO: Add more filters for BMS and active balancer */}
+            {category === "battery" && (
+              <>
+                <Divider
+                  color={neutralLight}
+                  orientation="vertical"
+                  variant="middle"
+                  flexItem
+                />
+                <Box width="100%" marginX="1rem">
+                  <Typography
+                    marginTop="5px"
+                    color={medium}
+                    variant="h6"
+                    fontWeight="500"
+                  >
+                    Battery Type
+                  </Typography>
+                  <FlexBetween
+                    borderRadius="9px"
+                    marginBottom="20px"
+                    padding="0.1rem 1.5rem"
+                  >
+                    <FormGroup row>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name="Lead Acid"
+                            checked={searchBattType["Lead Acid"]}
+                            onChange={handleCheckbox}
+                          />
+                        }
+                        label="Lead Acid"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name="LiFePo4"
+                            checked={searchBattType["LiFePo4"]}
+                            onChange={handleCheckbox}
+                          />
+                        }
+                        label="LiFePo4"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name="Li-On"
+                            checked={searchBattType["Li-On"]}
+                            onChange={handleCheckbox}
+                          />
+                        }
+                        label="Li-On"
+                      />
+                    </FormGroup>
+                  </FlexBetween>
+                </Box>
+              </>
+            )}
           </FlexBetween>
         </AccordionDetails>
       </Accordion>

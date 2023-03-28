@@ -44,6 +44,7 @@ export const {
   setSort,
 } = productSlice.actions;
 
+export const selectCategory = (state) => state.product.category;
 export const selectInitParams = (state) => state.product.initParams;
 export const selectFilters = (state) => state.product.filters;
 export const selectPagination = (state) => state.product.pagination;

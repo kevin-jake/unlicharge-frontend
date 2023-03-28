@@ -16,6 +16,7 @@ import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { selectUser } from "../../store/slices/auth/authSlice";
 import {
+  selectCategory,
   selectFilters,
   selectInitParams,
   selectPagination,
@@ -43,7 +44,7 @@ function BuildPage() {
     },
   ];
   const dispatch = useDispatch();
-  const category = useSelector(({ product }) => product.category);
+  const category = useSelector(selectCategory);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [focusedProduct, setFocusedProduct] = useState({});
@@ -133,7 +134,7 @@ function BuildPage() {
                 )}
                 refetch={refetch}
               />
-              <BuildFilters />
+              <BuildFilters category={category} />
             </FlexBetween>
           </Grid>
           {isLoading && (
