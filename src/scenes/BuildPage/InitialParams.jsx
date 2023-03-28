@@ -30,11 +30,11 @@ const InitialParams = ({ refetch }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const initialValuesRegister = {
-    batteryVoltage: initParams?.batteryVoltage || "",
-    batteryCapacity: initParams?.batteryCapacity || "",
-    maxVoltage: initParams?.maxVoltage || "",
-    minVoltage: initParams?.minVoltage || "",
-    dod: initParams?.dod || "",
+    inputVoltage: initParams?.inputVoltage || "",
+    inputCapacity: initParams?.inputCapacity || "",
+    inputmaxVoltage: initParams?.inputinputmaxVoltage || "",
+    inputminVoltage: initParams?.inputinputminVoltage || "",
+    inputdod: initParams?.inputdod || "",
   };
 
   const handleCalculate = (values) => {
@@ -80,13 +80,8 @@ const InitialParams = ({ refetch }) => {
                   label="Battery Voltage"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.batteryVoltage}
-                  name="batteryVoltage"
-                  error={
-                    Boolean(touched.batteryVoltage) &&
-                    Boolean(errors.batteryVoltage)
-                  }
-                  helperText={touched.batteryVoltage && errors.batteryVoltage}
+                  value={values.inputVoltage}
+                  name="inputVoltage"
                 >
                   <MenuItem value={12}>12 V</MenuItem>
                   <MenuItem value={24}>24 V</MenuItem>
@@ -97,26 +92,21 @@ const InitialParams = ({ refetch }) => {
                 label="Battery Voltage"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.batteryVoltage}
-                name="batteryVoltage"
+                value={values.inputVoltage}
+                name="inputVoltage"
                 error={
-                  Boolean(touched.batteryVoltage) &&
-                  Boolean(errors.batteryVoltage)
+                  Boolean(touched.inputVoltage) &&
+                  Boolean(errors.inputVoltage)
                 }
-                helperText={touched.batteryVoltage && errors.batteryVoltage}
+                helperText={touched.inputVoltage && errors.inputVoltage}
                 sx={{ gridColumn: "span 6" }}
               /> */}
               <TextField
                 label="Battery Capacity"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.batteryCapacity}
-                name="batteryCapacity"
-                error={
-                  Boolean(touched.batteryCapacity) &&
-                  Boolean(errors.batteryCapacity)
-                }
-                helperText={touched.batteryCapacity && errors.batteryCapacity}
+                value={values.inputCapacity}
+                name="inputCapacity"
                 sx={{ gridColumn: "span 6" }}
               />
               <Accordion sx={{ gridColumn: "span 12", boxShadow: 0 }}>
@@ -144,24 +134,24 @@ const InitialParams = ({ refetch }) => {
                       label="Max. Voltage"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.maxVoltage}
-                      name="maxVoltage"
+                      value={values.inputmaxVoltage}
+                      name="inputmaxVoltage"
                       sx={{ gridColumn: "span 4" }}
                     />
                     <TextField
                       label="Min. Voltage"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.minVoltage}
-                      name="minVoltage"
+                      value={values.inputminVoltage}
+                      name="inputminVoltage"
                       sx={{ gridColumn: "span 4" }}
                     />
                     <TextField
                       label="DOD"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.dod}
-                      name="dod"
+                      value={values.inputdod}
+                      name="inputdod"
                       sx={{ gridColumn: "span 4" }}
                     />
                   </Box>
