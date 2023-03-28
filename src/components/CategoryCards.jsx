@@ -8,16 +8,13 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategory } from "../store/slices/products/productSlice";
 import FlexBetween from "./wrappers/FlexBetween";
 
-const CategoryCards = ({
-  category,
-  icon,
-  apiPath,
-  refetch,
-  selectedCategory,
-  setSelectedCategory,
-}) => {
+const CategoryCards = ({ category, icon, apiPath, refetch }) => {
+  const selectedCategory = useSelector((state) => state.product.category);
+  const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
 
@@ -33,7 +30,7 @@ const CategoryCards = ({
         }}
         onClick={() => {
           refetch();
-          setSelectedCategory(apiPath);
+          dispatch(setCategory(apiPath));
         }}
       >
         <CardActionArea>

@@ -43,16 +43,14 @@ function BuildPage() {
       apiPath: "ab",
     },
   ];
-  const dispatch = useDispatch();
-  const [selectedCategory, setSelectedCategory] = useState("battery");
+  const category = useSelector(({ product }) => product.category);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [focusedProduct, setFocusedProduct] = useState({});
   const [crudModalState, setCrudModalState] = useState({
     isOpen: false,
     operation: "Create",
-    category: categories.filter((item) => item.apiPath === selectedCategory)[0]
-      .name,
+    category: categories.filter((item) => item.apiPath === category)[0].name,
     oldValues: {},
   });
   const initParams = useSelector(selectInitParams);
@@ -61,7 +59,7 @@ function BuildPage() {
   const sort = useSelector(selectSort);
   const isLoggedIn = Boolean(useSelector(selectUser));
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery({
-    category: selectedCategory,
+    category,
     initParams,
     filters,
     pagination,
@@ -121,8 +119,6 @@ function BuildPage() {
             apiPath={apiPath}
             icon={icon}
             refetch={refetch}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={handleSelectCategory}
           />
         ))}
       </Grid>
@@ -249,8 +245,7 @@ function BuildPage() {
           productId={focusedProduct?._id}
           setCrudModalState={setCrudModalState}
           category={
-            categories.filter((item) => item.apiPath === selectedCategory)[0]
-              .name
+            categories.filter((item) => item.apiPath === category)[0].name
           }
         />
       </DialogWrapper>

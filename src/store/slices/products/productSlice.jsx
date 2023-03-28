@@ -38,8 +38,14 @@ export const productSlice = createSlice({
   },
 });
 
-export const { setInitParams, setFilters, setPagination, setSort, resetSort } =
-  productSlice.actions;
+export const {
+  setCategory,
+  setInitParams,
+  setFilters,
+  setPagination,
+  setSort,
+  resetSort,
+} = productSlice.actions;
 
 export const selectInitParams = (state) => state.product.initParams;
 export const selectFilters = (state) => state.product.filters;
