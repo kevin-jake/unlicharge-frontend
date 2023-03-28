@@ -83,6 +83,7 @@ const InitialParams = ({ refetch }) => {
                   value={values.inputVoltage}
                   name="inputVoltage"
                 >
+                  <MenuItem value="">None</MenuItem>
                   <MenuItem value={12}>12 V</MenuItem>
                   <MenuItem value={24}>24 V</MenuItem>
                   <MenuItem value={48}>48 V</MenuItem>

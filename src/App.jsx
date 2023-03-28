@@ -16,6 +16,7 @@ import {
 } from "./store/slices/auth/authSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { resetSortPageFilters } from "./store/slices/products/productSlice";
 
 let logoutTimer;
 
@@ -27,6 +28,7 @@ function App() {
 
   const logout = useCallback(() => {
     dispatch(setLogout());
+    dispatch(resetSortPageFilters());
   }, []);
 
   useEffect(() => {

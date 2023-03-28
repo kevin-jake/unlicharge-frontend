@@ -35,6 +35,9 @@ export const productSlice = createSlice({
     setSort: (state, action) => {
       state.sort = action.payload;
     },
+    resetSortPageFilters: (state) => {
+      state = initialState;
+    },
   },
 });
 
@@ -44,6 +47,7 @@ export const {
   setFilters,
   setPagination,
   setSort,
+  resetSortPageFilters,
 } = productSlice.actions;
 
 export const selectCategory = (state) => state.product.category;

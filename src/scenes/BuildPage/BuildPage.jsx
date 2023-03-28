@@ -76,11 +76,6 @@ function BuildPage() {
       pagination,
       sort,
     });
-  console.log(
-    "🚀 ~ file: BuildPage.jsx:72 ~ BuildPage ~ isLoading:",
-    isLoading
-  );
-
   useEffect(() => {
     refetch();
   }, [isLoggedIn]);
@@ -223,7 +218,7 @@ function BuildPage() {
       <Grid item xs={12}>
         <PageFooter
           {...pagination}
-          isShown={data?.products.length > 0}
+          isShown={data?.products.length > 0 && !isLoading && !isFetching}
           setPagination={(page, limit) => {
             dispatch(
               setPagination({
