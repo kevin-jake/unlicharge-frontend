@@ -4,17 +4,24 @@ export const productApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: ({ category, initParams, filters, pagination, sort }) => {
-        console.log(
-          "🚀 ~ file: productApiSlice.jsx:17 ~ pagination:",
-          pagination
-        );
         const { inputVoltage, inputCapacity } = initParams || {};
         const { page, limit } = pagination || {};
         const { battType, minPrice, maxPrice } = filters || {};
+        const { sortBy, sortArrangement } = sort || {};
         return {
           url: `products/${category}`,
           method: "GET",
-          params: { inputVoltage, inputCapacity, page, limit },
+          params: {
+            inputVoltage,
+            inputCapacity,
+            page,
+            limit,
+            sortBy,
+            sortArrangement,
+            battType,
+            minPrice,
+            maxPrice,
+          },
         };
       },
     }),

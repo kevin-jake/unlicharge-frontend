@@ -16,9 +16,11 @@ import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { selectUser } from "../../store/slices/auth/authSlice";
 import {
+  resetSort,
   selectFilters,
   selectInitParams,
   selectPagination,
+  selectSort,
   setFilters,
   setPagination,
 } from "../../store/slices/products/productSlice";
@@ -56,15 +58,15 @@ function BuildPage() {
   const initParams = useSelector(selectInitParams);
   const filters = useSelector(selectFilters);
   const pagination = useSelector(selectPagination);
+  const sort = useSelector(selectSort);
   const isLoggedIn = Boolean(useSelector(selectUser));
-
   const { data, isLoading, isSuccess, refetch } = useGetProductsQuery({
     category: selectedCategory,
-    initParams: JSON.stringify(initParams),
-    filters: JSON.stringify(filters),
-    pagination: JSON.stringify(pagination),
+    initParams,
+    filters,
+    pagination,
+    sort,
   });
-  console.log("🚀 ~ file: BuildPage.jsx:48 ~ BuildPage ~ data:", data);
 
   useEffect(() => {
     refetch();
@@ -95,6 +97,12 @@ function BuildPage() {
     setIsProductModalOpen(true);
     setFocusedProduct(product);
   };
+
+  const handleSelectCategory = (apiPath) => {
+    dispatch(resetSort());
+    setSelectedCategory(apiPath);
+    refetch();
+  };
   return (
     <PageWrapper title="Estimate your build">
       <Box
@@ -114,7 +122,7 @@ function BuildPage() {
             icon={icon}
             refetch={refetch}
             selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
+            setSelectedCategory={handleSelectCategory}
           />
         ))}
       </Grid>
@@ -128,7 +136,13 @@ function BuildPage() {
         >
           <Grid item xs={12}>
             <FlexBetween>
-              <SortFilter />
+              <SortFilter
+                category={selectedCategory}
+                isComputedSpecsShown={Boolean(
+                  data?.products[0]?.specs.computedSpecs
+                )}
+                refetch={refetch}
+              />
               <BuildFilters />
             </FlexBetween>
           </Grid>
@@ -193,6 +207,7 @@ function BuildPage() {
       <Grid item xs={12}>
         <PageFooter
           {...pagination}
+          isShown={data?.products.length > 0}
           setPagination={(page, limit) => {
             dispatch(
               setPagination({

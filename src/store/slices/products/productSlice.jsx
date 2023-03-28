@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  category: "battery",
   initParams: {},
   pagination: {
     limit: 5,
@@ -16,6 +17,9 @@ export const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
+    setCategory: (state, action) => {
+      state.category = action.payload;
+    },
     setInitParams: (state, action) => {
       state.initParams = action.payload;
     },
@@ -26,16 +30,15 @@ export const productSlice = createSlice({
       state.pagination = action.payload;
     },
     setSort: (state, action) => {
-      console.log(
-        "🚀 ~ file: productSlice.jsx:30 ~ action.payload:",
-        action.payload
-      );
       state.sort = action.payload;
+    },
+    resetSort: (state) => {
+      state.sort = initialState.sort;
     },
   },
 });
 
-export const { setInitParams, setFilters, setPagination, setSort } =
+export const { setInitParams, setFilters, setPagination, setSort, resetSort } =
   productSlice.actions;
 
 export const selectInitParams = (state) => state.product.initParams;
