@@ -15,19 +15,44 @@ import {
 } from "@mui/material";
 import { Formik } from "formik";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectInitParams,
+  selectSelection,
   setInitParams,
+  setUpdatedBatt,
 } from "../../store/slices/buildpage/buildpageSlice";
+import { useGetBatteryQuery } from "../../store/slices/products/productApiSlice";
 
-const InitialParams = ({ refetch }) => {
+const InitialParams = () => {
   const dispatch = useDispatch();
   const initParams = useSelector(selectInitParams);
+  const { battery } = useSelector(selectSelection);
   const { palette } = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [skip, setSkip] = useState(true);
+
+  const { data, isSuccess } = useGetBatteryQuery(
+    {
+      initParams,
+      selectedBatt: battery?.id,
+    },
+    {
+      skip,
+    }
+  );
+
+  console.log("🚀 ~ file: InitialParams.jsx:35 ~ InitialParams ~ skip:", skip);
+  console.log("🚀 ~ file: InitialParams.jsx:36 ~ InitialParams ~ data:", data);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setUpdatedBatt(data));
+      setSkip(true);
+    }
+  }, [data]);
 
   const initialValuesRegister = {
     inputVoltage: initParams?.inputVoltage || "",
@@ -39,7 +64,7 @@ const InitialParams = ({ refetch }) => {
 
   const handleCalculate = (values) => {
     dispatch(setInitParams(values));
-    refetch();
+    setSkip(false);
   };
 
   return (

@@ -27,9 +27,10 @@ import {
   selectFilters,
   selectInitParams,
   selectPagination,
+  selectSelection,
   selectSort,
-  setFilters,
   setPagination,
+  setSelectedProduct,
 } from "../../store/slices/buildpage/buildpageSlice";
 import BuildFilters from "./BuildFilters";
 import FlexBetween from "../../components/wrappers/FlexBetween";
@@ -52,6 +53,12 @@ function BuildPage() {
     },
   ];
   const dispatch = useDispatch();
+  const initParams = useSelector(selectInitParams);
+  const selectedItems = useSelector(selectSelection);
+  const filters = useSelector(selectFilters);
+  const pagination = useSelector(selectPagination);
+  const sort = useSelector(selectSort);
+  const isLoggedIn = Boolean(useSelector(selectUser));
   const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
   const category = useSelector(selectCategory);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
@@ -63,11 +70,7 @@ function BuildPage() {
     category: categories.filter((item) => item.apiPath === category)[0].name,
     oldValues: {},
   });
-  const initParams = useSelector(selectInitParams);
-  const filters = useSelector(selectFilters);
-  const pagination = useSelector(selectPagination);
-  const sort = useSelector(selectSort);
-  const isLoggedIn = Boolean(useSelector(selectUser));
+
   const { data, isLoading, isFetching, isSuccess, isError, refetch } =
     useGetProductsQuery({
       category,
@@ -76,7 +79,6 @@ function BuildPage() {
       pagination,
       sort,
     });
-  console.log("🚀 ~ file: BuildPage.jsx:72 ~ BuildPage ~ data:", data);
 
   useEffect(() => {
     refetch();
@@ -88,6 +90,21 @@ function BuildPage() {
         (item) => item._id === focusedProduct?._id
       );
       setFocusedProduct(newFocus[0]);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      const newSelection = data.products.filter(
+        (item) => item.specs.id === selectedItems[category].id
+      );
+      console.log(
+        "🚀 ~ file: BuildPage.jsx:101 ~ useEffect ~ newSelection:",
+        newSelection
+      );
+      if (newSelection.length) {
+        dispatch(setSelectedProduct(newSelection[0].specs));
+      }
     }
   }, [data]);
 

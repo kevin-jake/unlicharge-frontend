@@ -26,6 +26,19 @@ export const productApiSlice = api.injectEndpoints({
         };
       },
     }),
+    getBattery: builder.query({
+      query: ({ initParams, selectedBatt }) => {
+        const { inputVoltage, inputCapacity } = initParams || {};
+        return {
+          url: `products/battSpec/${selectedBatt}`,
+          method: "GET",
+          params: {
+            inputVoltage,
+            inputCapacity,
+          },
+        };
+      },
+    }),
     createProductRequest: builder.mutation({
       query: ({ category, specs }) => ({
         url: `products/${category}`,
@@ -36,5 +49,8 @@ export const productApiSlice = api.injectEndpoints({
   }),
 });
 
-export const { useGetProductsQuery, useCreateProductRequestMutation } =
-  productApiSlice;
+export const {
+  useGetProductsQuery,
+  useGetBatteryQuery,
+  useCreateProductRequestMutation,
+} = productApiSlice;
