@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectInitParams,
   setInitParams,
-} from "../../store/slices/products/productSlice";
+} from "../../store/slices/buildpage/buildpageSlice";
 
 const InitialParams = ({ refetch }) => {
   const dispatch = useDispatch();

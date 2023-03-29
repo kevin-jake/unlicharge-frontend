@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategory, setSort } from "../store/slices/products/productSlice";
+import { setCategory, setSort } from "../store/slices/buildpage/buildpageSlice";
 import FlexBetween from "./wrappers/FlexBetween";
 
 const CategoryCards = ({ category, icon, apiPath }) => {

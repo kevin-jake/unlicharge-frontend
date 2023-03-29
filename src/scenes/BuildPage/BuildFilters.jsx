@@ -25,7 +25,7 @@ import {
   selectCategory,
   selectFilters,
   setFilters,
-} from "../../store/slices/products/productSlice";
+} from "../../store/slices/buildpage/buildpageSlice";
 
 const BuildFilters = ({ refetch }) => {
   const dispatch = useDispatch();

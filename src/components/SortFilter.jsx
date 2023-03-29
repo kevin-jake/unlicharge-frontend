@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSort, setSort } from "../store/slices/products/productSlice";
+import { selectSort, setSort } from "../store/slices/buildpage/buildpageSlice";
 
 const SortFilter = ({ isComputedSpecsShown, refetch, isNonMobileScreens }) => {
   const sort = useSelector(selectSort);

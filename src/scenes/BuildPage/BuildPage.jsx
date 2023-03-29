@@ -30,7 +30,7 @@ import {
   selectSort,
   setFilters,
   setPagination,
-} from "../../store/slices/products/productSlice";
+} from "../../store/slices/buildpage/buildpageSlice";
 import BuildFilters from "./BuildFilters";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import PageFooter from "../../components/PageFooter";
