@@ -27,10 +27,6 @@ const ProductDialogContent = ({
   const { palette } = useTheme();
   const selectedCategory = useSelector(selectCategory);
   const selectedItems = useSelector(selectSelection);
-  console.log(
-    "🚀 ~ file: ProductDialogContent.jsx:27 ~ selectedItems:",
-    selectedItems
-  );
   const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, __v, id, updatedAt, createdAt, computedSpecs, ...specsRest } =
@@ -53,6 +49,14 @@ const ProductDialogContent = ({
           tabComp: <CompleteSpecs specs={specs} />,
         },
       ];
+
+  const isSelected = selectedItems[selectedCategory].id !== specs.id;
+
+  const handleSelection = () => {
+    if (isSelected) dispatch(setSelectedProduct(specs));
+    else dispatch(setSelectedProduct({}));
+  };
+
   return (
     <>
       <DialogContent
@@ -99,12 +103,8 @@ const ProductDialogContent = ({
       </DialogContent>
       <DialogActions sx={{ justifyContent: "space-between" }}>
         <Box>
-          <Button
-            variant="contained"
-            autoFocus
-            onClick={() => dispatch(setSelectedProduct(specs))}
-          >
-            Select
+          <Button autoFocus onClick={handleSelection} variant="contained">
+            {isSelected ? "Select" : "Deselect"}
           </Button>
         </Box>
         <Box sx={{ gap: 2 }}>

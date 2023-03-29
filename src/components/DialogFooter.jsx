@@ -18,8 +18,15 @@ const DialogFooter = ({
   isRequest,
   specs,
 }) => {
+  const selectedCategory = useSelector(selectCategory);
   const selectedItems = useSelector(selectSelection);
   const dispatch = useDispatch();
+  const isSelected = selectedItems[selectedCategory].id !== specs.id;
+
+  const handleSelection = () => {
+    if (isSelected) dispatch(setSelectedProduct(specs));
+    else dispatch(setSelectedProduct({}));
+  };
 
   return (
     <FlexBetween gap="0.3rem">
@@ -74,11 +81,8 @@ const DialogFooter = ({
         )}
       </FlexBetween>
       {isProduct && (
-        <Button
-          onClick={() => dispatch(setSelectedProduct(specs))}
-          variant="contained"
-        >
-          Select
+        <Button onClick={handleSelection} variant="contained">
+          {isSelected ? "Select" : "Deselect"}
         </Button>
       )}
     </FlexBetween>
