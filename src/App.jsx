@@ -16,7 +16,7 @@ import {
 } from "./store/slices/auth/authSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { resetSortPageFilters } from "./store/slices/products/productSlice";
+import { resetSortPageFilters } from "./store/slices/buildpage/buildpageSlice";
 
 let logoutTimer;
 

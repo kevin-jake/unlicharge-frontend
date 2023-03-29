@@ -11,10 +11,20 @@ const initialState = {
     sortBy: "name",
     sortArrangement: "asc",
   },
+  selection: {
+    battery: {},
+    bms: {},
+    ab: {},
+  },
+  issues: {
+    battery: [],
+    bms: [],
+    ab: [],
+  },
 };
 
-export const productSlice = createSlice({
-  name: "product",
+export const buildSlice = createSlice({
+  name: "build",
   initialState,
   reducers: {
     setCategory: (state, action) => {
@@ -35,6 +45,12 @@ export const productSlice = createSlice({
     setSort: (state, action) => {
       state.sort = action.payload;
     },
+    setSelectedProduct: (state, action) => {
+      state.selection[state.category] = action.payload;
+    },
+    setIssues: (state, action) => {
+      state.selection.ab = action.payload;
+    },
     resetSortPageFilters: (state) => {
       state = initialState;
     },
@@ -47,13 +63,16 @@ export const {
   setFilters,
   setPagination,
   setSort,
+  setSelectedProduct,
   resetSortPageFilters,
-} = productSlice.actions;
+} = buildSlice.actions;
 
-export const selectCategory = (state) => state.product.category;
-export const selectInitParams = (state) => state.product.initParams;
-export const selectFilters = (state) => state.product.filters;
-export const selectPagination = (state) => state.product.pagination;
-export const selectSort = (state) => state.product.sort;
+export const selectCategory = (state) => state.build.category;
+export const selectInitParams = (state) => state.build.initParams;
+export const selectFilters = (state) => state.build.filters;
+export const selectPagination = (state) => state.build.pagination;
+export const selectSort = (state) => state.build.sort;
+export const selectSelection = (state) => state.build.selection;
+export const selectIssues = (state) => state.build.issues;
 
-export default productSlice.reducer;
+export default buildSlice.reducer;

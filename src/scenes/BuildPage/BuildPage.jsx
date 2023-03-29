@@ -172,7 +172,6 @@ function BuildPage() {
                 key={product._id}
                 openModal={() => handleOpenProductModal(product)}
                 publishStatus={product.publishStatus}
-                productId={product._id}
                 specs={product.specs}
                 creator={product.creator}
                 isSummaryOpen={isSummaryOpen}

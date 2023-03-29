@@ -3,15 +3,24 @@ import React from "react";
 import UserImage from "./UserImage";
 import FlexBetween from "./wrappers/FlexBetween";
 import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCategory,
+  selectSelection,
+  setSelectedProduct,
+} from "../store/slices/buildpage/buildpageSlice";
 
 const DialogFooter = ({
   userName,
-  lastUpdated,
   createdAt,
   userImage,
   isProduct,
   isRequest,
+  specs,
 }) => {
+  const selectedItems = useSelector(selectSelection);
+  const dispatch = useDispatch();
+
   return (
     <FlexBetween gap="0.3rem">
       <FlexBetween gap="0.5rem">
@@ -27,7 +36,7 @@ const DialogFooter = ({
             <Typography variant="body"> {userName}</Typography>
             <Typography variant="caption">
               {" "}
-              {moment(lastUpdated).fromNow()}
+              {moment(specs.lastUpdated).fromNow()}
             </Typography>
           </Box>
         )}
@@ -58,13 +67,20 @@ const DialogFooter = ({
                 Request Created: {moment(createdAt).format("lll")}
               </Typography>
               <Typography variant="caption">
-                Udated: {moment(lastUpdated).fromNow()}
+                Udated: {moment(specs.lastUpdated).fromNow()}
               </Typography>
             </Box>
           </Box>
         )}
       </FlexBetween>
-      {isProduct && <Button variant="contained">Select</Button>}
+      {isProduct && (
+        <Button
+          onClick={() => dispatch(setSelectedProduct(specs))}
+          variant="contained"
+        >
+          Select
+        </Button>
+      )}
     </FlexBetween>
   );
 };

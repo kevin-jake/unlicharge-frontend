@@ -11,12 +11,16 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSort, setSort } from "../store/slices/buildpage/buildpageSlice";
+import {
+  selectCategory,
+  selectSort,
+  setSort,
+} from "../store/slices/buildpage/buildpageSlice";
 
 const SortFilter = ({ isComputedSpecsShown, refetch, isNonMobileScreens }) => {
   const sort = useSelector(selectSort);
   const dispatch = useDispatch();
-  const category = useSelector(({ product }) => product.category);
+  const category = useSelector(selectCategory);
   const { palette } = useTheme();
   const { sortBy, sortArrangement } = sort || {};
   let menuItemsArray = [

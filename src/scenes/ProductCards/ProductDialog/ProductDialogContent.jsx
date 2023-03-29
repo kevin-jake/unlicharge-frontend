@@ -5,12 +5,18 @@ import {
   DialogContent,
   Grid,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import CompleteSpecs from "./CompleteSpecs";
 import ItemTabs from "../../../components/ItemTabs";
 import PriceCompute from "../PriceCompute";
-import { toast } from "react-toastify";
+import {
+  selectCategory,
+  selectSelection,
+  setSelectedProduct,
+} from "../../../store/slices/buildpage/buildpageSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProductDialogContent = ({
   specs,
@@ -18,11 +24,17 @@ const ProductDialogContent = ({
   setCrudModalState,
   category,
 }) => {
-  console.log("🚀 ~ file: ProductDialogContent.jsx:23 ~ specs:", specs);
+  const { palette } = useTheme();
+  const selectedCategory = useSelector(selectCategory);
+  const selectedItems = useSelector(selectSelection);
+  console.log(
+    "🚀 ~ file: ProductDialogContent.jsx:27 ~ selectedItems:",
+    selectedItems
+  );
+  const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, __v, id, updatedAt, createdAt, computedSpecs, ...specsRest } =
     specs;
-  console.log("🚀 ~ file: ProductDialogContent.jsx:34 ~ specsRest:", specsRest);
 
   const tabArray = Boolean(specs.computedSpecs)
     ? [
@@ -43,7 +55,15 @@ const ProductDialogContent = ({
       ];
   return (
     <>
-      <DialogContent dividers>
+      <DialogContent
+        sx={{
+          backgroundColor:
+            selectedItems[selectedCategory].id === specs.id
+              ? palette.primary.darkest
+              : "",
+        }}
+        dividers
+      >
         <Grid
           item
           xs
@@ -79,7 +99,11 @@ const ProductDialogContent = ({
       </DialogContent>
       <DialogActions sx={{ justifyContent: "space-between" }}>
         <Box>
-          <Button variant="contained" autoFocus>
+          <Button
+            variant="contained"
+            autoFocus
+            onClick={() => dispatch(setSelectedProduct(specs))}
+          >
             Select
           </Button>
         </Box>

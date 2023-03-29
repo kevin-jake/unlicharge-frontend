@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ProductName from "./ProductName";
 import PriceCompute from "./PriceCompute";
 import QuickSpecs from "./QuickSpecs";
@@ -9,22 +9,34 @@ import { numberWithCommas } from "../../util/numberFormats";
 import DialogFooter from "../../components/DialogFooter";
 import ReactCardFlip from "react-card-flip";
 import { useState } from "react";
+import {
+  selectCategory,
+  selectSelection,
+} from "../../store/slices/buildpage/buildpageSlice";
 
 // TODO: Add color-coding and in SortFilter add filters for Requests, Approved and Deleted
 const ProductCards = ({
-  productId,
   specs,
   publishStatus,
   creator,
   openModal,
   isSummaryOpen,
 }) => {
-  const dispatch = useDispatch();
+  const selectedItems = useSelector(selectSelection);
+  const category = useSelector(selectCategory);
+
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
   const [isFlipped, setIsFlipped] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
+
+  const backgroundColor =
+    publishStatus === "Request"
+      ? `${palette.compliment.main} !important`
+      : selectedItems[category].id === specs.id
+      ? `${palette.primary.dark} !important`
+      : palette.background.alt;
 
   const handleFlip = () => {
     setIsFlipped((prevIsFlipped) => !prevIsFlipped);
@@ -35,9 +47,7 @@ const ProductCards = ({
       <WidgetWrapper
         m="0.25rem"
         sx={{
-          backgroundColor:
-            publishStatus === "Request" &&
-            `${palette.compliment.main} !important`,
+          backgroundColor,
         }}
       >
         <ProductName
@@ -129,7 +139,7 @@ const ProductCards = ({
           isProduct={true}
           userImage={creator.imagePath}
           userName={creator.username}
-          lastUpdated={specs.updatedAt}
+          specs={specs}
         />
       </WidgetWrapper>
     </Grid>
