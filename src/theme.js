@@ -53,6 +53,8 @@ export const themeSettings = (mode) => {
               dark: colorTokens.primary[800],
               main: colorTokens.primary[500],
               light: colorTokens.primary[200],
+              selectedCat: "#296c29",
+              selectedCard: "#296c29",
             },
             compliment: {
               dark: colorTokens.compliment[800],
@@ -70,6 +72,9 @@ export const themeSettings = (mode) => {
               default: colorTokens.grey[900],
               alt: colorTokens.grey[800],
             },
+            error: { main: "#5e0000", light: "#533232" },
+            warning: { main: "#503600", light: "#533232" },
+            info: { main: "#503600", light: "#314656" },
           }
         : {
             // palette values for light mode
@@ -78,6 +83,8 @@ export const themeSettings = (mode) => {
               dark: colorTokens.primary[700],
               main: colorTokens.primary[800],
               light: colorTokens.primary[500],
+              selectedCat: "#296c29",
+              selectedCard: "#87d98775",
             },
             compliment: {
               dark: colorTokens.compliment[100],
@@ -95,6 +102,9 @@ export const themeSettings = (mode) => {
               default: colorTokens.grey[10],
               alt: colorTokens.grey[0],
             },
+            error: { main: "#ffc6c0", light: "#824e4e" },
+            warning: { main: "#ffffc0", light: "#69701d" },
+            info: { main: "#c0f5ff", light: "#1d6670" },
           }),
     },
     typography: {

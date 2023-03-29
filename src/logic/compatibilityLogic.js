@@ -13,52 +13,57 @@ const areBatteryAndBMSNotCompatible = (selected_battery, selected_bms) => {
       dischargeCurrent,
     } = selected_bms || {};
     const {
-      totalParallel,
+      totalSeries,
       totalchargeCrate,
       totalDischargeCRate,
       // totalMaxDischargeCRate,
     } = selected_battery.computedSpecs || {};
 
-    //   Check string compatibility
-    if (totalParallel !== selected_bms.strings) {
-      const message = `BMS strings is ${selected_bms.strings} the battery pack needs ${totalParallel}`;
-      issues.battery.push({ message, severity: "error" });
-      issues.bms.push({ message, severity: "error" });
+    if (
+      Boolean(selected_battery.computedSpecs) &&
+      selected_battery.battType !== "Lead Acid"
+    ) {
+      //   Check string compatibility
+      if (totalSeries !== selected_bms.strings) {
+        const message = `BMS strings is ${selected_bms.strings} the battery pack needs ${totalSeries}`;
+        issues.battery.push({ message, severity: "error" });
+        issues.bms.push({ message, severity: "error" });
+      }
+
+      // Check charge rate compatibility
+      if (totalchargeCrate < chargeCurrent) {
+        const message = `BMS charge current is higher than the allowed battery charging current based from C rate. Ideal BMS charge current must be ${totalchargeCrate} A or below.`;
+        issues.battery.push({ message, severity: "warning" });
+        issues.bms.push({ message, severity: "warning" });
+      }
+
+      // Check discharge rate compatibility
+      if (totalDischargeCRate < dischargeCurrent) {
+        const message = `BMS discharge current is higher than the allowed battery discharging current based from C rate. Ideal BMS discharge current must be ${totalDischargeCRate} A or below.`;
+        issues.battery.push({ message, severity: "warning" });
+        issues.bms.push({ message, severity: "warning" });
+      }
     }
 
     // Check if BMS battery type is equal to battery selected_battery.battType
-    if (selected_battery.battType !== bmsBattType) {
+    if (
+      selected_battery.battType !== bmsBattType &&
+      selected_battery.battType !== "Lead Acid"
+    ) {
       const message = `Battery type is different from the selected BMS battery type parameter.`;
       issues.battery.push({ message, severity: "warning" });
       issues.bms.push({ message, severity: "warning" });
     }
 
-    // Check charge rate compatibility
+    //   Check if BMS is needed
     if (
-      selected_battery.battType !== "Lead Acid" &&
-      totalchargeCrate < chargeCurrent
+      selected_battery.battType === "Lead Acid" &&
+      selected_bms.hasOwnProperty("id")
     ) {
-      const message = `BMS charge current is higher than the allowed battery charging current based from C rate. Ideal BMS charge current must be ${totalchargeCrate} A or below.`;
+      const message = `Lead Acid batteries might not need a BMS`;
       issues.battery.push({ message, severity: "warning" });
       issues.bms.push({ message, severity: "warning" });
     }
-
-    // Check discharge rate compatibility
-    if (
-      selected_battery.battType !== "Lead Acid" &&
-      totalDischargeCRate < dischargeCurrent
-    ) {
-      const message = `BMS discharge current is higher than the allowed battery discharging current based from C rate. Ideal BMS discharge current must be ${totalDischargeCRate} A or below.`;
-      issues.battery.push({ message, severity: "warning" });
-      issues.bms.push({ message, severity: "warning" });
-    }
-  }
-
-  //   Check if BMS is needed
-  if (selected_battery.battType === "Lead Acid" && Boolean(selected_bms)) {
-    const message = `Lead Acid batteries might not need a BMS`;
-    issues.battery.push({ message, severity: "warning" });
-    issues.bms.push({ message, severity: "warning" });
   }
 
   if (issues.battery.length || issues.bms.length) {
@@ -80,11 +85,22 @@ const areBatteryAndABNotCompatible = (selected_battery, selected_ab) => {
   ) {
     if (
       Boolean(selected_battery.computedSpecs) &&
-      selected_battery.computedSpecs.totalParallel !== selected_ab.strings
+      selected_battery.battType !== "Lead Acid" &&
+      selected_battery.computedSpecs.totalSeries !== selected_ab.strings
     ) {
-      const message = `BMS strings is ${selected_ab.strings} the battery pack needs ${selected_battery.computedSpecs.totalParallel}`;
+      const message = `Active Balancer strings is ${selected_ab.strings} the battery pack needs ${selected_battery.computedSpecs.totalSeries}`;
       issues.battery.push({ message, severity: "error" });
       issues.ab.push({ message, severity: "error" });
+    }
+
+    //   Check if AB is needed
+    if (
+      selected_battery.battType === "Lead Acid" &&
+      selected_ab.hasOwnProperty("id")
+    ) {
+      const message = `Lead Acid batteries might not need an Active Balancer`;
+      issues.battery.push({ message, severity: "warning" });
+      issues.ab.push({ message, severity: "warning" });
     }
   }
   if (issues.battery.length || issues.ab.length) {
