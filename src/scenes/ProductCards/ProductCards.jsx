@@ -24,7 +24,6 @@ const ProductCards = ({
 }) => {
   const selectedItems = useSelector(selectSelection);
   const category = useSelector(selectCategory);
-
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;

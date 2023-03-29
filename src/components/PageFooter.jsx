@@ -11,7 +11,7 @@ import {
 import React from "react";
 import FlexBetween from "./wrappers/FlexBetween";
 
-const PageFooter = ({ page, total, limit = 1, setPagination, isShown }) => {
+const PageFooter = ({ page = 1, total, limit = 1, setPagination, isShown }) => {
   const pageNumbers = Math.ceil(total / limit);
   const handlePageChange = (event, value) => {
     setPagination(value, limit);

@@ -34,10 +34,10 @@ const CategoryCards = ({ category, icon, apiPath }) => {
   if (errors.length) backgroundColor = palette.error.main;
   else if (errors.length && selectedCategory === apiPath)
     backgroundColor = palette.error.light;
-  console.log(
-    "🚀 ~ file: CategoryCards.jsx:23 ~ CategoryCards ~ issues:",
-    issues
-  );
+  // console.log(
+  //   "🚀 ~ file: CategoryCards.jsx:23 ~ CategoryCards ~ issues:",
+  //   issues
+  // );
   return (
     <Grid item xs={4} padding="1rem">
       <Card
