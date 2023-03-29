@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { areProductsCompatible } from "../../../logic/compatibilityLogic";
 
 const initialState = {
   category: "battery",
@@ -47,9 +48,15 @@ export const buildSlice = createSlice({
     },
     setSelectedProduct: (state, action) => {
       state.selection[state.category] = action.payload;
-    },
-    setIssues: (state, action) => {
-      state.selection.ab = action.payload;
+      state.issues = areProductsCompatible(
+        state.selection.battery,
+        state.selection.bms,
+        state.selection.ab
+      );
+      console.log(
+        "🚀 ~ file: buildpageSlice.jsx:52 ~ state.issues:",
+        state.issues
+      );
     },
     resetSortPageFilters: (state) => {
       state = initialState;

@@ -26,6 +26,10 @@ const ProductDialogContent = ({
 }) => {
   const { palette } = useTheme();
   const selectedCategory = useSelector(selectCategory);
+  console.log(
+    "🚀 ~ file: ProductDialogContent.jsx:29 ~ selectedCategory:",
+    selectedCategory
+  );
   const selectedItems = useSelector(selectSelection);
   const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");

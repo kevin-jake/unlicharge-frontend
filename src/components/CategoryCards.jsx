@@ -11,14 +11,20 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectCategory,
+  selectIssues,
   setCategory,
 } from "../store/slices/buildpage/buildpageSlice";
 import FlexBetween from "./wrappers/FlexBetween";
 
 const CategoryCards = ({ category, icon, apiPath }) => {
-  const selectedCategory = useSelector(selectCategory);
   const dispatch = useDispatch();
+  const selectedCategory = useSelector(selectCategory);
+  const issues = useSelector(selectIssues);
   const { palette } = useTheme();
+  console.log(
+    "🚀 ~ file: CategoryCards.jsx:23 ~ CategoryCards ~ issues:",
+    issues
+  );
 
   return (
     <Grid item xs={4} padding="1rem">
