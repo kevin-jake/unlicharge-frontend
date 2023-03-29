@@ -34,11 +34,40 @@ export const specMap = [
     required: true,
   },
   {
+    nameDisplay: "Model",
+    specProps: "model",
+    specOf: ["Battery"],
+  },
+  {
     nameDisplay: "Capacity",
     specProps: "capacity",
     unit: "Ah",
     specOf: ["Battery"],
     required: true,
+  },
+  {
+    nameDisplay: "Internal Resistance",
+    specProps: "internalResistance",
+    unit: "mΩ",
+    specOf: ["Battery"],
+  },
+  {
+    nameDisplay: "Charge C Rate",
+    specProps: "chargeCRate",
+    unit: "C",
+    specOf: ["Battery"],
+  },
+  {
+    nameDisplay: "Discharge C Rate",
+    specProps: "dischargeCRate",
+    unit: "C",
+    specOf: ["Battery"],
+  },
+  {
+    nameDisplay: "Max Discharge C Rate",
+    specProps: "maxDischargeRate",
+    unit: "C",
+    specOf: ["Battery"],
   },
   {
     nameDisplay: "Nominal Voltage",

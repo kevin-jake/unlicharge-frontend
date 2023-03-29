@@ -69,112 +69,121 @@ const CompleteSpecs = ({
             columns: 2,
           }}
         >
-          {filteredSpecs.map((specName) => (
-            <ListItem
-              key={specName}
-              sx={{
-                display: "list-item",
-                pageBreakInside: "avoid",
-                "& span": {
-                  whiteSpace: "normal",
-                },
-              }}
-            >
-              <ListItemText
-                primary={specDisplay(specName)}
-                secondary={
-                  specName === "supplierLink" ? (
-                    <>
-                      <Link
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        href={specs[specName]}
-                        underline="none"
-                      >
-                        Buy here
-                      </Link>
-                      {Boolean(currentValues) &&
-                        requestStatus === "Request" &&
-                        currentValues[specName] !== specs[specName] && (
-                          <Box
-                            sx={{
-                              "& .MuiLink-root": {
-                                fontSize: "0.75rem",
-                                fontStyle: "italic",
-                                color: palette.compliment[500],
-                              },
-                            }}
+          {filteredSpecs.map(
+            (specName) =>
+              Boolean(specs[specName]) && (
+                <ListItem
+                  key={specName}
+                  sx={{
+                    display: "list-item",
+                    pageBreakInside: "avoid",
+                    "& span": {
+                      whiteSpace: "normal",
+                    },
+                  }}
+                >
+                  <ListItemText
+                    primary={specDisplay(specName)}
+                    secondary={
+                      specName === "supplierLink" ? (
+                        <>
+                          <Link
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            href={specs[specName]}
+                            underline="none"
                           >
-                            <Link
-                              rel="noopener noreferrer"
-                              target="_blank"
-                              href={specs[specName]}
-                              underline="none"
-                            >
-                              Current link
-                            </Link>
-                          </Box>
-                        )}
-                      {Boolean(replacedValues) &&
-                        requestStatus === "Approved" &&
-                        replacedValues[specName] !== specs[specName] && (
-                          <Box
-                            sx={{
-                              "& .MuiLink-root": {
-                                fontSize: "0.75rem",
-                                fontStyle: "italic",
-                                color: palette.compliment[500],
-                              },
-                            }}
-                          >
-                            <Link
-                              rel="noopener noreferrer"
-                              target="_blank"
-                              href={specs[specName]}
-                              underline="none"
-                            >
-                              Old link
-                            </Link>
-                          </Box>
-                        )}
-                    </>
-                  ) : (
-                    <>
-                      {specWithUnit(specName, specs[specName])}
-                      {Boolean(currentValues) &&
-                        requestStatus === "Request" &&
-                        currentValues[specName] !== specs[specName] && (
-                          <Typography
-                            variant="caption"
-                            sx={{
-                              fontStyle: "italic",
-                              color: palette.grey[500],
-                            }}
-                          >
-                            Current value:{" "}
-                            {specWithUnit(specName, currentValues[specName])}
-                          </Typography>
-                        )}
-                      {Boolean(replacedValues) &&
-                        requestStatus === "Approved" &&
-                        replacedValues[specName] !== specs[specName] && (
-                          <Typography
-                            variant="caption"
-                            sx={{
-                              fontStyle: "italic",
-                              color: palette.grey[500],
-                            }}
-                          >
-                            Replaced value:{" "}
-                            {specWithUnit(specName, replacedValues[specName])}
-                          </Typography>
-                        )}
-                    </>
-                  )
-                }
-              />
-            </ListItem>
-          ))}
+                            Buy here
+                          </Link>
+                          {Boolean(currentValues) &&
+                            requestStatus === "Request" &&
+                            currentValues[specName] !== specs[specName] && (
+                              <Box
+                                sx={{
+                                  "& .MuiLink-root": {
+                                    fontSize: "0.75rem",
+                                    fontStyle: "italic",
+                                    color: palette.compliment[500],
+                                  },
+                                }}
+                              >
+                                <Link
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                  href={specs[specName]}
+                                  underline="none"
+                                >
+                                  Current link
+                                </Link>
+                              </Box>
+                            )}
+                          {Boolean(replacedValues) &&
+                            requestStatus === "Approved" &&
+                            replacedValues[specName] !== specs[specName] && (
+                              <Box
+                                sx={{
+                                  "& .MuiLink-root": {
+                                    fontSize: "0.75rem",
+                                    fontStyle: "italic",
+                                    color: palette.compliment[500],
+                                  },
+                                }}
+                              >
+                                <Link
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                  href={specs[specName]}
+                                  underline="none"
+                                >
+                                  Old link
+                                </Link>
+                              </Box>
+                            )}
+                        </>
+                      ) : (
+                        <>
+                          {specWithUnit(specName, specs[specName])}
+                          {Boolean(currentValues) &&
+                            requestStatus === "Request" &&
+                            currentValues[specName] !== specs[specName] && (
+                              <Typography
+                                variant="caption"
+                                sx={{
+                                  fontStyle: "italic",
+                                  color: palette.grey[500],
+                                }}
+                              >
+                                Current value:{" "}
+                                {specWithUnit(
+                                  specName,
+                                  currentValues[specName]
+                                )}
+                              </Typography>
+                            )}
+                          {Boolean(replacedValues) &&
+                            requestStatus === "Approved" &&
+                            replacedValues[specName] !== specs[specName] && (
+                              <Typography
+                                variant="caption"
+                                sx={{
+                                  fontStyle: "italic",
+                                  color: palette.grey[500],
+                                }}
+                              >
+                                Replaced value:{" "}
+                                {specWithUnit(
+                                  specName,
+                                  replacedValues[specName]
+                                )}
+                              </Typography>
+                            )}
+                        </>
+                      )
+                    }
+                  />
+                </ListItem>
+              )
+          )}
           {Boolean(requestStatus) && (
             <ListItem sx={{ display: "list-item", pageBreakInside: "avoid" }}>
               <ListItemText
