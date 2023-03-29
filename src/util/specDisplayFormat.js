@@ -1,3 +1,5 @@
+import { numberWithCommas } from "./numberFormats";
+
 export const specMap = [
   {
     nameDisplay: "Name",
@@ -147,6 +149,8 @@ export const specDisplay = (spec) => {
 export const specWithUnit = (spec, value) => {
   const specUnit = specMap.filter((specs) => specs.specProps === spec)[0].unit;
   if (specUnit) {
-    return specUnit === "Php" ? `${specUnit} ${value}` : `${value} ${specUnit}`;
+    return specUnit === "Php"
+      ? `${specUnit} ${numberWithCommas(value)}`
+      : `${value} ${specUnit}`;
   } else return value;
 };
