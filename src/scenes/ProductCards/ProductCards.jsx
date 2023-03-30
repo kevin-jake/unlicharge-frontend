@@ -29,13 +29,14 @@ const ProductCards = ({
   const [isFlipped, setIsFlipped] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
   const isNonSmallMobileScreens = useMediaQuery("(min-width:500px)");
+  const isSelected = selectedItems[category].id === specs.id;
+  const isRequest = publishStatus === "Request";
 
-  const backgroundColor =
-    publishStatus === "Request"
-      ? `${palette.compliment.main} !important`
-      : selectedItems[category].id === specs.id
-      ? `${palette.primary.selectedCard} !important`
-      : palette.background.alt;
+  const backgroundColor = isSelected
+    ? `${palette.primary.selectedCard} !important`
+    : isRequest
+    ? `${palette.primary.request} !important`
+    : palette.background.alt;
 
   const handleFlip = () => {
     setIsFlipped((prevIsFlipped) => !prevIsFlipped);
@@ -87,7 +88,11 @@ const ProductCards = ({
               <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
                 <WidgetWrapper
                   sx={{
-                    backgroundColor: `${palette.neutral.light} !important`,
+                    backgroundColor: isSelected
+                      ? `${palette.primary.selectedCompute} !important`
+                      : isRequest
+                      ? `${palette.primary.requestCompute} !important`
+                      : `${palette.neutral.light} !important`,
                     padding: "0.5rem !important",
                     cursor: "pointer",
                   }}
@@ -101,8 +106,14 @@ const ProductCards = ({
 
                 <WidgetWrapper
                   sx={{
-                    backgroundColor: `${palette.neutral.light} !important`,
+                    backgroundColor: isSelected
+                      ? `${palette.primary.selectedCompute} !important`
+                      : isRequest
+                      ? `${palette.primary.requestCompute} !important`
+                      : `${palette.neutral.light} !important`,
                     padding: "0.5rem !important",
+                    display: "flex",
+                    justifyContent: "center",
                     cursor: "pointer",
                   }}
                   onClick={handleFlip}
@@ -110,7 +121,12 @@ const ProductCards = ({
                   <Typography
                     variant="h4"
                     fontWeight="700"
-                    sx={{ color: primary }}
+                    sx={{
+                      color:
+                        isSelected || isRequest
+                          ? palette.primary.white
+                          : primary,
+                    }}
                   >
                     {`Php ${
                       (specs.pricePerPc &&
@@ -123,14 +139,23 @@ const ProductCards = ({
             ) : (
               <WidgetWrapper
                 sx={{
-                  backgroundColor: `${palette.neutral.light} !important`,
+                  backgroundColor: isSelected
+                    ? `${palette.primary.selectedCompute} !important`
+                    : isRequest
+                    ? `${palette.primary.requestCompute} !important`
+                    : `${palette.neutral.light} !important`,
                   padding: "0.5rem !important",
+                  display: "flex",
+                  justifyContent: "center",
                 }}
               >
                 <Typography
                   variant="h4"
                   fontWeight="700"
-                  sx={{ color: primary }}
+                  sx={{
+                    color:
+                      isSelected || isRequest ? palette.primary.white : primary,
+                  }}
                 >
                   {`Php ${
                     (specs.pricePerPc && numberWithCommas(specs.pricePerPc)) ||
