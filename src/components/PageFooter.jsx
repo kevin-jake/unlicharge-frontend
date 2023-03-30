@@ -8,11 +8,23 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import FlexBetween from "./wrappers/FlexBetween";
 
-const PageFooter = ({ page = 1, total, limit = 1, setPagination, isShown }) => {
+const PageFooter = ({
+  page,
+  total,
+  limit,
+  setPagination,
+  isShown,
+  category,
+}) => {
   const pageNumbers = Math.ceil(total / limit);
+
+  useEffect(() => {
+    setPagination(1, limit, total);
+  }, [category]);
+
   const handlePageChange = (event, value) => {
     setPagination(value, limit, total);
   };

@@ -61,10 +61,6 @@ function BuildPage() {
   // );
   const filters = useSelector(selectFilters);
   const pagination = useSelector(selectPagination);
-  console.log(
-    "🚀 ~ file: BuildPage.jsx:64 ~ BuildPage ~ pagination:",
-    pagination
-  );
   const sort = useSelector(selectSort);
   const isLoggedIn = Boolean(useSelector(selectUser));
   const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
@@ -88,6 +84,7 @@ function BuildPage() {
       sort,
     });
 
+  console.log("🚀 ~ file: BuildPage.jsx:79 ~ BuildPage ~ data:", data);
   useEffect(() => {
     refetch();
   }, [isLoggedIn]);
@@ -113,20 +110,6 @@ function BuildPage() {
       }
     }
   }, [data]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      console.log("pagination");
-
-      dispatch(
-        setPagination({
-          limit: data.limit,
-          page: data.products.length === 0 ? 1 : data.page,
-          total: data.total,
-        })
-      );
-    }
-  }, []);
 
   const handleOpenProductModal = (product) => {
     setIsProductModalOpen(true);
@@ -243,8 +226,11 @@ function BuildPage() {
       </Grid>
       <Grid item xs={12}>
         <PageFooter
-          {...pagination}
-          isShown={data?.products.length > 0 && !isLoading && !isFetching}
+          page={data?.page || pagination.page}
+          limit={data?.limit || pagination.page}
+          total={data?.total || pagination.total}
+          category={category}
+          isShown={Boolean(data?.products.length)}
           setPagination={(page, limit, total) => {
             dispatch(
               setPagination({

@@ -6,6 +6,7 @@ const initialState = {
   initParams: {},
   pagination: {
     limit: 5,
+    page: 1,
   },
   filters: {},
   sort: {
