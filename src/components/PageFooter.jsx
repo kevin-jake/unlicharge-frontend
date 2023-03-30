@@ -14,10 +14,10 @@ import FlexBetween from "./wrappers/FlexBetween";
 const PageFooter = ({ page = 1, total, limit = 1, setPagination, isShown }) => {
   const pageNumbers = Math.ceil(total / limit);
   const handlePageChange = (event, value) => {
-    setPagination(value, limit);
+    setPagination(value, limit, total);
   };
   const handleLimitChange = (event) => {
-    setPagination(page, event.target.value);
+    setPagination(page, event.target.value, total);
   };
   return (
     <>

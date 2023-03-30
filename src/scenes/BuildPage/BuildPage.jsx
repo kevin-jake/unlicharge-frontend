@@ -55,8 +55,16 @@ function BuildPage() {
   const dispatch = useDispatch();
   const initParams = useSelector(selectInitParams);
   const selectedItems = useSelector(selectSelection);
+  // console.log(
+  //   "🚀 ~ file: BuildPage.jsx:58 ~ BuildPage ~ selectedItems:",
+  //   selectedItems
+  // );
   const filters = useSelector(selectFilters);
   const pagination = useSelector(selectPagination);
+  console.log(
+    "🚀 ~ file: BuildPage.jsx:64 ~ BuildPage ~ pagination:",
+    pagination
+  );
   const sort = useSelector(selectSort);
   const isLoggedIn = Boolean(useSelector(selectUser));
   const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
@@ -96,11 +104,9 @@ function BuildPage() {
   useEffect(() => {
     if (isSuccess) {
       const newSelection = data.products.filter(
-        (item) => item.specs.id === selectedItems[category].id
-      );
-      console.log(
-        "🚀 ~ file: BuildPage.jsx:101 ~ useEffect ~ newSelection:",
-        newSelection
+        (item) =>
+          item.specs.id === selectedItems[category].id ||
+          item.id === selectedItems[category].productId
       );
       if (newSelection.length) {
         dispatch(setSelectedProduct(newSelection[0].specs));
@@ -110,6 +116,8 @@ function BuildPage() {
 
   useEffect(() => {
     if (isSuccess) {
+      console.log("pagination");
+
       dispatch(
         setPagination({
           limit: data.limit,
@@ -118,7 +126,7 @@ function BuildPage() {
         })
       );
     }
-  }, [data]);
+  }, []);
 
   const handleOpenProductModal = (product) => {
     setIsProductModalOpen(true);
@@ -237,14 +245,14 @@ function BuildPage() {
         <PageFooter
           {...pagination}
           isShown={data?.products.length > 0 && !isLoading && !isFetching}
-          setPagination={(page, limit) => {
+          setPagination={(page, limit, total) => {
             dispatch(
               setPagination({
                 limit,
                 page,
+                total,
               })
             );
-            refetch();
           }}
         />
       </Grid>

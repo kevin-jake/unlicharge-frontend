@@ -44,9 +44,6 @@ const InitialParams = () => {
     }
   );
 
-  console.log("🚀 ~ file: InitialParams.jsx:35 ~ InitialParams ~ skip:", skip);
-  console.log("🚀 ~ file: InitialParams.jsx:36 ~ InitialParams ~ data:", data);
-
   useEffect(() => {
     if (isSuccess) {
       dispatch(setUpdatedBatt(data));
