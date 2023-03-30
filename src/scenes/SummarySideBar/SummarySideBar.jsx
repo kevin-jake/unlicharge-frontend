@@ -46,7 +46,7 @@ const SummarySideBar = () => {
   const fullName = useMemo(() => "test", [user]);
 
   return (
-    // TODO: Make this responsive use below if large screen if mobile use the hamburger menu navbar
+    // TODO: Make this responsive use below if large screen if mobile use the hamburger menu navbar? Or dialog?
     <Box
       height="max-content"
       minWidth="300px"

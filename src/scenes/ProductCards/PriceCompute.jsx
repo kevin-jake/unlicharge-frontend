@@ -51,6 +51,7 @@ const PriceCompute = ({ computedSpecs, flexDirection }) => {
           title="Quantity"
           value={`${numberWithCommas(computedSpecs?.totalQty)}`}
         />
+        {/* TODO: Add more values as list item text on C Rate implement a flipping value for C rate and current */}
       </Box>
     </Grid>
   );

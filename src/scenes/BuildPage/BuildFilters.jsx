@@ -131,6 +131,7 @@ const BuildFilters = ({ refetch }) => {
               Clear All
             </Button>
           </Box>
+          {/* TODO: Extract into another component and implement functionality */}
           <FlexBetween margin="5px">
             <Box width="100%">
               <Typography

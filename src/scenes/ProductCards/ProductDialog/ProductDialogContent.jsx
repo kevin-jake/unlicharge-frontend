@@ -40,7 +40,12 @@ const ProductDialogContent = ({
         },
         {
           tabTitle: "Computation",
-          tabComp: <PriceCompute computedSpecs={specs.computedSpecs} />,
+          tabComp: (
+            <PriceCompute
+              computedSpecs={specs.computedSpecs}
+              flexDirection="row"
+            />
+          ),
         },
       ]
     : [
