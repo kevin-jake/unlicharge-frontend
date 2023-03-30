@@ -74,10 +74,6 @@ function BuildPage() {
   const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
   const initParams = useSelector(selectInitParams);
   const selectedItems = useSelector(selectSelection);
-  // console.log(
-  //   "🚀 ~ file: BuildPage.jsx:58 ~ BuildPage ~ selectedItems:",
-  //   selectedItems
-  // );
   const filters = useSelector(selectFilters);
   const pagination = useSelector(selectPagination);
   const sort = useSelector(selectSort);
@@ -96,13 +92,16 @@ function BuildPage() {
   });
 
   const { data, isLoading, isFetching, isSuccess, isError, refetch } =
-    useGetProductsQuery({
-      category,
-      initParams,
-      filters,
-      pagination,
-      sort,
-    });
+    useGetProductsQuery(
+      {
+        category,
+        initParams,
+        filters,
+        pagination,
+        sort,
+      },
+      { refetchOnMountOrArgChange: true }
+    );
   useEffect(() => {
     refetch();
   }, [isLoggedIn]);
@@ -146,9 +145,8 @@ function BuildPage() {
       </Box>
       <Grid container>
         {categories.map(({ name, icon, apiPath }) => (
-          <Grid item xs={4} padding="1rem">
+          <Grid item xs={4} key={name} padding="1rem">
             <CategoryCards
-              key={name}
               category={name}
               apiPath={apiPath}
               icon={icon}
@@ -195,7 +193,7 @@ function BuildPage() {
           )}
           {isSuccess &&
             !isFetching &&
-            data.total > 0 &&
+            data.products.length &&
             data.products.map((product) => (
               <ProductCards
                 key={product._id}

@@ -2,7 +2,6 @@ import { Alert, Stack, useMediaQuery } from "@mui/material";
 import React from "react";
 
 const ErrorDisplay = ({ issues }) => {
-  console.log("🚀 ~ file: ErrorDisplay.jsx:5 ~ ErrorDisplay ~ issues:", issues);
   const isNonMobileScreens = useMediaQuery("(min-width:500px)");
   const errors = issues.filter((issue) => issue.severity === "error");
   const warnings = issues.filter((issue) => issue.severity === "warning");
