@@ -28,6 +28,7 @@ const ProductCards = ({
   const primary = palette.primary.main;
   const [isFlipped, setIsFlipped] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
+  const isNonSmallMobileScreens = useMediaQuery("(min-width:500px)");
 
   const backgroundColor =
     publishStatus === "Request"
@@ -87,7 +88,10 @@ const ProductCards = ({
                   }}
                   onClick={handleFlip}
                 >
-                  <PriceCompute computedSpecs={specs.computedSpecs} />
+                  <PriceCompute
+                    computedSpecs={specs.computedSpecs}
+                    flexDirection={isNonSmallMobileScreens ? "row" : "column"}
+                  />
                 </WidgetWrapper>
 
                 <WidgetWrapper

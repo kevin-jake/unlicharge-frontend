@@ -3,7 +3,7 @@ import React from "react";
 import { numberWithCommas } from "../../util/numberFormats";
 import ComputeDisplay from "./ComputeDisplay";
 
-const PriceCompute = ({ computedSpecs }) => {
+const PriceCompute = ({ computedSpecs, flexDirection }) => {
   const { palette } = useTheme();
   const primary = palette.primary.main;
   return (
@@ -18,11 +18,13 @@ const PriceCompute = ({ computedSpecs }) => {
             display: "flex",
             justifyContent: "center",
           },
+          flexDirection,
         }}
         alignItems="center"
         justifyContent="center"
         width="auto"
         height="fit-content"
+        gap={flexDirection === "row" ? null : 1}
       >
         <ComputeDisplay
           title="Price"
@@ -30,7 +32,7 @@ const PriceCompute = ({ computedSpecs }) => {
         />
         <Divider
           color={primary}
-          orientation="vertical"
+          orientation={flexDirection === "row" ? "vertical" : "horizontal"}
           variant="middle"
           flexItem
         />
@@ -41,7 +43,7 @@ const PriceCompute = ({ computedSpecs }) => {
 
         <Divider
           color={primary}
-          orientation="vertical"
+          orientation={flexDirection === "row" ? "vertical" : "horizontal"}
           variant="middle"
           flexItem
         />

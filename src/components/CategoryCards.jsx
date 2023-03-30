@@ -2,7 +2,6 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  Grid,
   Typography,
   useMediaQuery,
   useTheme,
@@ -18,6 +17,9 @@ import FlexBetween from "./wrappers/FlexBetween";
 
 const CategoryCards = ({ category, icon, apiPath }) => {
   const dispatch = useDispatch();
+  const isNonMobileScreens = useMediaQuery("(min-width:500px)");
+  const isNonSmallMobileScreens = useMediaQuery("(min-width:400px)");
+
   const selectedCategory = useSelector(selectCategory);
   const issues = useSelector(selectIssues);
   const { palette } = useTheme();
@@ -35,36 +37,44 @@ const CategoryCards = ({ category, icon, apiPath }) => {
   if (errors.length && selectedCategory === apiPath)
     backgroundColor = palette.error.light;
   return (
-    <Grid item xs={4} padding="1rem">
-      <Card
-        sx={{
-          backgroundColor,
-          borderRadius: "0.75rem",
-        }}
-        onClick={() => {
-          dispatch(setCategory(apiPath));
-        }}
-      >
-        <CardActionArea>
-          <CardContent>
-            <FlexBetween
-              mt="0.25rem"
-              sx={{
-                justifyContent: "center",
-                color: selectedCategory === apiPath && "white",
-              }}
-            >
-              <FlexBetween mt="0.25rem">
-                {icon}
-                <Typography variant="h4" sx={{ marginLeft: "0.25rem" }}>
-                  {category}
-                </Typography>
-              </FlexBetween>
+    <Card
+      sx={{
+        backgroundColor,
+        borderRadius: "0.75rem",
+      }}
+      onClick={() => {
+        dispatch(setCategory(apiPath));
+      }}
+    >
+      <CardActionArea>
+        <CardContent>
+          <FlexBetween
+            mt="0.25rem"
+            sx={{
+              justifyContent: "center",
+              color: selectedCategory === apiPath && "white",
+            }}
+          >
+            <FlexBetween mt="0.25rem">
+              {icon}
+
+              <Typography
+                variant={
+                  isNonMobileScreens
+                    ? "h4"
+                    : isNonSmallMobileScreens
+                    ? "h6"
+                    : "body"
+                }
+                sx={{ marginLeft: "0.25rem" }}
+              >
+                {category}
+              </Typography>
             </FlexBetween>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-    </Grid>
+          </FlexBetween>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 };
 

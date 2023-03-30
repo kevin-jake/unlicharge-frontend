@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   CircularProgress,
@@ -26,6 +27,7 @@ import {
   selectCategory,
   selectFilters,
   selectInitParams,
+  selectIssues,
   selectPagination,
   selectSelection,
   selectSort,
@@ -37,22 +39,39 @@ import FlexBetween from "../../components/wrappers/FlexBetween";
 import PageFooter from "../../components/PageFooter";
 import { AddCircle } from "@mui/icons-material";
 import NoResults from "../../components/NoResults";
+import ErrorDisplay from "../../components/ErrorDisplay";
 
 function BuildPage() {
+  const isNonSmallMobileScreens = useMediaQuery("(min-width:400px)");
   const categories = [
     {
       name: "Battery",
-      icon: <Battery5BarIcon fontSize="large" />,
+      icon: (
+        <Battery5BarIcon
+          fontSize={isNonSmallMobileScreens ? "large" : "small"}
+        />
+      ),
       apiPath: "battery",
     },
-    { name: "BMS", icon: <AccountTreeIcon fontSize="large" />, apiPath: "bms" },
+    {
+      name: "BMS",
+      icon: (
+        <AccountTreeIcon
+          fontSize={isNonSmallMobileScreens ? "large" : "small"}
+        />
+      ),
+      apiPath: "bms",
+    },
     {
       name: "Active Balancer",
-      icon: <EqualizerIcon fontSize="large" />,
+      icon: (
+        <EqualizerIcon fontSize={isNonSmallMobileScreens ? "large" : "small"} />
+      ),
       apiPath: "ab",
     },
   ];
   const dispatch = useDispatch();
+  const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
   const initParams = useSelector(selectInitParams);
   const selectedItems = useSelector(selectSelection);
   // console.log(
@@ -63,8 +82,9 @@ function BuildPage() {
   const pagination = useSelector(selectPagination);
   const sort = useSelector(selectSort);
   const isLoggedIn = Boolean(useSelector(selectUser));
-  const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
   const category = useSelector(selectCategory);
+  const issues = useSelector(selectIssues);
+
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [focusedProduct, setFocusedProduct] = useState({});
@@ -126,13 +146,16 @@ function BuildPage() {
       </Box>
       <Grid container>
         {categories.map(({ name, icon, apiPath }) => (
-          <CategoryCards
-            key={name}
-            category={name}
-            apiPath={apiPath}
-            icon={icon}
-            refetch={refetch}
-          />
+          <Grid item xs={4} padding="1rem">
+            <CategoryCards
+              key={name}
+              category={name}
+              apiPath={apiPath}
+              icon={icon}
+              refetch={refetch}
+            />
+            <ErrorDisplay issues={issues[apiPath]} />
+          </Grid>
         ))}
       </Grid>
       <Grid container>
