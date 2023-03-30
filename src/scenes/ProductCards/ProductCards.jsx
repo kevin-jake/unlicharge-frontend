@@ -55,7 +55,12 @@ const ProductCards = ({
           publishStatus={publishStatus}
         />
         <FlexBetween marginY="1rem" sx={{ justifyContent: "flex-start" }}>
-          <Box width="130px" height="130px">
+          <Box
+            width="130px"
+            height="130px"
+            sx={{ cursor: "pointer" }}
+            onClick={openModal}
+          >
             <img
               style={{ objectFit: "cover", borderRadius: "0.75rem" }}
               width="130px"
@@ -134,7 +139,7 @@ const ProductCards = ({
                 </Typography>
               </WidgetWrapper>
             )}
-            <QuickSpecs specs={specs} />
+            <QuickSpecs specs={specs} openModal={openModal} />
           </Grid>
         </FlexBetween>
         <DialogFooter

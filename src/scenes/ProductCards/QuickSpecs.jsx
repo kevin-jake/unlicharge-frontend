@@ -17,7 +17,7 @@ const toDisplay = [
   "supplierLink",
 ];
 
-const QuickSpecs = ({ specs }) => {
+const QuickSpecs = ({ specs, openModal }) => {
   const { palette } = useTheme();
 
   const specsProperties = Object.keys(specs);
@@ -33,7 +33,7 @@ const QuickSpecs = ({ specs }) => {
             overflow: "hidden",
             textOverflow: "ellipsis",
             display: "inline-block",
-            whiteSpace: "nowrap",
+            whiteSpace: "normal",
             width: "-webkit-fill-available",
             WebkitLineClamp: "1",
             WebkitBoxOrient: "vertical",
@@ -45,7 +45,9 @@ const QuickSpecs = ({ specs }) => {
             color: palette.neutral.dark,
           },
           columns: 2,
+          cursor: "pointer",
         }}
+        onClick={openModal}
       >
         {filteredSpecs.map((specName) => (
           <ListItem
