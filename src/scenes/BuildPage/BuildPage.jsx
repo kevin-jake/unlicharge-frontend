@@ -225,7 +225,7 @@ function BuildPage() {
       <Grid item xs={12}>
         <PageFooter
           page={data?.page || pagination.page}
-          limit={data?.limit || pagination.page}
+          limit={data?.limit || pagination.limit}
           total={data?.total || pagination.total}
           category={category}
           isShown={Boolean(data?.products.length)}

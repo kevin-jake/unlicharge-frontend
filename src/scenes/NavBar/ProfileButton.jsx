@@ -20,12 +20,6 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const { palette } = useTheme();
   const neutralLight = palette.neutral.light;
   const [imgUrl, setImgUrl] = useState("/placeholder-avatar.png");
-  console.log("🚀 ~ file: ProfileButton.jsx:169 ~ ProfileButton ~ user:", user);
-  console.log(
-    "🚀 ~ file: ProfileButton.jsx:25 ~ ProfileButton ~ imgUrl:",
-    imgUrl
-  );
-
   const [isOpen, setIsOpen] = useState(false);
   const anchorRef = useRef(null);
 
