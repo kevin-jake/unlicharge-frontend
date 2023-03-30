@@ -70,6 +70,10 @@ export const buildSlice = createSlice({
         state.selection.ab
       );
     },
+    resetSelection: (state) => {
+      state.selection = initialState.selection;
+      state.issues = initialState.issues;
+    },
     resetSortPageFilters: (state) => {
       state = initialState;
     },
@@ -83,6 +87,7 @@ export const {
   setPagination,
   setSort,
   setUpdatedBatt,
+  resetSelection,
   setSelectedProduct,
   resetSortPageFilters,
 } = buildSlice.actions;

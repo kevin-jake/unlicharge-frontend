@@ -31,6 +31,7 @@ import {
 import { uploadImage } from "../../util/uploadImage";
 import { selectUser } from "../../store/slices/auth/authSlice";
 import { toast } from "react-toastify";
+import { selectCategory } from "../../store/slices/buildpage/buildpageSlice";
 
 const CRUDForm = ({
   operation,
@@ -42,7 +43,7 @@ const CRUDForm = ({
   setIsLoading,
 }) => {
   const { palette } = useTheme();
-  const apiCategory = useSelector(({ product }) => product.category);
+  const apiCategory = useSelector(selectCategory);
   const { role, userId } = useSelector(selectUser) || {};
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isCreate = operation === "Create";

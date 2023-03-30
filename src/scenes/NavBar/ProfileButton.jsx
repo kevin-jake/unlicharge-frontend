@@ -13,6 +13,7 @@ import React, { memo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { setLogout } from "../../store/slices/auth/authSlice";
+import { resetSelection } from "../../store/slices/buildpage/buildpageSlice";
 
 const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const handleLogOut = () => {
     setIsOpen(false);
     dispatch(setLogout());
+    dispatch(resetSelection());
   };
 
   return (
