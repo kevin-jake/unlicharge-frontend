@@ -9,7 +9,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { setLogout } from "../../store/slices/auth/authSlice";
@@ -19,12 +19,20 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const neutralLight = palette.neutral.light;
-  const [imgUrl, setImgUrl] = useState(
-    user?.imagePath ? user?.imagePath : "/placeholder-avatar.png"
+  const [imgUrl, setImgUrl] = useState("/placeholder-avatar.png");
+  console.log("🚀 ~ file: ProfileButton.jsx:169 ~ ProfileButton ~ user:", user);
+  console.log(
+    "🚀 ~ file: ProfileButton.jsx:25 ~ ProfileButton ~ imgUrl:",
+    imgUrl
   );
 
   const [isOpen, setIsOpen] = useState(false);
   const anchorRef = useRef(null);
+
+  useEffect(() => {
+    console.log("useEffect happen");
+    setImgUrl(user?.imagePath);
+  }, [user]);
 
   const handleImgError = () => {
     setImgUrl("/placeholder-avatar.png");

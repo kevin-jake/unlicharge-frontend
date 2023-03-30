@@ -83,8 +83,6 @@ function BuildPage() {
       pagination,
       sort,
     });
-
-  console.log("🚀 ~ file: BuildPage.jsx:79 ~ BuildPage ~ data:", data);
   useEffect(() => {
     refetch();
   }, [isLoggedIn]);
