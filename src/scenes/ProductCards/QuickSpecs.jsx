@@ -39,7 +39,7 @@ const QuickSpecs = ({ specs }) => {
             WebkitBoxOrient: "vertical",
           },
           "& .MuiListItemText-primary": {
-            color: palette.grey[500],
+            color: palette.neutral.main,
           },
           "& .MuiListItemText-secondary": {
             color: palette.neutral.dark,

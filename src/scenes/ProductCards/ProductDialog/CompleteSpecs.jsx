@@ -61,7 +61,7 @@ const CompleteSpecs = ({
               WebkitBoxOrient: "vertical",
             },
             "& .MuiListItemText-primary": {
-              color: palette.grey[500],
+              color: palette.neutral.main,
             },
             "& .MuiListItemText-secondary": {
               color: palette.neutral.dark,
@@ -150,7 +150,7 @@ const CompleteSpecs = ({
                                 variant="caption"
                                 sx={{
                                   fontStyle: "italic",
-                                  color: palette.grey[500],
+                                  color: palette.neutral.main,
                                 }}
                               >
                                 Current value:{" "}
@@ -167,7 +167,7 @@ const CompleteSpecs = ({
                                 variant="caption"
                                 sx={{
                                   fontStyle: "italic",
-                                  color: palette.grey[500],
+                                  color: palette.neutral.main,
                                 }}
                               >
                                 Replaced value:{" "}
@@ -197,7 +197,7 @@ const CompleteSpecs = ({
               <ListItemText
                 disableTypography
                 primary={
-                  <Typography variant="body2" color={palette.grey[500]}>
+                  <Typography variant="body2" color={palette.neutral.main}>
                     {requestStatus === "Approved"
                       ? "Approved by:"
                       : "Rejected by:"}

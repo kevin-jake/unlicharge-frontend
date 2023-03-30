@@ -29,7 +29,7 @@ const DialogWrapper = ({ children, title, isOpen, closeModal }) => {
               position: "absolute",
               right: 8,
               top: 8,
-              color: palette.grey[500],
+              color: palette.neutral.main,
             }}
           >
             <CloseIcon />
