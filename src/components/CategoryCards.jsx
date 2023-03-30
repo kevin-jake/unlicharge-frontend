@@ -28,16 +28,12 @@ const CategoryCards = ({ category, icon, apiPath }) => {
   let backgroundColor = palette.background.alt;
   if (selectedCategory === apiPath)
     backgroundColor = palette.primary.selectedCat;
-  if (warnings.length) backgroundColor = palette.warning.main;
-  else if (warnings.length && selectedCategory === apiPath)
+  if (warnings.length) backgroundColor = palette.warning.issues;
+  if (warnings.length && selectedCategory === apiPath)
     backgroundColor = palette.warning.light;
-  if (errors.length) backgroundColor = palette.error.main;
-  else if (errors.length && selectedCategory === apiPath)
+  if (errors.length) backgroundColor = palette.error.issues;
+  if (errors.length && selectedCategory === apiPath)
     backgroundColor = palette.error.light;
-  // console.log(
-  //   "🚀 ~ file: CategoryCards.jsx:23 ~ CategoryCards ~ issues:",
-  //   issues
-  // );
   return (
     <Grid item xs={4} padding="1rem">
       <Card

@@ -25,7 +25,6 @@ const ProductCards = ({
   const selectedItems = useSelector(selectSelection);
   const category = useSelector(selectCategory);
   const { palette } = useTheme();
-  const main = palette.neutral.main;
   const primary = palette.primary.main;
   const [isFlipped, setIsFlipped] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
@@ -34,7 +33,7 @@ const ProductCards = ({
     publishStatus === "Request"
       ? `${palette.compliment.main} !important`
       : selectedItems[category].id === specs.id
-      ? `${palette.primary.dark} !important`
+      ? `${palette.primary.selectedCard} !important`
       : palette.background.alt;
 
   const handleFlip = () => {

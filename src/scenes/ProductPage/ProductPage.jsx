@@ -11,16 +11,29 @@ function ProductPage() {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   const categories = [
-    { name: "Battery", icon: <Battery5BarIcon fontSize="large" /> },
-    { name: "BMS", icon: <AccountTreeIcon fontSize="large" /> },
-    { name: "Active Balancer", icon: <EqualizerIcon fontSize="large" /> },
+    {
+      name: "Battery",
+      icon: <Battery5BarIcon fontSize="large" />,
+      apiPath: "battery",
+    },
+    { name: "BMS", icon: <AccountTreeIcon fontSize="large" />, apiPath: "bms" },
+    {
+      name: "Active Balancer",
+      icon: <EqualizerIcon fontSize="large" />,
+      apiPath: "ab",
+    },
   ];
 
   return (
     <PageWrapper title="Products">
       <Grid marginY="0.5rem" container>
-        {categories.map(({ name, icon }) => (
-          <CategoryCards key={name} category={name} icon={icon} />
+        {categories.map(({ name, icon, apiPath }) => (
+          <CategoryCards
+            key={name}
+            category={name}
+            apiPath={apiPath}
+            icon={icon}
+          />
         ))}
       </Grid>
       <Box

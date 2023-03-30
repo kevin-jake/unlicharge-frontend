@@ -72,9 +72,9 @@ export const themeSettings = (mode) => {
               default: colorTokens.grey[900],
               alt: colorTokens.grey[800],
             },
-            error: { main: "#5e0000", light: "#533232" },
-            warning: { main: "#503600", light: "#533232" },
-            info: { main: "#503600", light: "#314656" },
+            error: { issues: "#5e0000", main: "#ffb5b5", light: "#533232" },
+            warning: { issues: "#503600", main: "#f7d984", light: "#81702a" },
+            info: { issues: "#503600", main: "#84c2f7", light: "#314656" },
           }
         : {
             // palette values for light mode
@@ -102,9 +102,9 @@ export const themeSettings = (mode) => {
               default: colorTokens.grey[10],
               alt: colorTokens.grey[0],
             },
-            error: { main: "#ffc6c0", light: "#824e4e" },
-            warning: { main: "#ffffc0", light: "#69701d" },
-            info: { main: "#c0f5ff", light: "#1d6670" },
+            error: { issues: "#ffc6c0", main: "#d32f2f", light: "#824e4e" },
+            warning: { issues: "#ffffc0", main: "#ff9800", light: "#69701d" },
+            info: { issues: "#c0f5ff", main: "#3498db", light: "#1d6670" },
           }),
     },
     typography: {
