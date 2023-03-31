@@ -82,7 +82,7 @@ function BuildPage() {
   const issues = useSelector(selectIssues);
 
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
-  const [isSummaryOpen, setIsSummaryOpen] = useState(false);
+  const [isSummaryOpen, setIsSummaryOpen] = useState(true);
   const [focusedProduct, setFocusedProduct] = useState({});
   const [crudModalState, setCrudModalState] = useState({
     isOpen: false,
@@ -102,6 +102,8 @@ function BuildPage() {
       },
       { refetchOnMountOrArgChange: true }
     );
+  // console.log("🚀 ~ file: BuildPage.jsx:95 ~ BuildPage ~ data:", data);
+
   useEffect(() => {
     refetch();
   }, [isLoggedIn]);
@@ -128,9 +130,9 @@ function BuildPage() {
     }
   }, [data]);
 
-  const handleOpenProductModal = (product) => {
+  const handleOpenProductModal = (spec) => {
+    setFocusedProduct(spec);
     setIsProductModalOpen(true);
-    setFocusedProduct(product);
   };
 
   return (
@@ -240,7 +242,13 @@ function BuildPage() {
             overflow: "hidden",
           }}
         >
-          {isSummaryOpen && <SummarySideBar />}
+          {isSummaryOpen && (
+            <SummarySideBar
+              openModal={(category) =>
+                handleOpenProductModal({ specs: selectedItems[category] })
+              }
+            />
+          )}
         </Grid>
       </Grid>
       <Grid item xs={12}>
@@ -287,8 +295,6 @@ function BuildPage() {
       >
         <ProductDialogContent
           specs={focusedProduct?.specs}
-          creator={focusedProduct?.creator}
-          productId={focusedProduct?._id}
           setCrudModalState={setCrudModalState}
           category={
             categories.filter((item) => item.apiPath === category)[0].name

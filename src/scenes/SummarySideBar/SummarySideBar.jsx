@@ -29,21 +29,17 @@ import FlexBetween from "../../components/wrappers/FlexBetween";
 import { setMode } from "../../store/slices/auth/authSlice";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import CategoryCards from "../../components/CategoryCards";
+import SummaryCards from "./SummaryCards";
+import { selectSelection } from "../../store/slices/buildpage/buildpageSlice";
 
-const SummarySideBar = () => {
-  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
-  const dispatch = useDispatch();
+const SummarySideBar = ({ openModal }) => {
   const user = useSelector(({ auth }) => auth.user);
+  const selectedItems = useSelector(selectSelection);
+  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-
   const { palette } = useTheme();
-  const neutralLight = palette.neutral.light;
-  const dark = palette.neutral.dark;
-  const background = palette.background.default;
-  const primaryLight = palette.primary.light;
   const alt = palette.background.alt;
-
-  const fullName = useMemo(() => "test", [user]);
+  const selectedArray = Object.keys(selectedItems);
 
   return (
     // TODO: Make this responsive use below if large screen if mobile use the hamburger menu navbar? Or dialog?
@@ -60,64 +56,13 @@ const SummarySideBar = () => {
         justifyContent="center"
         alignItems="center"
       >
-        {/* TODO: Extract to a new component */}
-        <WidgetWrapper width="100%">
-          <Card
-            sx={{
-              backgroundColor: palette.background.alt,
-              borderRadius: "0.75rem",
-            }}
-          >
-            <CardContent>
-              <FlexBetween margin="1rem" sx={{ justifyContent: "center" }}>
-                <FlexBetween mt="0.25rem">
-                  <Battery1BarOutlined fontSize="large" />
-                  <Typography variant="h4" sx={{ marginLeft: "0.25rem" }}>
-                    Battery
-                  </Typography>
-                </FlexBetween>
-              </FlexBetween>
-            </CardContent>
-          </Card>
-        </WidgetWrapper>
-        <WidgetWrapper width="100%">
-          <Card
-            sx={{
-              backgroundColor: palette.background.alt,
-              borderRadius: "0.75rem",
-            }}
-          >
-            <CardContent>
-              <FlexBetween margin="1rem" sx={{ justifyContent: "center" }}>
-                <FlexBetween mt="0.25rem">
-                  <Battery1BarOutlined fontSize="large" />
-                  <Typography variant="h4" sx={{ marginLeft: "0.25rem" }}>
-                    Battery
-                  </Typography>
-                </FlexBetween>
-              </FlexBetween>
-            </CardContent>
-          </Card>
-        </WidgetWrapper>
-        <WidgetWrapper width="100%">
-          <Card
-            sx={{
-              backgroundColor: palette.background.alt,
-              borderRadius: "0.75rem",
-            }}
-          >
-            <CardContent>
-              <FlexBetween margin="1rem" sx={{ justifyContent: "center" }}>
-                <FlexBetween mt="0.25rem">
-                  <Battery1BarOutlined fontSize="large" />
-                  <Typography variant="h4" sx={{ marginLeft: "0.25rem" }}>
-                    Battery
-                  </Typography>
-                </FlexBetween>
-              </FlexBetween>
-            </CardContent>
-          </Card>
-        </WidgetWrapper>
+        {selectedArray.map((product) => (
+          <SummaryCards
+            key={`summary-${product}`}
+            category={product}
+            openModal={() => openModal(product)}
+          />
+        ))}
       </FlexBetween>
     </Box>
   );

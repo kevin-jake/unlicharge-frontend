@@ -1,10 +1,10 @@
 export const categoryFormat = (category) => {
   switch (category) {
-    case "Batter":
-      return "battery";
-    case "BMS":
-      return "bms";
-    case "Active Balancer":
-      return "ab";
+    case "battery":
+      return "Battery";
+    case "bms":
+      return "BMS";
+    case "an":
+      return "Active Balancer";
   }
 };
