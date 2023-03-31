@@ -4,13 +4,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
+import { useGetCategoryObject } from "../../hooks/useGetCategoryObject";
 import { selectSelection } from "../../store/slices/buildpage/buildpageSlice";
-import { categoryFormat } from "../../util/categoryFormat";
+import { categoryObjMap } from "../../util/categoryObjMap";
 import QuickSpecs from "../ProductCards/QuickSpecs";
 
 const SummaryCards = ({ openModal, category }) => {
   const selectedItems = useSelector(selectSelection);
   const { palette } = useTheme();
+  const { categoryDisplayName, icon } = useGetCategoryObject(category);
 
   return (
     <WidgetWrapper width="100%">
@@ -25,9 +27,9 @@ const SummaryCards = ({ openModal, category }) => {
             sx={{ justifyContent: "flex-start", flexDirection: "column" }}
           >
             <Box display="flex" justifyContent="center">
-              <Battery1BarOutlined fontSize="small" />
+              {icon}
               <Typography variant="h5" sx={{ marginLeft: "0.25rem" }}>
-                {categoryFormat(category)}
+                {categoryDisplayName}
               </Typography>
             </Box>
             {selectedItems[category].hasOwnProperty("id") ? (
@@ -36,8 +38,12 @@ const SummaryCards = ({ openModal, category }) => {
                 openModal={openModal}
               />
             ) : (
-              <Typography variant="body">
-                {`No selected ${categoryFormat(category)} yet`}{" "}
+              <Typography
+                variant="body"
+                color={palette.neutral.medium}
+                margin="0.5rem"
+              >
+                {`No selected ${categoryDisplayName} yet`}{" "}
               </Typography>
             )}
           </FlexBetween>

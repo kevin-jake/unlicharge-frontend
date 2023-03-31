@@ -19,9 +19,6 @@ import SummarySideBar from "../SummarySideBar/SummarySideBar";
 import CRUDDialogContent from "../FormDialog/CRUDDialogContent";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetProductsQuery } from "../../store/slices/products/productApiSlice";
-import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import Battery5BarIcon from "@mui/icons-material/Battery5Bar";
-import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { selectUser } from "../../store/slices/auth/authSlice";
 import {
   selectCategory,
@@ -40,36 +37,11 @@ import PageFooter from "../../components/PageFooter";
 import { AddCircle } from "@mui/icons-material";
 import NoResults from "../../components/NoResults";
 import ErrorDisplay from "../../components/ErrorDisplay";
+import { useGetCategoryObject } from "../../hooks/useGetCategoryObject";
 
 function BuildPage() {
   const isNonSmallMobileScreens = useMediaQuery("(min-width:400px)");
-  const categories = [
-    {
-      name: "Battery",
-      icon: (
-        <Battery5BarIcon
-          fontSize={isNonSmallMobileScreens ? "large" : "small"}
-        />
-      ),
-      apiPath: "battery",
-    },
-    {
-      name: "BMS",
-      icon: (
-        <AccountTreeIcon
-          fontSize={isNonSmallMobileScreens ? "large" : "small"}
-        />
-      ),
-      apiPath: "bms",
-    },
-    {
-      name: "Active Balancer",
-      icon: (
-        <EqualizerIcon fontSize={isNonSmallMobileScreens ? "large" : "small"} />
-      ),
-      apiPath: "ab",
-    },
-  ];
+
   const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
   const initParams = useSelector(selectInitParams);
@@ -81,15 +53,18 @@ function BuildPage() {
   const category = useSelector(selectCategory);
   const issues = useSelector(selectIssues);
 
+  const { categoryDisplayName } = useGetCategoryObject(category);
+
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSummaryOpen, setIsSummaryOpen] = useState(true);
   const [focusedProduct, setFocusedProduct] = useState({});
   const [crudModalState, setCrudModalState] = useState({
     isOpen: false,
     operation: "Create",
-    category: categories.filter((item) => item.apiPath === category)[0].name,
+    category: categoryDisplayName,
     oldValues: {},
   });
+  const categories = ["battery", "bms", "ab"];
 
   const { data, isLoading, isFetching, isSuccess, isError, refetch } =
     useGetProductsQuery(
@@ -143,18 +118,13 @@ function BuildPage() {
         display="block"
         justifyContent="space-between"
       >
-        <InitialParams refetch={refetch} />
+        <InitialParams />
       </Box>
       <Grid container>
-        {categories.map(({ name, icon, apiPath }) => (
-          <Grid item xs={4} key={name} padding="1rem">
-            <CategoryCards
-              category={name}
-              apiPath={apiPath}
-              icon={icon}
-              refetch={refetch}
-            />
-            <ErrorDisplay issues={issues[apiPath]} />
+        {categories.map((category) => (
+          <Grid item xs={4} key={category} padding="1rem">
+            <CategoryCards category={category} />
+            <ErrorDisplay issues={issues[category]} />
           </Grid>
         ))}
       </Grid>
@@ -219,9 +189,7 @@ function BuildPage() {
                   setCrudModalState({
                     ...crudModalState,
                     operation: "Create",
-                    category: categories.filter(
-                      (item) => item.apiPath === category
-                    )[0].name,
+                    category: categoryDisplayName,
                     isOpen: true,
                   })
                 }
@@ -296,9 +264,7 @@ function BuildPage() {
         <ProductDialogContent
           specs={focusedProduct?.specs}
           setCrudModalState={setCrudModalState}
-          category={
-            categories.filter((item) => item.apiPath === category)[0].name
-          }
+          category={categoryDisplayName}
         />
       </DialogWrapper>
       <DialogWrapper

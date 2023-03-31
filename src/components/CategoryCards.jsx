@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useGetCategoryObject } from "../hooks/useGetCategoryObject";
 import {
   selectCategory,
   selectIssues,
@@ -15,26 +16,29 @@ import {
 } from "../store/slices/buildpage/buildpageSlice";
 import FlexBetween from "./wrappers/FlexBetween";
 
-const CategoryCards = ({ category, icon, apiPath }) => {
+const CategoryCards = ({ category }) => {
   const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:500px)");
   const isNonSmallMobileScreens = useMediaQuery("(min-width:400px)");
-
+  const { categoryDisplayName, icon } = useGetCategoryObject(
+    category,
+    isNonSmallMobileScreens
+  );
   const selectedCategory = useSelector(selectCategory);
   const issues = useSelector(selectIssues);
   const { palette } = useTheme();
-  const errors = issues[apiPath].filter((issue) => issue.severity === "error");
-  const warnings = issues[apiPath].filter(
+  const errors = issues[category].filter((issue) => issue.severity === "error");
+  const warnings = issues[category].filter(
     (issue) => issue.severity === "warning"
   );
   let backgroundColor = palette.background.alt;
-  if (selectedCategory === apiPath)
+  if (selectedCategory === category)
     backgroundColor = palette.primary.selectedCat;
   if (warnings.length) backgroundColor = palette.warning.issues;
-  if (warnings.length && selectedCategory === apiPath)
+  if (warnings.length && selectedCategory === category)
     backgroundColor = palette.warning.light;
   if (errors.length) backgroundColor = palette.error.issues;
-  if (errors.length && selectedCategory === apiPath)
+  if (errors.length && selectedCategory === category)
     backgroundColor = palette.error.light;
   return (
     <Card
@@ -43,7 +47,7 @@ const CategoryCards = ({ category, icon, apiPath }) => {
         borderRadius: "0.75rem",
       }}
       onClick={() => {
-        dispatch(setCategory(apiPath));
+        dispatch(setCategory(category));
       }}
     >
       <CardActionArea>
@@ -52,7 +56,7 @@ const CategoryCards = ({ category, icon, apiPath }) => {
             mt="0.25rem"
             sx={{
               justifyContent: "center",
-              color: selectedCategory === apiPath && "white",
+              color: selectedCategory === category && "white",
             }}
           >
             <FlexBetween mt="0.25rem">
@@ -68,7 +72,7 @@ const CategoryCards = ({ category, icon, apiPath }) => {
                 }
                 sx={{ marginLeft: "0.25rem" }}
               >
-                {category}
+                {categoryDisplayName}
               </Typography>
             </FlexBetween>
           </FlexBetween>
