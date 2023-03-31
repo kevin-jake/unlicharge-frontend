@@ -6,8 +6,8 @@ import FlexBetween from "../../components/wrappers/FlexBetween";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import { useGetCategoryObject } from "../../hooks/useGetCategoryObject";
 import { selectSelection } from "../../store/slices/buildpage/buildpageSlice";
-import { categoryObjMap } from "../../util/categoryObjMap";
 import QuickSpecs from "../ProductCards/QuickSpecs";
+import SummaryCardContent from "./SummaryCardContent";
 
 const SummaryCards = ({ openModal, category }) => {
   const selectedItems = useSelector(selectSelection);
@@ -33,7 +33,7 @@ const SummaryCards = ({ openModal, category }) => {
               </Typography>
             </Box>
             {selectedItems[category].hasOwnProperty("id") ? (
-              <QuickSpecs
+              <SummaryCardContent
                 specs={selectedItems[category]}
                 openModal={openModal}
               />

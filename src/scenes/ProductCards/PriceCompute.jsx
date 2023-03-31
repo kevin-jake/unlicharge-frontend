@@ -3,7 +3,7 @@ import React from "react";
 import { numberWithCommas } from "../../util/numberFormats";
 import ComputeDisplay from "./ComputeDisplay";
 
-const PriceCompute = ({ computedSpecs, flexDirection }) => {
+const PriceCompute = ({ computedSpecs, flexDirection, isSummary }) => {
   const { palette } = useTheme();
   const primary = palette.primary.main;
   return (
@@ -28,6 +28,7 @@ const PriceCompute = ({ computedSpecs, flexDirection }) => {
       >
         <ComputeDisplay
           title="Price"
+          isSummary={isSummary}
           value={`${numberWithCommas(computedSpecs?.totalPrice)}`}
         />
         <Divider
@@ -38,6 +39,7 @@ const PriceCompute = ({ computedSpecs, flexDirection }) => {
         />
         <ComputeDisplay
           title="Capacity"
+          isSummary={isSummary}
           value={`${numberWithCommas(computedSpecs?.totalCapacity)} Ah`}
         />
 
@@ -49,6 +51,7 @@ const PriceCompute = ({ computedSpecs, flexDirection }) => {
         />
         <ComputeDisplay
           title="Quantity"
+          isSummary={isSummary}
           value={`${numberWithCommas(computedSpecs?.totalQty)}`}
         />
       </Box>

@@ -56,6 +56,7 @@ function BuildPage() {
   const { categoryDisplayName } = useGetCategoryObject(category);
 
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  // TODO: Change to false
   const [isSummaryOpen, setIsSummaryOpen] = useState(true);
   const [focusedProduct, setFocusedProduct] = useState({});
   const [crudModalState, setCrudModalState] = useState({
