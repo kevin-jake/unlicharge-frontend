@@ -21,7 +21,7 @@ const DialogFooter = ({
   const selectedCategory = useSelector(selectCategory);
   const selectedItems = useSelector(selectSelection);
   const dispatch = useDispatch();
-  const isSelected = selectedItems[selectedCategory].id !== specs.id;
+  const isSelected = selectedItems[selectedCategory].id !== specs?.id;
 
   const handleSelection = () => {
     if (isSelected) dispatch(setSelectedProduct(specs));
@@ -43,7 +43,7 @@ const DialogFooter = ({
             <Typography variant="body"> {userName}</Typography>
             <Typography variant="caption">
               {" "}
-              {moment(specs.lastUpdated).fromNow()}
+              {moment(specs?.updatedAt).fromNow()}
             </Typography>
           </Box>
         )}
@@ -74,7 +74,7 @@ const DialogFooter = ({
                 Request Created: {moment(createdAt).format("lll")}
               </Typography>
               <Typography variant="caption">
-                Udated: {moment(specs.lastUpdated).fromNow()}
+                Udated: {moment(specs?.updatedAt).fromNow()}
               </Typography>
             </Box>
           </Box>

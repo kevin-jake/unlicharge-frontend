@@ -17,6 +17,7 @@ import {
   setSelectedProduct,
 } from "../../../store/slices/buildpage/buildpageSlice";
 import { useDispatch, useSelector } from "react-redux";
+import QuickSpecsList from "../QuickSpecsList";
 
 const ProductDialogContent = ({
   specs,
@@ -41,10 +42,13 @@ const ProductDialogContent = ({
         {
           tabTitle: "Computation",
           tabComp: (
-            <PriceCompute
-              computedSpecs={specs.computedSpecs}
-              flexDirection="row"
-            />
+            <>
+              <PriceCompute
+                computedSpecs={specs.computedSpecs}
+                flexDirection="row"
+              />
+              <QuickSpecsList computedSpecs={specs.computedSpecs} />
+            </>
           ),
         },
       ]

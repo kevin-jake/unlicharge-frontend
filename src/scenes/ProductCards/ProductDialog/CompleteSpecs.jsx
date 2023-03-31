@@ -29,7 +29,6 @@ const toNotDisplay = [
   "imagePath",
 ];
 
-// TODO: separate this component from request and product to be able to display the image effectively
 const CompleteSpecs = ({
   specs,
   currentValues,

@@ -140,6 +140,42 @@ export const specMap = [
     specOf: ["Active Balancer"],
     specProps: "balancingType",
   },
+
+  // Computed specs display
+  {
+    nameDisplay: "Series Cells",
+    specProps: "totalSeries",
+    specOf: ["Battery"],
+  },
+  {
+    nameDisplay: "Parallel Cells",
+    specProps: "totalParallel",
+    specOf: ["Battery"],
+  },
+  {
+    nameDisplay: "Maximum Voltage",
+    specProps: "totalMaxVolt",
+    unit: "V",
+    specOf: ["Battery"],
+  },
+  {
+    nameDisplay: "Minimum Voltage",
+    specProps: "totalMinVolt",
+    unit: "V",
+    specOf: ["Battery"],
+  },
+  {
+    nameDisplay: "Charge C Rate",
+    specProps: "totalchargeCrate",
+    unit: "A",
+    specOf: ["Battery"],
+  },
+  {
+    nameDisplay: "Discharge C Rate",
+    specProps: "totalDischargeCRate",
+    unit: "A",
+    specOf: ["Battery"],
+  },
 ];
 
 export const specDisplay = (spec) => {

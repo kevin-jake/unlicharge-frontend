@@ -24,7 +24,6 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const anchorRef = useRef(null);
 
   useEffect(() => {
-    console.log("useEffect happen");
     setImgUrl(user?.imagePath);
   }, [user]);
 
