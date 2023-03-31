@@ -14,7 +14,6 @@ import {
   selectSelection,
 } from "../../store/slices/buildpage/buildpageSlice";
 
-// TODO: Add color-coding and in SortFilter add filters for Requests, Approved and Deleted
 const ProductCards = ({
   specs,
   publishStatus,
