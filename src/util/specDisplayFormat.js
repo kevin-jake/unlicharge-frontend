@@ -153,6 +153,12 @@ export const specMap = [
     specOf: ["Battery"],
   },
   {
+    nameDisplay: "Nominal Voltage",
+    specProps: "totalNominalVolt",
+    unit: "V",
+    specOf: ["Battery"],
+  },
+  {
     nameDisplay: "Maximum Voltage",
     specProps: "totalMaxVolt",
     unit: "V",
@@ -174,6 +180,12 @@ export const specMap = [
     nameDisplay: "Discharge C Rate",
     specProps: "totalDischargeCRate",
     unit: "A",
+    specOf: ["Battery"],
+  },
+  {
+    nameDisplay: "Depth of Discharge (DOD)",
+    specProps: "totaldod",
+    unit: "%",
     specOf: ["Battery"],
   },
 ];

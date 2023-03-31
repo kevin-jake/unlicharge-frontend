@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   FormControl,
+  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
@@ -32,7 +33,6 @@ const InitialParams = () => {
   const { battery } = useSelector(selectSelection);
   const { palette } = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [skip, setSkip] = useState(true);
 
   const { data, isSuccess } = useGetBatteryQuery(
     {
@@ -40,28 +40,25 @@ const InitialParams = () => {
       selectedBatt: battery?.id,
     },
     {
-      skip,
-    }
+      skip: !battery.hasOwnProperty("id"),
+    },
+    { refetchOnMountOrArgChange: true }
   );
 
   useEffect(() => {
     if (isSuccess) {
       dispatch(setUpdatedBatt(data));
-      setSkip(true);
     }
   }, [data]);
 
   const initialValuesRegister = {
     inputVoltage: initParams?.inputVoltage || "",
     inputCapacity: initParams?.inputCapacity || "",
-    inputmaxVoltage: initParams?.inputinputmaxVoltage || "",
-    inputminVoltage: initParams?.inputinputminVoltage || "",
-    inputdod: initParams?.inputdod || "",
+    inputDod: initParams?.inputDod || "",
   };
 
   const handleCalculate = (values) => {
     dispatch(setInitParams(values));
-    setSkip(false);
   };
 
   return (
@@ -111,19 +108,6 @@ const InitialParams = () => {
                   <MenuItem value={48}>48 V</MenuItem>
                 </Select>
               </FormControl>
-              {/* <TextField
-                label="Battery Voltage"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.inputVoltage}
-                name="inputVoltage"
-                error={
-                  Boolean(touched.inputVoltage) &&
-                  Boolean(errors.inputVoltage)
-                }
-                helperText={touched.inputVoltage && errors.inputVoltage}
-                sx={{ gridColumn: "span 6" }}
-              /> */}
               <TextField
                 label="Battery Capacity"
                 onBlur={handleBlur}
@@ -154,34 +138,23 @@ const InitialParams = () => {
                     }}
                   >
                     <TextField
-                      label="Max. Voltage"
+                      label="Depth of Discharge (DOD)"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.inputmaxVoltage}
-                      name="inputmaxVoltage"
-                      sx={{ gridColumn: "span 4" }}
-                    />
-                    <TextField
-                      label="Min. Voltage"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.inputminVoltage}
-                      name="inputminVoltage"
-                      sx={{ gridColumn: "span 4" }}
-                    />
-                    <TextField
-                      label="DOD"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.inputdod}
-                      name="inputdod"
-                      sx={{ gridColumn: "span 4" }}
+                      value={values.inputDod}
+                      name="inputDod"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">%</InputAdornment>
+                        ),
+                      }}
+                      sx={{ gridColumn: "span 3" }}
                     />
                   </Box>
                 </AccordionDetails>
               </Accordion>
             </Box>
-            <Box display="flex" justifyContent="flex-end">
+            <Box display="flex" gap={1} justifyContent="flex-end">
               <Button
                 type="submit"
                 sx={{
@@ -193,6 +166,20 @@ const InitialParams = () => {
                 }}
               >
                 Caculate
+              </Button>
+              <Button
+                onClick={() => {
+                  setFieldValue("inputVoltage", "");
+                  setFieldValue("inputDod", "");
+                  setFieldValue("inputCapacity", "");
+                }}
+                sx={{
+                  m: "1rem 0",
+                  p: ".5rem",
+                }}
+                variant="outlined"
+              >
+                Reset Values
               </Button>
             </Box>
           </form>
