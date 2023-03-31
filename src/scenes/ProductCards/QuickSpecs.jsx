@@ -14,10 +14,15 @@ const toDisplay = [
   "brand",
   "capacity",
   "nominalVoltage",
+  "battType",
+  "strings",
+  "balancingType",
+  "portType",
   "supplierLink",
 ];
 
 const QuickSpecs = ({ specs, openModal }) => {
+  console.log("🚀 ~ file: QuickSpecs.jsx:25 ~ QuickSpecs ~ specs:", specs);
   const { palette } = useTheme();
 
   const specsProperties = Object.keys(specs);
