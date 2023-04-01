@@ -1,9 +1,10 @@
+import isObjectEmpty from "./isObjectEmpty";
+
 export const uploadImage = async (values) => {
   const { user } = JSON.parse(window.localStorage.getItem("persist:auth"));
-  const { username } = JSON.parse(user);
-  if (values.imagePath) {
+  const { username } = JSON.parse(user) || values;
+  if (!isObjectEmpty(values.imagePath)) {
     const formData = new FormData();
-    if (!Boolean(values.username)) formData.append("username", username);
     for (let value in values) {
       formData.append(value, values[value]);
     }
