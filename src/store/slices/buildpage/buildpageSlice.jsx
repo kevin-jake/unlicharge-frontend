@@ -48,12 +48,14 @@ export const buildSlice = createSlice({
       state.sort = action.payload;
     },
     setSelectedProduct: (state, action) => {
-      state.selection[state.category] = action.payload;
-      state.issues = areProductsCompatible(
-        state.selection.battery,
-        state.selection.bms,
-        state.selection.ab
-      );
+      if (Boolean(action.payload.category)) {
+        state.selection[action.payload.category] = action.payload.specs;
+        state.issues = areProductsCompatible(
+          state.selection.battery,
+          state.selection.bms,
+          state.selection.ab
+        );
+      }
     },
     setUpdatedBatt: (state, action) => {
       state.selection.battery = action.payload;

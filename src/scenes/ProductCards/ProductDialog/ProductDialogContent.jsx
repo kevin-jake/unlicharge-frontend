@@ -7,7 +7,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import CompleteSpecs from "./CompleteSpecs";
 import ItemTabs from "../../../components/ItemTabs";
 import PriceCompute from "../PriceCompute";
@@ -19,9 +19,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import QuickSpecsList from "../QuickSpecsList";
 
-const ProductDialogContent = ({ specs, setCrudModalState, category }) => {
+const ProductDialogContent = ({
+  specs,
+  setCrudModalState,
+  categoryDisplayName,
+  selectedCategory,
+}) => {
   const { palette } = useTheme();
-  const selectedCategory = useSelector(selectCategory);
   const selectedItems = useSelector(selectSelection);
   const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -35,6 +39,20 @@ const ProductDialogContent = ({ specs, setCrudModalState, category }) => {
     ...specsRest
   } = specs || {};
 
+  const category = useMemo(() => {
+    switch (selectedCategory) {
+      case "Battery":
+        return "battery";
+      case "BMS":
+        return "bms";
+      case "Active Balancer":
+        return "ab";
+      default:
+        return selectedCategory;
+    }
+  }, [selectedCategory]);
+
+  console.log("🚀 ~ file: ProductDialogContent.jsx:43 ~ category:", category);
   const tabArray = Boolean(computedSpecs)
     ? [
         {
@@ -58,11 +76,11 @@ const ProductDialogContent = ({ specs, setCrudModalState, category }) => {
         },
       ];
 
-  const isSelected = selectedItems[selectedCategory].id !== productId;
+  const isSelected = selectedItems[category].id !== productId;
 
   const handleSelection = () => {
-    if (isSelected) dispatch(setSelectedProduct(specs));
-    else dispatch(setSelectedProduct({}));
+    if (isSelected) dispatch(setSelectedProduct({ specs, category }));
+    else dispatch(setSelectedProduct({ specs: {}, category }));
   };
 
   return (
@@ -70,7 +88,7 @@ const ProductDialogContent = ({ specs, setCrudModalState, category }) => {
       <DialogContent
         sx={{
           backgroundColor:
-            selectedItems[selectedCategory].id === productId
+            selectedItems[category].id === productId
               ? palette.primary.darkest
               : "",
         }}
@@ -123,7 +141,7 @@ const ProductDialogContent = ({ specs, setCrudModalState, category }) => {
             onClick={() =>
               setCrudModalState({
                 operation: "Edit",
-                category: category,
+                category: categoryDisplayName,
                 isOpen: true,
                 oldValues: specsRest,
                 productId,
@@ -138,7 +156,7 @@ const ProductDialogContent = ({ specs, setCrudModalState, category }) => {
             onClick={() =>
               setCrudModalState({
                 operation: "Delete",
-                category: category,
+                category: categoryDisplayName,
                 isOpen: true,
                 oldValues: specsRest,
                 productId,

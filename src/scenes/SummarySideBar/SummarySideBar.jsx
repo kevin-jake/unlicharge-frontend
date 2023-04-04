@@ -16,6 +16,10 @@ import { numberWithCommas } from "../../util/numberFormats";
 const SummarySideBar = ({ openModal }) => {
   const user = useSelector(selectUser);
   const selectedItems = useSelector(selectSelection);
+  console.log(
+    "🚀 ~ file: SummarySideBar.jsx:19 ~ SummarySideBar ~ selectedItems:",
+    selectedItems
+  );
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [total, setTotal] = useState(0);

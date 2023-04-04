@@ -14,6 +14,11 @@ const SummaryCards = ({ openModal, category }) => {
   const { palette } = useTheme();
   const { categoryDisplayName, icon } = useGetCategoryObject(category);
 
+  console.log(
+    "🚀 ~ file: SummaryCards.jsx:55 ~ SummaryCards ~ selectedItems[category]:",
+    selectedItems[category]
+  );
+
   return (
     <WidgetWrapper width="100%">
       <Card
@@ -52,5 +57,4 @@ const SummaryCards = ({ openModal, category }) => {
     </WidgetWrapper>
   );
 };
-
 export default SummaryCards;

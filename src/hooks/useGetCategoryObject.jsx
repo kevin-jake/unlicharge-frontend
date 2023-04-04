@@ -20,5 +20,10 @@ export const useGetCategoryObject = (category, isResponsive) => {
         categoryDisplayName: "Active Balancer",
         icon: <EqualizerIcon fontSize={fontSize} />,
       };
+    default:
+      return {
+        categoryDisplayName: "",
+        icon: null,
+      };
   }
 };

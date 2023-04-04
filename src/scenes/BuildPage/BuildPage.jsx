@@ -101,7 +101,9 @@ function BuildPage() {
           item.id === selectedItems[category].productId
       );
       if (newSelection.length) {
-        dispatch(setSelectedProduct(newSelection[0].specs));
+        dispatch(
+          setSelectedProduct({ specs: newSelection[0].specs, category })
+        );
       }
     }
   }, [data]);
@@ -214,7 +216,10 @@ function BuildPage() {
           {isSummaryOpen && (
             <SummarySideBar
               openModal={(category) =>
-                handleOpenProductModal({ specs: selectedItems[category] })
+                handleOpenProductModal({
+                  specs: selectedItems[category],
+                  category,
+                })
               }
             />
           )}
@@ -265,7 +270,8 @@ function BuildPage() {
         <ProductDialogContent
           specs={focusedProduct?.specs}
           setCrudModalState={setCrudModalState}
-          category={categoryDisplayName}
+          categoryDisplayName={categoryDisplayName}
+          selectedCategory={focusedProduct?.category}
         />
       </DialogWrapper>
       <DialogWrapper

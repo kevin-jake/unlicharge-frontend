@@ -24,8 +24,10 @@ const DialogFooter = ({
   const isSelected = selectedItems[selectedCategory].id !== specs?.id;
 
   const handleSelection = () => {
-    if (isSelected) dispatch(setSelectedProduct(specs));
-    else dispatch(setSelectedProduct({}));
+    if (isSelected)
+      dispatch(setSelectedProduct({ specs, category: selectedCategory }));
+    else
+      dispatch(setSelectedProduct({ specs: {}, category: selectedCategory }));
   };
 
   return (
