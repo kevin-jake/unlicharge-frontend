@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   DialogActions,
@@ -18,6 +19,7 @@ import {
 } from "../../../store/slices/buildpage/buildpageSlice";
 import { useDispatch, useSelector } from "react-redux";
 import QuickSpecsList from "../QuickSpecsList";
+import { useGetIssues } from "../../../hooks/useGetIssues";
 
 const ProductDialogContent = ({
   specs,
@@ -25,7 +27,6 @@ const ProductDialogContent = ({
   categoryDisplayName,
   selectedCategory,
 }) => {
-  const { palette } = useTheme();
   const selectedItems = useSelector(selectSelection);
   const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -45,7 +46,7 @@ const ProductDialogContent = ({
         return "battery";
       case "BMS":
         return "bms";
-      case "Active Balancer":
+      case "ActiveBalancer":
         return "ab";
       default:
         return selectedCategory;
@@ -53,6 +54,8 @@ const ProductDialogContent = ({
   }, [selectedCategory]);
 
   console.log("🚀 ~ file: ProductDialogContent.jsx:43 ~ category:", category);
+  const { errors, warnings } = useGetIssues(category);
+
   const tabArray = Boolean(computedSpecs)
     ? [
         {
@@ -76,24 +79,16 @@ const ProductDialogContent = ({
         },
       ];
 
-  const isSelected = selectedItems[category].id !== productId;
+  const isNotSelected = selectedItems[category].id !== productId;
 
   const handleSelection = () => {
-    if (isSelected) dispatch(setSelectedProduct({ specs, category }));
+    if (isNotSelected) dispatch(setSelectedProduct({ specs, category }));
     else dispatch(setSelectedProduct({ specs: {}, category }));
   };
 
   return (
     <>
-      <DialogContent
-        sx={{
-          backgroundColor:
-            selectedItems[category].id === productId
-              ? palette.primary.darkest
-              : "",
-        }}
-        dividers
-      >
+      <DialogContent dividers>
         <Grid
           item
           xs
@@ -123,6 +118,35 @@ const ProductDialogContent = ({
               },
             }}
           >
+            {!isNotSelected &&
+              errors.map((error, index) => (
+                <Alert
+                  key={`err-${index}`}
+                  sx={{
+                    width: "100%",
+                    flexDirection: isNonMobileScreens ? "row" : "column",
+                  }}
+                  variant="filled"
+                  severity="error"
+                  width="100%"
+                >
+                  {error.message}
+                </Alert>
+              ))}
+            {!isNotSelected &&
+              warnings.map((warn, index) => (
+                <Alert
+                  key={`warn-${index}`}
+                  severity="warning"
+                  variant="filled"
+                  sx={{
+                    width: "100%",
+                    flexDirection: isNonMobileScreens ? "row" : "column",
+                  }}
+                >
+                  {warn.message}
+                </Alert>
+              ))}
             <ItemTabs tabArray={tabArray} />
           </Grid>
         </Grid>
@@ -130,7 +154,7 @@ const ProductDialogContent = ({
       <DialogActions sx={{ justifyContent: "space-between" }}>
         <Box>
           <Button autoFocus onClick={handleSelection} variant="contained">
-            {isSelected ? "Select" : "Deselect"}
+            {isNotSelected ? "Select" : "Deselect"}
           </Button>
         </Box>
         <Box sx={{ gap: 2 }}>

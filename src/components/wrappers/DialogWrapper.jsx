@@ -2,7 +2,13 @@ import React from "react";
 import { Dialog, DialogTitle, IconButton, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const DialogWrapper = ({ children, title, isOpen, closeModal }) => {
+const DialogWrapper = ({
+  children,
+  title,
+  isOpen,
+  closeModal,
+  ...dialogStyles
+}) => {
   const { palette } = useTheme();
 
   return (
@@ -11,7 +17,7 @@ const DialogWrapper = ({ children, title, isOpen, closeModal }) => {
       onClose={closeModal}
       maxWidth="lg"
       PaperProps={{
-        style: { borderRadius: "0.75rem" },
+        style: { borderRadius: "0.75rem", ...dialogStyles },
       }}
     >
       <DialogTitle

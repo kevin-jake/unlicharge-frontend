@@ -13,6 +13,7 @@ import {
   selectCategory,
   selectSelection,
 } from "../../store/slices/buildpage/buildpageSlice";
+import { useGetIssues } from "../../hooks/useGetIssues";
 
 const ProductCards = ({
   specs,
@@ -30,9 +31,14 @@ const ProductCards = ({
   const isNonSmallMobileScreens = useMediaQuery("(min-width:500px)");
   const isSelected = selectedItems[category].id === specs.id;
   const isRequest = publishStatus === "Request";
+  const { isError, isWarning } = useGetIssues(category);
 
   const backgroundColor = isSelected
-    ? `${palette.primary.selectedCard} !important`
+    ? isError
+      ? `${palette.error.issues} !important`
+      : isWarning
+      ? `${palette.warning.issues} !important`
+      : `${palette.primary.selectedCard} !important`
     : isRequest
     ? `${palette.primary.request} !important`
     : palette.background.alt;

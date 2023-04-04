@@ -6,8 +6,9 @@ import {
   Fab,
   Grid,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CategoryCards from "../../components/CategoryCards";
 import ProductCards from "../ProductCards/ProductCards";
 import InitialParams from "./InitialParams";
@@ -34,14 +35,15 @@ import {
 import BuildFilters from "./BuildFilters";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import PageFooter from "../../components/PageFooter";
-import { AddCircle } from "@mui/icons-material";
+import { AddCircle, Palette } from "@mui/icons-material";
 import NoResults from "../../components/NoResults";
 import ErrorDisplay from "../../components/ErrorDisplay";
 import { useGetCategoryObject } from "../../hooks/useGetCategoryObject";
+import { useGetIssues } from "../../hooks/useGetIssues";
 
 function BuildPage() {
   const isNonSmallMobileScreens = useMediaQuery("(min-width:400px)");
-
+  const { palette } = useTheme();
   const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery("(min-width:1300px)");
   const initParams = useSelector(selectInitParams);
@@ -59,6 +61,10 @@ function BuildPage() {
   // TODO: Change to false
   const [isSummaryOpen, setIsSummaryOpen] = useState(true);
   const [focusedProduct, setFocusedProduct] = useState({});
+  console.log(
+    "🚀 ~ file: BuildPage.jsx:63 ~ BuildPage ~ focusedProduct:",
+    focusedProduct
+  );
   const [crudModalState, setCrudModalState] = useState({
     isOpen: false,
     operation: "Create",
@@ -67,17 +73,23 @@ function BuildPage() {
   });
   const categories = ["battery", "bms", "ab"];
 
-  const { data, isLoading, isFetching, isSuccess, isError, refetch } =
-    useGetProductsQuery(
-      {
-        category,
-        initParams,
-        filters,
-        pagination,
-        sort,
-      },
-      { refetchOnMountOrArgChange: true }
-    );
+  const {
+    data,
+    isLoading,
+    isFetching,
+    isSuccess,
+    isError: dataError,
+    refetch,
+  } = useGetProductsQuery(
+    {
+      category,
+      initParams,
+      filters,
+      pagination,
+      sort,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
   // console.log("🚀 ~ file: BuildPage.jsx:95 ~ BuildPage ~ data:", data);
 
   useEffect(() => {
@@ -107,6 +119,33 @@ function BuildPage() {
       }
     }
   }, [data]);
+
+  const catSelector = useCallback(
+    (categoryName) => {
+      switch (categoryName) {
+        case "Battery":
+          return "battery";
+        case "BMS":
+          return "bms";
+        case "ActiveBalancer":
+          return "ab";
+        default:
+          return categoryName;
+      }
+    },
+    [focusedProduct]
+  );
+
+  const errors = issues[catSelector(focusedProduct?.category)]?.filter(
+    (issue) => issue.severity === "error"
+  );
+  console.log("🚀 ~ file: BuildPage.jsx:78 ~ BuildPage ~ errors:", errors);
+  const issuesError = Boolean(errors?.length);
+  const warnings = issues[catSelector(focusedProduct?.category)]?.filter(
+    (issue) => issue.severity === "warning"
+  );
+  console.log("🚀 ~ file: BuildPage.jsx:83 ~ BuildPage ~ warnings:", warnings);
+  const isWarning = Boolean(warnings?.length);
 
   const handleOpenProductModal = (spec) => {
     setFocusedProduct(spec);
@@ -179,7 +218,7 @@ function BuildPage() {
                 isSummaryOpen={isSummaryOpen}
               />
             ))}
-          {((isSuccess && !isFetching && data.total == 0) || isError) && (
+          {((isSuccess && !isFetching && data.total == 0) || dataError) && (
             <NoResults />
           )}
           <Grid item xs={12}>
@@ -266,6 +305,25 @@ function BuildPage() {
         isOpen={isProductModalOpen}
         title={focusedProduct?.specs?.name || ""}
         closeModal={() => setIsProductModalOpen(false)}
+        borderStyle={
+          focusedProduct?.specs?.id ===
+            selectedItems[catSelector(focusedProduct?.category)]?.id ||
+          focusedProduct?.publishStatus === "Request"
+            ? "solid"
+            : null
+        }
+        borderColor={
+          focusedProduct?.specs?.id ===
+          selectedItems[catSelector(focusedProduct?.category)]?.id
+            ? issuesError
+              ? palette.error.main
+              : isWarning
+              ? palette.warning.main
+              : palette.primary.main
+            : focusedProduct?.publishStatus === "Request"
+            ? palette.info.main
+            : null
+        }
       >
         <ProductDialogContent
           specs={focusedProduct?.specs}
