@@ -112,9 +112,15 @@ const InitialParams = () => {
                 label="Battery Capacity"
                 onBlur={handleBlur}
                 onChange={handleChange}
+                type="number"
                 value={values.inputCapacity}
                 name="inputCapacity"
                 sx={{ gridColumn: "span 6" }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">Ah</InputAdornment>
+                  ),
+                }}
               />
               <Accordion sx={{ gridColumn: "span 12", boxShadow: 0 }}>
                 <AccordionSummary
@@ -133,7 +139,7 @@ const InitialParams = () => {
                     gridTemplateColumns="repeat(12, 1fr)"
                     sx={{
                       "& > div": {
-                        gridColumn: isNonMobile ? undefined : "span 12",
+                        gridColumn: isNonMobile ? undefined : "span 9",
                       },
                     }}
                   >

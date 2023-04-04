@@ -17,6 +17,7 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { resetSortPageFilters } from "./store/slices/buildpage/buildpageSlice";
+import Footer from "./scenes/Footer/Footer";
 
 let logoutTimer;
 
@@ -66,6 +67,8 @@ function App() {
             )}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+
+          <Footer />
         </ThemeProvider>
       </BrowserRouter>
     </div>

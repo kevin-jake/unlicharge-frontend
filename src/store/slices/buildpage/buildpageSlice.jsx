@@ -49,10 +49,6 @@ export const buildSlice = createSlice({
     },
     setSelectedProduct: (state, action) => {
       state.selection[state.category] = action.payload;
-      console.log(
-        "🚀 ~ file: buildpageSlice.jsx:51 ~ action.payload:",
-        action.payload
-      );
       state.issues = areProductsCompatible(
         state.selection.battery,
         state.selection.bms,
@@ -60,10 +56,6 @@ export const buildSlice = createSlice({
       );
     },
     setUpdatedBatt: (state, action) => {
-      console.log(
-        "🚀 ~ file: buildpageSlice.jsx:51 ~ action.payload:",
-        action.payload
-      );
       state.selection.battery = action.payload;
       state.issues = areProductsCompatible(
         state.selection.battery,
