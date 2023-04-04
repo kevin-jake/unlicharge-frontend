@@ -14,7 +14,7 @@ const SummaryCardContent = ({ specs, openModal }) => {
   const { palette } = useTheme();
   const primary = palette.primary.main;
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} sx={{ width: "100%" }}>
       <FlexBetween marginY="1rem" sx={{ justifyContent: "flex-start" }}>
         <Box
           width="50px"
@@ -45,7 +45,7 @@ const SummaryCardContent = ({ specs, openModal }) => {
           }}
         >
           <Box onClick={openModal} sx={{ cursor: "pointer" }}>
-            {isObjectEmpty(specs.computedSpecs) ? (
+            {!isObjectEmpty(specs.computedSpecs) ? (
               <>
                 {specs.name}
                 <PriceCompute

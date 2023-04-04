@@ -1,41 +1,20 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
-  IconButton,
-  InputBase,
   Typography,
-  Select,
-  MenuItem,
-  FormControl,
   useTheme,
   useMediaQuery,
-  Button,
-  CardHeader,
-  Avatar,
-  Grid,
-  Card,
-  CardActionArea,
-  CardContent,
   Divider,
 } from "@mui/material";
-import {
-  DarkMode,
-  LightMode,
-  Close,
-  Battery1BarOutlined,
-} from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import FlexBetween from "../../components/wrappers/FlexBetween";
-import { setMode } from "../../store/slices/auth/authSlice";
-import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
-import CategoryCards from "../../components/CategoryCards";
+import { selectUser } from "../../store/slices/auth/authSlice";
 import SummaryCards from "./SummaryCards";
 import { selectSelection } from "../../store/slices/buildpage/buildpageSlice";
-import isObjectEmpty from "../../util/isObjectEmpty";
+import { numberWithCommas } from "../../util/numberFormats";
 
 const SummarySideBar = ({ openModal }) => {
-  const user = useSelector(({ auth }) => auth.user);
+  const user = useSelector(selectUser);
   const selectedItems = useSelector(selectSelection);
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
@@ -44,23 +23,18 @@ const SummarySideBar = ({ openModal }) => {
   const alt = palette.background.alt;
   const selectedArray = Object.keys(selectedItems);
 
-  // FIXME: Total computation
   useEffect(() => {
-    let newTotal = total;
+    let newTotal = 0;
+    newTotal +=
+      selectedItems.battery.computedSpecs?.totalPrice ||
+      selectedItems.battery.pricePerPc ||
+      0;
     console.log(
-      "🚀 ~ file: SummarySideBar.jsx:49 ~ useEffect ~ newTotal:",
+      "🚀 ~ file: SummarySideBar.jsx:54 ~ useEffect ~ newTotal:",
       newTotal
     );
-
-    selectedArray.forEach(
-      (product) =>
-        (newTotal =
-          product === "battery"
-            ? !isObjectEmpty(selectedItems.battery.computedSpecs)
-              ? newTotal + selectedItems.battery.computedSpecs.totalPrice
-              : newTotal + selectedItems.battery.pricePerPc
-            : newTotal + selectedItems[product].price)
-    );
+    newTotal += +selectedItems.bms?.price || 0;
+    newTotal += +selectedItems.ab?.price || 0;
     setTotal(newTotal);
   }, [selectedItems]);
 
@@ -89,13 +63,13 @@ const SummarySideBar = ({ openModal }) => {
         <Divider />
         <Box
           display="flex"
-          justifyContent="flex-start"
+          justifyContent="space-between"
           width="100%"
           margin="0.25rem"
           padding="1rem"
         >
           <Typography variant="h4">Total:</Typography>
-          <Typography variant="h3">{total}</Typography>
+          <Typography variant="h3">Php {numberWithCommas(total)}</Typography>
         </Box>
       </FlexBetween>
     </Box>

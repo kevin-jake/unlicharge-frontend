@@ -83,7 +83,7 @@ const areBatteryAndABNotCompatible = (selected_battery, selected_ab) => {
       selected_battery.battType !== "Lead Acid" &&
       selected_battery.computedSpecs.totalSeries !== selected_ab.strings
     ) {
-      const message = `Active Balancer strings is ${selected_ab.strings} the battery pack needs ${selected_battery.computedSpecs.totalSeries}. Change the battery or BMS`;
+      const message = `Active Balancer strings is ${selected_ab.strings} the battery pack needs ${selected_battery.computedSpecs.totalSeries}. Change the battery or AB`;
       issues.ab.push({ message, severity: "error" });
     }
 
