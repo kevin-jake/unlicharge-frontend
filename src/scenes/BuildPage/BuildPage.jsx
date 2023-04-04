@@ -166,7 +166,7 @@ function BuildPage() {
           )}
           {isSuccess &&
             !isFetching &&
-            data.products.length &&
+            Boolean(data.products.length) &&
             data.products.map((product) => (
               <ProductCards
                 key={product._id}

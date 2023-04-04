@@ -23,6 +23,7 @@ const ErrorDisplay = ({ issues }) => {
                 width: "100%",
                 flexDirection: isNonMobileScreens ? "row" : "column",
               }}
+              variant="outlined"
               severity="error"
               width="100%"
             >

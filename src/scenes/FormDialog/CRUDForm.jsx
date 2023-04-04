@@ -6,6 +6,10 @@ import {
   Typography,
   useTheme,
   InputAdornment,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -89,8 +93,8 @@ const CRUDForm = ({
         initialValues = initValue;
       }
 
-      textFields = specMap.filter((specItem) =>
-        specItem.specOf.includes(category)
+      textFields = specMap.filter(
+        (specItem) => specItem.specOf.includes(category) && specItem.textField
       );
 
       if (operation === "Delete") {
@@ -235,44 +239,66 @@ const CRUDForm = ({
                     )}
                   </Dropzone>
                 </Box>
-                {formikProps.textFields.map((field) => (
-                  <TextField
-                    key={field.specProps}
-                    label={field.nameDisplay}
-                    type={field.unit ? "number" : "text"}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    required={field.required}
-                    value={values[field.specProps]}
-                    InputProps={{
-                      endAdornment:
-                        field.unit !== "Php" ? (
-                          <InputAdornment position="end">
-                            {field.unit}
-                          </InputAdornment>
-                        ) : (
-                          ""
-                        ),
-                      startAdornment:
-                        field.unit === "Php" ? (
-                          <InputAdornment position="start">
-                            {field.unit}
-                          </InputAdornment>
-                        ) : (
-                          ""
-                        ),
-                    }}
-                    name={field.specProps}
-                    error={
-                      Boolean(touched[field.specProps]) &&
-                      Boolean(errors[field.specProps])
-                    }
-                    helperText={
-                      touched[field.specProps] && errors[field.specProps]
-                    }
-                    sx={{ gridColumn: "span 12" }}
-                  />
-                ))}
+                {formikProps.textFields.map((field) =>
+                  field.specProps === "battType" ? (
+                    <FormControl fullWidth sx={{ gridColumn: "span 12" }}>
+                      <InputLabel id={`${field.specProps}-label`}>
+                        {field.nameDisplay}
+                      </InputLabel>
+                      <Select
+                        labelId={`${field.specProps}-label`}
+                        id={field.specProps}
+                        label={field.nameDisplay}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        value={values[field.specProps]}
+                        name={field.specProps}
+                      >
+                        <MenuItem value="">None</MenuItem>
+                        <MenuItem value="LiFePo4">LiFePo4</MenuItem>
+                        <MenuItem value="Li-On">Li-On (Lithium Ion)</MenuItem>
+                        <MenuItem value="Lead Acid">Lead Acid</MenuItem>
+                      </Select>
+                    </FormControl>
+                  ) : (
+                    <TextField
+                      key={field.specProps}
+                      label={field.nameDisplay}
+                      type={field.unit ? "number" : "text"}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      required={field.required}
+                      value={values[field.specProps]}
+                      InputProps={{
+                        endAdornment:
+                          field.unit !== "Php" ? (
+                            <InputAdornment position="end">
+                              {field.unit}
+                            </InputAdornment>
+                          ) : (
+                            ""
+                          ),
+                        startAdornment:
+                          field.unit === "Php" ? (
+                            <InputAdornment position="start">
+                              {field.unit}
+                            </InputAdornment>
+                          ) : (
+                            ""
+                          ),
+                      }}
+                      name={field.specProps}
+                      error={
+                        Boolean(touched[field.specProps]) &&
+                        Boolean(errors[field.specProps])
+                      }
+                      helperText={
+                        touched[field.specProps] && errors[field.specProps]
+                      }
+                      sx={{ gridColumn: "span 12" }}
+                    />
+                  )
+                )}
               </>
             )}
             {isDelete && (
