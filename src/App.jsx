@@ -18,6 +18,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { resetSortPageFilters } from "./store/slices/buildpage/buildpageSlice";
 import Footer from "./scenes/Footer/Footer";
+import AboutPage from "./scenes/AboutPage/AboutPage";
 
 let logoutTimer;
 
@@ -58,6 +59,8 @@ function App() {
           <Routes>
             {/* <Route path="/" element={<HomePage />} /> */}
             <Route path="/" element={<BuildPage />} />
+            <Route path="/about" element={<AboutPage />} />
+
             {/* <Route path="/build" element={<BuildPage />} /> */}
             {/* <Route path="/products" element={<ProductPage />} /> */}
             {isAuth && (

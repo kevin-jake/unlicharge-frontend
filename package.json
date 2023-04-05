@@ -10,6 +10,7 @@
     "new-component": "new-component"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.10.0",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.15",
     "@mui/material": "^5.10.15",

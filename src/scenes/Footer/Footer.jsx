@@ -113,16 +113,14 @@ const Footer = () => {
                 alignItems: "center",
               }}
             >
-              <NavLink to="/about" exact="true">
-                <Typography variant="body" color={palette.primary.main}>
-                  About
-                </Typography>
-              </NavLink>
-              <NavLink to="/contact" exact="true">
-                <Typography variant="body" color={palette.primary.main}>
-                  Contact
-                </Typography>
-              </NavLink>
+              <Typography
+                variant="body"
+                color={palette.primary.main}
+                onClick={() => navigate("/about")}
+                sx={{ cursor: "pointer" }}
+              >
+                About
+              </Typography>
             </Box>
           </Box>
         </FlexBetween>
