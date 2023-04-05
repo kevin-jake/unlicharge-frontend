@@ -36,20 +36,17 @@ const Footer = () => {
               flexDirection: "column",
             }}
           >
-            <Typography
-              fontWeight="bold"
-              fontSize="medium"
-              color="primary"
-              onClick={() => navigate("/home")}
-              sx={{
-                "&:hover": {
-                  color: palette.primary.light,
+            <Box onClick={() => navigate("/")}>
+              <img
+                src="/public/Unlicharge_logo.svg"
+                height={20}
+                style={{
+                  filter:
+                    "brightness(0) saturate(100%) invert(74%) sepia(43%) saturate(405%) hue-rotate(71deg) brightness(91%) contrast(89%)",
                   cursor: "pointer",
-                },
-              }}
-            >
-              Unlicharge
-            </Typography>
+                }}
+              />
+            </Box>
             <Box
               gap={1}
               sx={{

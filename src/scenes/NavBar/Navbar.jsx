@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Box,
   IconButton,
-  Typography,
   useTheme,
   useMediaQuery,
   Button,
@@ -40,20 +39,17 @@ const Navbar = () => {
     <>
       <FlexBetween padding="1rem 2% 1rem 6%" backgroundColor={alt}>
         <FlexBetween gap="1.75rem">
-          <Typography
-            fontWeight="bold"
-            fontSize="clamp(1rem, 2rem, 2.25rem)"
-            color="primary"
-            onClick={() => navigate("/home")}
-            sx={{
-              "&:hover": {
-                color: primaryLight,
+          <Box onClick={() => navigate("/")}>
+            <img
+              src="/public/Unlicharge_logo.svg"
+              height={50}
+              style={{
+                filter:
+                  "brightness(0) saturate(100%) invert(74%) sepia(43%) saturate(405%) hue-rotate(71deg) brightness(91%) contrast(89%)",
                 cursor: "pointer",
-              },
-            }}
-          >
-            Unlicharge
-          </Typography>
+              }}
+            />
+          </Box>
         </FlexBetween>
 
         {/* DESKTOP NAV */}
