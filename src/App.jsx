@@ -63,7 +63,7 @@ function App() {
             {isAuth && (
               <>
                 <Route path="/requests" element={<RequestsPage />} />
-                <Route path="/profile/:userId" element={<ProfilePage />} />{" "}
+                <Route path="/profile/:userId" element={<ProfilePage />} />
               </>
             )}
             <Route path="*" element={<Navigate to="/" replace />} />

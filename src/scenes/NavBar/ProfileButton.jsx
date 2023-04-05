@@ -11,12 +11,13 @@ import {
 } from "@mui/material";
 import React, { memo, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setLogout } from "../../store/slices/auth/authSlice";
 import { resetSelection } from "../../store/slices/buildpage/buildpageSlice";
 
 const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { palette } = useTheme();
   const neutralLight = palette.neutral.light;
   const [imgUrl, setImgUrl] = useState("/placeholder-avatar.png");
@@ -117,15 +118,15 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
             onClose={handleClose}
           >
             {/* TODO: Add an Edit Profile and My Builds home profile pages */}
-            <MenuItem>
-              <Typography textAlign="center">test</Typography>
+            <MenuItem onClick={() => navigate(`/profile/${user?.userId}`)}>
+              <Typography textAlign="center" color={palette.neutral.dark}>
+                {user?.username}
+              </Typography>
             </MenuItem>
-            <MenuItem>
-              <NavLink to="/requests" exact="true">
-                <Typography textAlign="center" color={palette.neutral.dark}>
-                  My Requests
-                </Typography>
-              </NavLink>
+            <MenuItem onClick={() => navigate("requests")}>
+              <Typography textAlign="center" color={palette.neutral.dark}>
+                My Requests
+              </Typography>
             </MenuItem>
             <MenuItem onClick={handleLogOut}>
               <Typography textAlign="center">Log out</Typography>

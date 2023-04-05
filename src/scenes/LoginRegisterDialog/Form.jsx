@@ -50,7 +50,6 @@ const initialValuesRegister = {
   email: "",
   password: "",
   location: "",
-  occupation: "",
   imagePath: "",
 };
 
@@ -237,18 +236,6 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                     Boolean(errors.mobileNumber)
                   }
                   helperText={touched.mobileNumber && errors.mobileNumber}
-                  sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                  label="Occupation"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.occupation}
-                  name="occupation"
-                  error={
-                    Boolean(touched.occupation) && Boolean(errors.occupation)
-                  }
-                  helperText={touched.occupation && errors.occupation}
                   sx={{ gridColumn: "span 2" }}
                 />
                 <Box
