@@ -7,9 +7,10 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import { Facebook } from "@mui/icons-material";
+import logo from "../../../public/Unlicharge_logo.svg";
 
 const Footer = () => {
   const { palette } = useTheme();
@@ -38,7 +39,7 @@ const Footer = () => {
           >
             <Box onClick={() => navigate("/")}>
               <img
-                src="/public/Unlicharge_logo.svg"
+                src={logo}
                 height={20}
                 style={{
                   filter:

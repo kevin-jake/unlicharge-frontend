@@ -14,6 +14,7 @@ import LoginRegisterDialogContent from "../LoginRegisterDialog/LoginRegisterDial
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import { selectUser, setMode } from "../../store/slices/auth/authSlice";
 import ProfileButton from "./ProfileButton";
+import logo from "../../../public/Unlicharge_logo.svg";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -41,7 +42,7 @@ const Navbar = () => {
         <FlexBetween gap="1.75rem">
           <Box onClick={() => navigate("/")}>
             <img
-              src="/public/Unlicharge_logo.svg"
+              src={logo}
               height={50}
               style={{
                 filter:

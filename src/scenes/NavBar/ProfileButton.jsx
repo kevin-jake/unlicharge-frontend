@@ -14,13 +14,14 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLogout } from "../../store/slices/auth/authSlice";
 import { resetSelection } from "../../store/slices/buildpage/buildpageSlice";
+import placeholderAvatar from "../../../public/placeholder-avatar.png";
 
 const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { palette } = useTheme();
   const neutralLight = palette.neutral.light;
-  const [imgUrl, setImgUrl] = useState("/placeholder-avatar.png");
+  const [imgUrl, setImgUrl] = useState(placeholderAvatar);
   const [isOpen, setIsOpen] = useState(false);
   const anchorRef = useRef(null);
 
@@ -29,7 +30,7 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   }, [user]);
 
   const handleImgError = () => {
-    setImgUrl("/placeholder-avatar.png");
+    setImgUrl(placeholderAvatar);
   };
 
   const handleOpen = () => {

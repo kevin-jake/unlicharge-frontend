@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../store/slices/auth/authSlice";
 import WidgetWrapper from "../../../components/wrappers/WidgetWrapper";
 import CreatorInfo from "./CreatorInfo";
+import placeholderImg from "../../../../public/placeholder-image.jpg";
 
 const RequestDialogContent = ({
   focusedRequest,
@@ -121,7 +122,7 @@ const RequestDialogContent = ({
                 src={replacedValues?.imagePath}
                 onError={({ currentTarget }) => {
                   currentTarget.onerror = null;
-                  currentTarget.src = "/placeholder-image.jpg";
+                  currentTarget.src = placeholderImg;
                 }}
               />
             </Box>
@@ -135,7 +136,7 @@ const RequestDialogContent = ({
             src={specs.imagePath}
             onError={({ currentTarget }) => {
               currentTarget.onerror = null;
-              currentTarget.src = "/placeholder-image.jpg";
+              currentTarget.src = placeholderImg;
             }}
           />
         )}

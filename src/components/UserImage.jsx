@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
+import placeholderAvatar from "../../public/placeholder-avatar.png";
 
 const UserImage = ({ image, size = "60px" }) => {
   return (
@@ -12,7 +13,7 @@ const UserImage = ({ image, size = "60px" }) => {
         src={image}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null;
-          currentTarget.src = "/placeholder-avatar.png";
+          currentTarget.src = placeholderAvatar;
         }}
       />
     </Box>
