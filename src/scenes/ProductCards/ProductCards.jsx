@@ -94,7 +94,11 @@ const ProductCards = ({
                 <WidgetWrapper
                   sx={{
                     backgroundColor: isSelected
-                      ? `${palette.primary.selectedCompute} !important`
+                      ? isError
+                        ? `${palette.error.light} !important`
+                        : isWarning
+                        ? `${palette.warning.light} !important`
+                        : `${palette.primary.selectedCompute} !important`
                       : isRequest
                       ? `${palette.primary.requestCompute} !important`
                       : `${palette.neutral.light} !important`,
@@ -112,7 +116,11 @@ const ProductCards = ({
                 <WidgetWrapper
                   sx={{
                     backgroundColor: isSelected
-                      ? `${palette.primary.selectedCompute} !important`
+                      ? isError
+                        ? `${palette.error.light} !important`
+                        : isWarning
+                        ? `${palette.warning.light} !important`
+                        : `${palette.primary.selectedCompute} !important`
                       : isRequest
                       ? `${palette.primary.requestCompute} !important`
                       : `${palette.neutral.light} !important`,
@@ -145,7 +153,11 @@ const ProductCards = ({
               <WidgetWrapper
                 sx={{
                   backgroundColor: isSelected
-                    ? `${palette.primary.selectedCompute} !important`
+                    ? isError
+                      ? `${palette.error.light} !important`
+                      : isWarning
+                      ? `${palette.warning.light} !important`
+                      : `${palette.primary.selectedCompute} !important`
                     : isRequest
                     ? `${palette.primary.requestCompute} !important`
                     : `${palette.neutral.light} !important`,
