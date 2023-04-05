@@ -14,7 +14,7 @@ import LoginRegisterDialogContent from "../LoginRegisterDialog/LoginRegisterDial
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
 import { selectUser, setMode } from "../../store/slices/auth/authSlice";
 import ProfileButton from "./ProfileButton";
-import logo from "../../../public/Unlicharge_logo.svg";
+import logo from "../../assets//Unlicharge_logo.svg";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);

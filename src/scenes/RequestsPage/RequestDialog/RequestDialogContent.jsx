@@ -21,7 +21,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../store/slices/auth/authSlice";
 import WidgetWrapper from "../../../components/wrappers/WidgetWrapper";
 import CreatorInfo from "./CreatorInfo";
-import placeholderImg from "../../../../public/placeholder-image.jpg";
+import placeholderImg from "../../../assets/placeholder-image.jpg";
 
 const RequestDialogContent = ({
   focusedRequest,

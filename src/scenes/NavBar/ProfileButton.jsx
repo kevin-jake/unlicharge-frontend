@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLogout } from "../../store/slices/auth/authSlice";
 import { resetSelection } from "../../store/slices/buildpage/buildpageSlice";
-import placeholderAvatar from "../../../public/placeholder-avatar.png";
+import placeholderAvatar from "../../assets/placeholder-avatar.png";
 
 const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const dispatch = useDispatch();
