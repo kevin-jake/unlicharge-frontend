@@ -159,10 +159,6 @@ const CRUDForm = ({
         .unwrap()
         .then()
         .catch((error) => notifyError(error));
-      console.log(
-        "🚀 ~ file: CRUDForm.jsx:158 ~ handleFormSubmit ~ userId:",
-        userId
-      );
       if (specCreator.id === userId)
         toast.success("Product deleted successfully.");
       else if (role === "User")

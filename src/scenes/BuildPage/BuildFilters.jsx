@@ -58,10 +58,6 @@ const BuildFilters = ({ refetch }) => {
     const battType = Object.keys(searchBattType).filter(
       (prop) => searchBattType[prop]
     );
-    console.log(
-      "🚀 ~ file: BuildFilters.jsx:60 ~ handleSearch ~ battType:",
-      battType
-    );
     dispatch(
       setFilters({
         battType: JSON.stringify(battType),

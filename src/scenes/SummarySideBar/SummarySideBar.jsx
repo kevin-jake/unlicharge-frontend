@@ -30,10 +30,6 @@ const SummarySideBar = ({ openModal, setIsSummaryOpen }) => {
       selectedItems.battery.computedSpecs?.totalPrice ||
       selectedItems.battery.pricePerPc ||
       0;
-    console.log(
-      "🚀 ~ file: SummarySideBar.jsx:54 ~ useEffect ~ newTotal:",
-      newTotal
-    );
     newTotal += +selectedItems.bms?.price || 0;
     newTotal += +selectedItems.ab?.price || 0;
     setTotal(newTotal);

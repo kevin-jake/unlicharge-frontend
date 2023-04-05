@@ -58,7 +58,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/build" element={<BuildPage />} />
-            <Route path="/products" element={<ProductPage />} />
+            {/* <Route path="/products" element={<ProductPage />} /> */}
             {isAuth && (
               <>
                 <Route path="/requests" element={<RequestsPage />} />

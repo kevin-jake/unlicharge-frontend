@@ -135,12 +135,10 @@ function BuildPage() {
   const errors = issues[catSelector(focusedProduct?.category)]?.filter(
     (issue) => issue.severity === "error"
   );
-  console.log("🚀 ~ file: BuildPage.jsx:78 ~ BuildPage ~ errors:", errors);
   const issuesError = Boolean(errors?.length);
   const warnings = issues[catSelector(focusedProduct?.category)]?.filter(
     (issue) => issue.severity === "warning"
   );
-  console.log("🚀 ~ file: BuildPage.jsx:83 ~ BuildPage ~ warnings:", warnings);
   const isWarning = Boolean(warnings?.length);
 
   const handleOpenProductModal = (spec) => {
