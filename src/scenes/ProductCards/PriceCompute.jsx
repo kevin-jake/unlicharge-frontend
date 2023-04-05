@@ -14,7 +14,7 @@ const PriceCompute = ({ computedSpecs, flexDirection, isSummary }) => {
           "& hr": {
             mx: 1,
           },
-          "& .css-1idn90j-MuiGrid-root": {
+          "& .MuiGrid-root": {
             display: "flex",
             justifyContent: "center",
           },
