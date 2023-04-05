@@ -9,7 +9,7 @@ const DonationContent = () => {
   return (
     <WidgetWrapper
       display="flex"
-      flexDirection="row"
+      flexDirection={isNonMobileScreens ? "row" : "column"}
       justifyContent="center"
       alignItems="center"
       gap={5}

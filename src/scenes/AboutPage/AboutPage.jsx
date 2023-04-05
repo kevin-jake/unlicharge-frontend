@@ -26,6 +26,7 @@ const AboutPage = () => {
       <Box
         width="100%"
         display="flex"
+        paddingX="3%"
         flexDirection={isNonMobileScreens ? "row" : "column"}
         gap="0.5rem"
         justifyContent="center"
