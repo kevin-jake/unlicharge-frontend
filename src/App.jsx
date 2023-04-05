@@ -56,8 +56,9 @@ function App() {
             theme={mode}
           />
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/build" element={<BuildPage />} />
+            {/* <Route path="/" element={<HomePage />} /> */}
+            <Route path="/" element={<BuildPage />} />
+            {/* <Route path="/build" element={<BuildPage />} /> */}
             {/* <Route path="/products" element={<ProductPage />} /> */}
             {isAuth && (
               <>

@@ -67,9 +67,9 @@ const Navbar = () => {
                 alignItems: "center",
               }}
             >
-              <NavLink to="/" exact="true">
+              {/* <NavLink to="/" exact="true">
                 <Button>Home</Button>
-              </NavLink>
+              </NavLink> */}
               <NavLink to="/build" exact="true">
                 <Button>Build</Button>
               </NavLink>
@@ -128,9 +128,9 @@ const Navbar = () => {
               alignItems="center"
               gap="3rem"
             >
-              <NavLink to="/" exact="true">
+              {/* <NavLink to="/" exact="true">
                 <Button>Home</Button>
-              </NavLink>
+              </NavLink> */}
               <NavLink to="/build" exact="true">
                 <Button>Build</Button>
               </NavLink>
