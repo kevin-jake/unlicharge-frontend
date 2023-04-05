@@ -5,6 +5,8 @@ import {
   useTheme,
   useMediaQuery,
   Button,
+  Chip,
+  Typography,
 } from "@mui/material";
 import { DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,7 +40,14 @@ const Navbar = () => {
 
   return (
     <>
-      <FlexBetween padding="1rem 2% 1rem 6%" backgroundColor={alt}>
+      <FlexBetween
+        padding="1rem 2% 1rem 6%"
+        backgroundColor={
+          import.meta.env.DEV || import.meta.env.MODE == "dev"
+            ? theme.palette.compliment.main
+            : alt
+        }
+      >
         <FlexBetween gap="1.75rem">
           <Box onClick={() => navigate("/")}>
             <img
@@ -51,6 +60,16 @@ const Navbar = () => {
               }}
             />
           </Box>
+          <Chip
+            label={
+              <Typography variant="body1">
+                {import.meta.env.DEV || import.meta.env.MODE == "dev"
+                  ? "DEV BETA"
+                  : "BETA"}
+              </Typography>
+            }
+            color="primary"
+          />
         </FlexBetween>
 
         {/* DESKTOP NAV */}

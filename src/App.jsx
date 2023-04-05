@@ -44,6 +44,13 @@ function App() {
     }
   }, [isAuth]);
 
+  useEffect(() => {
+    document.title =
+      import.meta.env.DEV || import.meta.env.MODE == "dev"
+        ? "[DEV] - Unlicharge"
+        : "Unlicharge";
+  }, []);
+
   return (
     <div className="app">
       <BrowserRouter>
