@@ -3,6 +3,8 @@ import SendEmail from "./SendEmail";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import PageWrapper from "../../components/wrappers/PageWrapper";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
+import AboutContent from "./AboutContent";
+import DonationContent from "./DonationContent";
 
 const AboutPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -12,10 +14,23 @@ const AboutPage = () => {
       <Box
         width="100%"
         padding="2rem 3%"
-        display={isNonMobileScreens ? "flex" : "block"}
+        display="flex"
+        flexDirection={isNonMobileScreens ? "row" : "column"}
         gap="0.5rem"
-        justifyContent="space-between"
+        justifyContent="center"
       >
+        <Box display="flex" gap={3} flexDirection="row">
+          <AboutContent />
+        </Box>
+      </Box>
+      <Box
+        width="100%"
+        display="flex"
+        flexDirection={isNonMobileScreens ? "row" : "column"}
+        gap="0.5rem"
+        justifyContent="center"
+      >
+        <DonationContent />
         <WidgetWrapper
           display="flex"
           flexDirection="column"

@@ -40,7 +40,7 @@ const Footer = () => {
             <Box onClick={() => navigate("/")}>
               <img
                 src={logo}
-                height={20}
+                height={30}
                 style={{
                   filter:
                     "brightness(0) saturate(100%) invert(74%) sepia(43%) saturate(405%) hue-rotate(71deg) brightness(91%) contrast(89%)",
@@ -99,8 +99,20 @@ const Footer = () => {
                 alignItems: "center",
               }}
             >
-              <IconButton aria-label="fbgroup" size="large" color="primary">
+              <IconButton
+                sx={{
+                  borderRadius: 5,
+                  borderColor: "primary.main",
+                }}
+                aria-label="fbgroup"
+                size="large"
+                color="primary"
+              >
                 <Facebook />
+                <Typography variant="h6" marginX="1rem">
+                  {" "}
+                  Join our community
+                </Typography>
               </IconButton>
             </Box>
             <Box

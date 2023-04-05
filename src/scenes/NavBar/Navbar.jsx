@@ -93,6 +93,9 @@ const Navbar = () => {
               {/* <NavLink to="/products" exact="true">
                 <Button>Products</Button>
               </NavLink> */}
+              <NavLink to="/about" exact="true">
+                <Button>About</Button>
+              </NavLink>
               <IconButton onClick={() => dispatch(setMode())}>
                 {theme.palette.mode === "dark" ? (
                   <DarkMode sx={{ fontSize: "25px" }} />
@@ -154,6 +157,9 @@ const Navbar = () => {
               {/* <NavLink to="/build" exact="true">
                 <Button>Products</Button>
               </NavLink> */}
+              <NavLink to="/about" exact="true">
+                <Button>About</Button>
+              </NavLink>
               <IconButton onClick={() => dispatch(setMode())}>
                 {theme.palette.mode === "dark" ? (
                   <DarkMode sx={{ fontSize: "25px" }} />
