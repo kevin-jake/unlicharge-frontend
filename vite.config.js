@@ -7,7 +7,6 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 1600,
     rollupOptions: {
-      external: ["@emotion/react"],
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
