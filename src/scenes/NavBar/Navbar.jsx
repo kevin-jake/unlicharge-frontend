@@ -14,18 +14,30 @@ import { NavLink, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import LoginRegisterDialogContent from "../LoginRegisterDialog/LoginRegisterDialogContent";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
-import { selectUser, setMode } from "../../store/slices/auth/authSlice";
+import {
+  isPrivacyOpen,
+  isTermsOpen,
+  selectUser,
+  setIsPrivacyOpen,
+  setIsTermsOpen,
+  setMode,
+} from "../../store/slices/auth/authSlice";
 import ProfileButton from "./ProfileButton";
 import logo from "../../assets//Unlicharge_logo.svg";
+import TermsDialogContent from "../TermsAndPrivacyDialog/TermsDialogContent";
+import PrivacyDialogContent from "../TermsAndPrivacyDialog/PrivacyDialog";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(selectUser);
+  const isTermsOpenVar = useSelector(isTermsOpen);
+  const isPrivacyOpenVar = useSelector(isPrivacyOpen);
+
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const [modalType, setModalType] = useState("Login");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const user = useSelector(selectUser);
 
   const theme = useTheme();
   const dark = theme.palette.neutral.dark;
@@ -185,6 +197,22 @@ const Navbar = () => {
           pageType={modalType}
           setModalType={setModalType}
           closeModal={() => setIsModalOpen(false)}
+        />
+      </DialogWrapper>
+      <DialogWrapper
+        isOpen={isTermsOpenVar}
+        closeModal={() => dispatch(setIsTermsOpen(false))}
+      >
+        <TermsDialogContent
+          closeModal={() => dispatch(setIsTermsOpen(false))}
+        />
+      </DialogWrapper>
+      <DialogWrapper
+        isOpen={isPrivacyOpenVar}
+        closeModal={() => dispatch(setIsPrivacyOpen(false))}
+      >
+        <PrivacyDialogContent
+          closeModal={() => dispatch(setIsPrivacyOpen(false))}
         />
       </DialogWrapper>
     </>

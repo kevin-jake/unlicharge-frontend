@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 const initialState = {
   mode: "dark",
   user: null,
+  isTermsOpen: false,
+  isPrivacyOpen: false,
 };
 
 export const authSlice = createSlice({
@@ -19,6 +21,12 @@ export const authSlice = createSlice({
     setLogout: (state) => {
       state.user = null;
       toast.info("You have been logged out", { autoClose: 10000 });
+    },
+    setIsTermsOpen: (state, action) => {
+      state.isTermsOpen = action.payload;
+    },
+    setIsPrivacyOpen: (state, action) => {
+      state.isPrivacyOpen = action.payload;
     },
     setFriends: (state, action) => {
       if (state.user) {
@@ -40,10 +48,20 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } =
-  authSlice.actions;
+export const {
+  setMode,
+  setLogin,
+  setLogout,
+  setIsPrivacyOpen,
+  setIsTermsOpen,
+  setFriends,
+  setPosts,
+  setPost,
+} = authSlice.actions;
 
 export const selectUser = (state) => state.auth.user;
+export const isTermsOpen = (state) => state.auth.isTermsOpen;
+export const isPrivacyOpen = (state) => state.auth.isPrivacyOpen;
 export const selectMode = (state) => state.auth.mode;
 
 export default authSlice.reducer;

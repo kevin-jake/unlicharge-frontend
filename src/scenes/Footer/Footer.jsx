@@ -1,7 +1,6 @@
 import {
   Box,
   Container,
-  Divider,
   IconButton,
   Paper,
   Typography,
@@ -11,9 +10,15 @@ import { Link, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import { Facebook } from "@mui/icons-material";
 import logo from "../../assets/Unlicharge_logo.svg";
+import { useDispatch } from "react-redux";
+import {
+  setIsPrivacyOpen,
+  setIsTermsOpen,
+} from "../../store/slices/auth/authSlice";
 
 const Footer = () => {
   const { palette } = useTheme();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // TODO: Add more context
@@ -60,27 +65,24 @@ const Footer = () => {
               <Typography variant="caption" color={palette.primary.light}>
                 © 2023
               </Typography>
-              <Link
-                rel="noopener noreferrer"
-                target="_blank"
-                href="#"
-                underline="none"
-              >
-                <Typography variant="body1" color={palette.neutral.medium}>
+              <Box onClick={() => dispatch(setIsTermsOpen(true))}>
+                <Typography
+                  variant="body1"
+                  color={palette.neutral.medium}
+                  sx={{ cursor: "pointer" }}
+                >
                   Terms
                 </Typography>
-              </Link>
-              <Link
-                rel="noopener noreferrer"
-                sx={{ color: palette.primary.light }}
-                target="_blank"
-                href="#"
-                underline="none"
-              >
-                <Typography variant="body1" color={palette.neutral.medium}>
+              </Box>
+              <Box onClick={() => dispatch(setIsPrivacyOpen(true))}>
+                <Typography
+                  variant="body1"
+                  color={palette.neutral.medium}
+                  sx={{ cursor: "pointer" }}
+                >
                   Privacy
                 </Typography>
-              </Link>
+              </Box>
             </Box>
           </Box>
           <Box
