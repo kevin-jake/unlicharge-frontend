@@ -5,6 +5,7 @@ import {
   CircularProgress,
   Fab,
   Grid,
+  IconButton,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -35,11 +36,10 @@ import {
 import BuildFilters from "./BuildFilters";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import PageFooter from "../../components/PageFooter";
-import { AddCircle, Palette } from "@mui/icons-material";
+import { AddCircle, ListAlt } from "@mui/icons-material";
 import NoResults from "../../components/NoResults";
 import ErrorDisplay from "../../components/ErrorDisplay";
 import { useGetCategoryObject } from "../../hooks/useGetCategoryObject";
-import { useGetIssues } from "../../hooks/useGetIssues";
 
 function BuildPage() {
   const isNonSmallMobileScreens = useMediaQuery("(min-width:400px)");
@@ -59,12 +59,8 @@ function BuildPage() {
 
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   // TODO: Change to false
-  const [isSummaryOpen, setIsSummaryOpen] = useState(true);
+  const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [focusedProduct, setFocusedProduct] = useState({});
-  console.log(
-    "🚀 ~ file: BuildPage.jsx:63 ~ BuildPage ~ focusedProduct:",
-    focusedProduct
-  );
   const [crudModalState, setCrudModalState] = useState({
     isOpen: false,
     operation: "Create",
@@ -152,6 +148,12 @@ function BuildPage() {
     setIsProductModalOpen(true);
   };
 
+  const handleSummaryOpen = () => {
+    if (!isNonMobileScreens) {
+      setIsSummaryOpen(true);
+    } else setIsSummaryOpen(!isSummaryOpen);
+  };
+
   return (
     <PageWrapper title="Estimate your build">
       <Box
@@ -176,7 +178,7 @@ function BuildPage() {
           container
           spacing={0.5}
           item
-          md={isSummaryOpen ? 9 : 12}
+          md={isSummaryOpen && isNonMobileScreens ? 9 : 12}
         >
           <Grid item xs={12}>
             <FlexBetween flexDirection={isNonMobileScreens ? "row" : "column"}>
@@ -187,7 +189,29 @@ function BuildPage() {
                 refetch={refetch}
                 isNonMobileScreens={isNonMobileScreens}
               />
-              <BuildFilters refetch={refetch} />
+              <Grid container>
+                <Grid item xs={10}>
+                  <BuildFilters refetch={refetch} />
+                </Grid>
+                <Grid
+                  item
+                  xs={2}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{
+                      height: "100%",
+                      width: "100%",
+                      marginX: "1rem",
+                      padding: "0.25rem",
+                    }}
+                    onClick={handleSummaryOpen}
+                  >
+                    <ListAlt fontSize="large" />
+                  </Button>
+                </Grid>
+              </Grid>
             </FlexBetween>
           </Grid>
 
@@ -248,12 +272,14 @@ function BuildPage() {
             borderRadius: "0.75rem",
             height: "fit-content",
             top: "1rem",
+            zIndex: "1900",
             position: "sticky",
             overflow: "hidden",
           }}
         >
           {isSummaryOpen && (
             <SummarySideBar
+              setIsSummaryOpen={setIsSummaryOpen}
               openModal={(category) =>
                 handleOpenProductModal({
                   specs: selectedItems[category],
@@ -282,25 +308,6 @@ function BuildPage() {
           }}
         />
       </Grid>
-      <Box
-        sx={{
-          margin: "1rem",
-          right: 20,
-          bottom: 20,
-          left: "auto",
-          position: "fixed",
-        }}
-      >
-        <Fab
-          variant="extended"
-          size="small"
-          color="primary"
-          aria-label="add"
-          onClick={() => setIsSummaryOpen(!isSummaryOpen)}
-        >
-          Summary
-        </Fab>
-      </Box>
       <DialogWrapper
         isOpen={isProductModalOpen}
         title={focusedProduct?.specs?.name || ""}

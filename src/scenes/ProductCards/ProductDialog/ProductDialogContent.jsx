@@ -5,6 +5,7 @@ import {
   DialogActions,
   DialogContent,
   Grid,
+  Stack,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -114,39 +115,39 @@ const ProductDialogContent = ({
             zeroMinWidth
             sx={{
               "& > div": {
-                my: 0.25,
+                my: 1,
               },
             }}
           >
-            {!isNotSelected &&
-              errors.map((error, index) => (
-                <Alert
-                  key={`err-${index}`}
-                  sx={{
-                    width: "100%",
-                    flexDirection: isNonMobileScreens ? "row" : "column",
-                  }}
-                  variant="filled"
-                  severity="error"
-                  width="100%"
-                >
-                  {error.message}
-                </Alert>
-              ))}
-            {!isNotSelected &&
-              warnings.map((warn, index) => (
-                <Alert
-                  key={`warn-${index}`}
-                  severity="warning"
-                  variant="filled"
-                  sx={{
-                    width: "100%",
-                    flexDirection: isNonMobileScreens ? "row" : "column",
-                  }}
-                >
-                  {warn.message}
-                </Alert>
-              ))}
+            <Stack spacing={2}>
+              {!isNotSelected &&
+                errors.map((error, index) => (
+                  <Alert
+                    key={`err-${index}`}
+                    sx={{
+                      width: "100%",
+                    }}
+                    variant="filled"
+                    severity="error"
+                    width="100%"
+                  >
+                    {error.message}
+                  </Alert>
+                ))}
+              {!isNotSelected &&
+                warnings.map((warn, index) => (
+                  <Alert
+                    key={`warn-${index}`}
+                    severity="warning"
+                    variant="filled"
+                    sx={{
+                      width: "100%",
+                    }}
+                  >
+                    {warn.message}
+                  </Alert>
+                ))}
+            </Stack>
             <ItemTabs tabArray={tabArray} />
           </Grid>
         </Grid>

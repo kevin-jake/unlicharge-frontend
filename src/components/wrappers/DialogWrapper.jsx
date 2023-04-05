@@ -16,6 +16,7 @@ const DialogWrapper = ({
       open={isOpen ? isOpen : false}
       onClose={closeModal}
       maxWidth="lg"
+      sx={{ zIndex: "2000" }}
       PaperProps={{
         style: { borderRadius: "0.75rem", ...dialogStyles },
       }}

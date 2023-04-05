@@ -1,5 +1,12 @@
 import { Battery1BarOutlined } from "@mui/icons-material";
-import { Box, Card, CardContent, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import FlexBetween from "../../components/wrappers/FlexBetween";
@@ -12,15 +19,14 @@ import SummaryCardContent from "./SummaryCardContent";
 const SummaryCards = ({ openModal, category }) => {
   const selectedItems = useSelector(selectSelection);
   const { palette } = useTheme();
+  const isNonMobileScreens = useMediaQuery("(min-width: 1300px)");
   const { categoryDisplayName, icon } = useGetCategoryObject(category);
 
-  console.log(
-    "🚀 ~ file: SummaryCards.jsx:55 ~ SummaryCards ~ selectedItems[category]:",
-    selectedItems[category]
-  );
-
   return (
-    <WidgetWrapper width="100%">
+    <WidgetWrapper
+      width="100%"
+      sx={{ padding: !isNonMobileScreens && "0.3rem !important" }}
+    >
       <Card
         sx={{
           backgroundColor: palette.background.alt,
