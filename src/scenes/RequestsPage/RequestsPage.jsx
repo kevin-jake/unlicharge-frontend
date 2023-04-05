@@ -84,10 +84,6 @@ const RequestsPage = () => {
   const [decision, setDecision] = useState("");
   const [isMyRequestOnly, setIsMyRequestOnly] = useState(false);
   const [focusedRequest, setFocusedRequest] = useState({});
-  console.log(
-    "🚀 ~ file: RequestsPage.jsx:84 ~ RequestsPage ~ focusedRequest:",
-    focusedRequest
-  );
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);

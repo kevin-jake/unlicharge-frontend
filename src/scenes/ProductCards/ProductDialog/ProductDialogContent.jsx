@@ -53,8 +53,6 @@ const ProductDialogContent = ({
         return selectedCategory;
     }
   }, [selectedCategory]);
-
-  console.log("🚀 ~ file: ProductDialogContent.jsx:43 ~ category:", category);
   const { errors, warnings } = useGetIssues(category);
 
   const tabArray = Boolean(computedSpecs)
