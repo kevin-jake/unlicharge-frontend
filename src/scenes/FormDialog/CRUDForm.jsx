@@ -10,6 +10,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  FormHelperText,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -237,24 +238,39 @@ const CRUDForm = ({
                 </Box>
                 {formikProps.textFields.map((field) =>
                   field.specProps === "battType" ? (
-                    <FormControl fullWidth sx={{ gridColumn: "span 12" }}>
-                      <InputLabel id={`${field.specProps}-label`}>
-                        {field.nameDisplay}
+                    <FormControl
+                      key="battType"
+                      fullWidth
+                      sx={{ gridColumn: "span 12" }}
+                      error={
+                        Boolean(errors.battType) && Boolean(touched.battType)
+                      }
+                    >
+                      <InputLabel id={"battType-label"}>
+                        {field.nameDisplay} *
                       </InputLabel>
                       <Select
-                        labelId={`${field.specProps}-label`}
-                        id={field.specProps}
-                        label={field.nameDisplay}
+                        labelId={"battType-label"}
+                        id="battType"
+                        label="Battery Type *"
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        value={values[field.specProps]}
-                        name={field.specProps}
+                        required
+                        MenuProps={{
+                          style: { zIndex: 3500 },
+                        }}
+                        value={values.battType}
+                        name="battType"
                       >
                         <MenuItem value="">None</MenuItem>
                         <MenuItem value="LiFePo4">LiFePo4</MenuItem>
                         <MenuItem value="Li-On">Li-On (Lithium Ion)</MenuItem>
                         <MenuItem value="Lead Acid">Lead Acid</MenuItem>
                       </Select>
+                      {Boolean(errors.battType) &&
+                        Boolean(touched.battType) && (
+                          <FormHelperText>{errors.battType}</FormHelperText>
+                        )}
                     </FormControl>
                   ) : (
                     <TextField
