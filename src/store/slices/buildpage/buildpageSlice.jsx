@@ -5,7 +5,7 @@ const initialState = {
   category: "battery",
   initParams: {},
   pagination: {
-    limit: 5,
+    limit: 6,
     page: 1,
   },
   filters: {
