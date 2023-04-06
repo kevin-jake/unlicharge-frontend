@@ -58,7 +58,6 @@ function BuildPage() {
   const { categoryDisplayName } = useGetCategoryObject(category);
 
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
-  // TODO: Change to false
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [focusedProduct, setFocusedProduct] = useState({});
   const [crudModalState, setCrudModalState] = useState({
@@ -194,10 +193,14 @@ function BuildPage() {
                 <Grid
                   item
                   xs={2}
-                  sx={{ display: "flex", justifyContent: "center" }}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
                   <Button
-                    variant="contained"
+                    variant="text"
                     sx={{
                       height: "100%",
                       width: "100%",

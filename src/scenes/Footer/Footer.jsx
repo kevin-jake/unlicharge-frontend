@@ -21,7 +21,6 @@ const Footer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // TODO: Add more context
   return (
     <Paper
       sx={{

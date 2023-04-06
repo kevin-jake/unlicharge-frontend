@@ -26,7 +26,7 @@ const registerSchema = yup.object().shape({
   password: yup.string().required("Required"),
   mobileNumber: yup.string().required("Required"),
 });
-
+// TODO: Add functionality on frontend and backend
 const EditProfileForm = ({ user }) => {
   const { palette } = useTheme();
   const [showPassword, setShowPassword] = useState(false);

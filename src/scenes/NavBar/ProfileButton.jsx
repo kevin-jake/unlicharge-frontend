@@ -118,7 +118,6 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
             open={isOpen}
             onClose={handleClose}
           >
-            {/* TODO: Add an Edit Profile and My Builds home profile pages */}
             <MenuItem onClick={() => navigate(`/profile/${user?.userId}`)}>
               <Typography textAlign="center" color={palette.neutral.dark}>
                 {user?.username}

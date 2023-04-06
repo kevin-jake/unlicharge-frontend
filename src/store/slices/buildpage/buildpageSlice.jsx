@@ -8,7 +8,10 @@ const initialState = {
     limit: 5,
     page: 1,
   },
-  filters: {},
+  filters: {
+    minPrice: 0,
+    maxPrice: 100000,
+  },
   sort: {
     sortBy: "name",
     sortArrangement: "asc",
@@ -69,6 +72,9 @@ export const buildSlice = createSlice({
       state.selection = initialState.selection;
       state.issues = initialState.issues;
     },
+    resetFilters: (state) => {
+      state.filters = initialState.filters;
+    },
     resetSortPageFilters: (state) => {
       state = initialState;
     },
@@ -82,8 +88,9 @@ export const {
   setPagination,
   setSort,
   setUpdatedBatt,
-  resetSelection,
   setSelectedProduct,
+  resetFilters,
+  resetSelection,
   resetSortPageFilters,
 } = buildSlice.actions;
 
