@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLogout } from "../../store/slices/auth/authSlice";
 import { resetSelection } from "../../store/slices/buildpage/buildpageSlice";
-import placeholderAvatar from "../../../public/placeholder-avatar.png";
+import placeholderAvatar from "../../assets/placeholder-avatar.png";
 
 const ProfileButton = ({ user, isLoggedIn, openModal }) => {
   const dispatch = useDispatch();
@@ -118,7 +118,6 @@ const ProfileButton = ({ user, isLoggedIn, openModal }) => {
             open={isOpen}
             onClose={handleClose}
           >
-            {/* TODO: Add an Edit Profile and My Builds home profile pages */}
             <MenuItem onClick={() => navigate(`/profile/${user?.userId}`)}>
               <Typography textAlign="center" color={palette.neutral.dark}>
                 {user?.username}

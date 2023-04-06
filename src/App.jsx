@@ -19,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { resetSortPageFilters } from "./store/slices/buildpage/buildpageSlice";
 import Footer from "./scenes/Footer/Footer";
 import AboutPage from "./scenes/AboutPage/AboutPage";
+import ContactPage from "./scenes/ContactPage/ContactPage";
 
 let logoutTimer;
 
@@ -44,6 +45,13 @@ function App() {
     }
   }, [isAuth]);
 
+  useEffect(() => {
+    document.title =
+      import.meta.env.DEV || import.meta.env.MODE == "dev"
+        ? "[DEV] - Unlicharge"
+        : "Unlicharge";
+  }, []);
+
   return (
     <div className="app">
       <BrowserRouter>
@@ -60,6 +68,7 @@ function App() {
             {/* <Route path="/" element={<HomePage />} /> */}
             <Route path="/" element={<BuildPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
 
             {/* <Route path="/build" element={<BuildPage />} /> */}
             {/* <Route path="/products" element={<ProductPage />} /> */}

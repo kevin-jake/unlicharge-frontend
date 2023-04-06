@@ -5,6 +5,8 @@ import {
   useTheme,
   useMediaQuery,
   Button,
+  Chip,
+  Typography,
 } from "@mui/material";
 import { DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,18 +14,30 @@ import { NavLink, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import LoginRegisterDialogContent from "../LoginRegisterDialog/LoginRegisterDialogContent";
 import DialogWrapper from "../../components/wrappers/DialogWrapper";
-import { selectUser, setMode } from "../../store/slices/auth/authSlice";
+import {
+  isPrivacyOpen,
+  isTermsOpen,
+  selectUser,
+  setIsPrivacyOpen,
+  setIsTermsOpen,
+  setMode,
+} from "../../store/slices/auth/authSlice";
 import ProfileButton from "./ProfileButton";
-import logo from "../../../public/Unlicharge_logo.svg";
+import logo from "../../assets//Unlicharge_logo.svg";
+import TermsDialogContent from "../TermsAndPrivacyDialog/TermsDialogContent";
+import PrivacyDialogContent from "../TermsAndPrivacyDialog/PrivacyDialog";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(selectUser);
+  const isTermsOpenVar = useSelector(isTermsOpen);
+  const isPrivacyOpenVar = useSelector(isPrivacyOpen);
+
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const [modalType, setModalType] = useState("Login");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const user = useSelector(selectUser);
 
   const theme = useTheme();
   const dark = theme.palette.neutral.dark;
@@ -38,7 +52,14 @@ const Navbar = () => {
 
   return (
     <>
-      <FlexBetween padding="1rem 2% 1rem 6%" backgroundColor={alt}>
+      <FlexBetween
+        padding="1rem 2% 1rem 6%"
+        backgroundColor={
+          import.meta.env.DEV || import.meta.env.MODE == "dev"
+            ? theme.palette.compliment.main
+            : alt
+        }
+      >
         <FlexBetween gap="1.75rem">
           <Box onClick={() => navigate("/")}>
             <img
@@ -51,6 +72,16 @@ const Navbar = () => {
               }}
             />
           </Box>
+          <Chip
+            label={
+              <Typography variant="body1">
+                {import.meta.env.DEV || import.meta.env.MODE == "dev"
+                  ? "DEV BETA"
+                  : "BETA"}
+              </Typography>
+            }
+            color="primary"
+          />
         </FlexBetween>
 
         {/* DESKTOP NAV */}
@@ -74,6 +105,12 @@ const Navbar = () => {
               {/* <NavLink to="/products" exact="true">
                 <Button>Products</Button>
               </NavLink> */}
+              <NavLink to="/about" exact="true">
+                <Button>About</Button>
+              </NavLink>
+              <NavLink to="/contact" exact="true">
+                <Button>Contact</Button>
+              </NavLink>
               <IconButton onClick={() => dispatch(setMode())}>
                 {theme.palette.mode === "dark" ? (
                   <DarkMode sx={{ fontSize: "25px" }} />
@@ -135,6 +172,12 @@ const Navbar = () => {
               {/* <NavLink to="/build" exact="true">
                 <Button>Products</Button>
               </NavLink> */}
+              <NavLink to="/about" exact="true">
+                <Button>About</Button>
+              </NavLink>
+              <NavLink to="/contact" exact="true">
+                <Button>Contact</Button>
+              </NavLink>
               <IconButton onClick={() => dispatch(setMode())}>
                 {theme.palette.mode === "dark" ? (
                   <DarkMode sx={{ fontSize: "25px" }} />
@@ -160,6 +203,22 @@ const Navbar = () => {
           pageType={modalType}
           setModalType={setModalType}
           closeModal={() => setIsModalOpen(false)}
+        />
+      </DialogWrapper>
+      <DialogWrapper
+        isOpen={isTermsOpenVar}
+        closeModal={() => dispatch(setIsTermsOpen(false))}
+      >
+        <TermsDialogContent
+          closeModal={() => dispatch(setIsTermsOpen(false))}
+        />
+      </DialogWrapper>
+      <DialogWrapper
+        isOpen={isPrivacyOpenVar}
+        closeModal={() => dispatch(setIsPrivacyOpen(false))}
+      >
+        <PrivacyDialogContent
+          closeModal={() => dispatch(setIsPrivacyOpen(false))}
         />
       </DialogWrapper>
     </>

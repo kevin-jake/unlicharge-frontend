@@ -1,7 +1,6 @@
 import {
   Box,
   Container,
-  Divider,
   IconButton,
   Paper,
   Typography,
@@ -10,13 +9,18 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import { Facebook } from "@mui/icons-material";
-import logo from "../../../public/Unlicharge_logo.svg";
+import logo from "../../assets/Unlicharge_logo.svg";
+import { useDispatch } from "react-redux";
+import {
+  setIsPrivacyOpen,
+  setIsTermsOpen,
+} from "../../store/slices/auth/authSlice";
 
 const Footer = () => {
   const { palette } = useTheme();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // TODO: Add more context
   return (
     <Paper
       sx={{
@@ -40,7 +44,7 @@ const Footer = () => {
             <Box onClick={() => navigate("/")}>
               <img
                 src={logo}
-                height={20}
+                height={30}
                 style={{
                   filter:
                     "brightness(0) saturate(100%) invert(74%) sepia(43%) saturate(405%) hue-rotate(71deg) brightness(91%) contrast(89%)",
@@ -60,27 +64,24 @@ const Footer = () => {
               <Typography variant="caption" color={palette.primary.light}>
                 © 2023
               </Typography>
-              <Link
-                rel="noopener noreferrer"
-                target="_blank"
-                href="#"
-                underline="none"
-              >
-                <Typography variant="body1" color={palette.neutral.medium}>
+              <Box onClick={() => dispatch(setIsTermsOpen(true))}>
+                <Typography
+                  variant="body1"
+                  color={palette.neutral.medium}
+                  sx={{ cursor: "pointer" }}
+                >
                   Terms
                 </Typography>
-              </Link>
-              <Link
-                rel="noopener noreferrer"
-                sx={{ color: palette.primary.light }}
-                target="_blank"
-                href="#"
-                underline="none"
-              >
-                <Typography variant="body1" color={palette.neutral.medium}>
+              </Box>
+              <Box onClick={() => dispatch(setIsPrivacyOpen(true))}>
+                <Typography
+                  variant="body1"
+                  color={palette.neutral.medium}
+                  sx={{ cursor: "pointer" }}
+                >
                   Privacy
                 </Typography>
-              </Link>
+              </Box>
             </Box>
           </Box>
           <Box
@@ -91,7 +92,8 @@ const Footer = () => {
               flexDirection: "column",
             }}
           >
-            <Box
+            {/* TODO: Enable this once facebook group is already up */}
+            {/* <Box
               gap="1rem"
               sx={{
                 display: "flex",
@@ -99,10 +101,22 @@ const Footer = () => {
                 alignItems: "center",
               }}
             >
-              <IconButton aria-label="fbgroup" size="large" color="primary">
+              <IconButton
+                sx={{
+                  borderRadius: 5,
+                  borderColor: "primary.main",
+                }}
+                aria-label="fbgroup"
+                size="large"
+                color="primary"
+              >
                 <Facebook />
+                <Typography variant="h6" marginX="1rem">
+                  {" "}
+                  Join our community
+                </Typography>
               </IconButton>
-            </Box>
+            </Box> */}
             <Box
               gap="1rem"
               sx={{
@@ -118,6 +132,14 @@ const Footer = () => {
                 sx={{ cursor: "pointer" }}
               >
                 About
+              </Typography>
+              <Typography
+                variant="body"
+                color={palette.primary.main}
+                onClick={() => navigate("/contact")}
+                sx={{ cursor: "pointer" }}
+              >
+                Contact
               </Typography>
             </Box>
           </Box>

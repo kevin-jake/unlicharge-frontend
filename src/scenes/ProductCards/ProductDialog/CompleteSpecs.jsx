@@ -54,7 +54,6 @@ const CompleteSpecs = ({
               overflow: "hidden",
               textOverflow: "ellipsis",
               display: "inline-block",
-              whiteSpace: "nowrap",
               width: "-webkit-fill-available",
               WebkitLineClamp: "1",
               WebkitBoxOrient: "vertical",

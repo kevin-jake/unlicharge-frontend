@@ -1,4 +1,4 @@
-import { numberWithCommas } from "./numberFormats";
+import { kiloformat, numberWithCommas } from "./numberFormats";
 
 export const specMap = [
   {
@@ -171,6 +171,12 @@ export const specMap = [
     specOf: ["Battery"],
   },
   {
+    nameDisplay: "Total Capacity in Watt-hours",
+    specProps: "totalWh",
+    unit: "Wh",
+    specOf: ["Battery"],
+  },
+  {
     nameDisplay: "Parallel Cells",
     specProps: "totalParallel",
     specOf: ["Battery"],
@@ -222,6 +228,6 @@ export const specWithUnit = (spec, value) => {
   if (specUnit) {
     return specUnit === "Php"
       ? `${specUnit} ${numberWithCommas(value)}`
-      : `${value} ${specUnit}`;
+      : `${kiloformat(value, specUnit)}`;
   } else return value;
 };

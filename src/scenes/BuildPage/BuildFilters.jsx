@@ -7,8 +7,6 @@ import {
   useTheme,
   Button,
   IconButton,
-  Slider,
-  TextField,
   FormGroup,
   FormControlLabel,
   Checkbox,
@@ -22,10 +20,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  resetFilters,
   selectCategory,
   selectFilters,
   setFilters,
 } from "../../store/slices/buildpage/buildpageSlice";
+import PriceSliders from "../../components/PriceSliders";
 
 const BuildFilters = ({ refetch }) => {
   const dispatch = useDispatch();
@@ -46,6 +46,10 @@ const BuildFilters = ({ refetch }) => {
   });
   // TODO: convert this to useRef
   const [searchBar, setSearchBar] = useState(filters.search);
+  const [priceRangeValue, setPriceRangeValue] = useState([
+    filters.minPrice,
+    filters.maxPrice,
+  ]);
 
   const handleCheckbox = (e) => {
     setSearchBattType({
@@ -60,6 +64,8 @@ const BuildFilters = ({ refetch }) => {
     );
     dispatch(
       setFilters({
+        minPrice: priceRangeValue[0],
+        maxPrice: priceRangeValue[1],
         battType: JSON.stringify(battType),
         search: searchBar,
       })
@@ -72,6 +78,13 @@ const BuildFilters = ({ refetch }) => {
       }
     )
       refetch();
+  };
+
+  const handleClearAll = () => {
+    setSearchBattType({});
+    setSearchBar("");
+    setPriceRangeValue([filters.minPrice, filters.maxPrice]);
+    dispatch(resetFilters());
   };
   return (
     <Box
@@ -123,55 +136,19 @@ const BuildFilters = ({ refetch }) => {
             <Button
               variant="text"
               sx={{ minWidth: 100, color: medium, textTransform: "none" }}
+              onClick={handleClearAll}
             >
               Clear All
             </Button>
           </Box>
           {/* TODO: Extract into another component and implement functionality */}
           <FlexBetween margin="5px">
-            <Box width="100%">
-              <Typography
-                marginTop="5px"
-                color={medium}
-                variant="h6"
-                fontWeight="500"
-              >
-                Price
-              </Typography>
-              <FlexBetween
-                borderRadius="9px"
-                marginBottom="20px"
-                padding="0.1rem 1.5rem"
-              >
-                <Box
-                  display="flex"
-                  gap="0.25rem"
-                  flexDirection="row"
-                  width="100%"
-                >
-                  <TextField
-                    label="Min"
-                    type="number"
-                    variant="standard"
-                    InputLabelProps={{ shrink: true }}
-                    sx={{ width: "90px" }}
-                  />
-                  <Slider
-                    defaultValue={50}
-                    aria-label="Default"
-                    valueLabelDisplay="auto"
-                  />
-
-                  <TextField
-                    label="Max"
-                    type="number"
-                    variant="standard"
-                    InputLabelProps={{ shrink: true }}
-                    sx={{ width: "90px" }}
-                  />
-                </Box>
-              </FlexBetween>
-            </Box>
+            <PriceSliders
+              minPrice={filters.minPrice}
+              maxPrice={filters.maxPrice}
+              priceRangeValue={priceRangeValue}
+              setPriceRangeValue={setPriceRangeValue}
+            />
             {/* TODO: Add more filters for BMS and active balancer */}
             {category === "battery" && (
               <>

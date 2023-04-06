@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import placeholderAvatar from "../../public/placeholder-avatar.png";
+import placeholderAvatar from "../assets/placeholder-avatar.png";
 
 const UserImage = ({ image, size = "60px" }) => {
   return (
