@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/wrappers/FlexBetween";
 import { Facebook } from "@mui/icons-material";
 import logo from "../../assets/Unlicharge_logo.svg";
+
 import { useDispatch } from "react-redux";
 import {
   setIsPrivacyOpen,
