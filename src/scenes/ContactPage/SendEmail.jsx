@@ -27,8 +27,6 @@ const SendEmail = () => {
   };
 
   const sendEmail = async (values, onSubmitProps) => {
-    console.log("🚀 ~ file: SendEmail.jsx:27 ~ sendEmail ~ values:", values);
-
     try {
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
