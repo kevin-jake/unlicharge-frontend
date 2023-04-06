@@ -13,6 +13,7 @@ import {
   Checkbox,
   FormHelperText,
   FormControl,
+  Link,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -298,7 +299,7 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                     Boolean(errors.isPrivacyChecked)
                   }
                   component="fieldset"
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: isNonMobile ? "span 2" : "span 4" }}
                   variant="standard"
                 >
                   <FormGroup>
@@ -311,16 +312,18 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                         />
                       }
                       label={
-                        <Box display="flex" flexDirection="row" width="100%">
+                        <Box component="span" width="100%">
                           I agree to the
-                          <Typography
-                            variant="body1"
+                          <Link
                             color={palette.primary.main}
+                            component="button"
+                            variant="body1"
+                            underline="none"
+                            sx={{ ml: 1 }}
                             onClick={() => dispatch(setIsTermsOpen(true))}
-                            sx={{ cursor: "pointer", ml: "0.5rem" }}
                           >
                             Terms of Use
-                          </Typography>
+                          </Link>
                         </Box>
                       }
                     />
@@ -338,16 +341,23 @@ const Form = ({ setModalType, pageType, closeModal }) => {
                         />
                       }
                       label={
-                        <Box display="flex" flexDirection="row" width="100%">
+                        <Box
+                          component="span"
+                          display="flex"
+                          flexDirection="row"
+                          width="100%"
+                        >
                           I agree to the
-                          <Typography
-                            variant="body1"
+                          <Link
                             color={palette.primary.main}
+                            component="button"
+                            variant="body1"
+                            underline="none"
+                            sx={{ ml: 1 }}
                             onClick={() => dispatch(setIsPrivacyOpen(true))}
-                            sx={{ cursor: "pointer", ml: "0.5rem" }}
                           >
                             Privacy Policy
-                          </Typography>
+                          </Link>
                         </Box>
                       }
                     />
