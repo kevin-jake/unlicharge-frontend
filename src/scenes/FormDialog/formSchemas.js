@@ -18,20 +18,41 @@ export const batterySchema = yup.object().shape({
     .typeError("Price per Pc must be a number")
     .positive("Price per Pc must be greater than zero")
     .required("Price per Pc is required"),
-  maxVoltage: yup
-    .number()
-    .typeError("Max Voltage must be a number")
-    .transform((value) =>
-      isNaN(value) || value === null || value === undefined ? 0 : value
-    )
-    .moreThan(-1, "Max Voltage must be greater than a negative number"),
   minVoltage: yup
     .number()
-    .typeError("Min Voltage must be a number")
-    .transform((value) =>
-      isNaN(value) || value === null || value === undefined ? 0 : value
-    )
-    .moreThan(-1, "Min Voltage must be greater than a negative number"),
+    .nullable()
+    .test(
+      "is-valid-number",
+      "Minimum voltage must be a valid number",
+      (value) =>
+        !value || (typeof value === "number" && !isNaN(value) && value > 0)
+    ),
+  maxVoltage: yup
+    .number()
+    .nullable()
+    .when("minVoltage", {
+      is: (minVoltage) => minVoltage !== null && minVoltage !== undefined,
+      then: yup
+        .number()
+        .test(
+          "is-greater-than",
+          "Maximum voltage must be greater than or equal to minimum voltage",
+          function (value) {
+            return (
+              value !== null &&
+              value !== undefined &&
+              value >= this.resolve(yup.ref("minVoltage"))
+            );
+          }
+        ),
+      otherwise: yup.number().nullable(),
+    })
+    .test(
+      "is-valid-number",
+      "Maximum voltage must be a valid number",
+      (value) =>
+        !value || (typeof value === "number" && !isNaN(value) && value > 0)
+    ),
   supplierLink: yup
     .string()
     .matches(
@@ -48,6 +69,7 @@ export const initialBatteryValues = {
   pricePerPc: "",
   maxVoltage: "",
   minVoltage: "",
+  model: "",
   imagePath: "",
   brand: "",
   supplierLink: "",

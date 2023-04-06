@@ -36,15 +36,47 @@ import { uploadImage } from "../../util/uploadImage";
 import { toast } from "react-toastify";
 
 const registerSchema = yup.object().shape({
-  username: yup.string().required("Required"),
-  firstName: yup.string().required("Required"),
-  lastName: yup.string().required("Required"),
+  username: yup
+    .string()
+    .required("Required")
+    .min(6, "The string must be at least 6 characters long")
+    .max(20, "The string must not exceed 20 characters"),
+  firstName: yup
+    .string()
+    .required("Required")
+    .max(35, "Nickname will be fine, if your name is that long.")
+    .matches(/^[^0-9]*$/, "Your name should not contain any numbers"),
+  lastName: yup
+    .string()
+    .required("Required")
+    .max(
+      35,
+      "Woah! you have a longer last name than Sir Wolfeschlegelsteinhausenbergerdorff. Apply in Guiness and get back to us."
+    )
+    .matches(/^[^0-9]*$/, "Your name should not contain any numbers"),
   email: yup
     .string()
     .email("Please enter a valid email address")
     .required("Required"),
-  password: yup.string().required("Required"),
-  mobileNumber: yup.string().required("Required"),
+  password: yup
+    .string()
+    .required("Required")
+    .min(6, "Password must be at least 6 characters"),
+  mobileNumber: yup
+    .string()
+    .matches(/^(\+63|0)\d{9,10}$/, {
+      message:
+        "Mobile number must start with +63 or 0, followed by 9 or 10 digits",
+    })
+    .test("is-allowed-length", "Invalid mobile number length", (value) => {
+      if (value.startsWith("+63")) {
+        return value.length === 13;
+      } else if (value.startsWith("0")) {
+        return value.length === 11;
+      }
+      return false;
+    })
+    .required("Required"),
   isTermsChecked: yup
     .boolean()
     .oneOf([true], "Please read and check the Terms of Use"),
@@ -54,7 +86,7 @@ const registerSchema = yup.object().shape({
 });
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email("invalid email").required("Required"),
+  email: yup.string().email("Invalid email").required("Required"),
   password: yup.string().required("Required"),
 });
 

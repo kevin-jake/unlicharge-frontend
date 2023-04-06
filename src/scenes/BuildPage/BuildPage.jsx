@@ -282,11 +282,6 @@ function BuildPage() {
             <SummarySideBar
               setIsSummaryOpen={setIsSummaryOpen}
               openModal={(category) => {
-                console.log(
-                  "🚀 ~ file: BuildPage.jsx:296 ~ BuildPage ~ category:",
-                  category
-                );
-
                 handleOpenProductModal({
                   specs: selectedItems[category],
                   category,

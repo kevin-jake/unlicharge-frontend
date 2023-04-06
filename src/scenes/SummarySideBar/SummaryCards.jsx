@@ -20,10 +20,6 @@ const SummaryCards = ({ openModal, category }) => {
   const { palette } = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1300px)");
   const { categoryDisplayName, icon } = useGetCategoryObject(category);
-  console.log(
-    "🚀 ~ file: SummaryCards.jsx:19 ~ SummaryCards ~ category:",
-    category
-  );
 
   return (
     <WidgetWrapper
