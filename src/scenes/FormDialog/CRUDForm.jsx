@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Box,
   TextField,
@@ -11,6 +11,7 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Button,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -51,6 +52,7 @@ const CRUDForm = ({
   const apiCategory = useSelector(selectCategory);
   const { role, userId } = useSelector(selectUser) || {};
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [isMah, setIsMah] = useState(false);
   const isCreate = operation === "Create";
   const isEdit = operation === "Edit";
   const isDelete = operation === "Delete";
@@ -121,7 +123,14 @@ const CRUDForm = ({
   const handleFormSubmit = async (values) => {
     let specs = values;
     if (Boolean(values.imagePath) && typeof values.imagePath === "object") {
-      specs = await uploadImage(values);
+      try {
+        specs = await uploadImage(values);
+      } catch (err) {
+        toast.error(err);
+      }
+    }
+    if (isMah) {
+      specs.capacity = (+specs.capacity / 1000).toFixed(2);
     }
     if (isCreate) {
       await createProductRequest({ category: apiCategory, specs })
@@ -171,6 +180,8 @@ const CRUDForm = ({
     closeModal();
   };
 
+  const handleClickAh = () => setIsMah(!isMah);
+
   return (
     // TODO: Improve page layout of items
     <Formik
@@ -205,6 +216,7 @@ const CRUDForm = ({
                   borderRadius="5px"
                   p="1rem"
                 >
+                  {/* TODO: On load or upload display the image or have an option to use an image address */}
                   <Dropzone
                     acceptedFiles=".jpg,.jpeg,.png"
                     multiple={false}
@@ -285,7 +297,18 @@ const CRUDForm = ({
                       value={values[field.specProps]}
                       InputProps={{
                         endAdornment:
-                          field.unit !== "Php" ? (
+                          field.unit === "Ah" ? (
+                            <InputAdornment
+                              onClick={handleClickAh}
+                              position="end"
+                              sx={{
+                                cursor: "pointer",
+                                "& p": { color: palette.primary.main },
+                              }}
+                            >
+                              {isMah ? "mAh" : "Ah"}
+                            </InputAdornment>
+                          ) : field.unit !== "Php" ? (
                             <InputAdornment position="end">
                               {field.unit}
                             </InputAdornment>

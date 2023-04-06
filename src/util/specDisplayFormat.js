@@ -223,11 +223,15 @@ export const specDisplay = (spec) => {
   return specMap.filter((specs) => specs.specProps === spec)[0].nameDisplay;
 };
 
-export const specWithUnit = (spec, value) => {
+export const specWithUnit = (spec, value, isMah) => {
   const specUnit = specMap.filter((specs) => specs.specProps === spec)[0].unit;
   if (specUnit) {
+    if (isMah) {
+      const mahVal = +value * 1000;
+      return kiloformat(mahVal, "mAh");
+    }
     return specUnit === "Php"
       ? `${specUnit} ${numberWithCommas(value)}`
-      : `${kiloformat(value, specUnit)}`;
+      : kiloformat(value, specUnit);
   } else return value;
 };

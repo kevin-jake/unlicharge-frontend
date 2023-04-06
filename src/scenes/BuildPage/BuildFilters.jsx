@@ -141,7 +141,6 @@ const BuildFilters = ({ refetch }) => {
               Clear All
             </Button>
           </Box>
-          {/* TODO: Extract into another component and implement functionality */}
           <FlexBetween margin="5px">
             <PriceSliders
               minPrice={filters.minPrice}
@@ -149,7 +148,7 @@ const BuildFilters = ({ refetch }) => {
               priceRangeValue={priceRangeValue}
               setPriceRangeValue={setPriceRangeValue}
             />
-            {/* TODO: Add more filters for BMS and active balancer */}
+            {/* TODO: Add more filters for BMS and active balancer and extract into a component */}
             {category === "battery" && (
               <>
                 <Divider

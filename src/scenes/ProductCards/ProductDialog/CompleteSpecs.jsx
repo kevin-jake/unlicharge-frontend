@@ -2,17 +2,20 @@ import {
   Alert,
   Box,
   Grid,
+  IconButton,
   Link,
   List,
   ListItem,
+  ListItemIcon,
   ListItemText,
   Typography,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import UserImage from "../../../components/UserImage";
 import FlexBetween from "../../../components/wrappers/FlexBetween";
 import { specDisplay, specWithUnit } from "../../../util/specDisplayFormat";
+import { SwitchAccessShortcut } from "@mui/icons-material";
 
 const toNotDisplay = [
   "__v",
@@ -40,6 +43,7 @@ const CompleteSpecs = ({
 }) => {
   const { palette } = useTheme();
   const specsProperties = Object.keys(specs);
+  const [isMah, setIsMah] = useState(false);
   let filteredSpecs = specsProperties.filter(
     (specProp) => !toNotDisplay.includes(specProp)
   );
@@ -81,7 +85,20 @@ const CompleteSpecs = ({
                   }}
                 >
                   <ListItemText
-                    primary={specDisplay(specName)}
+                    primary={
+                      <>
+                        {specDisplay(specName)}
+                        {specName === "capacity" && (
+                          <IconButton
+                            size="small"
+                            onClick={() => setIsMah(!isMah)}
+                            sx={{ fontSize: 12, color: palette.primary.main }}
+                          >
+                            {isMah ? "Ah" : "mAh"}
+                          </IconButton>
+                        )}
+                      </>
+                    }
                     secondary={
                       specName === "supplierLink" ? (
                         <>
@@ -138,6 +155,46 @@ const CompleteSpecs = ({
                               </Box>
                             )}
                         </>
+                      ) : specName === "capacity" ? (
+                        <>
+                          {specWithUnit(specName, specs[specName], isMah)}
+                          {Boolean(currentValues) &&
+                            requestStatus === "Request" &&
+                            currentValues[specName] !== specs[specName] && (
+                              <Typography
+                                variant="caption"
+                                sx={{
+                                  fontStyle: "italic",
+                                  color: palette.neutral.main,
+                                }}
+                              >
+                                Current value:{" "}
+                                {specWithUnit(
+                                  specName,
+                                  currentValues[specName],
+                                  isMah
+                                )}
+                              </Typography>
+                            )}
+                          {Boolean(replacedValues) &&
+                            requestStatus === "Approved" &&
+                            replacedValues[specName] !== specs[specName] && (
+                              <Typography
+                                variant="caption"
+                                sx={{
+                                  fontStyle: "italic",
+                                  color: palette.neutral.main,
+                                }}
+                              >
+                                Replaced value:{" "}
+                                {specWithUnit(
+                                  specName,
+                                  replacedValues[specName],
+                                  isMah
+                                )}
+                              </Typography>
+                            )}
+                        </>
                       ) : (
                         <>
                           {specWithUnit(specName, specs[specName])}
@@ -178,6 +235,7 @@ const CompleteSpecs = ({
                         </>
                       )
                     }
+                    sx={{ width: "auto" }}
                   />
                 </ListItem>
               )
