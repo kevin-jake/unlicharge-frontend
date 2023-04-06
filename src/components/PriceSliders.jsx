@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
-  Stack,
   Typography,
   Slider,
   TextField,
@@ -9,8 +8,6 @@ import {
   useTheme,
 } from "@mui/material";
 import FlexBetween from "./wrappers/FlexBetween";
-import { useSelector } from "react-redux";
-import { selectFilters } from "../store/slices/buildpage/buildpageSlice";
 
 const PriceSliders = ({
   minPrice,
@@ -24,8 +21,6 @@ const PriceSliders = ({
   const handlePriceRangeChange = (event, newValue) => {
     setPriceRangeValue(newValue);
   };
-
-  console.log(priceRangeValue);
 
   return (
     <Box width="100%">
