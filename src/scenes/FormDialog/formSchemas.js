@@ -66,6 +66,10 @@ export const initialBatteryValues = {
   battType: "",
   nominalVoltage: "",
   capacity: "",
+  internalResistance: "",
+  chargeCRate: "",
+  dischargeCRate: "",
+  maxDischargeRate: "",
   pricePerPc: "",
   maxVoltage: "",
   minVoltage: "",
@@ -127,11 +131,6 @@ export const abSchema = yup.object().shape({
     .typeError("Strings must be a number")
     .positive("Strings must be greater than zero")
     .required("Strings is required"),
-  balanceCurrent: yup
-    .number()
-    .typeError("Balancing Current must be a number")
-    .positive("Balancing Current must be greater than zero")
-    .required("Balancing Current is required"),
   price: yup
     .number()
     .typeError("Price must be a number")

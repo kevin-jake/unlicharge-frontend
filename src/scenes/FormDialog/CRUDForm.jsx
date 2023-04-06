@@ -286,6 +286,58 @@ const CRUDForm = ({
                           <FormHelperText>{errors.battType}</FormHelperText>
                         )}
                     </FormControl>
+                  ) : field.specProps === "portType" ? (
+                    <FormControl
+                      key="portType"
+                      fullWidth
+                      sx={{ gridColumn: "span 12" }}
+                    >
+                      <InputLabel id={"portType-label"}>
+                        {field.nameDisplay}
+                      </InputLabel>
+                      <Select
+                        labelId={"portType-label"}
+                        id="portType"
+                        label="Port Type"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        MenuProps={{
+                          style: { zIndex: 3500 },
+                        }}
+                        value={values.portType}
+                        name="portType"
+                      >
+                        <MenuItem value="">None</MenuItem>
+                        <MenuItem value="Common">Common</MenuItem>
+                        <MenuItem value="Seperate">Seperate</MenuItem>
+                      </Select>
+                    </FormControl>
+                  ) : field.specProps === "balancingType" ? (
+                    <FormControl
+                      key="balancingType"
+                      fullWidth
+                      sx={{ gridColumn: "span 12" }}
+                    >
+                      <InputLabel id={"balancingType-label"}>
+                        {field.nameDisplay}
+                      </InputLabel>
+                      <Select
+                        labelId={"balancingType-label"}
+                        id="balancingType"
+                        label="Balancing Type"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        MenuProps={{
+                          style: { zIndex: 3500 },
+                        }}
+                        value={values.balancingType}
+                        name="balancingType"
+                      >
+                        <MenuItem value="">None</MenuItem>
+                        <MenuItem value="Common">Active</MenuItem>
+                        <MenuItem value="Seperate">Passive</MenuItem>
+                      </Select>
+                    </FormControl>
                   ) : (
                     <TextField
                       key={field.specProps}
