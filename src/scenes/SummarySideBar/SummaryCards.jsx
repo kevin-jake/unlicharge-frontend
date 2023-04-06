@@ -13,7 +13,6 @@ import FlexBetween from "../../components/wrappers/FlexBetween";
 import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
 import { useGetCategoryObject } from "../../hooks/useGetCategoryObject";
 import { selectSelection } from "../../store/slices/buildpage/buildpageSlice";
-import QuickSpecs from "../ProductCards/QuickSpecs";
 import SummaryCardContent from "./SummaryCardContent";
 
 const SummaryCards = ({ openModal, category }) => {
@@ -21,6 +20,10 @@ const SummaryCards = ({ openModal, category }) => {
   const { palette } = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1300px)");
   const { categoryDisplayName, icon } = useGetCategoryObject(category);
+  console.log(
+    "🚀 ~ file: SummaryCards.jsx:19 ~ SummaryCards ~ category:",
+    category
+  );
 
   return (
     <WidgetWrapper

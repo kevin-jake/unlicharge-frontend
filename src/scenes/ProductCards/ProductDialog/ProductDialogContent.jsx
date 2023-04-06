@@ -25,7 +25,6 @@ import { useGetIssues } from "../../../hooks/useGetIssues";
 const ProductDialogContent = ({
   specs,
   setCrudModalState,
-  categoryDisplayName,
   selectedCategory,
 }) => {
   const selectedItems = useSelector(selectSelection);
@@ -79,7 +78,7 @@ const ProductDialogContent = ({
         },
       ];
 
-  const isNotSelected = selectedItems[category].id !== id;
+  const isNotSelected = selectedItems[category]?.id !== id;
 
   const handleSelection = () => {
     if (isNotSelected) dispatch(setSelectedProduct({ specs, category }));
@@ -165,7 +164,14 @@ const ProductDialogContent = ({
             onClick={() =>
               setCrudModalState({
                 operation: "Edit",
-                category: categoryDisplayName,
+                category:
+                  selectedCategory === "bms"
+                    ? "BMS"
+                    : selectedCategory === "battery"
+                    ? "Battery"
+                    : selectedCategory === "ab"
+                    ? "Active Balancer"
+                    : selectedCategory,
                 isOpen: true,
                 oldValues: specsRest,
                 productId,
@@ -180,7 +186,14 @@ const ProductDialogContent = ({
             onClick={() =>
               setCrudModalState({
                 operation: "Delete",
-                category: categoryDisplayName,
+                category:
+                  selectedCategory === "bms"
+                    ? "BMS"
+                    : selectedCategory === "battery"
+                    ? "Battery"
+                    : selectedCategory === "ab"
+                    ? "Active Balancer"
+                    : selectedCategory,
                 isOpen: true,
                 oldValues: specsRest,
                 productId,

@@ -281,12 +281,17 @@ function BuildPage() {
           {isSummaryOpen && (
             <SummarySideBar
               setIsSummaryOpen={setIsSummaryOpen}
-              openModal={(category) =>
+              openModal={(category) => {
+                console.log(
+                  "🚀 ~ file: BuildPage.jsx:296 ~ BuildPage ~ category:",
+                  category
+                );
+
                 handleOpenProductModal({
                   specs: selectedItems[category],
                   category,
-                })
-              }
+                });
+              }}
             />
           )}
         </Grid>
@@ -336,7 +341,6 @@ function BuildPage() {
         <ProductDialogContent
           specs={focusedProduct?.specs}
           setCrudModalState={setCrudModalState}
-          categoryDisplayName={categoryDisplayName}
           selectedCategory={focusedProduct?.category}
         />
       </DialogWrapper>

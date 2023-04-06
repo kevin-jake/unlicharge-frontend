@@ -265,7 +265,9 @@ const CRUDForm = ({
                         <MenuItem value="">None</MenuItem>
                         <MenuItem value="LiFePo4">LiFePo4</MenuItem>
                         <MenuItem value="Li-On">Li-On (Lithium Ion)</MenuItem>
-                        <MenuItem value="Lead Acid">Lead Acid</MenuItem>
+                        {category === "Battery" && (
+                          <MenuItem value="Lead Acid">Lead Acid</MenuItem>
+                        )}
                       </Select>
                       {Boolean(errors.battType) &&
                         Boolean(touched.battType) && (

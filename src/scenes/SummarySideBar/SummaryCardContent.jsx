@@ -1,16 +1,11 @@
 import { Box, Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
 import FlexBetween from "../../components/wrappers/FlexBetween";
-import WidgetWrapper from "../../components/wrappers/WidgetWrapper";
-import { selectSelection } from "../../store/slices/buildpage/buildpageSlice";
 import isObjectEmpty from "../../util/isObjectEmpty";
 import { numberWithCommas } from "../../util/numberFormats";
 import PriceCompute from "../ProductCards/PriceCompute";
-import QuickSpecs from "../ProductCards/QuickSpecs";
 
 const SummaryCardContent = ({ specs, openModal }) => {
-  const selectedItems = useSelector(selectSelection);
   const { palette } = useTheme();
   const primary = palette.primary.main;
   return (

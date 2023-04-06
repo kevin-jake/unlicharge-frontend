@@ -38,7 +38,7 @@ export const specMap = [
     nameDisplay: "Battery Type",
     specProps: "battType",
     textField: true,
-    specOf: ["Battery"],
+    specOf: ["Battery", "BMS"],
     required: true,
   },
   {

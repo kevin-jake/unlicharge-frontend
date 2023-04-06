@@ -11,8 +11,8 @@ export const useGetIssues = (category) => {
   );
   return {
     errors,
-    isError: Boolean(errors.length),
+    isError: Boolean(errors?.length),
     warnings,
-    isWarning: Boolean(warnings.length),
+    isWarning: Boolean(warnings?.length),
   };
 };
