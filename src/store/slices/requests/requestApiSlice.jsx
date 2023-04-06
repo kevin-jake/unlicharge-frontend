@@ -3,15 +3,15 @@ import { api } from "../../api";
 export const requestApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     editProductRequest: builder.mutation({
-      query: ({ category, id, specs }) => ({
-        url: `requests/${category}/${id}/edit`,
+      query: ({ category, productId, specs }) => ({
+        url: `requests/${category}/${productId}/edit`,
         method: "POST",
         body: specs,
       }),
     }),
     deleteProductRequest: builder.mutation({
-      query: ({ category, id, deleteBody }) => ({
-        url: `requests/${category}/${id}/delete`,
+      query: ({ category, productId, deleteBody }) => ({
+        url: `requests/${category}/${productId}/delete`,
         method: "POST",
         body: deleteBody,
       }),

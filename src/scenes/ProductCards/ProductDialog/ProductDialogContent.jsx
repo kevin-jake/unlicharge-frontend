@@ -34,7 +34,8 @@ const ProductDialogContent = ({
   const {
     _id,
     __v,
-    id: productId,
+    id,
+    productId,
     updatedAt,
     createdAt,
     computedSpecs,
@@ -78,7 +79,7 @@ const ProductDialogContent = ({
         },
       ];
 
-  const isNotSelected = selectedItems[category].id !== productId;
+  const isNotSelected = selectedItems[category].id !== id;
 
   const handleSelection = () => {
     if (isNotSelected) dispatch(setSelectedProduct({ specs, category }));

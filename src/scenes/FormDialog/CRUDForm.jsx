@@ -139,7 +139,7 @@ const CRUDForm = ({
     if (isEdit) {
       await editProductRequest({
         category: apiCategory,
-        id: productId,
+        productId,
         specs,
       })
         .unwrap()
@@ -154,7 +154,7 @@ const CRUDForm = ({
     if (isDelete) {
       await deleteProductRequest({
         category: apiCategory,
-        id: productId,
+        productId,
         deleteBody: values,
       })
         .unwrap()
