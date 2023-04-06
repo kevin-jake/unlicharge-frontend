@@ -5,6 +5,9 @@ export const uploadImage = async (values) => {
   const { username } = JSON.parse(user) || values;
   if (!isObjectEmpty(values.imagePath)) {
     const formData = new FormData();
+    if (Boolean(username)) {
+      formData.append(username, "username");
+    }
     for (let value in values) {
       formData.append(value, values[value]);
     }
