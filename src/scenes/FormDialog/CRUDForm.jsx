@@ -334,8 +334,8 @@ const CRUDForm = ({
                         name="balancingType"
                       >
                         <MenuItem value="">None</MenuItem>
-                        <MenuItem value="Common">Active</MenuItem>
-                        <MenuItem value="Seperate">Passive</MenuItem>
+                        <MenuItem value="Active">Active</MenuItem>
+                        <MenuItem value="Passive">Passive</MenuItem>
                       </Select>
                     </FormControl>
                   ) : (
