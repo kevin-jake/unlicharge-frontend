@@ -20,7 +20,7 @@ const TermsDialogContent = () => {
         flexDirection="column"
         justifyContent="center"
         gap={5}
-        width="100vh"
+        width="100%"
       >
         <Box display="flex" gap={2} flexDirection="column">
           <Typography variant="h3" fontWeight="bold">

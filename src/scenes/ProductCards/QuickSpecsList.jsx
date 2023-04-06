@@ -20,7 +20,6 @@ const QuickSpecsList = ({ computedSpecs }) => {
             overflow: "hidden",
             textOverflow: "ellipsis",
             display: "inline-block",
-            whiteSpace: "nowrap",
             width: "-webkit-fill-available",
             WebkitLineClamp: "1",
             WebkitBoxOrient: "vertical",
@@ -40,9 +39,6 @@ const QuickSpecsList = ({ computedSpecs }) => {
               sx={{
                 display: "list-item",
                 pageBreakInside: "avoid",
-                "& span": {
-                  whiteSpace: "normal",
-                },
               }}
             >
               <ListItemText
@@ -59,9 +55,6 @@ const QuickSpecsList = ({ computedSpecs }) => {
                 sx={{
                   display: "list-item",
                   pageBreakInside: "avoid",
-                  "& span": {
-                    whiteSpace: "normal",
-                  },
                 }}
               >
                 <ListItemText
