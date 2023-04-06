@@ -3,6 +3,9 @@ const numberWithCommas = (x) => {
 };
 
 const kiloformat = (num, unit) => {
+  if (unit === "A") {
+    return num + " " + unit;
+  }
   if (num >= 1000000000) {
     return (num / 1000000000).toFixed(3).replace(/\.0$/, "") + " G" + unit;
   }

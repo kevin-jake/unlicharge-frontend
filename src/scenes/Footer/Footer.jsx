@@ -92,7 +92,8 @@ const Footer = () => {
               flexDirection: "column",
             }}
           >
-            <Box
+            {/* TODO: Enable this once facebook group is already up */}
+            {/* <Box
               gap="1rem"
               sx={{
                 display: "flex",
@@ -115,7 +116,7 @@ const Footer = () => {
                   Join our community
                 </Typography>
               </IconButton>
-            </Box>
+            </Box> */}
             <Box
               gap="1rem"
               sx={{
@@ -131,6 +132,14 @@ const Footer = () => {
                 sx={{ cursor: "pointer" }}
               >
                 About
+              </Typography>
+              <Typography
+                variant="body"
+                color={palette.primary.main}
+                onClick={() => navigate("/contact")}
+                sx={{ cursor: "pointer" }}
+              >
+                Contact
               </Typography>
             </Box>
           </Box>

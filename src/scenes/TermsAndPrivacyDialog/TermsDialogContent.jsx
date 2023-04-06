@@ -29,8 +29,8 @@ const TermsDialogContent = () => {
 
           <Typography variant="body">
             Please read these Terms of Use ("Terms", "Terms of Use") carefully
-            before using the Unlicharge.com website ("the website", "our
-            website") operated by Unlicharge ("us", "we", or "our").
+            before using the Unlicharge website ("the website", "our website")
+            operated by Unlicharge ("us", "we", or "our").
           </Typography>
           <Typography variant="body">
             Your access to and use of the website is conditioned on your
@@ -61,7 +61,7 @@ const TermsDialogContent = () => {
           </Typography>
 
           <Typography variant="body">
-            Unlicharge.com participates in various affiliate marketing programs,
+            Unlicharge participates in various affiliate marketing programs,
             which means we may receive commissions on products purchased through
             our links to retailer sites. Our participation in these programs
             does not affect the content we provide, and we only promote products

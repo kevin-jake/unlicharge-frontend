@@ -27,22 +27,21 @@ const PrivacyDialogContent = () => {
           </Typography>
 
           <Typography variant="body">
-            At UnliCharge.com, we highly value our users' privacy and are
-            dedicated to safeguarding their personal information. This Privacy
-            Policy provides a comprehensive overview of the type of data we
-            collect, how we use it, and the measures we employ to protect it. By
-            using our website, you acknowledge and agree to comply with the
-            policy's terms and conditions.
+            At Unlicharge, we highly value our users' privacy and are dedicated
+            to safeguarding their personal information. This Privacy Policy
+            provides a comprehensive overview of the type of data we collect,
+            how we use it, and the measures we employ to protect it. By using
+            our website, you acknowledge and agree to comply with the policy's
+            terms and conditions.
           </Typography>
           <Typography variant="body">
             We may collect certain personally identifiable information while you
-            are using UnliCharge.com, such as your email address (if you opt to
-            sign up for our newsletter or other communications), cookies, and
-            usage data. We use this information to analyze user behavior,
-            enhance our website's functionality, and offer tailored content and
-            advertising. We may also use your email address to send you
-            newsletters, promotional materials, or other information related to
-            our site.
+            are using Unlicharge, such as your email address (if you opt to sign
+            up for our newsletter or other communications), cookies, and usage
+            data. We use this information to analyze user behavior, enhance our
+            website's functionality, and offer tailored content and advertising.
+            We may also use your email address to send you newsletters,
+            promotional materials, or other information related to our site.
           </Typography>
           <Typography variant="body">
             Cookies are small data files that may include an anonymous unique
@@ -54,7 +53,7 @@ const PrivacyDialogContent = () => {
             be unavailable to you.
           </Typography>
           <Typography variant="body">
-            At UnliCharge.com, we participate in various affiliate marketing
+            At Unlicharge, we participate in various affiliate marketing
             programs, which means we may receive commissions on products
             purchased through our links to retailer sites. When you click on one
             of these affiliate links and make a purchase, we may earn a small
