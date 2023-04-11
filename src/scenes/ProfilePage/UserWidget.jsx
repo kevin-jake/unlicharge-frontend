@@ -41,7 +41,7 @@ const UserWidget = () => {
         </Divider>
       </Box>
       {isEditMode ? (
-        <EditProfileForm user={user} />
+        <EditProfileForm user={user} setIsEditMode={setIsEditMode} />
       ) : (
         <ViewProfile user={user} />
       )}

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   IconButton,
   InputAdornment,
   TextField,
@@ -14,6 +15,11 @@ import Dropzone from "react-dropzone";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useUpdateUserInformationMutation } from "../../store/slices/users/userApiSlice";
+import { uploadImage } from "../../util/uploadImage";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../store/slices/auth/authSlice";
 
 const registerSchema = yup.object().shape({
   username: yup.string().required("Required"),
@@ -23,22 +29,54 @@ const registerSchema = yup.object().shape({
     .string()
     .email("Please enter a valid email address")
     .required("Required"),
-  password: yup.string().required("Required"),
   mobileNumber: yup.string().required("Required"),
 });
-// TODO: Add functionality on frontend and backend
-const EditProfileForm = ({ user }) => {
+
+const EditProfileForm = ({ user, setIsEditMode }) => {
   const { palette } = useTheme();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
+  const [updateUserInformation, { isLoading }] =
+    useUpdateUserInformationMutation();
+
+  const notifyError = (error) => {
+    const errMsg = `${error.data.message}`;
+    toast.error(errMsg);
+    throw new Error(errMsg);
+  };
+
   const initialValuesRegister = user;
 
+  const handleFormSubmit = async (values) => {
+    console.log(
+      "🚀 ~ file: EditProfileForm.jsx:49 ~ handleFormSubmit ~ values:",
+      values
+    );
+    if (Boolean(values.imagePath) && typeof values.imagePath === "object") {
+      try {
+        specs = await uploadImage(values);
+      } catch (err) {
+        toast.error(err);
+      }
+    }
+    const userData = await updateUserInformation({
+      profileId: user.userId,
+      body: values,
+    })
+      .unwrap()
+      .then()
+      .catch((error) => notifyError(error));
+    toast.success("User information updated successfully.");
+    dispatch(setLogin(userData));
+    setIsEditMode(false);
+  };
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const handleFormSubmit = () => {};
+
   return (
     <Formik
       onSubmit={handleFormSubmit}
@@ -205,7 +243,7 @@ const EditProfileForm = ({ user }) => {
                 "&:hover": { color: palette.primary.main },
               }}
             >
-              {false ? (
+              {isLoading ? (
                 <CircularProgress
                   size={20}
                   sx={{ color: palette.secondary.light }}

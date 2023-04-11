@@ -35,7 +35,7 @@ const ViewProfile = ({ user }) => {
         <Typography variant="body" color={palette.primary.light}>
           Username
         </Typography>
-        <Typography variant="body">{user?.email}</Typography>
+        <Typography variant="body">{user?.username}</Typography>
       </Box>
       <Box
         gap={2}
