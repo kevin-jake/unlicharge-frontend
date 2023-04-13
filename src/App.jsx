@@ -27,19 +27,22 @@ function App() {
   const mode = useSelector(selectMode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const dispatch = useDispatch();
-  const isAuth = Boolean(useSelector(selectUser)?.token);
-
+  const { token, timeToLogout } = useSelector(selectUser) || {};
+  console.log("🚀 ~ file: App.jsx:31 ~ App ~ timeToLogout:", timeToLogout);
+  const isAuth = Boolean(token);
+  const tokenExpirationDate = new Date(timeToLogout);
   const logout = useCallback(() => {
     dispatch(setLogout());
     dispatch(resetSortPageFilters());
   }, []);
 
   useEffect(() => {
-    const tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 60);
     if (isAuth && tokenExpirationDate) {
       const remainingTime =
         tokenExpirationDate.getTime() - new Date().getTime();
-      logoutTimer = setTimeout(logout, remainingTime);
+      if (remainingTime <= 0) {
+        logout();
+      } else logoutTimer = setTimeout(logout, remainingTime);
     } else {
       clearTimeout(logoutTimer);
     }
