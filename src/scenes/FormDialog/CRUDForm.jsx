@@ -38,6 +38,7 @@ import { uploadImage } from "../../util/uploadImage";
 import { selectUser } from "../../store/slices/auth/authSlice";
 import { toast } from "react-toastify";
 import { selectCategory } from "../../store/slices/buildpage/buildpageSlice";
+import ImageUploadZone from "../../components/ImageUploadZone";
 
 const CRUDForm = ({
   operation,
@@ -210,44 +211,11 @@ const CRUDForm = ({
           >
             {(isCreate || isEdit) && (
               <>
-                <Box
-                  gridColumn="span 12"
-                  border={`1px solid ${palette.neutral.medium}`}
-                  borderRadius="5px"
-                  p="1rem"
-                >
-                  {/* TODO: On load or upload display the image or have an option to use an image address */}
-                  <Dropzone
-                    acceptedFiles=".jpg,.jpeg,.png"
-                    multiple={false}
-                    onDrop={(acceptedFiles) =>
-                      setFieldValue("imagePath", acceptedFiles[0])
-                    }
-                  >
-                    {({ getRootProps, getInputProps }) => (
-                      <Box
-                        {...getRootProps()}
-                        border={`2px dashed ${palette.primary.main}`}
-                        p="1rem"
-                        sx={{ "&:hover": { cursor: "pointer" } }}
-                      >
-                        <input {...getInputProps()} />
-                        {!values.imagePath ? (
-                          <p>Add Picture Here</p>
-                        ) : (
-                          <FlexBetween>
-                            <Typography>
-                              {values.imagePath.name
-                                ? values.imagePath.name
-                                : values.imagePath}
-                            </Typography>
-                            <EditOutlinedIcon />
-                          </FlexBetween>
-                        )}
-                      </Box>
-                    )}
-                  </Dropzone>
-                </Box>
+                <ImageUploadZone
+                  setFieldValue={setFieldValue}
+                  values={values}
+                  gridspan={12}
+                />
                 {formikProps.textFields.map((field) =>
                   field.specProps === "battType" ? (
                     <FormControl

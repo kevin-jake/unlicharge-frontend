@@ -34,6 +34,7 @@ import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { uploadImage } from "../../util/uploadImage";
 import { toast } from "react-toastify";
+import ImageUploadZone from "../../components/ImageUploadZone";
 
 const registerSchema = yup.object().shape({
   username: yup
@@ -69,9 +70,9 @@ const registerSchema = yup.object().shape({
         "Mobile number must start with +63 or 0, followed by 9 or 10 digits",
     })
     .test("is-allowed-length", "Invalid mobile number length", (value) => {
-      if (value.startsWith("+63")) {
+      if (value?.startsWith("+63")) {
         return value.length === 13;
-      } else if (value.startsWith("0")) {
+      } else if (value?.startsWith("0")) {
         return value.length === 11;
       }
       return false;
@@ -192,39 +193,11 @@ const Form = ({ setModalType, pageType, closeModal }) => {
             }}
           >
             {isRegister && (
-              <Box
-                gridColumn="span 4"
-                border={`1px solid ${palette.neutral.medium}`}
-                borderRadius="5px"
-                p="1rem"
-              >
-                <Dropzone
-                  acceptedFiles=".jpg,.jpeg,.png"
-                  multiple={false}
-                  onDrop={(acceptedFiles) =>
-                    setFieldValue("imagePath", acceptedFiles[0])
-                  }
-                >
-                  {({ getRootProps, getInputProps }) => (
-                    <Box
-                      {...getRootProps()}
-                      border={`2px dashed ${palette.primary.main}`}
-                      p="1rem"
-                      sx={{ "&:hover": { cursor: "pointer" } }}
-                    >
-                      <input {...getInputProps()} />
-                      {!values.imagePath ? (
-                        <p>Add Picture Here</p>
-                      ) : (
-                        <FlexBetween>
-                          <Typography>{values.imagePath.name}</Typography>
-                          <EditOutlinedIcon />
-                        </FlexBetween>
-                      )}
-                    </Box>
-                  )}
-                </Dropzone>
-              </Box>
+              <ImageUploadZone
+                setFieldValue={setFieldValue}
+                values={values}
+                gridspan={4}
+              />
             )}
             <TextField
               label="Email"
