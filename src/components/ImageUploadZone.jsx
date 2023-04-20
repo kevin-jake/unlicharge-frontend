@@ -1,19 +1,15 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import FlexBetween from "./wrappers/FlexBetween";
 import { DeleteOutline } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 const ImageUploadZone = ({ setFieldValue, values, gridspan }) => {
   const { palette } = useTheme();
   const [files, setFiles] = useState([]);
 
   const areFilesPresent = Boolean(files.length);
-  console.log(
-    "🚀 ~ file: ImageUploadZone.jsx:12 ~ ImageUploadZone ~ areFilesPresent:",
-    areFilesPresent
-  );
 
   const removeFile = (file) => () => {
     const newFiles = [...files];
@@ -31,9 +27,21 @@ const ImageUploadZone = ({ setFieldValue, values, gridspan }) => {
       justifySelf={areFilesPresent ? "center" : ""}
     >
       <Dropzone
-        acceptedFiles=".jpg,.jpeg,.png"
+        accept={{ "image/jpg": [".jpg", ".jpeg", ".png"] }}
+        maxSize={5242880}
         multiple={false}
-        onDrop={(acceptedFiles) => {
+        onDrop={(acceptedFiles, fileRejections) => {
+          fileRejections.forEach((file) => {
+            file.errors.forEach((err) => {
+              if (err.code === "file-too-large") {
+                toast.error(`File size must be 5MB or smaller.`);
+              }
+
+              if (err.code === "file-invalid-type") {
+                toast.error(`Files must be in jpg, jpeg or png format only.`);
+              }
+            });
+          });
           setFieldValue("imagePath", acceptedFiles[0]);
           setFiles(
             acceptedFiles.map((file) =>

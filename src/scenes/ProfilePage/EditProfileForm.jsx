@@ -50,10 +50,6 @@ const EditProfileForm = ({ user, setIsEditMode }) => {
   const initialValuesRegister = user;
 
   const handleFormSubmit = async (values) => {
-    console.log(
-      "🚀 ~ file: EditProfileForm.jsx:49 ~ handleFormSubmit ~ values:",
-      values
-    );
     if (Boolean(values.imagePath) && typeof values.imagePath === "object") {
       try {
         specs = await uploadImage(values);

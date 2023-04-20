@@ -28,7 +28,6 @@ function App() {
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const dispatch = useDispatch();
   const { token, timeToLogout } = useSelector(selectUser) || {};
-  console.log("🚀 ~ file: App.jsx:31 ~ App ~ timeToLogout:", timeToLogout);
   const isAuth = Boolean(token);
   const tokenExpirationDate = new Date(timeToLogout);
   const logout = useCallback(() => {
